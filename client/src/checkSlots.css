@@ -1,0 +1,19 @@
+.nav2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 105%;
+    font-family: Ubuntu;
+    color: #ffa600;
+    background-color: rgb(0, 0, 0);
+    border-style: solid;
+    border-color: tomato;
+    border-width: 3px;
+
+}
+
+.custom-select .react-select__control {
+    height: 30px; /* Adjust the height value as needed */
+  }
+  
+

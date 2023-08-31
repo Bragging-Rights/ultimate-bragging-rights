@@ -1,0 +1,17 @@
+/* NavigationBar.css */
+
+/* Apply custom background color and font color */
+.navbar-dark {
+    background-color: #000000; /* Dark background color */
+  }
+  
+  .nav-link {
+    color: #ffb300; /* Yellow font color */
+  }
+  
+  /* Adjust padding and spacing as needed */
+  .navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }

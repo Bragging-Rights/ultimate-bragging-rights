@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,700&display=swap');
+
+
+/* Adjust font size and other styles for small screens */
+@media (max-width: 767px) {
+  .content {
+    font-size: 24px;
+  }
+  /* Add more responsive styles as needed */
+}
+
+/* Adjust font size and other styles for medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+  .content {
+    font-size: 32px;
+  }
+  /* Add more responsive styles as needed */
+}
+
+/* Add more media queries for larger screens if needed */
+
+
+.homepage{
+  background-color: #000000;
+  color: white;
+  font-size: xx-large;
+}
+.gradient-custom-home {
+  /* fallback for old browsers */
+  background: #000000;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right,  rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: black;
+}
+.container-fluid{
+    width: 100%;
+    margin: auto;
+    font-size: x-large;
+    align-items: center;
+    justify-content: center;
+    /* border: #000000;
+    border-style:dashed; */
+    text-align: center;
+    font-family: 'Ubuntu';
+    text-size-adjust: x-large;
+    flex-grow: 1; /* Allow the content to expand and take up remaining space */
+    display: flex;
+    flex-direction: column;
+    object-fit: cover;
+  }
+
+
+  
+  .containerimg{
+    height:80%;
+    width: 500px;
+  }
+
+  .thirdcontainerimg {
+    /* Set dimensions for the container */
+    width: 50%; /* Adjust width as needed */
+    max-width: 50%; /* Ensure the container doesn't exceed its parent's width */
+    align-items: center;
+    margin-top: 10px; /* Adjust margin as needed */
+    display: flex;
+    justify-content: center;
+    margin-left: 150px;
+
+  }
+
+  .fifthcontainerimg {
+    /* Set dimensions for the container */
+    width: 50% !important; /* Adjust width as needed */
+    max-width: 50%; /* Ensure the container doesn't exceed its parent's width */
+    align-items: center;
+    margin-top: 10px; /* Adjust margin as needed */
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .sixthcontainerimg {
+    position: relative;
+  }
+  
+  .timeshadow {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .text-overlay {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    z-index: auto; /* Place the text on top of the image */
+  }
+  
+  .border-box {
+    position: relative;
+    z-index: auto;
+  }  
+
+  
+  .image {
+    /* Ensure the image fits within the container */
+    max-width: 100%; /* Make sure the image doesn't exceed the container's width */
+    height: auto; /* Maintain the image's aspect ratio */
+    display: block; /* Remove any extra spacing around the image */
+    align-items: center;
+    justify-content: center;
+
+  }
+  
+
+  .main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    align-items: center;
+    justify-content: center;
+
+
+    /* opacity: 0.4; */
+
+  }
+  .content {
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    bottom: 30%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 800px; /* Adjust the max-width as needed */
+    text-align: center;
+    font-family: 'Ubuntu';
+    font-size: 42px;
+    text-size-adjust: x-large;
+    flex-grow: 1; /* Allow the content to expand and take up remaining space */
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+
+  }
+
+
+
+  .logo {
+    width: 200px; /* Adjust the width as needed */
+    height: auto;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+
+  
+ 
+
+  .mainLogo{
+    width: 300px;
+    padding-left: 150px;
+  }
+  
+  .content-bottom{
+    margin-top: 75% !important;
+  }
+
+  .bar {
+    background-color: #ffb300 !important;
+    border: #ffb300;
+    border-style: solid;
+    width: 600px;
+    margin-left: 350px !important;
+    
+  }
+
+  .bar1 {
+    background-color: #ffb300 !important;
+    border: #ffb300;
+    border-style: solid;
+    width: 800px;
+    padding-left: 1075px;
+  }
+
+  .barone{
+    background-color: #ffb300 !important;
+    border: #ffb300;
+    border-style: solid;
+    width: 600px;
+    padding-left: 100%;
+  }
+
+  .container-fluid3{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Ubuntu';
+    object-fit: cover;
+    position: relative;
+    display: flex;
+
+
+  }
+  .container-fluid4 {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Ubuntu';
+    position: relative;
+    display: flex;
+    overflow: hidden; /* Ensure text doesn't overflow container */
+  
+    /* Adjust container dimensions as needed */
+    min-height: 100vh; /* Set a minimum height to fill the viewport */
+  }
+
+  .content1 {
+    position: absolute;
+    top: 0; /* Position at the top of the container */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center the content horizontally */
+    z-index: auto; /* Place the content above the video */
+    text-shadow:
+    0 0 7px rgb(0, 0, 0),
+    0 0 10px rgb(0, 0, 0),
+    0 0 21px rgb(0, 0, 0),
+    0 0 42px rgb(255, 191, 0),
+    0 0 82px rgb(255, 191, 0);
+    text-align: center;
+
+
+  }
+
+  .border-box{
+    border: #ffb300;
+    border-style: double;
+    text-shadow:
+    0 0 7px rgb(0, 0, 0),
+    0 0 10px rgb(0, 0, 0),
+    0 0 21px rgb(0, 0, 0),
+    0 0 42px rgb(255, 191, 0),
+    0 0 82px rgb(255, 191, 0);
+    background-color: #ffb30042;
+  }
+
+  .border-box2{
+    border: #ffb300;
+    border-style: double;
+    text-shadow:
+    0 0 7px rgb(0, 0, 0),
+    0 0 10px rgb(0, 0, 0),
+    0 0 21px rgb(0, 0, 0),
+    0 0 42px rgb(255, 191, 0),
+    0 0 82px rgb(255, 191, 0);
+    background-color: #ffb30042;
+    top: 40px;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    z-index: auto; /* Place the text on top of the image */
+  }
+
+  .stats{
+    max-width: 100%;
+    max-height: 1000%;
+    justify-content: center;
+    display: flex;
+    position: relative;
+
+  }
+  .stats-list {
+    display: flex;
+    align-items: center;
+  }
+  
+  .stats-left,
+  .stats-right {
+    flex: 1;
+    text-align: left;
+    padding: 10px;
+  }
+
+  .stats-right{
+    text-align: right !important;
+
+  }
+  
+  .stats-image {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .text-overlay1 {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    z-index: auto;
+    color: white;
+
+  }
+
+  .bar-stats{
+    background-color: #ffb300 !important;
+    border: #ffb300;
+    border-style: solid;
+    flex-grow: 1;
+    margin-left: 8px;
+
+
+
+  }
