@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import logo from "../src/assets/logo.png";
 import "./index.css"; // Import your custom CSS file
 import "./navbar.css"; // Import your custom CSS file
-import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
-  const [selectedLeague, setSelectedLeague] = useState("Select League");
+  const [selectedLeague, setSelectedLeague] = useState("PRO FOOTBALL");
 
   const handleLeagueClick = (league) => {
     setSelectedLeague(league);
   };
+
   return (
     <nav
       className="navbar navbar-dark bg-dark d-flex justify-content-between gradient-custom custom-navbar navbar-expand-lg bg-body-tertiary col-md-4 col-lg-12"
@@ -61,34 +62,55 @@ const Navbar = () => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {selectedLeague}
+            {selectedLeague || ""}{" "}
+            {/* Conditionally render based on selectedLeague */}
           </button>
           <ul className="dropdown-menu">
             <li>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={() => handleLeagueClick("Action")}
+                onClick={() => handleLeagueClick("PRO FOOTBALL")}
               >
-                Action
+                PRO FOOTBALL
               </button>
             </li>
             <li>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={() => handleLeagueClick("Action two")}
+                onClick={() => handleLeagueClick("PRO HOCKEY")}
               >
-                Action two
+                PRO HOCKEY
               </button>
             </li>
             <li>
               <button
                 className="dropdown-item"
                 type="button"
-                onClick={() => handleLeagueClick("Action three")}
+                onClick={() => handleLeagueClick("PRO BASKETBALL")}
               >
-                Action three
+                PRO BASKETBALL
+              </button>
+            </li>
+            <li>
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={() => handleLeagueClick("PRO BASEBALL")}
+              >
+                PRO BASEBALL
+              </button>
+            </li>
+            <li>
+              <button
+                className="dropdown-item"
+                type="button"
+                onClick={() =>
+                  handleLeagueClick("INTERNATIONAL ICE HOCKEY FEDERATION")
+                }
+              >
+                INTERNATIONAL ICE HOCKEY FEDERATION
               </button>
             </li>
           </ul>
