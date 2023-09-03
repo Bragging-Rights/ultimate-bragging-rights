@@ -53,7 +53,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* <div className="selectLeague dropdown-center col-lg-4">
+        <div className="selectLeague dropdown-center col-lg-4">
           <label>Select League</label>
           <button
             className="btn btn-warning dropdown-toggle"
@@ -92,7 +92,7 @@ const Navbar = () => {
               </button>
             </li>
           </ul>
-        </div> */}
+        </div>
 
         <div className="col-lg-4 display-inline d-flex align-items-center justify-content-end">
           <div className="d-flex align-items-center">
