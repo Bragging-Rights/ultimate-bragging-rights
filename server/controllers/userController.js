@@ -8,7 +8,7 @@ const sendEmail = require("../utils/sendEmail");
 
 
 exports.signUpController = async (req, res) => {
-    const { firstName, lastName, email, password, gender, city, state, country, zipCode, phone } = req.body;
+    const { firstName, lastName, email, username, password, gender, city, state, country, zipCode, phone } = req.body;
     db.query("SELECT * FROM users WHERE email = ?", [email], (error, user) => {
         if (user && user?.length > 0) {
             res.status(200).json(responseObject({}, 'Email already exists. Please try another one', false));
@@ -16,10 +16,10 @@ exports.signUpController = async (req, res) => {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             const otp = generateOTP();
-            const query = `INSERT INTO users (firstName, lastName, email, password, gender, city, state, country, zipCode, phone, otp, emailVerified) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+            const query = `INSERT INTO users (firstName, lastName, email, username, password, gender, city, state, country, zipCode, phone, otp, emailVerified) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
-            db.query(query, [firstName, lastName, email, hash, gender, city, state, country, zipCode, phone, otp, false], (err, results) => {
+            db.query(query, [firstName, lastName, email, username, hash, gender, city, state, country, zipCode, phone, otp, false], (err, results) => {
                 console.log(results);
                 if (err) {
                     console.error('Error inserting user:', err);
@@ -72,6 +72,7 @@ exports.signInController = async (req, res) => {
                             }
                         }
                         delete findUser["password"];
+                        delete findUser["otp"];
                         jwt.sign(payload, config.jwtSecret, (err, token) => {
                             if (err) res.status(400).json(responseObject({}, 'Jwt Error', true));
                             else {
@@ -107,8 +108,13 @@ exports.verifyOTP = async (req, res) => {
         } else {
             const user = results[0];
             if (otp === user?.otp) {
-                db.query("UPDATE users SET `otp` = ?, ")
-                res.status(200).json(responseObject({}, "OTP verified!", false));
+                db.query("UPDATE users SET `otp` = ?, `emailVerified` = ?", ["", true], (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        res.status(200).json(responseObject({}, "OTP verified!", false));
+                    }
+                })
             } else {
                 res.status(200).json(responseObject({}, "Invalid OTP", false));
             }

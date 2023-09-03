@@ -21,9 +21,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   database: config.database,
 // });
 
+// db.ge((err, con) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log("Connected Successfully")
+//   }
+// })
+
+
 // Include routes
 // app.use(routes);
 app.use('/api/users', userRoutes);
+
+app.get("/", async (req, res) => {
+  res.send("Server is running...")
+})
 
 // Start the server
 app.listen(PORT, () => {
