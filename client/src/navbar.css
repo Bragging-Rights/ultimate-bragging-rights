@@ -53,6 +53,6 @@
     position: absolute; /* Set position to absolute */
     top: 100%; /* Position the dropdown menu below the button */
     left: 0;
-    z-index: 1001; /* Set an even higher z-index value */
+    z-index: 10000; /* Set an even higher z-index value */
   }
   

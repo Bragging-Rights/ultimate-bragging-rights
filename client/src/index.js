@@ -4,12 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css'; // Make sure this line is present to import the custom CSS file
+import './index.css'; 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+     <QueryClientProvider client={queryClient}>
     <App />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

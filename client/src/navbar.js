@@ -1,13 +1,39 @@
 import React, { useState, useEffect } from "react";
+import { useMutation } from 'react-query';
 
 import { Link } from "react-router-dom";
 import logo from "../src/assets/logo.png";
 import "./index.css"; // Import your custom CSS file
 import "./navbar.css"; // Import your custom CSS file
 import "bootstrap/dist/css/bootstrap.min.css";
+import { login } from "./services/auth";
 
 const Navbar = () => {
   const [selectedLeague, setSelectedLeague] = useState("PRO FOOTBALL");
+  const [user,setUser] = useState({
+    email:"",
+    password:""
+  });
+
+  const inputChangeHandler = (e)=>{
+
+    const {name,value} = e.target;
+    setUser({
+      ...user,
+      name:value,
+    })
+
+  }
+
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (user) => login(user)
+  );
+
+const handleLogin = ()=>{
+
+
+  mutate(user);
+}
 
   const handleLeagueClick = (league) => {
     setSelectedLeague(league);
@@ -17,7 +43,7 @@ const Navbar = () => {
     <nav
       className="navbar navbar-dark bg-dark d-flex justify-content-between gradient-custom custom-navbar navbar-expand-lg bg-body-tertiary col-md-4 col-lg-12"
       style={{
-        // position: "fixed",
+        position: "absolute",
         top: 0,
         width: "100%",
         height: "40px",
@@ -122,6 +148,8 @@ const Navbar = () => {
               <input
                 type="email"
                 id="form2Example1"
+                name="email"
+                onChange={inputChangeHandler}
                 className="form-control custom-input"
                 placeholder="Email"
               />
@@ -130,14 +158,25 @@ const Navbar = () => {
               <input
                 type="password"
                 id="form2Example2"
+                name="password"
+                onChange={inputChangeHandler}
                 className="form-control custom-input"
                 placeholder="Password"
               />
             </div>
-            <button type="button" className="btn btn-warning custom-input">
+            <button type="button" className="btn btn-warning "
+            style={{
+              minWidth:"88px"
+            }}
+              onClick={handleLogin}
+            >
               Sign in
             </button>
-            <Link to="/signup" className="btn btn-warning">
+            <Link to="/signup" className="btn btn-warning"
+               style={{
+                minWidth:"88px"
+              }}
+            >
               Sign Up
             </Link>
           </div>
