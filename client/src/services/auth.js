@@ -3,6 +3,7 @@ import api from './api';
 
 
 export const login = async (data) => {
+  console.log(data);
   const response = await api.post('/signin', data);
 
   console.log(response);

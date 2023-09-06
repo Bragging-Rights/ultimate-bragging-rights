@@ -20,19 +20,17 @@ const Navbar = () => {
     const {name,value} = e.target;
     setUser({
       ...user,
-      name:value,
+      [name]:value,
     })
 
   }
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
-    (user) => login(user)
+    (user) => login(JSON.stringify(user))
   );
 
 const handleLogin = ()=>{
-
-
-  mutate(user);
+   mutate(user);
 }
 
   const handleLeagueClick = (league) => {
@@ -157,7 +155,6 @@ const handleLogin = ()=>{
             <div className="form-outline me-2">
               <input
                 type="password"
-                id="form2Example2"
                 name="password"
                 onChange={inputChangeHandler}
                 className="form-control custom-input"

@@ -6,6 +6,8 @@ import Input from "./components/Input";
 import PhoneInput from "react-phone-input-2"; // Import the ReactPhoneInput component
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import { useMutation } from "react-query";
+import { createUser } from "./services/auth";
 
 const leaguesOptions = [
   { value: "nba", label: "NBA" },
@@ -130,6 +132,9 @@ const SignUp = ({ onSignUp }) => {
     setCaptchaValue(value);
   };
 
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (user) => createUser(user)
+  );
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -141,35 +146,16 @@ const SignUp = ({ onSignUp }) => {
 
     // Make the API call to sign up
     try {
-      const response = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+     
 
-      const data = await response.json();
-      if (data.success) {
-        console.log("User registered successfully");
-        // You can perform any necessary actions after successful signup
-      } else {
-        console.error("Error registering user:", data.error);
-        // Handle error case here
-      }
+       mutate(JSON.stringify(formData));
     } catch (error) {
       console.error("Error making API call:", error);
       // Handle error case here
     }
 
     // Instead of using fetch, you can use axios to make the POST request
-    try {
-      const response = await axios.post("/api/signup", formData); // Send the form data to the /api/signup route on your server
-      console.log(response.data); // This will log the response data from the server
-      onSignUp(formData);
-    } catch (error) {
-      console.error(error);
-    }
+  
 
     if (!formData.termsAccepted) {
       alert("Please accept the Terms of Use and Privacy Policy.");

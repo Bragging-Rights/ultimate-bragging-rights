@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL =   'https://bragging-rights-app-abab3385dc82.herokuapp.com';
+const BASE_URL =   'https://bragging-rights-app-abab3385dc82.herokuapp.com/api/users';
 const config = {
   headers: {
     'Content-type': 'text/json',
