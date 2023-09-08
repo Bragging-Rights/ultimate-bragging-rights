@@ -6,7 +6,7 @@ import "./index.css";
 import "./custom.css"; // Import the custom CSS file
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
-import Navbar from "./navbar";
+import Navbar from "./navbar"; 
 import Navbar2 from "./checkSlots";
 import Navbar3 from "./navigation";
 import Home from "./home";
