@@ -58,7 +58,7 @@ exports.signInController = async (req, res) => {
 
     db.query(query, [email], (error, results) => {
         if (error) {
-            callback(error, null);
+            res.status(404).send(responseObject({}, 'Error Logging in', false)); // No matching row found
         } else {
             if (results.length > 0) {
                 const findUser = results[0];
@@ -92,7 +92,7 @@ exports.signInController = async (req, res) => {
                     res.status(201).json(responseObject({}, 'Incorrect username or password.', true))
                 }
             } else {
-                res.status(404).send(responseObject({}, 'No Data Found', false)); // No matching row found
+                res.status(404).send(responseObject({}, 'Incorrect username or password.', false)); // No matching row found
             }
         }
     });
