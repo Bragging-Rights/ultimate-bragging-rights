@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./navigation.css";
+import "./SearchBar.css";
 
-const Navigation = () => {
+const SearchBar = () => {
   const [activeButton, setActiveButton] = useState(null);
   const [selectedWeekday, setSelectedWeekday] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -143,4 +143,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default SearchBar;

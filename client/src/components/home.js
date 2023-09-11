@@ -1,16 +1,16 @@
 import React from "react";
 import "./home.css";
-import videoBG from "../src/assets/3People_watchGoal.mp4";
-import video from "../src/assets/ComparingScores .mp4";
-import third from "../src/assets/thirdcontainerimg.png";
-import logo from "../src/assets/logo.png";
-import table from "../src/assets/fifthcontainerimg.png";
-import timeshadow from "../src/assets/TIME shadow.png";
-import abstract from "../src/assets/abstract05.png";
-import logosmall from "../src/assets/BRCircleTrophyLogoo.png";
-import stats from "../src/assets/StatsBadgeMaster.png";
-import star from "../src/assets/star.png";
-import mainLogo from "../src/assets/BR-LogoCenterBlack.png";
+import videoBG from "../assets/3People_watchGoal.mp4";
+import video from "../assets/ComparingScores .mp4";
+import third from "../assets/thirdcontainerimg.png";
+import logo from "../assets/logo.png";
+import table from "../assets/fifthcontainerimg.png";
+import timeshadow from "../assets/TIME shadow.png";
+import abstract from "../assets/abstract05.png";
+import logosmall from "../assets/BRCircleTrophyLogoo.png";
+import stats from "../assets/StatsBadgeMaster.png";
+import star from "../assets/star.png";
+import mainLogo from "../assets/BR-LogoCenterBlack.png";
 
 const Home = () => {
   return (
@@ -62,7 +62,7 @@ const Home = () => {
             </h1>
             <br></br>
             <div className="secondcontainerimg">
-              <img src={require("./assets/secondcontainerimg.png")} alt="" />
+              <img src={require("../assets/secondcontainerimg.png")} alt="" />
             </div>
             <br></br>
             <h1>

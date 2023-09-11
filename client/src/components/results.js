@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JS
-import banner_results from "../src/assets/banner_result.png";
+import banner_results from "../assets/banner_result.png";
 
 const Results = () => {
   return (

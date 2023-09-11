@@ -6,16 +6,16 @@ import "./index.css";
 import "./custom.css"; // Import the custom CSS file
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
-import Navbar from "./navbar";
-import Navbar2 from "./checkSlots";
-import Navbar3 from "./navigation";
-import Home from "./home";
-import Games from "./games";
-import SignUp from "./signup";
-import Privacy from "./PrivacyPolicy"; // Import Privacy component
-import TermsOfUse from "./TermsOfUse"; // Import TermsOfUse component
-import NavigationBar from "./navigationbar";
-import Results from "./results";
+import CheckSlots from "./components/checkSlots";
+import SearchBar from "./components/SearchBar";
+import Home from "./components/home";
+import Games from "./components/games";
+import SignUp from "./components/signup";
+import Privacy from "./components/PrivacyPolicy"; // Import Privacy component
+import TermsOfUse from "./components/TermsOfUse"; // Import TermsOfUse component
+import NavigationBar from "./components/navigationbar";
+import Results from "./components/results";
+import LeagueSelector from "./components/leagueSelector";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -27,16 +27,15 @@ const App = () => {
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
-        <Navbar />
+        <LeagueSelector></LeagueSelector>
         <NavigationBar></NavigationBar>
-        <Navbar2 />
-        <Navbar3></Navbar3>
+        <CheckSlots></CheckSlots>
+
         <div className="container-fluid">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
             <Route path="/results" element={<Results />} />
-            
 
             <Route
               path="/signup"

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from "react-router-dom";
 import axios from "axios"; // Import axios library
-import Input from "./components/Input";
+import Input from "./Input";
 import PhoneInput from "react-phone-input-2"; // Import the ReactPhoneInput component
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useMutation } from "react-query";
-import { createUser } from "./services/auth";
+import { createUser } from "../services/auth";
 
 const leaguesOptions = [
   { value: "nba", label: "NBA" },

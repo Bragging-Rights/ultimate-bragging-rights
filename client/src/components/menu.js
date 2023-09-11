@@ -1,4 +1,4 @@
-import { teamsData, divisionsData, conferencesData } from "./data";
+import { teamsData, divisionsData, conferencesData } from "../data";
 
 document.addEventListener("DOMContentLoaded", function () {
 
