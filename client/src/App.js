@@ -6,19 +6,7 @@ import "./index.css";
 import "./custom.css"; // Import the custom CSS file
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
-<<<<<<< HEAD
-import CheckSlots from "./components/checkSlots";
-import SearchBar from "./components/SearchBar";
-import Home from "./components/home";
-import Games from "./components/games";
-import SignUp from "./components/signup";
-import Privacy from "./components/PrivacyPolicy"; // Import Privacy component
-import TermsOfUse from "./components/TermsOfUse"; // Import TermsOfUse component
-import NavigationBar from "./components/navigationbar";
-import Results from "./components/results";
-import LeagueSelector from "./components/leagueSelector";
-=======
-import Navbar from "./navbar"; 
+import Navbar from "./navbar";
 import Navbar2 from "./checkSlots";
 import Navbar3 from "./navigation";
 import Home from "./home";
@@ -28,7 +16,6 @@ import Privacy from "./PrivacyPolicy"; // Import Privacy component
 import TermsOfUse from "./TermsOfUse"; // Import TermsOfUse component
 import NavigationBar from "./navigationbar";
 import Results from "./results";
->>>>>>> 8341106577199d2791b1e70d6a449c9296ccea9c
 
 const App = () => {
   const [users, setUsers] = useState([]);
