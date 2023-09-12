@@ -6,6 +6,7 @@ import "./index.css";
 import "./custom.css"; // Import the custom CSS file
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
+import { LeagueProvider } from "./services/LeagueContext";
 import CheckSlots from "./components/checkSlots";
 import SearchBar from "./components/SearchBar";
 import Home from "./components/home";
@@ -16,6 +17,7 @@ import TermsOfUse from "./components/TermsOfUse"; // Import TermsOfUse component
 import NavigationBar from "./components/navigationbar";
 import Results from "./components/results";
 import LeagueSelector from "./components/leagueSelector";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -27,25 +29,28 @@ const App = () => {
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
-        <LeagueSelector></LeagueSelector>
-        <NavigationBar></NavigationBar>
-        <CheckSlots></CheckSlots>
+        <LeagueProvider>
+          <LeagueSelector></LeagueSelector>
+          <NavigationBar></NavigationBar>
+          <CheckSlots></CheckSlots>
 
-        <div className="container-fluid">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/results" element={<Results />} />
+          <div className="container-fluid">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/games" element={<Games />} />
+              <Route path="/results" element={<Results />} />
 
-            <Route
-              path="/signup"
-              element={<SignUp onSignUp={handleSignUp} />}
-            />
-            {/* Add routes for Privacy and Terms of Use pages */}
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<TermsOfUse />} />
-          </Routes>
-        </div>
+              <Route
+                path="/signup"
+                element={<SignUp onSignUp={handleSignUp} />}
+              />
+              {/* Add routes for Privacy and Terms of Use pages */}
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<TermsOfUse />} />
+            </Routes>
+          </div>
+          <Footer></Footer>
+        </LeagueProvider>
       </div>
     </Router>
   );

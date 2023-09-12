@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./leagueSelector.css";
+import { useLeagueContext } from "../services/LeagueContext";
 import logo from "../assets/logo2.png";
 import arrow from "../assets/polygon1.png";
-import axios from "axios"; // Import Axios
 
 const LeagueSelector = () => {
-  const [selectedLeague, setSelectedLeague] = useState("NHL");
+  const { selectedLeague, setSelectedLeague } = useLeagueContext();
   const [newLeagueName, setNewLeagueName] = useState(""); // Track the new league name
   const [isAddingLeague, setIsAddingLeague] = useState(false); // Track if adding a league is in progress
   const [leagueButtons, setLeagueButtons] = useState([
@@ -22,6 +22,7 @@ const LeagueSelector = () => {
 
   const handleLeagueClick = (league) => {
     setSelectedLeague(league);
+    console.log("Selected League:", league);
   };
 
   const nextPage = () => {
