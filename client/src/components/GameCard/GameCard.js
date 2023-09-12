@@ -1,12 +1,15 @@
+import GamesBanner from "../GamesBanner/GamesBanner"
 import "./GameCard.css"
 
 const GameCard = () => {
   return (
+   <>
+  
     <div className='game-card col-5'>
         <div className=" w-100 d-flex justify-content-between ">
             <div className=" d-flex flex-column ">
             <span className=" game-time mb-3">7:00 PM EST</span>
-            <input type="text"  className=" card-input mb-3"/>
+            <input type="text"  className=" card-input mb-3" value={100}/>
            
             </div>
 
@@ -53,16 +56,20 @@ const GameCard = () => {
         
        </div>
 
-       <div className=" w-100 d-flex justify-content-between mt-3">
+       <div className=" w-100 d-flex justify-content-between mt-3 ">
             <div className=" d-flex flex-column ">
             
-            <input type="text"  className=" card-input mb-3"/>
+            <input type="text"  className=" card-input mb-3" value={100}/>
              
            
             </div>
 
             <div className=" d-flex flex-column ">
-            <div className=" box ">Toronto</div>
+            <div className=" box"
+              style={{
+               marginLeft:"30px"
+              }}
+            >Toronto</div>
          
            
             </div>
@@ -84,7 +91,7 @@ const GameCard = () => {
     
         </div>
         
-       <div className=" d-flex justify-content-between w-75">
+       <div className=" d-flex justify-content-between">
        <div className="card-id">ID: 625</div>
        <div className=" d-flex mt-4 gap-1 align-items-center">
             <input type="radio" />
@@ -103,6 +110,8 @@ const GameCard = () => {
             <button  className=" card-btn mt-4 ">LOCK IT IN</button>
         </div>
     </div>
+  
+    </>
   )
 }
 

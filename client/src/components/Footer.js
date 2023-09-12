@@ -1,5 +1,4 @@
 import logo from "../assets/logo2.png";
-import "font-awesome/css/font-awesome.min.css";
 import "./Footer.css";
 
 const Footer = () => {

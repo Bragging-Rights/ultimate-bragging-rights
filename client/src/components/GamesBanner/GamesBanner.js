@@ -24,15 +24,7 @@ const GamesBanner = () => {
             <span>Upcoming Games</span>
    
         </div>
-     <div className=' row mt-4'
-       style={{
-        marginLeft:"-2px",
-        gap:"32px"
-       }}
-     >
-        <GameCard />
-        <GameCard />
-     </div>
+  
     </div>
   )
 }

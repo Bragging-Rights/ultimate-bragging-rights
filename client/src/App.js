@@ -49,7 +49,7 @@ const App = () => {
               <Route path="/terms" element={<TermsOfUse />} />
             </Routes>
           </div>
-          <Footer></Footer>
+           <Footer />
         </LeagueProvider>
       </div>
     </Router>
