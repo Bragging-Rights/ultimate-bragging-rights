@@ -12,7 +12,7 @@ const NavigationBar = () => {
       <div className="gradient-text ">
         <ul className="navbar-nav ">
           <li className="nav-item ">
-            <NavLink className="nav-link" to="/" activeClassName="active-link">
+            <NavLink className="nav-link" to="/" activeclassname="active-link">
               Home
             </NavLink>
           </li>
@@ -20,7 +20,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/games"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               Games
             </NavLink>
@@ -29,7 +29,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/results"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               Results
             </NavLink>
@@ -38,7 +38,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/standings"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               Standings
             </NavLink>
@@ -47,7 +47,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/stats"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               Stats
             </NavLink>
@@ -56,7 +56,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/sportspools"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               Sports Pools
             </NavLink>
@@ -65,7 +65,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/fbchallenge"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               FB Challenge
             </NavLink>
@@ -74,7 +74,7 @@ const NavigationBar = () => {
             <NavLink
               className="nav-link"
               to="/alltimerecords"
-              activeClassName="selected"
+              activeclassname="selected"
             >
               All-Time Records
             </NavLink>
