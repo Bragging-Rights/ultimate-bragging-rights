@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from "react-router-dom";
-import axios from "axios"; // Import axios library
+import "./signup.css";
 import Input from "./Input";
 import PhoneInput from "react-phone-input-2"; // Import the ReactPhoneInput component
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -134,7 +134,7 @@ const SignUp = ({ onSignUp }) => {
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (user) => createUser(user)
-  );
+  );
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -146,16 +146,13 @@ const SignUp = ({ onSignUp }) => {
 
     // Make the API call to sign up
     try {
-     
-
-       mutate(JSON.stringify(formData));
+      mutate(JSON.stringify(formData));
     } catch (error) {
       console.error("Error making API call:", error);
       // Handle error case here
     }
 
     // Instead of using fetch, you can use axios to make the POST request
-  
 
     if (!formData.termsAccepted) {
       alert("Please accept the Terms of Use and Privacy Policy.");
