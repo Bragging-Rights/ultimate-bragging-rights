@@ -13,20 +13,20 @@ const GameCard = () => {
 
           <div className=" d-flex flex-column justify-content-start ">
             <span className=" game-date">April 4, 2023</span>
-            <div className=" box h-100 ">Toronto</div>
+            <div className=" box">Toronto</div>
           </div>
           <div className=" d-flex flex-column justify-content-start ">
             <span className=" game-time ">Money Line</span>
-            <div className=" box h-100">+100 12 Pts</div>
+            <div className=" box">+100 12 Pts</div>
           </div>
           <div className=" d-flex flex-column justify-content-start ">
             <span className=" game-time">Spread</span>
-            <div className=" box h-100">+1.5 12 Pts</div>
+            <div className=" box ">+1.5 12 Pts</div>
           </div>
           <div className=" d-flex flex-column justify-content-start ">
             <span className=" game-time">Over/Under</span>
 
-            <div className=" box h-100">5.5 Pts</div>
+            <div className=" box ">5.5 Pts</div>
           </div>
         </div>
 
