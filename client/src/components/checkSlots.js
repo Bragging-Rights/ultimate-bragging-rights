@@ -62,7 +62,7 @@ const CustomNavbar = () => {
         display: "flex",
         justifyContent: "space-between",
         width: "100%",
-        zIndex: 100,
+       
       }}
     >
       {/* Red background bar */}

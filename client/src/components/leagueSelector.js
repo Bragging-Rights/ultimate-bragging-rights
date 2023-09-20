@@ -4,6 +4,7 @@ import "./leagueSelector.css";
 import { useLeagueContext } from "../services/LeagueContext";
 import logo from "../assets/logo2.png";
 import arrow from "../assets/polygon1.png";
+import ReactModal from "./Modal/ReactModal";
 
 const LeagueSelector = () => {
   const { selectedLeague, setSelectedLeague } = useLeagueContext();
@@ -73,7 +74,17 @@ const LeagueSelector = () => {
     // fetchData();
   }, [selectedLeague]);
 
+  const [modalIsOpen,setModalIsOpen] = useState(false);
+
+  const closeModal = ()=>{
+    setModalIsOpen(false);
+  }
+
   return (
+    <>
+      <ReactModal  modalIsOpen={modalIsOpen}
+         closeModal={closeModal}
+      />
     <div className="league-selector">
       <Link to="/" className="navbar-brand">
         <img
@@ -140,11 +151,14 @@ const LeagueSelector = () => {
             <button onClick={closeAddLeague}>Cancel</button>
           </div>
         )}
-        <Link to="/signup" className="custom-button register">
+        <Link  className="custom-button register"
+          onClick={()=>setModalIsOpen(true)}
+        >
           <div className="button-text">Register</div>
         </Link>
       </div>
     </div>
+    </>
   );
 };
 
