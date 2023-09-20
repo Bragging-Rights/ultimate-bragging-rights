@@ -1,28 +1,38 @@
-.game-card{
+/* Default styles for all screen sizes */
+.game-card {
     border-radius: 6px;
     border: 1px solid #626262;
     background: #212121;
     padding: 24px;
+    margin-bottom: 20px; /* Add margin to separate cards */
 }
-.game-time{
+
+.game-time,
+.game-date,
+.box,
+.card-input,
+.line,
+.card-id,
+.card-label,
+.card-btn-outline,
+.card-btn {
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.game-time {
     color: #FEF098;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
 }
-.game-date{
+
+.game-date {
     color: #FFF;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
 }
-.box{
-    background:  linear-gradient(185deg, #45423A 15.54%, #202126 114.57%);
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
+
+.box {
+    background: linear-gradient(185deg, #45423A 15.54%, #202126 114.57%);
     font-weight: 800;
     display: flex;
     justify-content: center;
@@ -30,58 +40,60 @@
     padding: 10px;
     color: white;
 }
-.card-input{
-    border-radius: 4px;
-border: 2px solid #BE8200;width: 53px;
-height: 42px;
-width: 53px;
-font-size: 14px;
 
-background-color: transparent;
-color: white;
+.card-input {
+    border-radius: 4px;
+    border: 2px solid #BE8200;
+    width: 53px;
+    height: 42px;
+    font-size: 14px;
+    background-color: transparent;
+    color: white;
 }
 
-.line{
+.line {
     height: 8px;
     border-radius: 1px;
     background: linear-gradient(185deg, #45423A 15.54%, #202126 114.57%);
 }
-.card-id{
+
+.card-id {
     color: #737373;
-    font-family: Inter;
-    font-size: 14px;
-     font-style: normal;
-     font-weight: 400;
-     line-height: normal;
 }
 
-.card-label{
-    color: #FFF; 
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+.card-label {
+    color: #FFF;
 }
-.card-btn-outline{
+
+.card-btn-outline {
     border-radius: 4px;
-    border: 1px solid  #BE8200;
+    border: 1px solid #BE8200;
     padding: 10px;
-    font-family: Inter;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
 }
-.card-btn{
+
+.card-btn {
     border-radius: 4px;
-    background:  linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
+    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
     padding: 10px;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
     color: #000;
+}
 
+/* Media queries for different screen sizes */
+
+/* For screens smaller than 768px wide (e.g., smartphones) */
+@media (max-width: 768px) {
+    .game-card {
+        padding: 16px;
+    }
+
+    .game-card {
+        width: 100%; /* Ensure cards take up full width */
+        margin-right: 0; /* Remove right margin to prevent horizontal overflow */
+    }
+}
+
+
+.game-card span {
+    height: 40px !important;
+    margin-bottom: .4rem;
 }

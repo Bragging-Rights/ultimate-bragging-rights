@@ -32,7 +32,7 @@ const App = () => {
         <LeagueProvider>
           <LeagueSelector></LeagueSelector>
           <NavigationBar></NavigationBar>
-          <CheckSlots></CheckSlots>
+          {/* <CheckSlots></CheckSlots> */}
 
           <div className="container-fluid">
             <Routes>
@@ -49,7 +49,7 @@ const App = () => {
               <Route path="/terms" element={<TermsOfUse />} />
             </Routes>
           </div>
-           <Footer />
+          <Footer />
         </LeagueProvider>
       </div>
     </Router>
