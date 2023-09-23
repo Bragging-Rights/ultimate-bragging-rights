@@ -1,26 +1,38 @@
 // server.js
 
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 // const mysql = require('mysql');
-// const config = require('./config/keys');
-const userRoutes = require('./routes/userRoutes');
-const predictionRoutes = require('./routes/predictionsRoutes');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
+const config = require("./config/keys");
+const userRoutes = require("./routes/userRoutes");
+const predictionRoutes = require("./routes/predictionsRoutes");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
+const mongoose = require("mongoose");
+const moragn = require("morgan");
+require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 8000;
+const clientURL = process.env.CLIENT_URL;
+
+//db
+mongoose
+  .connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+  })
+  .then(() => console.log("DB Connected"));
 
 let corsOptions = {
-  origin: ['http://localhost:3000']
+  origin: ["http://localhost:3000"] || [clientURL],
 };
 
+app.use(moragn("dev"));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // const pool = mysql.createPool({
 //   host: 'localhost',
@@ -37,22 +49,19 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //   }
 // })
 
-
 // Include routes
 // app.use(routes);
-app.use('/api/users', userRoutes);
-app.use('/api/games', predictionRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/games", predictionRoutes);
 
 app.get("/", async (req, res) => {
-  res.send("Server is running...")
-})
+  res.send("Server is running...");
+});
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-
 
 /********* Auth *******/
 /**
@@ -101,7 +110,6 @@ app.listen(PORT, () => {
  *         description: Error registering user.
  */
 
-
 /**
  * @swagger
  * /users/signin:
@@ -134,7 +142,6 @@ app.listen(PORT, () => {
  *         description: An unknown error occurred.
  */
 
-
 /**
  * @swagger
  * /users/verify-otp:
@@ -163,13 +170,7 @@ app.listen(PORT, () => {
  *         description: An unknown error occurred.
  */
 
-
-
-
-
-
 /***************************************************** Predictions *************************************************************/
-
 
 /**
  * @swagger
@@ -192,7 +193,6 @@ app.listen(PORT, () => {
  *         description: An unknown error occurred.
  */
 
-
 /**
  * @swagger
  * /games/seasons:
@@ -214,7 +214,6 @@ app.listen(PORT, () => {
  *         description: An unknown error occurred.
  */
 
-
 /**
  * @swagger
  * /games:
@@ -235,7 +234,6 @@ app.listen(PORT, () => {
  *       400:
  *         description: An unknown error occurred.
  */
-
 
 /**
  * @swagger
@@ -281,7 +279,6 @@ app.listen(PORT, () => {
  *       '500':
  *         description: Internal server error.
  */
-
 
 /**
  * @swagger

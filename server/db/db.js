@@ -1,11 +1,12 @@
 // db.js
-const mysql = require('mysql');
-const config = require('../config/keys');
+// this will be deprecated in the future
+const mysql = require("mysql");
+const config = require("../config/keys");
 
 // Create a MySQL pool for handling connections
 let pool;
 if (process.env.JAWSDB_URL) {
-  pool = mysql.createConnection(process.env.JAWSDB_URL)
+  pool = mysql.createConnection(process.env.JAWSDB_URL);
 } else {
   pool = mysql.createPool({
     host: config.host,

@@ -2,3 +2,4 @@
 config/dev.js
 /.git
 .git
+.env
