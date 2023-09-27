@@ -1,14 +1,22 @@
 const GamePoints = require("../models/gamePoints");
 const moment = require("moment");
+const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
+
+
+const seasonModel = mongoose.model('seasons', {});
+const gamesModel = mongoose.model('games', {});
+const League = mongoose.model('league', {});
+
 
 exports.getLeaguesController = async (req, res) => {
   try {
-    const leagues = await GamePoints.distinct("league");
+    const leagues = await League.findOne();
     res
       .status(200)
       .json(responseObject(leagues, "Data Fetched Successfully", false));
   } catch (error) {
+    console.log(error);
     res
       .status(400)
       .json(responseObject(error, "An unknown error occured", true));
@@ -17,7 +25,7 @@ exports.getLeaguesController = async (req, res) => {
 
 exports.getSeasonsController = async (req, res) => {
   try {
-    const seasons = await GamePoints.distinct("eldate");
+    const seasons = await seasonModel.find();
     res
       .status(200)
       .json(responseObject(seasons, "Data Fetched Successfully", false));
@@ -30,7 +38,7 @@ exports.getSeasonsController = async (req, res) => {
 
 exports.getGames = async (req, res) => {
   try {
-    const games = await GamePoints.find().limit(1000);
+    const games = await gamesModel.find().limit(1000);
     res
       .status(200)
       .json(responseObject(games, "Data Fetched Successfully", false));
@@ -42,7 +50,6 @@ exports.getGames = async (req, res) => {
 };
 
 exports.addPrediction = async (req, res) => {
-  console.log(req.body);
   const {
     user,
     gameid,
@@ -85,6 +92,27 @@ exports.addPrediction = async (req, res) => {
     res
       .status(400)
       .json(responseObject(error, "Error in inserting prediction", true));
+  }
+};
+
+exports.lockPrediction = async (req, res) => {
+  const {
+    lock_prediction
+  } = req.body;
+
+  const getGame = GamePoints.findOne({ _id: req.params.id });
+  try {
+    getGame.lock_prediction = lock_prediction;
+    getGame.save();
+    res
+      .status(200)
+      .json(
+        responseObject(getGame, "Prediction locked successfully", false)
+      );
+  } catch (error) {
+    res
+      .status(400)
+      .json(responseObject(error, "Error in locking prediction", true));
   }
 };
 

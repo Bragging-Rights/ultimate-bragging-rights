@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 // const mysql = require('mysql');
 const config = require("./config/keys");
 const userRoutes = require("./routes/userRoutes");
-const predictionRoutes = require("./routes/predictionsRoutes");
+const predictionRoutes = require("./routes/gamesRoutes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const mongoose = require("mongoose");
@@ -257,8 +257,6 @@ app.listen(PORT, () => {
  *               eldate:
  *                 type: string
  *                 format: date
- *               total_tickets:
- *                 type: integer
  *               visitor_team:
  *                 type: string
  *               home_team:
@@ -269,6 +267,8 @@ app.listen(PORT, () => {
  *                 type: integer
  *               GameEndingPrediction:
  *                 type: string
+ *               total_tickets:
+ *                type: Number
  *     responses:
  *       '201':
  *         description: Successfully created prediction.
