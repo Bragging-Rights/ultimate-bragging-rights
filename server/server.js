@@ -170,6 +170,7 @@ app.listen(PORT, () => {
  *         description: An unknown error occurred.
  */
 
+
 /***************************************************** Predictions *************************************************************/
 
 /**
@@ -237,6 +238,27 @@ app.listen(PORT, () => {
 
 /**
  * @swagger
+ * /games-played:
+ *   get:
+ *     tags:
+ *       - Games Played
+ *     summary: Get a list of games played.
+ *     description: Retrieve a list of games played from the database (limited to the first 1000).
+ *     responses:
+ *       200:
+ *         description: Data Fetched Successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Game'
+ *       400:
+ *         description: An unknown error occurred.
+ */
+
+/**
+ * @swagger
  * /games/add-prediction:
  *   post:
  *     summary: Create a game score prediction.
@@ -250,25 +272,30 @@ app.listen(PORT, () => {
  *           schema:
  *             type: object
  *             properties:
- *               user:
+ *               email:
+ *                 type: string
+ *               id:
+ *                 type: string
+ *               ip:
+ *                 type: string
+ *               sports:
+ *                 type: string
+ *               league:
  *                 type: string
  *               gameid:
  *                 type: integer
- *               eldate:
+ *               visitor:
  *                 type: string
- *                 format: date
- *               visitor_team:
+ *               home:
  *                 type: string
- *               home_team:
- *                 type: string
- *               visitor_pick:
+ *               pick_visitor:
  *                 type: integer
- *               home_pick:
+ *               pick_home:
  *                 type: integer
  *               GameEndingPrediction:
  *                 type: string
- *               total_tickets:
- *                type: Number
+ *               balanced:
+ *                 type: string
  *     responses:
  *       '201':
  *         description: Successfully created prediction.

@@ -1,17 +1,17 @@
 const GamePoints = require("../models/gamePoints");
-const moment = require("moment");
+const GamesPlayed = require("../models/gamesPlayed");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
 
 
 const seasonModel = mongoose.model('seasons', {});
 const gamesModel = mongoose.model('games', {});
-const League = mongoose.model('league', {});
+const League = mongoose.model('league', {}, "league");
 
 
 exports.getLeaguesController = async (req, res) => {
   try {
-    const leagues = await League.findOne();
+    const leagues = await League.find();
     res
       .status(200)
       .json(responseObject(leagues, "Data Fetched Successfully", false));
@@ -49,32 +49,59 @@ exports.getGames = async (req, res) => {
   }
 };
 
+exports.getGamesPlayed = async (req, res) => {
+  try {
+    const games = await GamesPlayed.find().limit(1000);
+    res
+      .status(200)
+      .json(responseObject(games, `Data Fetched Successfully`, false));
+  } catch (error) {
+    res
+      .status(400)
+      .json(responseObject(error, "An unknown error occured", true));
+  }
+};
+
+exports.getLeagueGames = async (req, res) => {
+  try {
+    const games = await gamesModel.find({ league: req.body.league_name }).limit(1000);
+    res
+      .status(200)
+      .json(responseObject(games, "Data Fetched Successfully", false));
+  } catch (error) {
+    res
+      .status(400)
+      .json(responseObject(error, "An unknown error occured", true));
+  }
+};
+
 exports.addPrediction = async (req, res) => {
   const {
-    user,
+    id,
+    ip,
+    email,
     gameid,
     gamedate,
-    eldate,
-    visitor_team,
-    home_team,
-    visitor_pick,
-    home_pick,
+    visitor,
+    home,
+    pick_visitor,
+    pick_home,
     GameEndingPrediction,
     sports,
     league,
     GameEndingActual,
   } = req.body;
 
-  const gamePoints = new GamePoints({
-    user,
+  const gamesPlayed = new GamesPlayed({
+    id,
+    ip,
+    email,
     gameid,
     gamedate,
-    timestamping: moment().format("YYYY-MM-DD HH:mm:ss"),
-    eldate,
-    visitor_team,
-    home_team,
-    visitor_pick,
-    home_pick,
+    visitor,
+    home,
+    pick_visitor,
+    pick_home,
     GameEndingPrediction,
     sports,
     league,
@@ -82,11 +109,11 @@ exports.addPrediction = async (req, res) => {
   });
 
   try {
-    const savedGamePoints = await gamePoints.save();
+    const savedGamesPlayed = await gamesPlayed.save();
     res
       .status(200)
       .json(
-        responseObject(savedGamePoints, "Prediction added successfully", false)
+        responseObject(savedGamesPlayed, "Prediction added successfully", false)
       );
   } catch (error) {
     res
