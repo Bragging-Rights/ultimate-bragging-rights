@@ -278,6 +278,8 @@ app.listen(PORT, () => {
  *                 type: string
  *               ip:
  *                 type: string
+ *               gamedate:
+ *                 type: string
  *               sports:
  *                 type: string
  *               league:
