@@ -4,7 +4,7 @@ const { getLeaguesController, getSeasonsController, getGames, updateActualScores
 const router = express.Router();
 
 router.get("/", getGames);
-router.get("/league", getLeagueGames);
+router.post("/league-games", getLeagueGames);
 router.get("/leagues", getLeaguesController);
 router.get("/seasons", getSeasonsController);
 router.post("/lock-prediction/:id", lockPrediction);

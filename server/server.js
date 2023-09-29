@@ -241,7 +241,7 @@ app.listen(PORT, () => {
  * /games-played:
  *   get:
  *     tags:
- *       - Games Played
+ *       - Games
  *     summary: Get a list of games played.
  *     description: Retrieve a list of games played from the database (limited to the first 1000).
  *     responses:
@@ -301,6 +301,35 @@ app.listen(PORT, () => {
  *     responses:
  *       '201':
  *         description: Successfully created prediction.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Prediction'
+ *       '500':
+ *         description: Internal server error.
+ */
+
+
+/**
+ * @swagger
+ * /games/league-games:
+ *   post:
+ *     summary: Get games of a specific league.
+ *     tags:
+ *       - Games
+ *     requestBody:
+ *       description: Get games of a specific league.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               league_name:
+ *                 type: string
+ *     responses:
+ *       '201':
+ *         description: Successfully fetched games of a specific league.
  *         content:
  *           application/json:
  *             schema:
