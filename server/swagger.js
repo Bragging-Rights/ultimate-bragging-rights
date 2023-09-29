@@ -1,7 +1,6 @@
 //clearification required on wether  to keep this or not
 
 const swaggerJSDoc = require("swagger-jsdoc");
-const config = require("./config/keys");
 
 const swaggerDefinition = {
   openapi: "3.0.0", // Specify the version of Swagger
@@ -12,7 +11,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: `${config.backendUrl}/api`, // Update with your API's URL
+      url: `http://localhost:8000/api`, // Update with your API's URL
       description: "Development server",
     },
   ],
