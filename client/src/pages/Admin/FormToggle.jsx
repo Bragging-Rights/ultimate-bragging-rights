@@ -1,8 +1,8 @@
-// FormToggle.js
 import React, { useState } from "react";
 import MainNavBar from "../../components/MainNavBar";
 import EnterGames from "./EnterGames";
 import EnterResults from "./EnterResults";
+import LiveGames from "./LiveGames";
 
 const FormToggle = () => {
   const [activeForm, setActiveForm] = useState("games"); // Initially, display Enter Games form
@@ -14,7 +14,7 @@ const FormToggle = () => {
   return (
     <div>
       <MainNavBar></MainNavBar>
-      <div>
+      <div className="flex justify-center gap-3">
         <button
           onClick={() => handleToggle("games")}
           className={`bg-darkgray-300 border border-ffb300 text-white px-4 py-2 rounded-full mr-4 ${
@@ -31,9 +31,24 @@ const FormToggle = () => {
         >
           Enter Results
         </button>
+
+        <button
+          onClick={() => handleToggle("livegames")}
+          className={`bg-darkgray-300 border border-ffb300 text-white px-4 py-2 rounded-full ${
+            activeForm === "livegames" ? "bg-ffb300 text-yellow-300" : ""
+          }`}
+        >
+          Live Games
+        </button>
       </div>
 
-      {activeForm === "games" ? <EnterGames /> : <EnterResults />}
+      {activeForm === "games" ? (
+        <EnterGames />
+      ) : activeForm === "results" ? (
+        <EnterResults />
+      ) : activeForm === "livegames" ? (
+        <LiveGames />
+      ) : null}
     </div>
   );
 };

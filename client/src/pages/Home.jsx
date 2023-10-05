@@ -2,23 +2,17 @@ import React from "react";
 import logo from "../assets/logo.png";
 import img1 from "../assets/homeh1.png";
 import img2 from "../assets/homeh2.png";
+import MainNavbar from "../components/MainNavBar";
+import Navbar from "../components/Navbar";
+import ReactModal from "../components/Modal/ReactModal";
+import Signup from "../components/SignUp";
 
 const Home = () => {
   return (
     <div className=" w-full">
-      <div className=" w-full    h-14  flex items-center justify-between bg-[#2E2F32] px-10">
-        <img src={logo} alt="logo" width={90} height={60} />
-        <div className=" flex items-center ">
-          <img src={img1} />
-          <p className=" text-[#FFB800] text-lg font-extrabold">
-            Players Wanted For Weekly Sports Prediction Competition
-          </p>
-          <img src={img2} />
-        </div>
-        <button className=" bg-[#FFB800] rounded font-extrabold py-2 px-4 text-white">
-          Sign in
-        </button>
-      </div>
+      <Navbar></Navbar>
+      <MainNavbar></MainNavbar>
+
       <div className=" h-40 flex justify-center items-center text-white">
         Here section when completed
       </div>
