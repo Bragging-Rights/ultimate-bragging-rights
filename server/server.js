@@ -4,7 +4,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 // const mysql = require('mysql');
-const config = require("./config/keys");
 const userRoutes = require("./routes/userRoutes");
 const predictionRoutes = require("./routes/gamesRoutes");
 const swaggerUi = require("swagger-ui-express");
@@ -22,7 +21,9 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
   })
-  .then(() => console.log("DB Connected"));
+  .then(() => console.log("DB Connected")).catch(err => {
+    console.log("Error in db connection", err)
+  })
 
 let corsOptions = {
   origin: ["http://localhost:3000"] || [clientURL],
@@ -36,7 +37,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // const pool = mysql.createPool({
 //   host: 'localhost',
-//   user: config.user,
+//   user: config.user, 
 //   password: config.password,
 //   database: config.database,
 // });
@@ -385,4 +386,52 @@ app.listen(PORT, () => {
  *         summary: Internal Server Error.
  *         value:
  *           error: Internal Server Error
+ */
+
+
+/**
+ * @swagger
+ *  /games/results:
+ *   get:
+ *     summary: Get Results - Retrieve game results with pagination.
+ *     description: Retrieve a paginated list of game results.
+ *     tags:
+ *       - Results
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: The page number for pagination (default is 1).
+ *     responses:
+ *       '200':
+ *         description: A successful response with paginated game results.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 currentPage:
+ *                   type: integer
+ *                 totalPages:
+ *                   type: integer
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/GameResult'  # Define your schema
+ *                 message:
+ *                   type: string
+ *                 error:
+ *                   type: boolean
+ *       '400':
+ *         description: Bad request with error details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 error:
+ *                   type: boolean
  */
