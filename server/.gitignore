@@ -3,3 +3,4 @@ config/dev.js
 /.git
 .git
 .env
+scrappers/

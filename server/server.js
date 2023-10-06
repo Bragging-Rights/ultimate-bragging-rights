@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const config = require("./config/keys");
 const userRoutes = require("./routes/userRoutes");
 const predictionRoutes = require("./routes/gamesRoutes");
+const gameRoutes = require("./routes/gamesRoutes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const mongoose = require("mongoose");
@@ -53,6 +54,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // app.use(routes);
 app.use("/api/users", userRoutes);
 app.use("/api/games", predictionRoutes);
+app.use("/api/games", gameRoutes);
 
 app.get("/", async (req, res) => {
   res.send("Server is running...");
@@ -169,7 +171,6 @@ app.listen(PORT, () => {
  *       500:
  *         description: An unknown error occurred.
  */
-
 
 /***************************************************** Predictions *************************************************************/
 
@@ -308,7 +309,6 @@ app.listen(PORT, () => {
  *       '500':
  *         description: Internal server error.
  */
-
 
 /**
  * @swagger
