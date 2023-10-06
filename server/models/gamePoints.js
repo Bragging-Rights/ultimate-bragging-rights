@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const moment = require("moment"); 
+const moment = require("moment");
 
 // Define the schema for the gamePoints collection
 // const gamePointsSchema = new mongoose.Schema({
@@ -94,6 +94,6 @@ const gamePointsSchema = new mongoose.Schema({
 });
 
 // Create a model for the gamePoints collection
-const GamePoints = mongoose.model("gamePoints", gamePointsSchema);
+const GamePoints = mongoose.model("gamePoints", gamePointsSchema, "gamePoints");
 
 module.exports = GamePoints;
