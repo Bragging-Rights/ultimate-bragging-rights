@@ -2,12 +2,12 @@ const nodemailer = require('nodemailer');
 const config = require('../config/keys');
 
 let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    secure: false,
+    host: 'smtp.gmail.com',
     port: 587,
+    secure: false, // TLS
     auth: {
-        user: config.email,
-        pass: config.emailPassword
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
     },
     tls: {
         rejectUnauthorized: false
@@ -16,10 +16,16 @@ let transporter = nodemailer.createTransport({
 
 const sendEmail = (email, subject, html) => {
     transporter.sendMail({
-        from: config.email,
+        from: process.env.EMAIL,
         to: email,
         subject,
         html,
+    }, (error, info) => {
+        if (error) {
+            console.error('Email sending error:', error);
+        } else {
+            console.log('Email sent:', info.response);
+        }
     })
 }
 

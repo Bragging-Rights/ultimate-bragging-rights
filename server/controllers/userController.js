@@ -20,7 +20,7 @@ exports.signUpController = async (req, res) => {
     zipCode,
     phone,
   } = req.body;
-
+console.log(process.env.PASSWORD);
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
