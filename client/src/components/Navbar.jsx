@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LeageSelect from "./LeageSelect";
 import logo from "../assets/logo.png";
+import Modal from "react-modal";
 import ReactModal from "./Modal/ReactModal";
 import Signup from "./SignUp";
+import SignInModal from "../Modal/SignInModal"; 
 
 import img1 from "../assets/homeh1.png";
 import img2 from "../assets/homeh2.png";
 
 const Navbar = () => {
+  const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const location = useLocation(); // Get the current route location
 
@@ -21,7 +24,14 @@ const Navbar = () => {
     setModalIsOpen(true);
   };
 
+  const openSignInModal = () => {
+    setSignInModalIsOpen(true);
+    console.log("sign in modal");
+  };
+
   const isHomepage = location.pathname === "/";
+
+  Modal.setAppElement("#root"); // Set the app element
 
   return (
     <nav
@@ -66,7 +76,7 @@ const Navbar = () => {
             </button>
           )}
 
-          <Link className="custom-button" onClick={openModal}>
+          <Link className="custom-button" onClick={openSignInModal}>
             <button
               className=" rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold"
               style={{
@@ -76,6 +86,11 @@ const Navbar = () => {
               Sign In
             </button>
           </Link>
+
+          <SignInModal
+            modalIsOpen={signInModalIsOpen}
+            closeModal={() => setSignInModalIsOpen(false)}
+          />
 
           <Link className="custom-button" onClick={openModal}>
             <button
