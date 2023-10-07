@@ -440,6 +440,7 @@ app.listen(PORT, () => {
 
 
 /************************* Games *********************/
+
 /**
  * @swagger
  * components:
@@ -630,26 +631,28 @@ app.listen(PORT, () => {
  *           description: The timestamp of the game.
  * security:
  *   - BearerAuth: []  # Indicates that Bearer token is required in headers
- *  /admin/games/createGame:
- *   post:
- *     summary: Create a new game.
- *     tags:
- *       - admin
- *     security:
- *       - BearerAuth: []  # Requires Bearer token in headers
- *     requestBody:
- *       description: Game data to be created.
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Game'
- *     responses:
- *       200:
- *         description: Game created successfully.
- *       400:
- *         description: Bad request.
+ * paths:
+ *   /admin/games/createGame:
+ *     post:
+ *       summary: Create a new game.
+ *       tags:
+ *         - admin
+ *       security:
+ *         - BearerAuth: []  # Requires Bearer token in headers
+ *       requestBody:
+ *         description: Game data to be created.
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
+ *       responses:
+ *         200:
+ *           description: Game created successfully.
+ *         400:
+ *           description: Bad request.
  */
+
 
 
 /**

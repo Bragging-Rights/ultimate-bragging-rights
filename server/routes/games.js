@@ -11,7 +11,7 @@ const { authenticateUser, checkAdmin } = require("../middlewares/auth");
 // const { authenticateUser, checkAdmin } = require("../middlewares/auth");
 
 // Create a new game
-router.post("/createGame", authenticateUser, checkAdmin, createGame);
+router.post("/createGame", createGame);
 
 // Get all games
 router.get("/getAllGames", getGames);

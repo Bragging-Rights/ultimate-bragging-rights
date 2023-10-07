@@ -2,7 +2,6 @@ const Game = require("../models/games");
 
 // Create a new game
 const createGame = async (req, res) => {
-  console.log(req.body);
   try {
     const game = new Game(req.body);
     await game.save();
