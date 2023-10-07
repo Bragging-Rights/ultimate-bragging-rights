@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainNavBar from "../../components/MainNavBar";
 
 const GameForm = () => {
@@ -25,6 +25,9 @@ const GameForm = () => {
     date: "",
   });
 
+  const [teams, setTeams] = useState([]);
+  const [loadingTeams, setLoadingTeams] = useState(false);
+
   const generateSeasonOptions = () => {
     return (
       <>
@@ -32,6 +35,18 @@ const GameForm = () => {
         <option value="Pre Season">Pre Season</option>
         <option value="Regular">Regular</option>
         <option value="Playoffs">Playoffs</option>
+      </>
+    );
+  };
+
+  const generateLeagueOptions = () => {
+    return (
+      <>
+        <option value="">Select a league</option>
+        <option value="NFL">NFL</option>
+        <option value="NBA">NBA</option>
+        <option value="NHL">NHL</option>
+        <option value="MLB">MLB</option>
       </>
     );
   };
@@ -60,6 +75,23 @@ const GameForm = () => {
     // You can add code to send the data to your server here
   };
 
+  useEffect(() => {
+    if (formData.league) {
+      setLoadingTeams(true);
+      // Replace 'apiEndpoint' with your actual API endpoint for fetching teams
+      fetch(`apiEndpoint/teams?league=${formData.league}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setTeams(data); // Update the teams state with fetched data
+          setLoadingTeams(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching teams:", error);
+          setLoadingTeams(false);
+        });
+    }
+  }, [formData.league]); // Trigger the effect when the selected league changes
+
   return (
     <div className="p-4">
       <h2 className="text-white text-xl mb-4 align-items-center">
@@ -86,8 +118,7 @@ const GameForm = () => {
 
           <div className="mb-4 w-1/4 px-2">
             <label htmlFor="league">League</label>
-            <input
-              type="text"
+            <select
               id="league"
               name="league"
               value={formData.league}
@@ -95,7 +126,9 @@ const GameForm = () => {
                 setFormData({ ...formData, league: e.target.value })
               }
               className="bg-gray-800 text-white p-2 rounded w-full"
-            />
+            >
+              {generateLeagueOptions()} {/* Call the new function */}
+            </select>
           </div>
 
           <div className="mb-4 w-1/4 px-2">
@@ -139,14 +172,26 @@ const GameForm = () => {
               </div>
               <div className="w-1/3 px-2">
                 <label htmlFor={`visitorteam-${index}`}>Visitor</label>
-                <input
-                  type="text"
+                <select
                   id={`visitorteam-${index}`}
                   name={`visitorTeam`}
                   value={gameCard.visitorTeam}
                   onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full"
-                />
+                >
+                  <option value="">Select a team</option>
+                  {loadingTeams ? (
+                    <option value="" disabled>
+                      Loading teams...
+                    </option>
+                  ) : (
+                    teams.map((team) => (
+                      <option key={team.id} value={team.id}>
+                        {team.name}
+                      </option>
+                    ))
+                  )}
+                </select>
               </div>
 
               <div className="w-1/8 px-2">
@@ -213,14 +258,26 @@ const GameForm = () => {
 
               <div className="w-1/4 px-2">
                 <label htmlFor={`hometeam-${index}`}>Home</label>
-                <input
-                  type="text"
+                <select
                   id={`hometeam-${index}`}
                   name={`homeTeam`}
                   value={gameCard.homeTeam}
                   onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full"
-                />
+                >
+                  <option value="">Select a team</option>
+                  {loadingTeams ? (
+                    <option value="" disabled>
+                      Loading teams...
+                    </option>
+                  ) : (
+                    teams.map((team) => (
+                      <option key={team.id} value={team.id}>
+                        {team.name}
+                      </option>
+                    ))
+                  )}
+                </select>
               </div>
 
               <div className="w-1/8 px-2">
