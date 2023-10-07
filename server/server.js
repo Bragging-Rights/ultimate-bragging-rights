@@ -22,12 +22,13 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
   })
-  .then(() => console.log("DB Connected")).catch(err => {
-    console.log("Error in db connection", err)
-  })
+  .then(() => console.log("DB Connected"))
+  .catch((err) => {
+    console.log("Error in db connection", err);
+  });
 
 let corsOptions = {
-  origin: ["http://localhost:3000"] || [clientURL],
+  origin: ["http://127.0.0.1:5173"] || [clientURL],
 };
 
 app.use(moragn("dev"));
@@ -38,7 +39,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // const pool = mysql.createPool({
 //   host: 'localhost',
-//   user: config.user, 
+//   user: config.user,
 //   password: config.password,
 //   database: config.database,
 // });
@@ -388,7 +389,6 @@ app.listen(PORT, () => {
  *           error: Internal Server Error
  */
 
-
 /**
  * @swagger
  *  /games/results:
@@ -435,9 +435,6 @@ app.listen(PORT, () => {
  *                 error:
  *                   type: boolean
  */
-
-
-
 
 /************************* Games *********************/
 /**
@@ -651,7 +648,6 @@ app.listen(PORT, () => {
  *         description: Bad request.
  */
 
-
 /**
  * @swagger
  * /getAllGames:
@@ -710,7 +706,6 @@ app.listen(PORT, () => {
  *         description: Internal server error.
  */
 
-
 /**
  * @swagger
  * /deleteGame:{id}:
@@ -733,7 +728,6 @@ app.listen(PORT, () => {
  *       500:
  *         description: Internal server error.
  */
-
 
 /**
  * @swagger

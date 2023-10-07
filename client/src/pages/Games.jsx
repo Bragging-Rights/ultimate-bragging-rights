@@ -8,14 +8,26 @@ import GameCard from "../components/GameCard/GameCard";
 import img1 from "../assets/card.png";
 import img2 from "../assets/card2.png";
 import GamerCardRight from "../components/GameCard/GamerCardRight/GamerCardRight";
+import { getGames } from "../services/games";
+import { useQuery } from "react-query";
 
 const Games = () => {
   const [gameData, setGameData] = useState([]);
 
-  const handleFormSubmit = (data) => {
-    // Add the submitted form data to the gameData array
-    setGameData([...gameData, data]);
-  };
+  const { isLoading, isError, data, error, reset } = useQuery(
+    "getGames",
+    getGames,
+    {
+      onSuccess: (fetchedData) => {
+        setGameData(fetchedData.data.data);
+      },
+      onError: (error) => {
+        console.error("An error occurred:", error);
+      },
+    }
+  );
+
+  console.log("gameData", gameData[0]);
 
   const date = new Date();
   const options = {

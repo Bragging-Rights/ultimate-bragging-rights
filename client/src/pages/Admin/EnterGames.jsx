@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import MainNavBar from "../../components/MainNavBar";
+import { addGame } from "../../services/games";
+import { useMutation } from "react-query";
 
 const GameForm = () => {
   const initialFormData = {
@@ -27,6 +28,10 @@ const GameForm = () => {
 
   const [teams, setTeams] = useState([]);
   const [loadingTeams, setLoadingTeams] = useState(false);
+
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (data) => addGame(data)
+  );
 
   const generateSeasonOptions = () => {
     return (
@@ -72,7 +77,7 @@ const GameForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data submitted:", gameCards);
-    // You can add code to send the data to your server here
+    mutate(gameCards);
   };
 
   useEffect(() => {
