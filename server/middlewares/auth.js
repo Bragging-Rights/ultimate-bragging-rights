@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 // Middleware to authenticate user
-export const authenticateUser = async (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -24,7 +24,7 @@ export const authenticateUser = async (req, res, next) => {
 };
 
 // Middleware to check if user is admin
-export const checkAdmin = (req, res, next) => {
+const checkAdmin = (req, res, next) => {
   if (req.user.role !== "admin") {
     return res
       .status(403)
@@ -32,3 +32,5 @@ export const checkAdmin = (req, res, next) => {
   }
   next();
 };
+
+module.exports = { authenticateUser, checkAdmin }

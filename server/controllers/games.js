@@ -2,12 +2,14 @@ const Game = require("../models/games");
 
 // Create a new game
 const createGame = async (req, res) => {
+  console.log(req.body);
   try {
     const game = new Game(req.body);
     await game.save();
     res.status(201).json(game);
   } catch (error) {
     res.status(400).json({ message: error.message });
+    console.log(error);
   }
 };
 
