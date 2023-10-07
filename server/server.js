@@ -435,3 +435,338 @@ app.listen(PORT, () => {
  *                 error:
  *                   type: boolean
  */
+
+
+
+
+/************************* Games *********************/
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *   schemas:
+ *     Game:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The unique ID of the game.
+ *         gamedate:
+ *           type: string
+ *           description: The date of the game in string format (e.g., "2023-10-10").
+ *         day:
+ *           type: string
+ *           description: The day of the week for the game (e.g., "Monday").
+ *         date:
+ *           type: string
+ *           description: The date of the game in string format (e.g., "10").
+ *         month:
+ *           type: string
+ *           description: The month of the game (e.g., "October").
+ *         time:
+ *           type: string
+ *           description: The time of the game (e.g., "10:00 AM").
+ *         cutofftime:
+ *           type: string
+ *           description: The cutoff time for the game (e.g., "9:30 AM").
+ *         gametime:
+ *           type: string
+ *           description: The game time (e.g., "Regular").
+ *         visitor:
+ *           type: string
+ *           description: The name of the visitor team.
+ *         home:
+ *           type: string
+ *           description: The name of the home team.
+ *         seasonflag:
+ *           type: string
+ *           description: The season flag.
+ *         lock1:
+ *           type: string
+ *           description: The lock status.
+ *         finalscorevisitor:
+ *           type: string
+ *           description: The final score of the visitor team.
+ *         sports:
+ *           type: string
+ *           description: The sports category.
+ *         league:
+ *           type: string
+ *           description: The league of the game.
+ *         finalscorehome:
+ *           type: string
+ *           description: The final score of the home team.
+ *         vagainstspreadpoints:
+ *           type: string
+ *           description: The points against the spread for the visitor team.
+ *         hagagnstspreadpoints:
+ *           type: string
+ *           description: The points against the spread for the home team.
+ *         voverunderrate:
+ *           type: string
+ *           description: The over/under rate for the visitor team.
+ *         hoverunderrate:
+ *           type: string
+ *           description: The over/under rate for the home team.
+ *         gameended:
+ *           type: string
+ *           description: The game ended status.
+ *         vpickscorepoints:
+ *           type: string
+ *           description: The pick score points for the visitor team.
+ *         hpickscorepoints:
+ *           type: string
+ *           description: The pick score points for the home team.
+ *         vpickwinnerpoints:
+ *           type: string
+ *           description: The pick winner points for the visitor team.
+ *         hpickwinnerppoints:
+ *           type: string
+ *           description: The pick winner points for the home team.
+ *         vagainstthespreadrate:
+ *           type: string
+ *           description: The against the spread rate for the visitor team.
+ *         hagainstthesreadrate:
+ *           type: string
+ *           description: The against the spread rate for the home team.
+ *         hoverunderpoints:
+ *           type: string
+ *           description: The over/under points for the home team.
+ *         voverunderpoints:
+ *           type: string
+ *           description: The over/under points for the home team.
+ *         "v-ml":
+ *           type: string
+ *           description: The moneyline for the visitor team.
+ *         "h-ml":
+ *           type: string
+ *           description: The moneyline for the home team.
+ *         "v-sprd":
+ *           type: string
+ *           description: The spread for the visitor team.
+ *         "h-sprd":
+ *           type: string
+ *           description: The spread for the home team.
+ *         "v-sprd-odds":
+ *           type: string
+ *           description: The spread odds for the visitor team.
+ *         "h-sprd-odds":
+ *           type: string
+ *           description: The spread odds for the home team.
+ *         "v-ou":
+ *           type: string
+ *           description: The over/under for the visitor team.
+ *         "h-ou":
+ *           type: string
+ *           description: The over/under for the home team.
+ *         "v-ou-odds":
+ *           type: string
+ *           description: The over/under odds for the visitor team.
+ *         "h-ou-odds":
+ *           type: string
+ *           description: The over/under odds for the home team.
+ *         winner:
+ *           type: string
+ *           description: The winner of the game.
+ *         ptsregualtion:
+ *           type: string
+ *           description: The points in regulation time.
+ *         ptsovertime:
+ *           type: string
+ *           description: The points in overtime.
+ *         ptsshootout:
+ *           type: string
+ *           description: The points in a shootout.
+ *         bothpickscore:
+ *           type: string
+ *           description: The score picked by both teams.
+ *         scoreentered:
+ *           type: string
+ *           description: The score entered status.
+ *         PredictionDateTimeStarting:
+ *           type: string
+ *           description: The prediction date and time starting.
+ *         eldatetime:
+ *           type: string
+ *           description: The EL date and time.
+ *         oddsset:
+ *           type: string
+ *           description: The odds set status.
+ *         oddssetdate:
+ *           type: string
+ *           description: The odds set date.
+ *         oddssettime:
+ *           type: string
+ *           description: The odds set time.
+ *         postponeflag:
+ *           type: string
+ *           description: The postpone flag.
+ *         orggamedate:
+ *           type: string
+ *           description: The original game date.
+ *         suspended:
+ *           type: string
+ *           description: The suspended status.
+ *         vresult:
+ *           type: string
+ *           description: The result for the visitor team.
+ *         hresult:
+ *           type: string
+ *           description: The result for the home team.
+ *         nflweek:
+ *           type: string
+ *           description: The NFL week.
+ *         conference:
+ *           type: string
+ *           description: The conference of the game.
+ *         devision:
+ *           type: string
+ *           description: The division of the game.
+ *         timestamp:
+ *           type: string
+ *           description: The timestamp of the game.
+ * security:
+ *   - BearerAuth: []  # Indicates that Bearer token is required in headers
+ * /games/create-game:
+ *   post:
+ *     summary: Create a new game.
+ *     tags:
+ *       - admin
+ *     security:
+ *       - BearerAuth: []  # Requires Bearer token in headers
+ *     requestBody:
+ *       description: Game data to be created.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Game'
+ *     responses:
+ *       200:
+ *         description: Game created successfully.
+ *       400:
+ *         description: Bad request.
+ */
+
+
+/**
+ * @swagger
+ * /getAllGames:
+ *   get:
+ *     summary: Get all games
+ *     tags:
+ *       - admin
+ *     responses:
+ *       200:
+ *         description: Successful response with a list of games.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Game'
+ *       500:
+ *         description: Internal server error.
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: The page number for paginated results.
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: The maximum number of items to return per page.
+ */
+
+/**
+ * @swagger
+ * /getGame/{id}:
+ *   get:
+ *     summary: Get a single game
+ *     tags:
+ *       - admin
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the game to retrieve.
+ *     responses:
+ *       200:
+ *         description: Successful response with the game details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
+ *       404:
+ *         description: Game not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
+
+/**
+ * @swagger
+ * /deleteGame:{id}:
+ *   delete:
+ *     summary: Delete a game
+ *     tags:
+ *       - admin
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the game to delete.
+ *     responses:
+ *       200:
+ *         description: Game deleted successfully.
+ *       404:
+ *         description: Game not found.
+ *       500:
+ *         description: Internal server error.
+ */
+
+
+/**
+ * @swagger
+ * /updateGame:{id}:
+ *   patch:
+ *     summary: Update a game
+ *     tags:
+ *       - admin
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the game to update.
+ *     requestBody:
+ *       description: Updated game data.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Game' # Reference to your Game schema
+ *     responses:
+ *       200:
+ *         description: Game updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
+ *       400:
+ *         description: Bad request.
+ *       404:
+ *         description: Game not found.
+ *       500:
+ *         description: Internal server error.
+ */
