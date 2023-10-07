@@ -417,6 +417,21 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
       overtimePoints = 4;
     }
 
+    // Calculate points for picking extra innings
+    let extraInningsPoints = 0;
+
+    if (predictionData.extraInningsPrediction === true && gameData.wentToExtraInnings === true) {
+      // Predicted that the game goes into extra innings and it did
+      extraInningsPoints = 5;
+
+      // Calculate additional points for each extra inning predicted correctly
+      // You may need to adjust the logic based on your data structure
+      const extraInningsPredicted = predictionData.extraInningsPredicted || 0;
+      const extraInningsActual = gameData.extraInningsActual || 0;
+      const correctExtraInnings = Math.min(extraInningsPredicted, extraInningsActual);
+      extraInningsPoints += correctExtraInnings;
+    }
+
     console.log(
       "winner", winnerPoints,
       "spread", spreadPoints,
@@ -426,6 +441,7 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
       "score1PointsBaseball", score1PointsForBaseball,
       "shutOutPoints", shutoutPoints,
       "overTimePoints", overtimePoints,
+      "extraInningsPoints", extraInningsPoints,
     )
     // Calculate total points
     // const totalPoints = winnerPoints + spreadPoints + overUnderPoints;

@@ -9,7 +9,7 @@ const calculatePagination = (data, currentPage = 1, pageSize = 50) => {
       currentPage,
       totalPages,
       data: paginatedData,
-    };
+    }; 
   };
   
   module.exports = calculatePagination;
