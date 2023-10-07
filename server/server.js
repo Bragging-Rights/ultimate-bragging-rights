@@ -688,7 +688,7 @@ app.listen(PORT, () => {
 
 /**
  * @swagger
- * /admin/games/getGame/{id}:
+ * /admin/games/getGame:{id}:
  *   get:
  *     summary: Get a single game
  *     tags:
@@ -772,4 +772,58 @@ app.listen(PORT, () => {
  *         description: Game not found.
  *       500:
  *         description: Internal server error.
+ */
+
+
+/**
+ * @swagger
+ * /admin/games/teams/{league}:
+ *   get:
+ *     summary: Get teams of a specific league.
+ *     tags:
+ *       - admin
+ *     parameters:
+ *       - in: path
+ *         name: league
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The name of the league.
+ *     responses:
+ *       '200':
+ *         description: Successful response. Returns teams' data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       displayName:
+ *                         type: string
+ *                       id:
+ *                         type: string
+ *                 message:
+ *                   type: string
+ *                 error:
+ *                   type: boolean
+ *       '400':
+ *         description: Bad request. An error occurred.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
  */
