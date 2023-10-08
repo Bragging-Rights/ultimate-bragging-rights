@@ -8,6 +8,7 @@ const createGame = async (req, res) => {
     res.status(201).json(game);
   } catch (error) {
     res.status(400).json({ message: error.message });
+    console.log(error);
   }
 };
 

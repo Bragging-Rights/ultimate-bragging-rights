@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 // const mysql = require('mysql');
 const userRoutes = require("./routes/userRoutes");
 const predictionRoutes = require("./routes/gamesRoutes");
-const gameRoutes = require("./routes/gamesRoutes");
+const gameRoutes = require("./routes/games");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const mongoose = require("mongoose");
@@ -56,7 +56,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // app.use(routes);
 app.use("/api/users", userRoutes);
 app.use("/api/games", predictionRoutes);
-app.use("/api/games", gameRoutes);
+app.use("/api/admin/games", gameRoutes);
 
 app.get("/", async (req, res) => {
   res.send("Server is running...");
@@ -437,6 +437,7 @@ app.listen(PORT, () => {
  */
 
 /************************* Games *********************/
+
 /**
  * @swagger
  * components:
@@ -627,30 +628,31 @@ app.listen(PORT, () => {
  *           description: The timestamp of the game.
  * security:
  *   - BearerAuth: []  # Indicates that Bearer token is required in headers
- * /games/create-game:
- *   post:
- *     summary: Create a new game.
- *     tags:
- *       - admin
- *     security:
- *       - BearerAuth: []  # Requires Bearer token in headers
- *     requestBody:
- *       description: Game data to be created.
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Game'
- *     responses:
- *       200:
- *         description: Game created successfully.
- *       400:
- *         description: Bad request.
+ * paths:
+ *   /admin/games/createGame:
+ *     post:
+ *       summary: Create a new game.
+ *       tags:
+ *         - admin
+ *       security:
+ *         - BearerAuth: []  # Requires Bearer token in headers
+ *       requestBody:
+ *         description: Game data to be created.
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
+ *       responses:
+ *         200:
+ *           description: Game created successfully.
+ *         400:
+ *           description: Bad request.
  */
 
 /**
  * @swagger
- * /getAllGames:
+ * /admin/games/getAllGames:
  *   get:
  *     summary: Get all games
  *     tags:
@@ -681,7 +683,7 @@ app.listen(PORT, () => {
 
 /**
  * @swagger
- * /getGame/{id}:
+ * /admin/games/getGame/{id}:
  *   get:
  *     summary: Get a single game
  *     tags:
@@ -708,7 +710,7 @@ app.listen(PORT, () => {
 
 /**
  * @swagger
- * /deleteGame:{id}:
+ * /admin/games/deleteGame:{id}:
  *   delete:
  *     summary: Delete a game
  *     tags:
@@ -731,7 +733,7 @@ app.listen(PORT, () => {
 
 /**
  * @swagger
- * /updateGame:{id}:
+ * /admin/games/updateGame:{id}:
  *   patch:
  *     summary: Update a game
  *     tags:
