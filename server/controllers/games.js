@@ -15,7 +15,13 @@ const createGame = async (req, res) => {
 };
 
 const getTeamsOfLeaguesController = async (req, res) => {
-  const model = mongoose.model(req.params.league, {}, req.params.league);
+  const modelName = req.params.league;
+  let model;
+  try {
+    model = mongoose.model(modelName);
+  } catch (error) {
+    model = mongoose.model(modelName, new mongoose.Schema({}));
+  }
   try {
     const teams = await model.find({}, { displayName: 1, id: 1 });
     res
@@ -48,9 +54,8 @@ const getGames = async (req, res) => {
 
     // Use the calculated dates to query the database
     const games = await Game.find({
-      league: req.params.league
-    })
-      .sort({ gamedate: -1 });
+      league: req.params.league,
+    }).sort({ gamedate: -1 });
 
     res.json(games);
   } catch (error) {
@@ -58,7 +63,6 @@ const getGames = async (req, res) => {
     console.log(error);
   }
 };
-
 
 // Get a single game
 const getGame = async (req, res) => {
@@ -108,5 +112,5 @@ module.exports = {
   getGame,
   updateGame,
   deleteGame,
-  getTeamsOfLeaguesController
+  getTeamsOfLeaguesController,
 };
