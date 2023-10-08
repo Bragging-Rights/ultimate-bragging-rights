@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { addGame } from "../../services/games";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import displayToast from "../../components/Alert/Alert";
+import { getTeasmByLeage } from "../../services/Teams";
 
 const GameForm = () => {
   const dispatch = useDispatch();
@@ -24,13 +25,12 @@ const GameForm = () => {
 
   const [gameCards, setGameCards] = useState([]);
   const [formData, setFormData] = useState({
-    league: "",
+    league: "nhl",
     season: "",
     date: "",
   });
 
   const [teams, setTeams] = useState([]);
-  const [loadingTeams, setLoadingTeams] = useState(false);
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => addGame(data),
@@ -43,6 +43,19 @@ const GameForm = () => {
       },
     }
   );
+
+  const {
+    isLoading: loadingTeams,
+    isError: teamError,
+    data: teamsData,
+  } = useQuery(["teams", formData.league], getTeasmByLeage, {
+    onError: (err) => {
+      displayToast("An error occurred while adding the game.", "error");
+    },
+    onSuccess: (rec) => {
+      setTeams(rec.data.data);
+    },
+  });
 
   const generateSeasonOptions = () => {
     return (
@@ -90,23 +103,6 @@ const GameForm = () => {
 
     mutate(gameCards);
   };
-
-  useEffect(() => {
-    if (formData.league) {
-      setLoadingTeams(true);
-      // Replace 'apiEndpoint' with your actual API endpoint for fetching teams
-      fetch(`apiEndpoint/teams?league=${formData.league}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setTeams(data); // Update the teams state with fetched data
-          setLoadingTeams(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching teams:", error);
-          setLoadingTeams(false);
-        });
-    }
-  }, [formData.league]); // Trigger the effect when the selected league changes
 
   return (
     <div className="p-4">
