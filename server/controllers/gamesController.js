@@ -23,6 +23,7 @@ exports.getLeaguesController = async (req, res) => {
   }
 };
 
+
 exports.getSeasonsController = async (req, res) => {
   try {
     const seasons = await seasonModel.find();
