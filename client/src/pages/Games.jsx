@@ -27,8 +27,6 @@ const Games = () => {
     }
   );
 
-  console.log("gameData", gameData[0]);
-
   const date = new Date();
   const options = {
     year: "numeric",

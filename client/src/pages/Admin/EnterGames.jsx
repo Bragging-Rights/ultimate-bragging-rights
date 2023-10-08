@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { addGame } from "../../services/games";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import displayToast from "../../components/Alert/Alert";
 
 const GameForm = () => {
+  const dispatch = useDispatch();
   const initialFormData = {
     time: "",
     visitorTeam: "",
@@ -30,7 +33,15 @@ const GameForm = () => {
   const [loadingTeams, setLoadingTeams] = useState(false);
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
-    (data) => addGame(data)
+    (data) => addGame(data),
+    {
+      onError: (err) => {
+        displayToast("An error occurred while adding the game.", "error");
+      },
+      onSuccess: (rec) => {
+        displayToast("Game added successfully.", "success");
+      },
+    }
   );
 
   const generateSeasonOptions = () => {
@@ -76,7 +87,7 @@ const GameForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data submitted:", gameCards);
+
     mutate(gameCards);
   };
 
