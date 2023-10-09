@@ -21,12 +21,12 @@ router.get("/teams/:league", getTeamsOfLeaguesController);
 router.get("/getAllGames/:league", getGames);
 
 // Get a single game
-router.get("/getGame:id", getGame);
+router.get("/getGame/:id", getGame);
 
 // Update a game
-router.patch("/updateGame:id", authenticateUser, checkAdmin, updateGame);
+router.patch("/updateGame/:id", authenticateUser, checkAdmin, updateGame);
 
 // Delete a game
-router.delete("/deleteGame:id", authenticateUser, checkAdmin, deleteGame);
+router.delete("/deleteGame/:id", authenticateUser, checkAdmin, deleteGame);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
 const predictionRoutes = require("./routes/gamesRoutes");
 const gameRoutes = require("./routes/games");
+const nhlTeams = require("./routes/leagues/nhl");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const mongoose = require("mongoose");
@@ -22,9 +23,10 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
   })
-  .then(() => console.log("DB Connected")).catch(err => {
-    console.log("Error in db connection", err)
-  })
+  .then(() => console.log("DB Connected"))
+  .catch((err) => {
+    console.log("Error in db connection", err);
+  });
 
 let corsOptions = {
   origin: ["http://localhost:3000"] || [clientURL],
@@ -38,7 +40,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // const pool = mysql.createPool({
 //   host: 'localhost',
-//   user: config.user, 
+//   user: config.user,
 //   password: config.password,
 //   database: config.database,
 // });
@@ -56,6 +58,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/users", userRoutes);
 app.use("/api/games", predictionRoutes);
 app.use("/api/admin/games", gameRoutes);
+app.use("/api/leagues/nhl", nhlTeams);
 
 app.get("/", async (req, res) => {
   res.send("Server is running...");
@@ -388,7 +391,6 @@ app.listen(PORT, () => {
  *           error: Internal Server Error
  */
 
-
 /**
  * @swagger
  *  /games/results:
@@ -435,9 +437,6 @@ app.listen(PORT, () => {
  *                 error:
  *                   type: boolean
  */
-
-
-
 
 /************************* Games *********************/
 
@@ -653,8 +652,6 @@ app.listen(PORT, () => {
  *           description: Bad request.
  */
 
-
-
 /**
  * @swagger
  * /admin/games/getAllGames:
@@ -713,7 +710,6 @@ app.listen(PORT, () => {
  *         description: Internal server error.
  */
 
-
 /**
  * @swagger
  * /admin/games/deleteGame:{id}:
@@ -736,7 +732,6 @@ app.listen(PORT, () => {
  *       500:
  *         description: Internal server error.
  */
-
 
 /**
  * @swagger
@@ -773,7 +768,6 @@ app.listen(PORT, () => {
  *       500:
  *         description: Internal server error.
  */
-
 
 /**
  * @swagger
