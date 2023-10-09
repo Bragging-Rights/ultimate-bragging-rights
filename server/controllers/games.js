@@ -6,7 +6,8 @@ const { responseObject } = require("../utils/responseObject");
 const createGame = async (req, res) => {
   try {
     const game = new Game(req.body);
-    await game.save();
+    console.log(game);
+    // await game.save();
     res.status(201).json(game);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -15,13 +16,7 @@ const createGame = async (req, res) => {
 };
 
 const getTeamsOfLeaguesController = async (req, res) => {
-  const modelName = req.params.league;
-  let model;
-  try {
-    model = mongoose.model(modelName);
-  } catch (error) {
-    model = mongoose.model(modelName, new mongoose.Schema({}));
-  }
+  const model = mongoose.model(req.params.league, {}, req.params.league);
   try {
     const teams = await model.find({}, { displayName: 1, id: 1 });
     res
@@ -45,6 +40,7 @@ const getTeamsOfLeaguesController = async (req, res) => {
 //   }
 // };
 const getGames = async (req, res) => {
+  console.log(req.params.league);
   try {
     // Calculate the start and end dates for the 24-hour window
     const currentDate = new Date();

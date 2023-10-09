@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
 const predictionRoutes = require("./routes/gamesRoutes");
 const gameRoutes = require("./routes/games");
+const nhlTeams = require("./routes/leagues/nhl");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const mongoose = require("mongoose");
@@ -57,6 +58,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/users", userRoutes);
 app.use("/api/games", predictionRoutes);
 app.use("/api/admin/games", gameRoutes);
+app.use("/api/leagues/nhl", nhlTeams);
 
 app.get("/", async (req, res) => {
   res.send("Server is running...");
@@ -766,7 +768,6 @@ app.listen(PORT, () => {
  *       500:
  *         description: Internal server error.
  */
-
 
 /**
  * @swagger
