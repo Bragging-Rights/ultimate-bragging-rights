@@ -50,10 +50,11 @@ const GameForm = () => {
     data: teamsData,
   } = useQuery(["teams", formData.league], getTeasmByLeage, {
     onError: (err) => {
-      displayToast("An error occurred while adding the game.", "error");
+      displayToast("An error occurred while getting  the game.", "error");
     },
     onSuccess: (rec) => {
-      setTeams(rec.data.data);
+      console.log("rec", rec);
+      setTeams(rec.data);
     },
   });
 
@@ -198,8 +199,8 @@ const GameForm = () => {
                     </option>
                   ) : (
                     teams.map((team) => (
-                      <option key={team.id} value={team.id}>
-                        {team.name}
+                      <option key={team.id} value={team.displayName}>
+                        {team.displayName}
                       </option>
                     ))
                   )}
@@ -284,8 +285,8 @@ const GameForm = () => {
                     </option>
                   ) : (
                     teams.map((team) => (
-                      <option key={team.id} value={team.id}>
-                        {team.name}
+                      <option key={team.id} value={team.displayName}>
+                        {team.displayName}
                       </option>
                     ))
                   )}
