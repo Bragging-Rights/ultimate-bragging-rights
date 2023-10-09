@@ -821,3 +821,232 @@ app.listen(PORT, () => {
  *                     name:
  *                       type: string
  */
+
+
+
+
+/********************************** NHL Teams **************************/
+
+/**
+ * @swagger
+ * /leagues/nhl/teams:
+ *   post:
+ *     summary: Create a new NHL team
+ *     description: Creates a new NHL team.
+ *     tags:
+ *       - NHL Teams
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: team
+ *         description: The NHL team object to create
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             displayName:
+ *               type: string
+ *             conference:
+ *               type: string
+ *             division:
+ *               type: string
+ *             active:
+ *               type: string
+ *             abbreviation:
+ *               type: string
+ *             fullName:
+ *               type: string
+ *             startDate:
+ *               type: string
+ *               format: date
+ *             endDate:
+ *               type: string
+ *               format: date
+ *             city:
+ *               type: string
+ *             province:
+ *               type: string
+ *             state:
+ *               type: string
+ *             country:
+ *               type: string
+ *             stadium:
+ *               type: string
+ *             relocatedFrom:
+ *               type: string
+ *             relocatedTo:
+ *               type: string
+ *             previousName:
+ *               type: string
+ *     responses:
+ *       '201':
+ *         description: Successful creation of an NHL team
+ *         schema:
+ *           $ref: '#/definitions/NHLTeam'
+ *       '500':
+ *         description: Internal Server Error
+ */
+
+
+/**
+ * @swagger
+ * /leagues/nhl/teams:
+ *   get:
+ *     summary: Get NHL teams
+ *     description: Retrieve a list of NHL teams.
+ *     tags:
+ *       - NHL Teams
+ *     responses:
+ *       200:
+ *         description: Successful response with the list of NHL teams.
+ *         content:
+ *           application/json:
+ *             example:
+ *               - name: Team 1
+ *                 city: City 1
+ *               - name: Team 2
+ *                 city: City 2
+ *       500:
+ *         description: Internal server error.
+ */
+
+/**
+ * @swagger
+ * /leagues/nhl/teams/{id}:
+ *   get:
+ *     summary: Get a single team by ID
+ *     tags:
+ *       - NHL Teams
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Team ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Team retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Team'
+ *       404:
+ *         description: Team not found
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Team not found
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Internal server error
+ */
+
+
+/**
+ * @swagger
+ * /leagues/nhl/teams/{id}:
+ *   delete:
+ *     summary: Delete an NHL Team by ID
+ *     description: Deletes an NHL team by its unique ID.
+ *     tags:
+ *       - NHL Teams
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: The ID of the NHL team to delete
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *         description: Successful deletion of an NHL team
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               description: A success message indicating the team was deleted
+ *       '404':
+ *         description: Team not found
+ *       '500':
+ *         description: Internal Server Error
+ */
+
+
+/**
+ * @swagger
+ * /leagues/nhl/teams/{id}:
+ *   patch:
+ *     summary: Update an NHL Team by ID
+ *     description: Updates an NHL team by its unique ID.
+ *     tags:
+ *       - NHL Teams
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: The ID of the NHL team to update
+ *         required: true
+ *         type: string
+ *       - in: body
+ *         name: team
+ *         description: The updated NHL team object
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             displayName:
+ *               type: string
+ *             conference:
+ *               type: string
+ *             division:
+ *               type: string
+ *             active:
+ *               type: string
+ *             abbreviation:
+ *               type: string
+ *             fullName:
+ *               type: string
+ *             startDate:
+ *               type: string
+ *               format: date
+ *             endDate:
+ *               type: string
+ *               format: date
+ *             city:
+ *               type: string
+ *             province:
+ *               type: string
+ *             state:
+ *               type: string
+ *             country:
+ *               type: string
+ *             stadium:
+ *               type: string
+ *             relocatedFrom:
+ *               type: string
+ *             relocatedTo:
+ *               type: string
+ *             previousName:
+ *               type: string
+ *     responses:
+ *       '200':
+ *         description: Successful update of an NHL team
+ *         schema:
+ *           $ref: '#/definitions/NHLTeam'
+ *       '404':
+ *         description: Team not found
+ *       '500':
+ *         description: Internal Server Error
+ */
