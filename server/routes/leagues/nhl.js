@@ -24,3 +24,5 @@ router.patch("/teams/:id", updateTeamById);
 router.delete("/teams/:id", deleteTeamById);
 
 module.exports = router;
+
+
