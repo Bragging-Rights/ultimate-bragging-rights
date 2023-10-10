@@ -4,11 +4,31 @@ const { responseObject } = require("../utils/responseObject");
 
 // Create a new game
 const createGame = async (req, res) => {
+  console.log(req.body);
   try {
-    const game = new Game(req.body);
-    console.log(game);
-    // await game.save();
-    res.status(201).json(game);
+    const games = req.body.map((game) => {
+      return {
+        league: game.league,
+        seasonflag: game.season,
+        gamedate: game.date,
+        time: game.time,
+        "v-ml": game.vML,
+        "v-sprd": game.vSprd,
+        "v-sprd-odds": game.vSprdOdds,
+        "v-ou": game.vOU,
+        "v-ou-odds": game.vOUOdds,
+        "h-ml": game.hML,
+        "h-sprd": game.hSprd,
+        "h-sprd-odds": game.hSprdOdds,
+        "h-ou": game.hOU,
+        "h-ou-odds": game.hOUOdds,
+        visitor: game.visitorTeam,
+        home: game.homeTeam,
+      };
+    });
+    const result = await Game.insertMany(games);
+    console.log("games", result);
+    res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
     console.log(error);

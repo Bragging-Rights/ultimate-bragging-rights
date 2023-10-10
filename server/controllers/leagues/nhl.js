@@ -15,7 +15,7 @@ const createTeam = async (req, res) => {
 const getTeams = async (req, res) => {
   try {
     const teams = await nhl.find({});
-    console.log(teams);
+    // console.log(teams);
     res.json(teams);
   } catch (error) {
     console.log(error);
@@ -72,5 +72,3 @@ module.exports = {
   updateTeamById,
   deleteTeamById,
 };
-
-

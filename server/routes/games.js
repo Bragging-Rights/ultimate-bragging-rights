@@ -24,9 +24,9 @@ router.get("/getAllGames/:league", getGames);
 router.get("/getGame/:id", getGame);
 
 // Update a game
-router.patch("/updateGame/:id", authenticateUser, checkAdmin, updateGame);
+router.patch("/updateGame/:id", updateGame);
 
 // Delete a game
-router.delete("/deleteGame/:id", authenticateUser, checkAdmin, deleteGame);
+router.delete("/deleteGame/:id", deleteGame);
 
 module.exports = router;

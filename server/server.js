@@ -28,12 +28,12 @@ mongoose
     console.log("Error in db connection", err);
   });
 
-let corsOptions = {
-  origin: ["http://127.0.0.1:5173"] || [clientURL],
-};
+// let corsOptions = {
+//   origin: ["http://127.0.0.1:5173"] || [clientURL],
+// };
 
 app.use(moragn("dev"));
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -822,9 +822,6 @@ app.listen(PORT, () => {
  *                       type: string
  */
 
-
-
-
 /********************************** NHL Teams **************************/
 
 /**
@@ -890,7 +887,6 @@ app.listen(PORT, () => {
  *         description: Internal Server Error
  */
 
-
 /**
  * @swagger
  * /leagues/nhl/teams:
@@ -948,7 +944,6 @@ app.listen(PORT, () => {
  *               message: Internal server error
  */
 
-
 /**
  * @swagger
  * /leagues/nhl/teams/{id}:
@@ -979,7 +974,6 @@ app.listen(PORT, () => {
  *       '500':
  *         description: Internal Server Error
  */
-
 
 /**
  * @swagger
