@@ -18,7 +18,7 @@ router.post("/createGame", createGame);
 router.get("/teams/:league", getTeamsOfLeaguesController);
 
 // Get all games
-router.get("/getAllGames/:league", getGames);
+router.get("/getAllGames/:league/:date", getGames);
 
 // Get a single game
 router.get("/getGame/:id", getGame);

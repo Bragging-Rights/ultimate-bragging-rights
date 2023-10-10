@@ -60,19 +60,18 @@ const getTeamsOfLeaguesController = async (req, res) => {
 //   }
 // };
 const getGames = async (req, res) => {
-  console.log(req.params.league);
+  console.log(req.params);
   try {
     // Calculate the start and end dates for the 24-hour window
-    const currentDate = new Date();
-    const endDate = new Date(currentDate);
-    const startDate = new Date(currentDate);
-    startDate.setHours(currentDate.getHours() - 24);
-
+    // const currentDate = new Date();
+    // const endDate = new Date(currentDate);
+    // const startDate = new Date(currentDate);
+    // startDate.setHours(currentDate.getHours() - 24);
     // Use the calculated dates to query the database
     const games = await Game.find({
       league: req.params.league,
-    }).sort({ gamedate: -1 });
-
+      gamedate: req.params.date,
+    }).sort({ gamedate: 1 });
     res.json(games);
   } catch (error) {
     res.status(500).json({ message: error.message });

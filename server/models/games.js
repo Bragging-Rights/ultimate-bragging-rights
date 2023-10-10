@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const gameSchema = new mongoose.Schema({
   id: String,
+  // gDate: date,
   gamedate: String,
   day: String,
   date: String,
