@@ -1,17 +1,21 @@
+import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 
 const GameCard = ({ gameData }) => {
+  console.log("gameData", gameData);
   return (
     <>
       <div className="game-card">
         <div className="flex justify-between">
           <div className=" flex flex-col ">
-            <span className=" game-time mb-3">7:00 PM EST</span>
+            <span className=" game-time mb-3">
+              {TimeFormat(gameData?.time)}
+            </span>
             <input type="text" className=" card-input mb-3" value={100} />
           </div>
 
           <div className=" flex flex-col justify-start ">
-            <span className=" game-date">April 4, 2023</span>
+            <span className=" game-date">{gameData?.gamedate}</span>
             <div className=" box">
               <label>Toronto</label>
             </div>

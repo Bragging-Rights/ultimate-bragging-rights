@@ -10,8 +10,13 @@ export const addGame = async (data) => {
   return response;
 };
 
-export const getGames = async () => {
-  const response = await api.get("api/games");
+export const getGames = async ({ queryKey }) => {
+  const [_, date, leage] = queryKey;
+
+  console.log("hamd", date, leage);
+  const response = await api.get(
+    `api/admin/games/getAllGames/${leage}/${date}`
+  );
 
   return response;
 };

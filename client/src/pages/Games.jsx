@@ -10,24 +10,30 @@ import img2 from "../assets/card2.png";
 import GamerCardRight from "../components/GameCard/GamerCardRight/GamerCardRight";
 import { getGames } from "../services/games";
 import { useQuery } from "react-query";
+import { format } from "date-fns";
 
 const Games = () => {
   const [gameData, setGameData] = useState([]);
 
-  const { isLoading, isError, data, error, reset } = useQuery(
-    "getGames",
-    getGames,
-    {
-      onSuccess: (fetchedData) => {
-        setGameData(fetchedData.data.data);
-      },
-      onError: (error) => {
-        console.error("An error occurred:", error);
-      },
-    }
-  );
+  console.log("gameData", gameData);
 
   const date = new Date();
+
+  const formattedDateForAPI = format(date, "yyyy-MM-dd");
+
+  const {
+    isLoading: loadingTeams,
+    isError: teamError,
+    data: teamsData,
+  } = useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
+    onSuccess: (fetchedData) => {
+      setGameData(fetchedData.data);
+    },
+    onError: (error) => {
+      console.error("An error occurred:", error);
+    },
+  });
+
   const options = {
     year: "numeric",
     month: "long",
@@ -43,13 +49,18 @@ const Games = () => {
       <Line />
       <Banner date={formattedDate} label={"Upcoming Games"} />
       <div className=" grid grid-cols-2 gap-4 ">
+        {gameData?.map((game, index) =>
+          index % 2 === 0 ? (
+            <GameCard gameData={game} />
+          ) : (
+            <GamerCardRight gameData={game} />
+          )
+        )}
+      </div>
+      {/* <div className=" grid grid-cols-2 gap-4 ">
         <GameCard />
         <GamerCardRight />
-      </div>
-      <div className=" grid grid-cols-2 gap-4 ">
-        <GameCard />
-        <GamerCardRight />
-      </div>
+      </div> */}
       <div className=" my-2">
         <Line />
       </div>
