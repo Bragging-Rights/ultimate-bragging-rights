@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import icons from a library like React Icons
 
 const navItem = [
   {
@@ -18,7 +19,6 @@ const navItem = [
     label: "Standings",
     path: "/standings",
   },
-
   {
     label: "Stats",
     path: "/stats",
@@ -27,14 +27,13 @@ const navItem = [
     label: "Teams",
     path: "/teams",
   },
-
   {
     label: "Pools",
     path: "/pools",
   },
   {
     label: "FB Challenge",
-    path: "/fb-challanges",
+    path: "/fb-challenges",
   },
   {
     label: "Records",
@@ -48,20 +47,35 @@ const navItem = [
 
 const MainNavBar = () => {
   const location = useLocation();
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
 
   return (
     <div
-      className=" w-full rounded border border-[#626262] h-12 my-5 flex items-center"
+      className="w-full rounded border border-[#626262] my-5 flex items-center"
       style={{
         background: "linear-gradient(185deg, #45423A 15.54%, #202126 114.57%)",
       }}
     >
-      <ul className=" flex gap-8  h-full items-center">
+      <button
+        onClick={toggleNav}
+        className="md:hidden absolute top-0 left-0 m-3 text-white"
+      >
+        {isNavOpen ? <FaTimes /> : <FaBars />}
+      </button>
+      <ul
+        className={`${
+          isNavOpen ? "block" : "hidden"
+        } md:flex flex-wrap gap-4 h-full items-center`}
+      >
         {navItem.map((item, index) => {
           return (
             <li
               key={index}
-              className={` text-xl px-2 h-full flex items-center font-light text-white
+              className={`text-xl px-2 h-full flex items-center font-light text-white
                           ${
                             location.pathname === item.path ? "active-item" : ""
                           }
