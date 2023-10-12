@@ -2,7 +2,6 @@ import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 
 const GameCard = ({ gameData }) => {
-  console.log("gameData", gameData);
   return (
     <>
       <div className="game-card">
@@ -17,26 +16,26 @@ const GameCard = ({ gameData }) => {
           <div className=" flex flex-col justify-start ">
             <span className=" game-date">{gameData?.gamedate}</span>
             <div className=" box">
-              <label>Toronto</label>
+              <label>{gameData?.visitor}</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time ">Money Line</span>
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["v-ml"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["v-sprd"]}</label> <label>12 Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["v-ou"]}</label> <label>12 Pts</label>
             </div>
           </div>
         </div>
@@ -68,22 +67,22 @@ const GameCard = ({ gameData }) => {
                 marginLeft: "25px",
               }}
             >
-              <label>Toronto</label>
+              <label>{gameData?.home}</label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["h-ml"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["h-sprd"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col">
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["h-ou"]}</label> <label> Pts</label>
             </div>
           </div>
         </div>

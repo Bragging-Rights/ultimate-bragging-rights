@@ -1,6 +1,7 @@
 import React from "react";
+import TimeFormat from "../../../services/TimeFormat";
 
-const GamerCardRight = () => {
+const GamerCardRight = ({ gameData }) => {
   return (
     <>
       <div
@@ -11,33 +12,35 @@ const GamerCardRight = () => {
       >
         <div className="flex justify-between">
           <div className=" flex flex-col ">
-            <span className=" game-time mb-3">7:00 PM EST</span>
+            <span className=" game-time mb-3">
+              {TimeFormat(gameData?.time)}
+            </span>
             <input type="text" className=" card-input mb-3" value={100} />
           </div>
 
           <div className=" flex flex-col justify-start ">
-            <span className=" game-date">April 4, 2023</span>
+            <span className=" game-date">{gameData?.gamedate}</span>
             <div className=" box">
-              <label>Toronto</label>
+              <label>{gameData?.visitor}</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time ">Money Line</span>
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["v-ml"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["v-sprd"]}</label> <label>12 Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["v-ou"]}</label> <label>12 Pts</label>
             </div>
           </div>
         </div>
@@ -69,22 +72,22 @@ const GamerCardRight = () => {
                 marginLeft: "25px",
               }}
             >
-              <label>Toronto</label>
+              <label>{gameData?.home}</label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["h-ml"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["h-sprd"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col">
             <div className=" box ">
-              <label>+100</label> <label>12 Pts</label>
+              <label>{gameData?.["h-ou"]}</label> <label> Pts</label>
             </div>
           </div>
         </div>
