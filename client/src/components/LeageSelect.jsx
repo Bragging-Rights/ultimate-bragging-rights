@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 
-const totLeagues = ["NHL", "NBA", "MLB", "NFL", "WNBAA", "CFL"];
+const totLeagues = ["NHL", "NBA", "MLB", "NFL", "WNBA", "CFL"];
 
-const LeageSelect = () => {
+const LeagueSelect = () => {
   const [selectedLeague, setSelectedLeague] = useState("NHL");
   const containerRef = useRef(null);
   const buttonsPerPage = 4; // Number of buttons to display per page
@@ -14,7 +14,7 @@ const LeageSelect = () => {
   };
 
   const nextPage = () => {
-    if (currentPage < leagueButtons.length / buttonsPerPage - 1) {
+    if (currentPage < totLeagues.length / buttonsPerPage - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -24,8 +24,6 @@ const LeageSelect = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-
-  
 
   return (
     <div className="league-select-container flex items-center space-x-4">
@@ -50,28 +48,29 @@ const LeageSelect = () => {
         className="league-list overflow-x-auto flex space-x-4"
         ref={containerRef}
       >
-        {totLeagues.map((item) => (
-          <li
-            key={item}
-            className={`text-white cursor-pointer text-base ${
-              item === selectedLeague ? "league-selected" : ""
-            }`}
-            style={{
-              textShadow: "0px 2px 4px rgba(255, 255, 255, 0.25)",
-              color: item === selectedLeague ? "#C28602" : "white",
-              borderBottom:
-                item === selectedLeague ? "2px solid #C28602" : "none", // Add a bottom border for the selected league
-              paddingBottom: item === selectedLeague ? "10px" : "0", // Add padding to the bottom border for spacing
-              // boxShadow:
-              //   item === selectedLeague
-              //     ? "0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00"
-              //     : "none",
-            }}
-            onClick={() => handleLeagueSelect(item)}
-          >
-            {item}
-          </li>
-        ))}
+        {totLeagues
+          .slice(
+            currentPage * buttonsPerPage,
+            (currentPage + 1) * buttonsPerPage
+          )
+          .map((item) => (
+            <li
+              key={item}
+              className={`text-white cursor-pointer text-base ${
+                item === selectedLeague ? "league-selected" : ""
+              }`}
+              style={{
+                textShadow: "0px 2px 4px rgba(255, 255, 255, 0.25)",
+                color: item === selectedLeague ? "#C28602" : "white",
+                borderBottom:
+                  item === selectedLeague ? "2px solid #C28602" : "none",
+                paddingBottom: item === selectedLeague ? "10px" : "0",
+              }}
+              onClick={() => handleLeagueSelect(item)}
+            >
+              {item}
+            </li>
+          ))}
       </ul>
       <div className="scroll-right cursor-pointer" onClick={nextPage}>
         <svg
@@ -94,4 +93,4 @@ const LeageSelect = () => {
   );
 };
 
-export default LeageSelect;
+export default LeagueSelect;

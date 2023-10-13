@@ -27,20 +27,24 @@ const GamerCardRight = ({ gameData }) => {
           <div className=" flex flex-col justify-start ">
             <span className=" game-time ">Money Line</span>
             <div className=" box ">
-              <label>{gameData?.["v-ml"]}</label> <label> Pts</label>
+              <label>{gameData?.["v-ml"]}</label> <label></label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box ">
-              <label>{gameData?.["v-sprd"]}</label> <label>12 Pts</label>
+              <label>{gameData?.["v-sprd"]}</label> 
+              {/* <label>____</label>
+              <label>{gameData?.["v-sprd-odds"]}</label> */}
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
             <div className=" box ">
-              <label>{gameData?.["v-ou"]}</label> <label>12 Pts</label>
+              <label>{gameData?.["v-ou"]}</label>
+              {/* <label>____</label>
+              <label>{gameData?.["v-ou-odds"]}</label> */}
             </div>
           </div>
         </div>
@@ -77,23 +81,28 @@ const GamerCardRight = ({ gameData }) => {
           </div>
           <div className=" flex flex-col ">
             <div className=" box ">
-              <label>{gameData?.["h-ml"]}</label> <label> Pts</label>
+              <label>{gameData?.["h-ml"]}</label> 
+              <label></label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box ">
-              <label>{gameData?.["h-sprd"]}</label> <label> Pts</label>
+              <label>{gameData?.["h-sprd"]}</label>
+              {/* <label>____</label>
+              <label>{gameData?.["h-sprd-odds"]}</label> */}
             </div>
           </div>
           <div className=" flex flex-col">
             <div className=" box ">
-              <label>{gameData?.["h-ou"]}</label> <label> Pts</label>
+              <label>{gameData?.["h-ou"]}</label>
+              {/* <label>____</label>
+              <label>{gameData?.["h-ou-odds"]}</label> */}
             </div>
           </div>
         </div>
 
         <div className=" flex justify-between">
-          <div className="card-id">ID: 625</div>
+          {/* <div className="card-id">ID: 625</div> */}
           <div className=" flex mt-4 gap-1 items-center">
             <input type="radio" />
             <label className="card-label">REG</label>
