@@ -5,8 +5,7 @@ import logo from "../assets/logo.png";
 import Modal from "react-modal";
 import ReactModal from "./Modal/ReactModal";
 import Signup from "./SignUp";
-import SignInModal from "../Modal/SignInModal"; 
-
+import SignInModal from "../Modal/SignInModal";
 import img1 from "../assets/homeh1.png";
 import img2 from "../assets/homeh2.png";
 
@@ -16,7 +15,6 @@ const Navbar = () => {
   const location = useLocation(); // Get the current route location
 
   const closeModal = () => {
-    console.log("close modal");
     setModalIsOpen(false);
   };
 
@@ -26,7 +24,6 @@ const Navbar = () => {
 
   const openSignInModal = () => {
     setSignInModalIsOpen(true);
-    console.log("sign in modal");
   };
 
   const isHomepage = location.pathname === "/";
@@ -35,21 +32,20 @@ const Navbar = () => {
 
   return (
     <nav
-      className=" flex items-center bg-[#1B1C21] h-18 border border-[#313131] w-full"
+      className="flex flex-col md:flex-row items-center bg-[#1B1C21] border border-[#313131] w-full"
       style={{
         boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <div className=" flex items-center justify-between w-full mx-14">
-        <div>
+      <div className="flex justify-between w-full mx-2 md:mx-14">
+        <div className="text-center md:text-left">
           <Link to="/">
-            <img src={logo} alt="bragging-rigths" width={80} height={60} />
-          </Link>{" "}
+            <img src={logo} alt="bragging-rights" width={80} height={60} />
+          </Link>
         </div>
         <div className="flex items-center">
           {isHomepage ? (
-            /* Render the content for the homepage */
-            <div className="flex items-center">
+            <div className="hidden md:flex-center items-center">
               <img src={img1} alt="img1" />
               <p className="text-[#BE8200] text-lg font-extrabold">
                 Players Wanted For Weekly Sports Prediction Competition
@@ -57,15 +53,13 @@ const Navbar = () => {
               <img src={img2} alt="img2" />
             </div>
           ) : (
-            /* Render the LeagueSelect component for other routes */
             <LeageSelect />
           )}
         </div>
-        <div className=" flex gap-1.5">
+        <div className="flex flex-col md:flex-row items-center mt-2 md:mt-0">
           {!isHomepage && (
-            /* Conditionally render the "Add League" button for non-homepage routes */
             <button
-              className="rounded h-8 px-4 text-[#1B1C21] font-extrabold"
+              className="rounded h-8 px-4 text-[#1B1C21] font-extrabold mt-2 md:mt-0 md:ml-2"
               style={{
                 background:
                   "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)",
@@ -78,9 +72,9 @@ const Navbar = () => {
 
           <Link className="custom-button" onClick={openSignInModal}>
             <button
-              className=" rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold"
+              className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
               style={{
-                boxShadow: " 0px 4px 40px 0px #000",
+                boxShadow: "0px 4px 40px 0px #000",
               }}
             >
               Sign In
@@ -94,9 +88,9 @@ const Navbar = () => {
 
           <Link className="custom-button" onClick={openModal}>
             <button
-              className=" rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold"
+              className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
               style={{
-                boxShadow: " 0px 4px 40px 0px #000",
+                boxShadow: "0px 4px 40px 0px #000",
               }}
             >
               REGISTER
