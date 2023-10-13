@@ -27,6 +27,7 @@ const Games = () => {
     data: teamsData,
   } = useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
     onSuccess: (fetchedData) => {
+      console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
     },
     onError: (error) => {
