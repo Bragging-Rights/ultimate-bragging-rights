@@ -191,3 +191,4 @@ const GameCard = ({ gameData }) => {
 };
 
 export default GameCard;
+ 
