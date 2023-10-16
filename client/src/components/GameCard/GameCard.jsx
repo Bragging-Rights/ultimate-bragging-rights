@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
+import Switches from "../Switches";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -88,7 +89,7 @@ const GameCard = ({ gameData }) => {
 
           <div className=" flex flex-col justify-start ">
             <span className=" game-date">{gameData?.gamedate}</span>
-            <div className=" box">
+            <div className=" box box h-12 w-24">
               <label>{gameData?.visitor}</label>
             </div>
           </div>
@@ -102,20 +103,20 @@ const GameCard = ({ gameData }) => {
             }}
           >
             <span className=" game-time font-inter mb-3">Money Line</span>
-            <div className=" box ">
+            <div className=" box h-12 w-24">
               <label>{gameData?.["v-ml"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
-            <div className=" box ">
+            <div className=" box h-12 w-24">
               <label>{gameData?.["v-sprd"]}</label> <label>12 Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
-            <div className=" box ">
+            <div className=" box h-12 w-24">
               <label>{gameData?.["v-ou"]}</label> <label>12 Pts</label>
             </div>
           </div>
@@ -149,26 +150,26 @@ const GameCard = ({ gameData }) => {
 
           <div className=" flex flex-col ">
             <div
-              className=" box"
+              className=" box h-12 w-24"
               style={{
-                marginLeft: "25px",
+                marginLeft: "60px",
               }}
             >
               <label>{gameData?.home}</label>
             </div>
           </div>
           <div className=" flex flex-col ">
-            <div className=" box ">
+            <div className=" box h-12 w-24">
               <label>{gameData?.["h-ml"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col ">
-            <div className=" box ">
+            <div className=" box h-12 w-24">
               <label>{gameData?.["h-sprd"]}</label> <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col">
-            <div className=" box ">
+            <div className=" box  h-12 w-24">
               <label>{gameData?.["h-ou"]}</label> <label> Pts</label>
             </div>
           </div>
@@ -176,51 +177,7 @@ const GameCard = ({ gameData }) => {
 
         <div className=" flex justify-between items-center">
           <div className="card-id">ID: 625</div>
-          <div classname="flex gap-2">
-            <div className="flex mt-4 gap-1 items-center">
-              <input
-                type="radio"
-                name="radio-group"
-                value="Regular"
-                onChange={handleRadioChange}
-                checked={gameEnding === "Regular"}
-              />
-              <label className="card-label">REG</label>
-            </div>
-
-            <div className="flex mt-4 gap-1 items-center">
-              <input
-                type="radio"
-                name="radio-group"
-                value="OverTime"
-                onChange={handleRadioChange}
-                checked={gameEnding === "OverTime"}
-              />
-              <label className="card-label">OT</label>
-            </div>
-
-            <div className="flex mt-4 gap-1 items-center">
-              <input
-                type="radio"
-                name="radio-group"
-                value="ShootOut"
-                onChange={handleRadioChange}
-                checked={gameEnding === "ShootOut"}
-              />
-              <label className="card-label">S/O</label>
-            </div>
-
-            <div className="flex mt-4 gap-1 items-center">
-              <input
-                type="radio"
-                name="radio-group"
-                value="ExtraInnings"
-                onChange={handleRadioChange}
-                checked={gameEnding === "ExtraInnings"}
-              />
-              <label className="card-label">E/I</label>
-            </div>
-          </div>
+          <Switches leage="Hocky" season={gameData?.seasonflag} />
           <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
             ENTER PICK
           </button>{" "}

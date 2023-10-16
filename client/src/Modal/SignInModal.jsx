@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import ModalInput from "./ModalInput";
 import logoImg from "../assets/logo.png";
+import { login } from "../services/auth";
+import { useMutation } from "react-query";
+import displayToast from "../components/Alert/Alert";
 
 const customStyles = {
   content: {
@@ -32,6 +35,23 @@ const SignInModal = (props) => {
     password: "",
   });
 
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (data) => login(data),
+    {
+      onError: (err) => {
+        displayToast("An error occurred in the login", "error");
+      },
+      onSuccess: (rec) => {
+        console.log("error", rec?.data);
+
+        if (rec?.data?.hasErrors) {
+          displayToast(rec?.data?.message, "error");
+        }
+        // displayToast("Login successfully.", "success");
+      },
+    }
+  );
+
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -42,41 +62,9 @@ const SignInModal = (props) => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+    console.log("formData", formData);
 
-    try {
-      const response = await axios.post("/api/signin", formData);
-      if (response.data.success) {
-        // Sign-in successful, you can redirect or perform other actions
-        console.log("Sign in successful");
-        closeModal();
-      } else {
-        // Sign-in failed, handle the error message
-        console.error("Sign in failed: ", response.data.error);
-      }
-    } catch (error) {
-      // Handle network or other errors
-      console.error("Error: ", error);
-    }
-  };
-
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post("/api/reset-password", {
-        email: formData.email,
-      });
-      if (response.data.success) {
-        // Password reset email sent successfully
-        console.log("Password reset email sent");
-      } else {
-        // Password reset failed, handle the error message
-        console.error("Password reset failed: ", response.data.error);
-      }
-    } catch (error) {
-      // Handle network or other errors
-      console.error("Error: ", error);
-    }
+    mutate(formData);
   };
 
   return (
@@ -87,14 +75,7 @@ const SignInModal = (props) => {
     >
       <div className="r-modal-header">
         <h2 className="title">SIGN IN</h2>
-        <img
-          src={logoImg}
-          alt="logo-img"
-          style={{
-            width: "99px",
-            height: "76px",
-          }}
-        />
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
@@ -138,9 +119,9 @@ const SignInModal = (props) => {
         />
       </div>
       <div className="password-reset-container text-white">
-        <button className="reset-password-btn" onClick={handleResetPassword}>
+        {/* <button className="reset-password-btn" onClick={handleResetPassword}>
           Forgot Password? Reset Here
-        </button>
+        </button> */}
       </div>
       <button className="submit-btn" onClick={handleSignIn}>
         SIGN IN
