@@ -85,11 +85,13 @@ exports.signUpController = async (req, res) => {
 
 exports.signInController = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
 
   console.log(email, password);
 
   try {
     const foundUser = await User.findOne({ email });
+    console.log(foundUser);
     if (!foundUser) {
       return res
         .status(201)
@@ -97,6 +99,7 @@ exports.signInController = async (req, res) => {
     }
 
     const checkPassword = await bcrypt.compare(password, foundUser.password);
+    console.log(checkPassword);
     if (!checkPassword) {
       return res
         .status(201)
@@ -111,9 +114,13 @@ exports.signInController = async (req, res) => {
     };
     delete foundUser.password;
     delete foundUser.otp;
-    jwt.sign(payload, config.jwtSecret, (err, token) => {
-      if (err) res.status(400).json(responseObject({}, "Jwt Error", true));
-      else {
+    console.log(config);
+    // jwt.sign(payload, config.jwtSecret, (err, token) => {
+    jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
+      if (err) {
+        res.status(400).json(responseObject({}, "Jwt Error", true));
+        console.log(err);
+      } else {
         foundUser.token = token;
         res
           .status(200)

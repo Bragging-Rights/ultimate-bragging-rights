@@ -12,7 +12,7 @@ import img2 from "../assets/homeh2.png";
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const location = useLocation(); // Get the current route location
+  const location = useLocation();
 
   const closeModal = () => {
     setModalIsOpen(false);

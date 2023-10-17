@@ -39,15 +39,19 @@ const SignInModal = (props) => {
     (data) => login(data),
     {
       onError: (err) => {
+        console.log(err);
         displayToast("An error occurred in the login", "error");
       },
       onSuccess: (rec) => {
-        console.log("error", rec?.data);
-
         if (rec?.data?.hasErrors) {
           displayToast(rec?.data?.message, "error");
+        } else {
+          displayToast("Login successfully.", "success");
+
+          localStorage.setItem("username", rec.data.username);
+          localStorage.setItem("email", rec.data.email);
+          localStorage.setItem("_id", rec.data._id);
         }
-        // displayToast("Login successfully.", "success");
       },
     }
   );
