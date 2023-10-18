@@ -48,9 +48,10 @@ const SignInModal = (props) => {
         } else {
           displayToast("Login successfully.", "success");
 
-          localStorage.setItem("username", rec.data.username);
-          localStorage.setItem("email", rec.data.email);
-          localStorage.setItem("_id", rec.data._id);
+          console.log("rec", rec);
+          localStorage.setItem("username", rec.data.data.username);
+          localStorage.setItem("email", rec.data.data.email);
+          localStorage.setItem("_id", rec.data.data._id);
         }
       },
     }

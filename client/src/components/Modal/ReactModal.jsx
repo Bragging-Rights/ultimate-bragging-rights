@@ -69,6 +69,7 @@ const ReactModal = (props) => {
   });
 
   const inputChangeHandler = (e) => {
+    console.log(e);
     const { name, value } = e.target;
     setFormData({
       ...formData,
