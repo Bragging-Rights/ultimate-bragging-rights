@@ -13,6 +13,8 @@ import { useQuery } from "react-query";
 import { format } from "date-fns";
 
 const Games = () => {
+  const isAdmin = true; // Set this value based on whether the user is an admin or not
+
   const [gameData, setGameData] = useState([]);
 
   console.log("gameData", gameData);
@@ -52,9 +54,9 @@ const Games = () => {
       <div className=" grid grid-cols-2 gap-4 ">
         {gameData?.map((game, index) =>
           index % 2 === 0 ? (
-            <GameCard gameData={game} />
+            <GameCard gameData={game} isAdmin={isAdmin} />
           ) : (
-            <GamerCardRight gameData={game} />
+            <GamerCardRight gameData={game} isAdmin={isAdmin} />
           )
         )}
       </div>

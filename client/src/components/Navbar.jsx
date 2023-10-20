@@ -12,7 +12,7 @@ import img2 from "../assets/homeh2.png";
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const location = useLocation(); // Get the current route location
+  const location = useLocation();
 
   const closeModal = () => {
     setModalIsOpen(false);
@@ -30,9 +30,20 @@ const Navbar = () => {
 
   Modal.setAppElement("#root"); // Set the app element
 
+  const userName = localStorage.getItem("username");
+  const userEmail = localStorage.getItem("email");
+
+  const handleLogout = () => {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("email");
+    localStorage.removeItem("_id");
+  };
+
   return (
     <nav
-      className="flex flex-col md:flex-row items-center bg-[#1B1C21] border border-[#313131] w-full"
+      className="flex flex-col md:flex-row items-center bg-[#1B1C21] border border-[#313131] w-full relative
+       overflow-x-hidden
+      "
       style={{
         boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
       }}
@@ -70,16 +81,29 @@ const Navbar = () => {
             </button>
           )}
 
-          <Link className="custom-button" onClick={openSignInModal}>
-            <button
-              className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
-              style={{
-                boxShadow: "0px 4px 40px 0px #000",
-              }}
-            >
-              Sign In
-            </button>
-          </Link>
+          {userEmail ? (
+            <Link className="custom-button" onClick={handleLogout}>
+              <button
+                className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
+                style={{
+                  boxShadow: "0px 4px 40px 0px #000",
+                }}
+              >
+                Logout
+              </button>
+            </Link>
+          ) : (
+            <Link className="custom-button" onClick={openSignInModal}>
+              <button
+                className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
+                style={{
+                  boxShadow: "0px 4px 40px 0px #000",
+                }}
+              >
+                Sign In
+              </button>
+            </Link>
+          )}
 
           <SignInModal
             modalIsOpen={signInModalIsOpen}

@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 import Switches from "../Switches";
+import Modal from "react-modal"; // Import the modal library
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editedGameData, setEditedGameData] = useState({ ...gameData });
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
@@ -61,6 +64,26 @@ const GameCard = ({ gameData }) => {
         // Handle errors
         console.error("Error saving data to the database:", error);
       });
+  };
+
+  const handleEdit = () => {
+    // Open the edit modal
+    setIsModalOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    // Save the edited game data
+    // Implement your logic to save the editedGameData
+    // You can make an HTTP request to update the data in your backend
+    // or use a state management library like Redux to update the data
+    // After saving, close the modal
+    setIsModalOpen(false);
+    console.log("Saved data:", editedGameData);
+  };
+
+  const handleModalClose = () => {
+    // Close the modal without saving
+    setIsModalOpen(false);
   };
 
   return (
@@ -178,6 +201,11 @@ const GameCard = ({ gameData }) => {
         <div className=" flex justify-between items-center">
           <div className="card-id">ID: 625</div>
           <Switches leage="Hocky" season={gameData?.seasonflag} />
+          {/* {isAdmin && (
+            <button className="card-btn-outline mt-4" onClick={handleEdit}>
+              EDIT
+            </button>
+          )} */}
           <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
             ENTER PICK
           </button>{" "}
@@ -186,9 +214,29 @@ const GameCard = ({ gameData }) => {
           </button>{" "}
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+        contentLabel="Edit Game Data"
+      >
+        <h2>Edit Game Data</h2>
+        <form>
+          {/* Render editable fields for editedGameData */}
+          {/* Example: */}
+          <input
+            type="text"
+            value={editedGameData?.visitor}
+            onChange={(e) =>
+              setEditedGameData({ ...editedGameData, visitor: e.target.value })
+            }
+          />
+          {/* Add more fields for other properties of editedGameData */}
+          <button onClick={handleSaveEdit}>Save</button>
+          <button onClick={handleModalClose}>Cancel</button>
+        </form>
+      </Modal>
     </>
   );
 };
 
 export default GameCard;
- 

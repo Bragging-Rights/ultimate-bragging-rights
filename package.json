@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "date-fns": "^2.30.0"
+    "date-fns": "^2.30.0",
+    "react-select": "^5.7.7",
+    "react-select-country-list": "^2.2.3",
+    "react-toastify": "^9.1.3"
   }
 }

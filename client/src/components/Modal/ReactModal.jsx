@@ -7,6 +7,10 @@ import CountrySelect from "./CountrySelect";
 import { RegionDropdown } from "react-country-region-selector";
 import PhoneInput from "react-phone-input-2";
 import logo3 from "../../assets/logo.png";
+import Select from "react-select";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getTeasmByLeage } from "../../services/Teams";
 
 const customStyles = {
   content: {
@@ -42,6 +46,10 @@ const ReactModal = (props) => {
   const [availableTeams, setAvailableTeams] = useState([]);
   const [selectedLeague, setSelectedLeague] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
+  const [selectedCountryCode, setSelectedCountryCode] = useState({
+    label: "+1",
+    value: "US",
+  }); // Default to US country code
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -61,6 +69,7 @@ const ReactModal = (props) => {
   });
 
   const inputChangeHandler = (e) => {
+    console.log(e);
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -127,6 +136,144 @@ const ReactModal = (props) => {
       selectedCity: "", // Reset the selected city in formData
     }));
   };
+  const countryCodes = [
+    { label: "+1", value: "US" },
+    { label: "+44", value: "UK" },
+    // Add more country code options as needed
+  ];
+  const handleCountryCodeChange = (selectedOption) => {
+    setSelectedCountryCode(selectedOption);
+    // Update the phone number in formData when the country code changes
+    setFormData({
+      phoneNumber: selectedOption.label + formData.phoneNumber,
+    });
+  };
+
+  const [leaguesInfo, setLeaguesInfo] = useState([
+    {
+      selectedLeague: "",
+      formData: { username: "", team: "" },
+    },
+  ]);
+
+  const addAnotherLeague = () => {
+    setLeaguesInfo([
+      ...leaguesInfo,
+      { selectedLeague: "", formData: { username: "", team: "" } },
+    ]);
+  };
+
+  const handleRemoveLeague = (index) => {
+    const updatedLeaguesInfo = [...leaguesInfo];
+    updatedLeaguesInfo.splice(index, 1);
+    setLeaguesInfo(updatedLeaguesInfo);
+  };
+
+  const handleRegistration = async () => {
+    // Simulated registration logic (replace this with your actual registration API call)
+    try {
+      // Simulate a successful registration (replace this with your actual registration logic)
+      const response = await fetch("https://api.example.com/register", {
+        method: "POST",
+        // Add your registration data here
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          // Add other registration fields
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Registration is successful
+        toast.success("User is registered!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      } else {
+        // Registration failed
+        toast.error("Registration failed. Please try again.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
+    } catch (error) {
+      // Handle registration error (e.g., network error)
+      toast.error("Registration failed. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  };
+
+  const [leagueTeams, setLeagueTeams] = useState({
+    nba: [], // Initialize with empty arrays for each league
+    nfl: [],
+    mlb: [],
+    nhl: [],
+  });
+
+  useEffect(() => {
+    const fetchAllTeams = async () => {
+      // Fetch teams for each league and update the state
+      const nbaTeams = await getTeasmByLeage("nba");
+      const nflTeams = await getTeasmByLeage("nfl");
+      const mlbTeams = await getTeasmByLeage("mlb");
+      const nhlTeams = await getTeasmByLeage("NHL");
+
+      setLeagueTeams({
+        nba: nbaTeams,
+        nfl: nflTeams,
+        mlb: mlbTeams,
+        nhl: nhlTeams,
+      });
+    };
+
+    fetchAllTeams();
+  }, []);
+
+  const getTeams = async (selectedLeague) => {
+    try {
+      const response = await getTeamsByLeague(selectedLeague);
+      const data = response.data;
+      setAvailableTeams(data);
+    } catch (error) {
+      // Handle any errors
+      console.error("Error fetching teams:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedLeague) {
+      const fetchTeams = async () => {
+        try {
+          const response = await getTeasmByLeage(selectedLeague); // Pass the selected league to the function
+          const data = response.data;
+          setAvailableTeams(data);
+        } catch (error) {
+          // Handle any errors
+          console.error("Error fetching teams:", error);
+        }
+      };
+
+      fetchTeams();
+    }
+  }, [selectedLeague]);
 
   return (
     <Modal isOpen={isOpen} style={customStyles}>
@@ -217,26 +364,42 @@ const ReactModal = (props) => {
           onChange={inputChangeHandler}
         />
 
-        <div className="element-container">
-          <div>
+        <div
+          className="element-container"
+          // style={{ display: "flex", alignItems: "center" }}
+        >
+          {/* <div style={{ marginRight: "10px" }}>
             <label className="star">*</label>
-            <label className="input-label">Phone</label>
+            <label className="input-label">Phone Number</label>
+          </div> */}
+          <div style={{ display: "flex", gap: "5px", paddingTop: "5px" }}>
+            <select
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              className="country-select"
+              style={{ width: "50px" }}
+            >
+              <option value="US">United States (+1)</option>
+              <option value="CA">Canada (+1)</option>
+              {/* Add more options for other countries as needed */}
+            </select>
+            <ModalInput
+              className="w-100 phone-input"
+              label="Phone Number"
+              country={selectedCountry}
+              value={formData.phoneNumber}
+              onChange={(phone) =>
+                inputChangeHandler({
+                  target: { value: phone, name: "phoneNumber" },
+                })
+              }
+              name="phoneNumber"
+              id="phoneNumber"
+              required={true}
+            />
           </div>
-          <PhoneInput
-            className="w-100 phone-input"
-            label="Phone Number"
-            country={"us"}
-            value={formData.phoneNumber}
-            onChange={(phone) =>
-              inputChangeHandler({
-                target: { name: "phoneNumber", value: phone },
-              })
-            }
-            name="phoneNumber"
-            id="phoneNumber"
-            required={true}
-          />
         </div>
+
         <ModalInput
           label={"Email"}
           placeholder={"Email"}
@@ -248,37 +411,58 @@ const ReactModal = (props) => {
 
         <div className="line"></div>
       </div>
-      <h2 className="leage-option">CHOICE LEAGUES YOU WANT TO PLAY IN</h2>
-
-      <div className="modal-bottom">
-        <ModalSelect
-          label={"Select League"}
-          options={leaguesOptions}
-          name="league"
-          value={selectedLeague}
-          onChange={(e) => {
-            setSelectedLeague(e.target.value);
-          }}
-        />
-        <ModalInput
-          label={"Create Unique Username"}
-          placeholder={"User Name"}
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={(e) => {
-            setFormData({ ...formData, username: e.target.value });
-          }}
-        />
-        <ModalSelect
-          label={"Select Your Favourite Team"}
-          name="team"
-          value={selectedTeam}
-          onChange={(e) => setSelectedTeam(e.target.value)}
-          options={availableTeams}
-        />
+      <h2 className="leage-option text-white">
+        CHOICE LEAGUES YOU WANT TO PLAY IN
+      </h2>
+      <div>
+        {leaguesInfo.map((info, index) => (
+          <div className="modal-bottom" key={index}>
+            <button
+              onClick={() => handleRemoveLeague(index)}
+              className="bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors hover:bg-red-600"
+            >
+              X
+            </button>
+            <ModalSelect
+              label="Select League"
+              options={leaguesOptions}
+              name={`league_${index}`}
+              value={info.selectedLeague}
+              onChange={(e) => {
+                const updatedLeaguesInfo = [...leaguesInfo];
+                updatedLeaguesInfo[index].selectedLeague = e.target.value;
+                setLeaguesInfo(updatedLeaguesInfo);
+              }}
+            />
+            <ModalInput
+              label="Create Unique Username"
+              placeholder="User Name"
+              type="text"
+              name={`username_${index}`}
+              value={info.formData.username}
+              onChange={(e) => {
+                const updatedLeaguesInfo = [...leaguesInfo];
+                updatedLeaguesInfo[index].formData.username = e.target.value;
+                setLeaguesInfo(updatedLeaguesInfo);
+              }}
+            />
+            <ModalSelect
+              label="Select Your Favorite Team"
+              name={`team_${index}`}
+              value={info.formData.team}
+              onChange={(e) => {
+                const updatedLeaguesInfo = [...leaguesInfo];
+                updatedLeaguesInfo[index].formData.team = e.target.value;
+                setLeaguesInfo(updatedLeaguesInfo);
+              }}
+              options={leagueTeams[info.selectedLeague] || []}
+            />
+          </div>
+        ))}
+        <div className="add-another-league" onClick={addAnotherLeague}>
+          +Add Another League
+        </div>
       </div>
-      <div className="add-another-league">+Add Another League</div>
       <div className="line"></div>
       <div className="password-section">
         <h2>Create strong password</h2>
@@ -353,7 +537,10 @@ const ReactModal = (props) => {
           </div>
         </div>
       </div>
-      <button className="submit-btn">GET ACCESS TO BRAGGING RIGHTS NOW!</button>
+      <button className="submit-btn" onClick={handleRegistration}>
+        GET ACCESS TO BRAGGING RIGHTS NOW!
+      </button>
+      <ToastContainer />{" "}
     </Modal>
   );
 };
