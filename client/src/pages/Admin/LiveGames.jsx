@@ -7,8 +7,8 @@ import GamerCardRight from "../../components/GameCard/GamerCardRight/GamerCardRi
 import { format } from "date-fns";
 
 const LiveGames = () => {
-  const [selectedDate, setSelectedDate] = useState("2023-10-18"); // Example date
-  const [selectedLeague, setSelectedLeague] = useState("yourLeague"); // Default league
+  // const [selectedDate, setSelectedDate] = useState("2023-10-18"); // Example date
+  // const [selectedLeague, setSelectedLeague] = useState("yourLeague"); // Default league
 
   const [gameData, setGameData] = useState([]);
 
@@ -54,33 +54,6 @@ const LiveGames = () => {
     <div>
       <h2 className="text-white text-xl mb-4 align-items-center">Live Games</h2>
       <div className="flex flex-wrap -mx-2">
-        <div className="mb-4 w-1/4 px-2">
-          {/* Date selection */}
-          <label className="text-white">Select Date: </label>
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-gray-800 text-white p-2 rounded w-full"
-          />
-          <br></br>
-          {/* League selection */}
-          <label className="text-white">Select League: </label>
-          <select
-            value={selectedLeague}
-            onChange={(e) => setSelectedLeague(e.target.value)}
-            className="bg-gray-800 text-white p-2 rounded w-full"
-          >
-            {generateLeagueOptions()} {/* Use the generated league options */}
-          </select>
-          <br></br>
-          {/* <button
-            onClick={fetchGames} // Trigger the fetchGames function on button click
-            className="bg-yellow-500 hover-bg-blue-700 text-black py-2 px-4 rounded"
-          >
-            Get Games
-          </button> */}
-        </div>
         <div className=" grid grid-cols-2 gap-4 ">
           {gameData?.map((game, index) =>
             index % 2 === 0 ? (

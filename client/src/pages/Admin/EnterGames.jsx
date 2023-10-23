@@ -183,29 +183,6 @@ const GameForm = () => {
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
-              <div className="w-1/3 px-2">
-                <label htmlFor={`visitorteam-${index}`}>Visitor</label>
-                <select
-                  id={`visitorteam-${index}`}
-                  name={`visitorTeam`}
-                  value={gameCard.visitorTeam}
-                  onChange={(e) => handleChange(e, index)}
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                >
-                  <option value="">Select a team</option>
-                  {loadingTeams ? (
-                    <option value="" disabled>
-                      Loading teams...
-                    </option>
-                  ) : (
-                    teams.map((team) => (
-                      <option key={team.id} value={team.displayName}>
-                        {team.displayName}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
 
               <div className="w-1/8 px-2">
                 <label htmlFor={`vML-${index}`}>V M/L</label>
@@ -265,6 +242,29 @@ const GameForm = () => {
                   onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
+              </div>
+              <div className="w-1/2 px-2">
+                <label htmlFor={`visitorteam-${index}`}>Visitor</label>
+                <select
+                  id={`visitorteam-${index}`}
+                  name={`visitorTeam`}
+                  value={gameCard.visitorTeam}
+                  onChange={(e) => handleChange(e, index)}
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                >
+                  <option value="">Select a team</option>
+                  {loadingTeams ? (
+                    <option value="" disabled>
+                      Loading teams...
+                    </option>
+                  ) : (
+                    teams.map((team) => (
+                      <option key={team.id} value={team.displayName}>
+                        {team.displayName}
+                      </option>
+                    ))
+                  )}
+                </select>
               </div>
 
               <div className="h-[100%] w-px bg-gray-500 mx-2"></div>

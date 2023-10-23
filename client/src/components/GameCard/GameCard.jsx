@@ -19,16 +19,6 @@ const GameCard = ({ gameData }) => {
 
   let gameEnding = ""; // Change const to let
 
-  const handleRadioChange = (e) => {
-    gameEnding = e.target.value;
-  };
-
-  const [userSelections, setUserSelections] = useState({
-    pick_visitor: "",
-    pick_home: "",
-    gameEnding: "",
-  });
-
   const handleEnterPick = () => {
     setUserSelections({
       pick_visitor,
@@ -97,7 +87,7 @@ const GameCard = ({ gameData }) => {
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
                 textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
-                fontSize: "16px",
+                fontSize: "14px",
               }}
             >
               {TimeFormat(gameData?.time)}
@@ -133,14 +123,16 @@ const GameCard = ({ gameData }) => {
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box h-12 w-24">
-              <label>{gameData?.["v-sprd"]}</label> <label>12 Pts</label>
+              <label>{gameData?.["v-sprd"]}</label>
+              <label> Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
             <div className=" box h-12 w-24">
-              <label>{gameData?.["v-ou"]}</label> <label>12 Pts</label>
+              <label>{gameData?.["v-ou"]}</label>
+              <label> Pts</label>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { utcToZonedTime } from "date-fns-tz";
 const TimeFormat = (inputTime) => {
   if (!inputTime) return;
   // The input time string in "HH:mm" format
-  console.log("inputTime", inputTime);
+  // console.log("inputTime", inputTime);
   // Parse the input time string
   const parsedTime = parse(inputTime, "HH:mm", new Date());
 

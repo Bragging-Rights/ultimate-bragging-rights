@@ -13,7 +13,7 @@ export const addGame = async (data) => {
 export const getGames = async ({ queryKey }) => {
   const [_, date, leage] = queryKey;
 
-  console.log("hamd", date, leage);
+  console.log("Games Fetched", date, leage);
   const response = await api.get(
     `api/admin/games/getAllGames/${leage}/${date}`
   );

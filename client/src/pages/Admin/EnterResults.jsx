@@ -1,117 +1,135 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker"; // You'll need to install this library
-
+import { useQuery } from "react-query";
+import { getGames } from "../../services/games";
 import "react-datepicker/dist/react-datepicker.css";
+import { format, add } from "date-fns";
 
 const EnterResults = () => {
+  const [gameData, setGameData] = useState([]);
+
+  const date = new Date();
+  const formattedDateForAPI = format(date, "yyyy-MM-dd");
+
+  const {
+    isLoading: loadingTeams,
+    isError: teamError,
+    data: teamsData,
+  } = useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
+    onSuccess: (fetchedData) => {
+      console.log("fetchedData", fetchedData);
+      setGameData(fetchedData.data);
+    },
+    onError: (error) => {
+      console.error("An error occurred:", error);
+    },
+  });
+
   const initialFormData = {
-    date: new Date(),
-    visitorTeamScore: "",
-    homeTeamScore: "",
-    gameType: "Regular",
+    finalScoreVisitor: "",
+    finalScoreHome: "",
+    gameEnding: "Regular",
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [games, setGames] = useState([]);
-
-  // Fetch games based on the selected date (you'll need to implement this logic)
-  useEffect(() => {
-    // Add your logic to fetch games from the database based on formData.date
-    // Update the games state with the fetched data
-  }, [formData.date]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, gameId) => {
     e.preventDefault();
-    // Prepare the game data to be added to the database
-    const gameData = {
-      date: formData.date,
-      visitorTeamScore: formData.visitorTeamScore,
-      homeTeamScore: formData.homeTeamScore,
-      gameType: formData.gameType,
-    };
 
-    // Add your logic here to send the gameData to your backend API to save in the database
-    // You can use a fetch or axios request to send the data
-    // For example, if you have an API endpoint /api/addGame, you can send data like this:
-    /*
-    fetch("/api/addGame", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(gameData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Game data added:", data);
-        // Optionally, you can clear the form fields or perform other actions after successful submission
-        setFormData(initialFormData);
-      })
-      .catch((error) => {
-        console.error("Error adding game data:", error);
-      });
-    */
+    // Find the game in gameData with the matching gameId
+    const updatedGameData = gameData.map((game) => {
+      if (game._id === gameId) {
+        return {
+          ...game,
+          finalScoreVisitor: formData.finalScoreVisitor,
+          finalScoreHome: formData.finalScoreHome,
+          gameEnding: formData.gameEnding,
+        };
+      }
+      return game;
+    });
+
+    setGameData(updatedGameData);
+    setFormData(initialFormData); // Clear the form input values
   };
 
   return (
     <div className="p-4 text-white">
-      <h2 className="text-xl mb-4 align-items-center">Enter Results</h2>
-      <form onSubmit={handleSubmit} className="text-yellow-500">
-        <div className="mb-4 w-1/8 px-2">
-          <label htmlFor="date">Select Date: </label>
-          <DatePicker
-            id="date"
-            name="date"
-            selected={formData.date}
-            onChange={(date) => setFormData({ ...formData, date })}
-            className="bg-gray-800 text-white p-2 rounded w-full"
-          />
-        </div>
-        <div className="mb-4 w-1/2 px-2">
-          <label htmlFor="visitorTeamScore">Visitor Team Score: </label>
-          <input
-            type="number"
-            id="visitorTeamScore"
-            name="visitorTeamScore"
-            value={formData.visitorTeamScore}
-            onChange={handleChange}
-            className="bg-gray-800 text-white p-2 rounded w-full"
-          />
-        </div>
-        <div className="mb-4 w-1/2 px-2">
-          <label htmlFor="homeTeamScore">Home Team Score: </label>
-          <input
-            type="number"
-            id="homeTeamScore"
-            name="homeTeamScore"
-            value={formData.homeTeamScore}
-            onChange={handleChange}
-            className="bg-gray-800 text-white p-2 rounded w-full"
-          />
-        </div>
-        <div className="mb-4 w-1/2 px-2">
-          <label htmlFor="gameType">Game Type: </label>
-          <select
-            id="gameType"
-            name="gameType"
-            value={formData.gameType}
-            onChange={handleChange}
-            className="bg-gray-800 text-white p-2 rounded w-full"
-          >
-            <option value="Regular">Regular</option>
-            <option value="Overtime">Overtime</option>
-            {/* Add more game types as needed */}
-          </select>
-        </div>
-        <button type="submit" className="bg-yellow-500 text-black p-2 rounded">
-          Submit
-        </button>{" "}
-      </form>
+      <h1 className="text-xl mb-4 align-items-center">
+        Enter Results for today's matches:
+      </h1>
+      <p>
+        <span className="text-red-500">Red is Visitor</span>
+        <br></br>
+        <span className="text-blue-500">Blue is Home</span>
+      </p>
+
+      <div className="flex flex-wrap">
+        {gameData.map((game) => (
+          <div key={game._id} className="w-1/2 p-4 border border-gray-400">
+            <p>
+              Match: <span className="text-red-500">{game.visitor}</span> vs{" "}
+              <span className="text-blue-500">{game.home}</span>
+            </p>
+            <p>
+              ID: <span className="text-green-500">{game._id}</span>
+            </p>
+            <br></br>
+            <form
+              key={game._id}
+              onSubmit={(e) => handleSubmit(e, game._id)}
+              className="text-yellow-500"
+            >
+              <div className="mb-4">
+                <label htmlFor="finalScoreVisitor">Final Score Visitor: </label>
+                <input
+                  type="number"
+                  id="finalScoreVisitor"
+                  name="finalScoreVisitor"
+                  value={formData.finalScoreVisitor}
+                  onChange={handleChange}
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="finalScoreHome">Final Score Home: </label>
+                <input
+                  type="number"
+                  id="finalScoreHome"
+                  name="finalScoreHome"
+                  value={formData.finalScoreHome}
+                  onChange={handleChange}
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="gameEnding">Game Ending: </label>
+                <select
+                  id="gameEnding"
+                  name="gameEnding"
+                  value={formData.gameEnding}
+                  onChange={handleChange}
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                >
+                  <option value="Regular">Regular</option>
+                  <option value="Overtime">Overtime</option>
+                  {/* Add more game types as needed */}
+                </select>
+              </div>
+              <button
+                type="submit"
+                className="bg-yellow-500 text-black p-2 rounded"
+              >
+                Submit
+              </button>{" "}
+            </form>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

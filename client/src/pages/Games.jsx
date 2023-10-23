@@ -10,7 +10,7 @@ import img2 from "../assets/card2.png";
 import GamerCardRight from "../components/GameCard/GamerCardRight/GamerCardRight";
 import { getGames } from "../services/games";
 import { useQuery } from "react-query";
-import { format } from "date-fns";
+import { format, add } from "date-fns";
 
 const Games = () => {
   const isAdmin = true; // Set this value based on whether the user is an admin or not
@@ -20,6 +20,12 @@ const Games = () => {
   console.log("gameData", gameData);
 
   const date = new Date();
+
+  const getNextDate = (dateString, daysToAdd) => {
+    const currentDate = new Date(dateString);
+    const nextDate = add(currentDate, { days: daysToAdd });
+    return nextDate;
+  };
 
   const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
@@ -44,6 +50,17 @@ const Games = () => {
   };
 
   const formattedDate = date.toLocaleDateString("en-US", options);
+  const nextFormattedDate = getNextDate(formattedDate, 1).toLocaleDateString(
+    "en-US",
+    options
+  );
+
+  const tomorrowGames = gameData.filter((game) => {
+    const gameDate = new Date(game.date); // Assuming your game objects have a 'date' property
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return gameDate.toDateString() === tomorrow.toDateString();
+  });
 
   return (
     <div className=" w-full">
@@ -52,12 +69,16 @@ const Games = () => {
       <Line />
       <Banner date={formattedDate} label={"Upcoming Games"} />
       <div className=" grid grid-cols-2 gap-4 ">
-        {gameData?.map((game, index) =>
-          index % 2 === 0 ? (
-            <GameCard gameData={game} isAdmin={isAdmin} />
-          ) : (
-            <GamerCardRight gameData={game} isAdmin={isAdmin} />
+        {gameData && gameData.length > 0 ? (
+          gameData.map((game, index) =>
+            index % 2 === 0 ? (
+              <GameCard key={game.id} gameData={game} isAdmin={isAdmin} />
+            ) : (
+              <GamerCardRight key={game.id} gameData={game} />
+            )
           )
+        ) : (
+          <p>No games available.</p>
         )}
       </div>
       {/* <div className=" grid grid-cols-2 gap-4 ">
@@ -76,15 +97,23 @@ const Games = () => {
           <img src={img2} alt="img2" className=" w-full" />
         </div>
       </div>
-      <Banner date={formattedDate} label={"Upcoming Games"} />
+      <Banner date={nextFormattedDate} label={"Tomorrow's Games"} />
       <div className=" grid grid-cols-2 gap-4 ">
-        <GameCard />
-        <GamerCardRight />
+        {tomorrowGames.length > 0 ? (
+          tomorrowGames.map((game, index) =>
+            index % 2 === 0 ? (
+              <GameCard key={game.id} gameData={game} isAdmin={isAdmin} />
+            ) : (
+              <GamerCardRight key={game.id} gameData={game} />
+            )
+          )
+        ) : (
+          <p className="text-white">No games available for tomorrow.</p>
+        )}
       </div>
-      <div className=" grid grid-cols-2 gap-4 ">
-        <GameCard />
-        <GamerCardRight />
-      </div>
+      <br></br>
+      <br></br>
+      <br></br>
     </div>
   );
 };
