@@ -20,6 +20,7 @@ const api = {
     return await axios.post(`${BASE_URL}${url}`, data, config);
   },
   put: async (url, data) => {
+    console.log(`${BASE_URL}${url}`);
     return await axios.put(`${BASE_URL}${url}`, data, config);
   },
   delete: async (url, data) => {

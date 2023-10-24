@@ -3,6 +3,7 @@ import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
+import { userId } from "../../Modal/SignInModal"; // Replace with the correct path to SignInModal.jsx
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -24,11 +25,13 @@ const GameCard = ({ gameData }) => {
       pick_visitor,
       pick_home,
       gameEnding,
+      userId,
     });
   };
 
   const handleLockIn = () => {
     const timestamp = new Date().toISOString();
+    console.log("User ID in GameCard:", userId);
 
     if (!gameEnding) {
       gameEnding = "null";
@@ -40,8 +43,9 @@ const GameCard = ({ gameData }) => {
       pick_home,
       gameEnding,
       timestamp,
+      userId,
     };
-    console.log(dataToSave);
+    console.log("UserDatatoGamesPlayed", dataToSave);
 
     // Send the data to the database using an HTTP request
     axios

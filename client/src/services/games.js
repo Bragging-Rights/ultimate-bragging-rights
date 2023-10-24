@@ -26,3 +26,12 @@ export const getGameById = async (id) => {
 
   return response;
 };
+
+export const enterGameResults = async (gameId, results) => {
+  const response = await api.put(
+    `api/admin/games/enterResults/${gameId}`,
+    JSON.stringify(results)
+  );
+
+  return response;
+};

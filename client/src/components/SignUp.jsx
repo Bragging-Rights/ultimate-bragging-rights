@@ -280,6 +280,20 @@ const SignUp = ({ onSignUp }) => {
                   <option value="other">Rather Not Say</option>
                 </select>
               </div>
+
+              <div className="col-md-4 col-lg-6">
+                <Input
+                  label="Email"
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required={true}
+                  className="text-warning bg-white"
+                  placeholder="name@example.com"
+                />
+              </div>
               <div className="col-md-4 col-lg-6">
                 <Input
                   label="City"
@@ -343,20 +357,6 @@ const SignUp = ({ onSignUp }) => {
                     required={true}
                   />
                 </div>
-              </div>
-
-              <div className="col-md-4 col-lg-6">
-                <Input
-                  label="Email"
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required={true}
-                  className="text-warning bg-white"
-                  placeholder="name@example.com"
-                />
               </div>
 
               <div className="col-md-4 col-lg-4">

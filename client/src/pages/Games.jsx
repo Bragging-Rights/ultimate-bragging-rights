@@ -12,6 +12,7 @@ import { getGames } from "../services/games";
 import { useQuery } from "react-query";
 import { format, add } from "date-fns";
 
+
 const Games = () => {
   const isAdmin = true; // Set this value based on whether the user is an admin or not
 
@@ -78,7 +79,7 @@ const Games = () => {
             )
           )
         ) : (
-          <p>No games available.</p>
+          <p className="text-white">No games available.</p>
         )}
       </div>
       {/* <div className=" grid grid-cols-2 gap-4 ">

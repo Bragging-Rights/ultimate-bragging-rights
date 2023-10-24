@@ -27,9 +27,10 @@ const customStyles = {
   },
 };
 
-const SignInModal = (props) => {
+export const SignInModal = (props) => {
   const { modalIsOpen, closeModal } = props;
-
+  const userId = localStorage.getItem("_id");
+  console.log("User ID:", userId);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -46,7 +47,7 @@ const SignInModal = (props) => {
         if (rec?.data?.hasErrors) {
           displayToast(rec?.data?.message, "error");
         } else {
-          displayToast("Login successfully.", "success");
+          displayToast("Login successful.", "success");
 
           console.log("rec", rec);
           localStorage.setItem("username", rec.data.data.username);
@@ -67,9 +68,14 @@ const SignInModal = (props) => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log("formData", formData);
+    // console.log("userCreds", formData);
 
-    mutate(formData);
+    mutate(formData, {
+      onSuccess: () => {
+        // Close the modal when the login is successful
+        closeModal();
+      },
+    });
   };
 
   return (
@@ -136,3 +142,4 @@ const SignInModal = (props) => {
 };
 
 export default SignInModal;
+export const userId = localStorage.getItem("_id");

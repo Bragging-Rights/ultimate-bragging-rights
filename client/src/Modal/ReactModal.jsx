@@ -126,6 +126,16 @@ const ReactModal = (props) => {
     }));
   };
 
+  const { mutate, isLoading, isError, data, error } = useMutation(
+    (data) => submitForm(data),
+    {
+      onSuccess: () => {
+        // Close the modal when the form is submitted successfully
+        closeModal();
+      },
+    }
+  );
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -167,14 +177,14 @@ const ReactModal = (props) => {
       </div>
       <div className=" modal-form-container">
         <ModalInput
-          label={"FIRST NAME"}
+          label={"First Name"}
           placeholder={"First Name"}
           name="firstName"
           value={formData.firstName}
           onChange={inputChangeHandler}
         />
         <ModalInput
-          label={"LAST NAME"}
+          label={"Last Name"}
           placeholder={"Last Name"}
           name="lastName"
           value={formData.lastName}
@@ -191,6 +201,17 @@ const ReactModal = (props) => {
           name="gender"
           onChange={inputChangeHandler}
         />
+
+        <ModalInput
+          label={"Email"}
+          placeholder={"Email"}
+          value={formData.email}
+          onChange={inputChangeHandler}
+          type="email"
+          name="email"
+        />
+
+        <CountrySelect value={selectedCountry} onChange={handleCountryChange} />
         <ModalInput
           label={"CITY"}
           placeholder={"City"}
@@ -198,7 +219,6 @@ const ReactModal = (props) => {
           value={formData.city}
           onChange={inputChangeHandler}
         />
-        <CountrySelect value={selectedCountry} onChange={handleCountryChange} />
         <div className="element-container">
           <div>
             <label className="star">*</label>
@@ -239,14 +259,6 @@ const ReactModal = (props) => {
             required={true}
           />
         </div>
-        <ModalInput
-          label={"Email"}
-          placeholder={"Email"}
-          value={formData.email}
-          onChange={inputChangeHandler}
-          type="email"
-          name="email"
-        />
 
         <div className="line"></div>
       </div>

@@ -267,7 +267,7 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div className="h-[100%] w-px bg-gray-500 mx-2"></div>
+              <div className="h-[100%] w-px bg-gray-500 mx-2">||</div>
 
               <div className="w-1/4 px-2">
                 <label htmlFor={`hometeam-${index}`}>Home</label>
