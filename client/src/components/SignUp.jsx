@@ -3,7 +3,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from "react-router-dom";
 // import "./signup.css";
 import Input from "./Input";
-import PhoneInput from "react-phone-input-2"; // Import the ReactPhoneInput component
+import PhoneInput from "react-phone-input-2";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useMutation } from "react-query";

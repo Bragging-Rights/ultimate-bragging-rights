@@ -102,7 +102,67 @@ const GameForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    mutate(gameCards);
+    const missingFields = [];
+
+    // // Check for missing league, season, and date
+    // if (!formData.league) {
+    //   missingFields.push("League");
+    // }
+    // if (!formData.season) {
+    //   missingFields.push("Season");
+    // }
+    // if (!formData.date) {
+    //   missingFields.push("Date");
+    // }
+
+    // Check each game card for missing fields
+    gameCards.forEach((gameCard, index) => {
+      if (!gameCard.visitorTeam) {
+        missingFields.push(`Visitor Team for game ${index + 1}`);
+      }
+      if (gameCard.vML === "") {
+        missingFields.push(`Visitor M/L for game ${index + 1}`);
+      }
+      if (gameCard.vSprd === "") {
+        missingFields.push(`V Sprd for game ${index + 1}`);
+      }
+      if (gameCard.vSprdOdds === "") {
+        missingFields.push(`V Sprd Odds for game ${index + 1}`);
+      }
+      if (gameCard.vOU === "") {
+        missingFields.push(`V O/U for game ${index + 1}`);
+      }
+      if (gameCard.vOUOdds === "") {
+        missingFields.push(`V O/U Odds for game ${index + 1}`);
+      }
+      if (!gameCard.homeTeam) {
+        missingFields.push(`Home Team for game ${index + 1}`);
+      }
+      if (gameCard.hML === "") {
+        missingFields.push(`Home M/L for game ${index + 1}`);
+      }
+      if (gameCard.hSprd === "") {
+        missingFields.push(`H Sprd for game ${index + 1}`);
+      }
+      if (gameCard.hSprdOdds === "") {
+        missingFields.push(`H Sprd Odds for game ${index + 1}`);
+      }
+      if (gameCard.hOU === "") {
+        missingFields.push(`H O/U for game ${index + 1}`);
+      }
+      if (gameCard.hOUOdds === "") {
+        missingFields.push(`H O/U Odds for game ${index + 1}`);
+      }
+    });
+
+    if (missingFields.length > 0) {
+      displayToast(
+        `Please add the following fields: ${missingFields.join(", ")}.`,
+        "error"
+      );
+    } else {
+      mutate(gameCards);
+    }
   };
 
   return (
@@ -159,10 +219,22 @@ const GameForm = () => {
             </select>
           </div>
         </div>
+
         {gameCards.map((gameCard, index) => (
-          <div key={index} className="mb-4">
-            <div className="mb-4 w-full flex justify-between">
-              <div className="mb-2 pt-6">
+          <div
+            key={index}
+            className="game-card"
+            style={{ backgroundColor: "" }}
+          >
+            <div className="flex flex-row">
+              <div
+                className="mb-2 pt-6"
+                style={{
+                  marginRight: "50px",
+                  marginTop: "-50px",
+                  marginLeft: "-10px",
+                }}
+              >
                 <button
                   type="button"
                   onClick={() => handleRemoveGameCard(index)}
@@ -172,79 +244,58 @@ const GameForm = () => {
                 </button>
               </div>
 
-              <div className="w-1/8 px-2">
-                <label htmlFor={`time-${index}`}>Time</label>
+              <div
+                className="w-1/2 px-2 box box h-18 w-40"
+                style={{ marginRight: "250px", marginBottom: "8px" }}
+              >
+                <label htmlFor={`time-${index}`}>Game Time</label>
                 <input
                   type="time"
                   id={`time-${index}`}
                   name={`time`}
                   value={gameCard.time}
                   onChange={(e) => handleChange(e, index)}
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
-              </div>
-
-              <div className="w-1/8 px-2">
-                <label htmlFor={`vML-${index}`}>V M/L</label>
-                <input
-                  type="number"
-                  id={`vML-${index}`}
-                  name={`vML`}
-                  value={gameCard.vML}
-                  onChange={(e) => handleChange(e, index)}
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
-              </div>
-
-              <div className="w-1/8 px-2">
-                <label htmlFor={`vSprd-${index}`}>V Sprd</label>
-                <input
-                  type="number"
-                  id={`vSprd-${index}`}
-                  name={`vSprd`}
-                  value={gameCard.vSprd}
-                  onChange={(e) => handleChange(e, index)}
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
-              </div>
-
-              <div className="w-1/8 px-2">
-                <label htmlFor={`vSprdOdds-${index}`}>VSprdOdds</label>
-                <input
-                  type="number"
-                  id={`vSprdOdds-${index}`}
-                  name={`vSprdOdds`}
-                  value={gameCard.vSprdOdds}
-                  onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full "
                 />
               </div>
-
-              <div className="w-1/8 px-2">
-                <label htmlFor={`vOU-${index}`}>V O/U</label>
-                <input
-                  type="number"
-                  id={`vOU-${index}`}
-                  name={`vOU`}
-                  value={gameCard.vOU}
-                  onChange={(e) => handleChange(e, index)}
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
+              {/* <div
+                className="w-1/5 px-2 box box h-18 w-20"
+                style={{ marginRight: "90px" }}
+              >
+                <label>MoneyLine</label>
               </div>
-
-              <div className="w-1/8 px-2">
-                <label htmlFor={`vOUOdds-${index}`}>VOUOdds</label>
-                <input
-                  type="number"
-                  id={`vOUOdds-${index}`}
-                  name={`vOUOdds`}
-                  value={gameCard.vOUOdds}
-                  onChange={(e) => handleChange(e, index)}
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
+              <div
+                className="w-1/5 px-2 box box h-18 w-20"
+                style={{ marginRight: "90px" }}
+              >
+                <label>Spread</label>
               </div>
-              <div className="w-1/2 px-2">
-                <label htmlFor={`visitorteam-${index}`}>Visitor</label>
+              <div
+                className="w-1/5 px-2 box box h-18 w-20 align-items-center justify-between"
+                style={{ marginRight: "70px" }}
+              >
+                <label>Spread Odds</label>
+              </div>
+              <div
+                className="w-1/5 px-2 box box h-18 w-20 align-items-center justify-between"
+                style={{ marginRight: "90px" }}
+              >
+                <label>Over/Under</label>
+              </div>
+              <div
+                className="w-1/5 px-2 box box h-18 w-20 align-items-center justify-between"
+                style={{ marginRight: "90px" }}
+              >
+                <label>Over/Under Odds</label>
+              </div> */}
+            </div>
+
+            <div className="flex justify-between">
+              <div
+                className="w-1/2 px-2 box box h-18 w-30"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`visitorteam-${index}`}>Visitor Team</label>
                 <select
                   id={`visitorteam-${index}`}
                   name={`visitorTeam`}
@@ -267,10 +318,90 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div className="h-[100%] w-px bg-gray-500 mx-2">||</div>
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`vML-${index}`}>Visitor M/L</label>
+                <input
+                  type="number"
+                  id={`vML-${index}`}
+                  name={`vML`}
+                  value={gameCard.vML}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
 
-              <div className="w-1/4 px-2">
-                <label htmlFor={`hometeam-${index}`}>Home</label>
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`vSprd-${index}`}>V Sprd</label>
+                <input
+                  type="number"
+                  id={`vSprd-${index}`}
+                  name={`vSprd`}
+                  value={gameCard.vSprd}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`vSprdOdds-${index}`}>V Sprd Odds</label>
+                <input
+                  type="number"
+                  id={`vSprdOdds-${index}`}
+                  name={`vSprdOdds`}
+                  value={gameCard.vSprdOdds}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`vOU-${index}`}>V O/U</label>
+                <input
+                  type="number"
+                  id={`vOU-${index}`}
+                  name={`vOU`}
+                  value={gameCard.vOU}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+
+              <div className="w-1/8 px-2 box box h-18 w-15">
+                <label htmlFor={`vOUOdds-${index}`}>V O/U Odds</label>
+                <input
+                  type="number"
+                  id={`vOUOdds-${index}`}
+                  name={`vOUOdds`}
+                  value={gameCard.vOUOdds}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between">
+              <div
+                className="w-1/2 px-2 box box h-18 w-30"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`hometeam-${index}`}>Home Team</label>
                 <select
                   id={`hometeam-${index}`}
                   name={`homeTeam`}
@@ -293,19 +424,26 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div className="w-1/8 px-2">
-                <label htmlFor={`hML-${index}`}>H M/L</label>
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`hML-${index}`}>Home M/L</label>
                 <input
                   type="number"
                   id={`hML-${index}`}
                   name={`hML`}
                   value={gameCard.hML}
                   onChange={(e) => handleChange(e, index)}
+                  step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
 
-              <div className="w-1/8 px-2">
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
                 <label htmlFor={`hSprd-${index}`}>H Sprd</label>
                 <input
                   type="number"
@@ -313,60 +451,74 @@ const GameForm = () => {
                   name={`hSprd`}
                   value={gameCard.hSprd}
                   onChange={(e) => handleChange(e, index)}
+                  step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
 
-              <div className="w-1/8 px-2">
-                <label htmlFor={`hSprdOdds-${index}`}>HSprdOdds</label>
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`hSprdOdds-${index}`}>H Sprd Odds</label>
                 <input
                   type="number"
                   id={`hSprdOdds-${index}`}
                   name={`hSprdOdds`}
                   value={gameCard.hSprdOdds}
                   onChange={(e) => handleChange(e, index)}
+                  step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
 
-              <div className="w-1/8 px-2">
-                <label htmlFor={`hOU-${index}`}>H OU</label>
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`hOU-${index}`}>H O/U</label>
                 <input
                   type="number"
                   id={`hOU-${index}`}
                   name={`hOU`}
                   value={gameCard.hOU}
                   onChange={(e) => handleChange(e, index)}
+                  step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
 
-              <div className="w-1/8 px-2">
-                <label htmlFor={`hOUOdds-${index}`}>HOUOdds</label>
+              <div className="w-1/8 px-2 box box h-18 w-15">
+                <label htmlFor={`hOUOdds-${index}`}>H O/U Odds</label>
                 <input
                   type="number"
                   id={`hOUOdds-${index}`}
                   name={`hOUOdds`}
                   value={gameCard.hOUOdds}
                   onChange={(e) => handleChange(e, index)}
+                  step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
             </div>
           </div>
         ))}
-        <div className="mb-4 w-1/2 px-2">
+        <div className="mb-4 w-1/4 px-2 flex">
           <button
             type="button"
             onClick={handleAddGameCard}
-            className="bg-green-500 text-white p-2 rounded w-full"
+            className="bg-green-500 text-white p-2 rounded"
+            style={{ marginRight: "10px" }}
           >
-            Add Game Card
+            +
+          </button>
+          <button
+            type="submit"
+            className="bg-yellow-400 text-black p-2 rounded"
+          >
+            Display Games on Website ✔
           </button>
         </div>
-        <button type="submit" className="bg-yellow-500 text-black p-2 rounded">
-          Submit
-        </button>
       </form>
     </div>
   );

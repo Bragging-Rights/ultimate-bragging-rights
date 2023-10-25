@@ -61,7 +61,7 @@ function GameForm({ game, onUpdateGameData }) {
       ) : (
         <form onSubmit={handleSubmit}>
           {/* Form fields */}
-          <div className="mb-4">
+          <div className="mb-2">
             <label htmlFor="finalScoreVisitor">Final Score Visitor: </label>
             <input
               type="number"
@@ -69,7 +69,7 @@ function GameForm({ game, onUpdateGameData }) {
               name="finalScoreVisitor"
               value={formData.finalScoreVisitor}
               onChange={handleChange}
-              className="bg-gray-800 text-white p-2 rounded w-full"
+              className="bg-gray-800 text-white p-2 rounded w-1/3"
             />
           </div>
           <div className="mb-4">
@@ -80,7 +80,7 @@ function GameForm({ game, onUpdateGameData }) {
               name="finalScoreHome"
               value={formData.finalScoreHome}
               onChange={handleChange}
-              className="bg-gray-800 text-white p-2 rounded w-full"
+              className="bg-gray-800 text-white p-2 rounded w-1/3"
             />
           </div>
           <div className="mb-4">
@@ -90,7 +90,7 @@ function GameForm({ game, onUpdateGameData }) {
               name="gameEnding"
               value={formData.gameEnding}
               onChange={handleChange}
-              className="bg-gray-800 text-white p-2 rounded w-full"
+              className="bg-gray-800 text-white p-2 rounded w-1/3"
             >
               <option value="Regular">Regular</option>
               <option value="Overtime">Overtime</option>
@@ -156,9 +156,9 @@ const EnterResults = () => {
         <span className="text-blue-500">Blue is Home</span>
       </p> */}
 
-      <div className="flex flex-wrap">
+      <div className="flex flex-col" style={{ width: "500px" }}>
         {gameData.map((game) => (
-          <div key={game._id} className="w-1/2 p-4 border border-yellow-400">
+          <div key={game._id} className="w-1/2 p-4 border border-blue-300">
             <span>
               <span className="text-orange-500">Match: </span>{" "}
               <span className="">{game.visitor}</span>{" "}

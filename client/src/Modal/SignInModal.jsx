@@ -5,6 +5,7 @@ import logoImg from "../assets/logo.png";
 import { login } from "../services/auth";
 import { useMutation } from "react-query";
 import displayToast from "../components/Alert/Alert";
+import { ForgotPasswordModal } from "./ForgotPasswordModal";
 
 const customStyles = {
   content: {
@@ -78,6 +79,9 @@ export const SignInModal = (props) => {
     });
   };
 
+  const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] =
+    useState(false);
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -130,13 +134,21 @@ export const SignInModal = (props) => {
         />
       </div>
       <div className="password-reset-container text-white">
-        {/* <button className="reset-password-btn" onClick={handleResetPassword}>
-          Forgot Password? Reset Here
-        </button> */}
+        <button
+          className="reset-password-btn text-yellow-300"
+          style={{ textDecoration: "underline", fontSize: "16px" }}
+          onClick={() => setForgotPasswordModalOpen(true)}
+        >
+          Forgot Password?
+        </button>
       </div>
       <button className="submit-btn" onClick={handleSignIn}>
         SIGN IN
       </button>
+      <ForgotPasswordModal
+        modalIsOpen={isForgotPasswordModalOpen}
+        closeModal={() => setForgotPasswordModalOpen(false)}
+      />
     </Modal>
   );
 };
