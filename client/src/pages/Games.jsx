@@ -12,23 +12,23 @@ import { getGames } from "../services/games";
 import { useQuery } from "react-query";
 import { format, add } from "date-fns";
 
-
 const Games = () => {
   const isAdmin = true; // Set this value based on whether the user is an admin or not
 
   const [gameData, setGameData] = useState([]);
+  const [tomorrowGameData, setTomorrowGameData] = useState([]); // Store tomorrow's games separately
 
   console.log("gameData", gameData);
+  console.log("tomorrowGameData", tomorrowGameData);
 
   const date = new Date();
+  const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
   const getNextDate = (dateString, daysToAdd) => {
     const currentDate = new Date(dateString);
     const nextDate = add(currentDate, { days: daysToAdd });
     return nextDate;
   };
-
-  const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
   const {
     isLoading: loadingTeams,
@@ -38,6 +38,23 @@ const Games = () => {
     onSuccess: (fetchedData) => {
       console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
+    },
+    onError: (error) => {
+      console.error("An error occurred:", error);
+    },
+  });
+
+  const tomorrow = add(date, { days: 1 });
+  const formattedDateForTomorrow = format(tomorrow, "yyyy-MM-dd");
+
+  const {
+    isLoading: loadingTomorrowGames,
+    isError: tomorrowGamesError,
+    data: tomorrowGamesData,
+  } = useQuery(["teams", formattedDateForTomorrow, "NHL"], getGames, {
+    onSuccess: (fetchedData) => {
+      console.log("fetchedTomorrowData", fetchedData);
+      setTomorrowGameData(fetchedData.data);
     },
     onError: (error) => {
       console.error("An error occurred:", error);
@@ -56,10 +73,8 @@ const Games = () => {
     options
   );
 
-  const tomorrowGames = gameData.filter((game) => {
+  const tomorrowGames = tomorrowGameData.filter((game) => {
     const gameDate = new Date(game.date); // Assuming your game objects have a 'date' property
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
     return gameDate.toDateString() === tomorrow.toDateString();
   });
 
@@ -100,16 +115,20 @@ const Games = () => {
       </div>
       <Banner date={nextFormattedDate} label={"Tomorrow's Games"} />
       <div className=" grid grid-cols-2 gap-4 ">
-        {tomorrowGames.length > 0 ? (
-          tomorrowGames.map((game, index) =>
-            index % 2 === 0 ? (
-              <GameCard key={game.id} gameData={game} isAdmin={isAdmin} />
-            ) : (
-              <GamerCardRight key={game.id} gameData={game} />
+        {tomorrowGameData ? (
+          tomorrowGameData.length > 0 ? (
+            tomorrowGameData.map((game, index) =>
+              index % 2 === 0 ? (
+                <GameCard key={game.id} gameData={game} isAdmin={isAdmin} />
+              ) : (
+                <GamerCardRight key={game.id} gameData={game} />
+              )
             )
+          ) : (
+            <p className="text-white">No games available for tomorrow.</p>
           )
         ) : (
-          <p className="text-white">No games available for tomorrow.</p>
+          <p className="text-white">Loading tomorrow's games...</p>
         )}
       </div>
       <br></br>

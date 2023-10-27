@@ -3,6 +3,7 @@ import React from "react";
 const Switches = (props) => {
   const { leage, season } = props;
 
+
   if (leage === "Hocky" && season === "Regular") {
     return (
       <div className=" flex gap-5">

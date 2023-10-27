@@ -61,42 +61,48 @@ function GameForm({ game, onUpdateGameData }) {
       ) : (
         <form onSubmit={handleSubmit}>
           {/* Form fields */}
-          <div className="mb-2">
-            <label htmlFor="finalScoreVisitor">Final Score Visitor: </label>
-            <input
-              type="number"
-              id="finalScoreVisitor"
-              name="finalScoreVisitor"
-              value={formData.finalScoreVisitor}
-              onChange={handleChange}
-              className="bg-gray-800 text-white p-2 rounded w-1/3"
-            />
+          <div className="flex space-x-4 w-full">
+            <div className="mb-2 w-1/2">
+              <label htmlFor="finalScoreVisitor">{game.visitor}</label>
+              <input
+                type="number"
+                id="finalScoreVisitor"
+                name="finalScoreVisitor"
+                value={formData.finalScoreVisitor}
+                onChange={handleChange}
+                className="bg-gray-800 text-white p-2 rounded w-1/3"
+              />
+            </div>
+            <span className="text-red-500">vs</span>{" "}
+            <div className="mb-4 w-1/2">
+              <label htmlFor="finalScoreHome">{game.home}</label>
+              <input
+                type="number"
+                id="finalScoreHome"
+                name="finalScoreHome"
+                value={formData.finalScoreHome}
+                onChange={handleChange}
+                className="bg-gray-800 text-white p-2 rounded w-1/3"
+              />
+            </div>
+            <div className="mb-4 w-full">
+              <label htmlFor="gameEnding"></label>
+              <select
+                id="gameEnding"
+                name="gameEnding"
+                value={formData.gameEnding}
+                onChange={handleChange}
+                className="bg-gray-800 text-white p-2 rounded w-1/3"
+              >
+                <option value="Regular">Regular</option>
+                <option value="Overtime">Overtime</option>
+                <option value="Postponed">Postponed</option>
+                <option value="Cancelled">Cancelled</option>
+                {/* Add more game types as needed */}
+              </select>
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="finalScoreHome">Final Score Home: </label>
-            <input
-              type="number"
-              id="finalScoreHome"
-              name="finalScoreHome"
-              value={formData.finalScoreHome}
-              onChange={handleChange}
-              className="bg-gray-800 text-white p-2 rounded w-1/3"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="gameEnding">Game Ending: </label>
-            <select
-              id="gameEnding"
-              name="gameEnding"
-              value={formData.gameEnding}
-              onChange={handleChange}
-              className="bg-gray-800 text-white p-2 rounded w-1/3"
-            >
-              <option value="Regular">Regular</option>
-              <option value="Overtime">Overtime</option>
-              {/* Add more game types as needed */}
-            </select>
-          </div>
+
           <button
             type="submit"
             className="bg-yellow-500 text-black p-2 rounded"
@@ -156,19 +162,19 @@ const EnterResults = () => {
         <span className="text-blue-500">Blue is Home</span>
       </p> */}
 
-      <div className="flex flex-col" style={{ width: "500px" }}>
+      <div className="flex flex-col w-full">
         {gameData.map((game) => (
           <div key={game._id} className="w-1/2 p-4 border border-blue-300">
-            <span>
+            {/* <span>
               <span className="text-orange-500">Match: </span>{" "}
               <span className="">{game.visitor}</span>{" "}
               <span className="text-red-500">vs</span>{" "}
               <span className="">{game.home}</span>
-            </span>
-            <p>
+            </span> */}
+            {/* <p>
               <span className="text-pink-500">ID: </span>
               <span>{game._id}</span>
-            </p>
+            </p> */}
             <br />
             {/* Render the form component for this card */}
             <GameForm game={game} onUpdateGameData={updateGameData} />

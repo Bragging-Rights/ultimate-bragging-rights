@@ -38,7 +38,7 @@ const GameCard = ({ gameData }) => {
     }
 
     const dataToSave = {
-      gameData,
+      gameData: gameData._id,
       pick_visitor,
       pick_home,
       gameEnding,
@@ -48,16 +48,16 @@ const GameCard = ({ gameData }) => {
     console.log("UserDatatoGamesPlayed", dataToSave);
 
     // Send the data to the database using an HTTP request
-    axios
-      .post("your_api_endpoint", dataToSave)
-      .then((response) => {
-        // Handle the response if needed
-        console.log("Data successfully saved to the database:", response.data);
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error saving data to the database:", error);
-      });
+    // axios
+    //   .post("your_api_endpoint", dataToSave)
+    //   .then((response) => {
+    //     // Handle the response if needed
+    //     console.log("Data successfully saved to the database:", response.data);
+    //   })
+    //   .catch((error) => {
+    //     // Handle errors
+    //     console.error("Error saving data to the database:", error);
+    //   });
   };
 
   const handleEdit = () => {

@@ -89,8 +89,15 @@ const GameForm = () => {
   };
 
   const handleAddGameCard = () => {
-    setGameCards([...gameCards, { ...formData }]);
-    setFormData(initialFormData);
+    const newGameCard = {
+      ...formData, // Copy the common form data
+      ...initialFormData, // Initialize game-specific data
+    };
+
+    // Create a new copy of the formData object for each game card
+    setGameCards((prevGameCards) => [...prevGameCards, newGameCard]);
+    setFormData(initialFormData); // Clear the form after adding a game card
+    console.log(newGameCard);
   };
 
   const handleRemoveGameCard = (index) => {
@@ -101,6 +108,7 @@ const GameForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(gameCards);
 
     const missingFields = [];
 
@@ -515,6 +523,7 @@ const GameForm = () => {
           <button
             type="submit"
             className="bg-yellow-400 text-black p-2 rounded"
+            onClick={handleSubmit}
           >
             Display Games on Website ✔
           </button>
