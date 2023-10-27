@@ -42,7 +42,6 @@ const GameCard = ({ gameData }) => {
       pick_visitor,
       pick_home,
       gameEnding,
-      timestamp,
       userId,
     };
     console.log("UserDatatoGamesPlayed", dataToSave);
