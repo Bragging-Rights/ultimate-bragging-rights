@@ -330,22 +330,6 @@ const GameForm = () => {
                 className="w-1/8 px-2 box box h-18 w-15"
                 style={{ marginRight: "8px" }}
               >
-                <label htmlFor={`vML-${index}`}>Visitor M/L</label>
-                <input
-                  type="number"
-                  id={`vML-${index}`}
-                  name={`vML`}
-                  value={gameCard.vML}
-                  onChange={(e) => handleChange(e, index)}
-                  step="0.1"
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
-              </div>
-
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
                 <label htmlFor={`vSprd-${index}`}>V Sprd</label>
                 <input
                   type="number"
@@ -402,6 +386,22 @@ const GameForm = () => {
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
               </div>
+
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`vML-${index}`}>Visitor M/L</label>
+                <input
+                  type="number"
+                  id={`vML-${index}`}
+                  name={`vML`}
+                  value={gameCard.vML}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
             </div>
 
             <div className="flex justify-between">
@@ -430,22 +430,6 @@ const GameForm = () => {
                     ))
                   )}
                 </select>
-              </div>
-
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
-                <label htmlFor={`hML-${index}`}>Home M/L</label>
-                <input
-                  type="number"
-                  id={`hML-${index}`}
-                  name={`hML`}
-                  value={gameCard.hML}
-                  onChange={(e) => handleChange(e, index)}
-                  step="0.1"
-                  className="bg-gray-800 text-white p-2 rounded w-full"
-                />
               </div>
 
               <div
@@ -503,6 +487,22 @@ const GameForm = () => {
                   id={`hOUOdds-${index}`}
                   name={`hOUOdds`}
                   value={gameCard.hOUOdds}
+                  onChange={(e) => handleChange(e, index)}
+                  step="0.1"
+                  className="bg-gray-800 text-white p-2 rounded w-full"
+                />
+              </div>
+
+              <div
+                className="w-1/8 px-2 box box h-18 w-15"
+                style={{ marginRight: "8px" }}
+              >
+                <label htmlFor={`hML-${index}`}>Home M/L</label>
+                <input
+                  type="number"
+                  id={`hML-${index}`}
+                  name={`hML`}
+                  value={gameCard.hML}
                   onChange={(e) => handleChange(e, index)}
                   step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
