@@ -4,6 +4,7 @@ import "./GameCard.css";
 import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
 import { userId } from "../../Modal/SignInModal"; // Replace with the correct path to SignInModal.jsx
+import { addPrediction } from "../../services/predictions";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -44,19 +45,10 @@ const GameCard = ({ gameData }) => {
       gameEnding,
       userId,
     };
-    console.log("UserDatatoGamesPlayed", dataToSave);
+    console.log("UserDatatoGamesPlayed", "data to save ", dataToSave);
 
     // Send the data to the database using an HTTP request
-    // axios
-    //   .post("your_api_endpoint", dataToSave)
-    //   .then((response) => {
-    //     // Handle the response if needed
-    //     console.log("Data successfully saved to the database:", response.data);
-    //   })
-    //   .catch((error) => {
-    //     // Handle errors
-    //     console.error("Error saving data to the database:", error);
-    //   });
+    addPrediction(dataToSave);
   };
 
   const handleEdit = () => {

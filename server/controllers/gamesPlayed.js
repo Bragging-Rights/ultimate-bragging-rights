@@ -2,6 +2,7 @@ const GamesPlayed = require("../models/gamesPlayed");
 
 // Create a new game played record
 exports.createGamePlayed = async (req, res) => {
+  console.log("req.body:", req.body);
   try {
     const gamePlayed = new GamesPlayed(req.body);
     await gamePlayed.save();

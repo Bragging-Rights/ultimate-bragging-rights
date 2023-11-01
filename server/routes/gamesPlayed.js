@@ -9,7 +9,7 @@ const {
 } = require("../controllers/gamesPlayed");
 
 // Create a new game played record
-router.post("/", createGamePlayed);
+router.post("/create", createGamePlayed);
 
 // Get all game played records
 router.get("/", getAllGamePlayed);

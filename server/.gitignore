@@ -4,3 +4,4 @@ config/dev.js
 .git
 .env
 scrappers/
+calculations/
