@@ -6,7 +6,7 @@ const {
   getTeam,
   updateTeam,
   deleteTeam,
-} = require("./nflController");
+} = require("../../controllers/leagues/nba");
 
 // Create
 router.post("/teams", createTeam);

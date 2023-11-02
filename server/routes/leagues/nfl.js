@@ -1,5 +1,11 @@
-import express from "express";
-import { createTeam, getTeams, getTeam, updateTeam, deleteTeam } from "./nfl";
+const express = require("express");
+const {
+  createTeam,
+  getTeams,
+  getTeam,
+  updateTeam,
+  deleteTeam,
+} = require("../../controllers/leagues/nfl");
 
 const router = express.Router();
 
@@ -16,4 +22,4 @@ router.put("/teams/:id", updateTeam);
 // Delete
 router.delete("/teams/:id", deleteTeam);
 
-export default router;
+module.exports = router;

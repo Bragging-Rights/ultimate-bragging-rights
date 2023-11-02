@@ -6,7 +6,7 @@ const {
   getTeam,
   updateTeam,
   deleteTeam,
-} = require("./mlb");
+} = require("../../controllers/leagues/mlb");
 
 // Create
 router.post("/teams", createTeam);

@@ -1,7 +1,7 @@
-const Nfl = require("./nfl");
+const Nfl = require("../../models/leagues/nhl");
 
 // Create
-export const createTeam = async (req, res) => {
+const createTeam = async (req, res) => {
   const newTeam = new Nfl(req.body);
   try {
     const team = await newTeam.save();
@@ -12,7 +12,7 @@ export const createTeam = async (req, res) => {
 };
 
 // Read
-export const getTeams = async (req, res) => {
+const getTeams = async (req, res) => {
   try {
     const teams = await Nfl.find();
     res.json(teams);
@@ -21,7 +21,7 @@ export const getTeams = async (req, res) => {
   }
 };
 
-export const getTeam = async (req, res) => {
+const getTeam = async (req, res) => {
   try {
     const team = await Nfl.findById(req.params.id);
     if (team == null) {
@@ -34,7 +34,7 @@ export const getTeam = async (req, res) => {
 };
 
 // Update
-export const updateTeam = async (req, res) => {
+const updateTeam = async (req, res) => {
   try {
     const team = await Nfl.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -49,7 +49,7 @@ export const updateTeam = async (req, res) => {
 };
 
 // Delete
-export const deleteTeam = async (req, res) => {
+const deleteTeam = async (req, res) => {
   try {
     const team = await Nfl.findByIdAndRemove(req.params.id);
     if (!team) {
@@ -59,4 +59,12 @@ export const deleteTeam = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports = {
+  createTeam,
+  getTeams,
+  getTeam,
+  updateTeam,
+  deleteTeam,
 };

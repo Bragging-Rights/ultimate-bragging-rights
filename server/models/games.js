@@ -61,6 +61,16 @@ const gameSchema = new mongoose.Schema({
   conference: String,
   devision: String,
   timestamp: String,
+  "v-ml-points": String,
+  "h-ml-points": String,
+  "v-sprd-points": String,
+  "h-sprd-points": String,
+  "v-sprd-odds-points": String,
+  "h-sprd-odds-points": String,
+  "v-ou-points": String,
+  "h-ou-points": String,
+  "v-ou-odds-points": String,
+  "h-ou-odds-points": String,
 });
 
 const Game = mongoose.model("Game", gameSchema);

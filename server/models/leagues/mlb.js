@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const TeamSchema = new mongoose.Schema({
+const mlbSchema = new mongoose.Schema({
   id: String,
   displayName: String,
   conference: String,

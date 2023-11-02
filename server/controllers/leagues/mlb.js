@@ -1,7 +1,7 @@
-const Mlb = require("./mlb");
+const Mlb = require("../../models/leagues/mlb");
 
 // Create
-const createTeam = async (req, res) => {
+exports.createTeam = async (req, res) => {
   const newTeam = new Mlb(req.body);
   try {
     const team = await newTeam.save();
@@ -12,7 +12,7 @@ const createTeam = async (req, res) => {
 };
 
 // Read
-const getTeams = async (req, res) => {
+exports.getTeams = async (req, res) => {
   try {
     const teams = await Mlb.find();
     res.json(teams);
@@ -21,7 +21,7 @@ const getTeams = async (req, res) => {
   }
 };
 
-const getTeam = async (req, res) => {
+exports.getTeam = async (req, res) => {
   try {
     const team = await Mlb.findById(req.params.id);
     if (team == null) {
@@ -34,7 +34,7 @@ const getTeam = async (req, res) => {
 };
 
 // Update
-const updateTeam = async (req, res) => {
+exports.updateTeam = async (req, res) => {
   try {
     const team = await Mlb.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -49,7 +49,7 @@ const updateTeam = async (req, res) => {
 };
 
 // Delete
-const deleteTeam = async (req, res) => {
+exports.deleteTeam = async (req, res) => {
   try {
     const team = await Mlb.findByIdAndRemove(req.params.id);
     if (!team) {
