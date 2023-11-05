@@ -65,10 +65,23 @@ const ReactModal = (props) => {
     refetch,
   } = useQuery(["teams", league], getTeasmByLeage, {
     onError: (err) => {
-      displayToast("An error occurred while getting  the game.", "error");
+      displayToast("An error occurred while getting the game.", "error");
     },
     onSuccess: (rec) => {
-      setAvailableTeams(rec.data);
+      const sortedTeams = rec.data.sort((a, b) => {
+        const nameA = a?.displayName;
+        const nameB = b?.displayName;
+
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      setAvailableTeams(sortedTeams);
     },
   });
 
@@ -317,7 +330,7 @@ const ReactModal = (props) => {
           }}
         />
         <ModalInput
-          label={"REFER BY"}
+          label={"Refer By"}
           placeholder={"Refer by"}
           name="refer_by"
           value={formData?.refer_by}
@@ -372,7 +385,7 @@ const ReactModal = (props) => {
               }}
               options={availableTeams.map((team) => {
                 return {
-                  label: team?.abbreviation,
+                  label: team?.displayName,
                   value: team?.fullName,
                 };
               })}

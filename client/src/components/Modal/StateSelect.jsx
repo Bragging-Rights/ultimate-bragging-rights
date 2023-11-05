@@ -10,7 +10,7 @@ const StateSelect = ({ country, onChange }) => {
     <div className="element-container">
       <div>
         <label className="star">*</label>
-        <label className="input-label">Select state</label>
+        <label className="input-label">State / Province</label>
       </div>
       <CustomSelect
         options={result?.map((country) => ({
