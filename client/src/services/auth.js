@@ -24,3 +24,10 @@ export const login = async (data) => {
 
   return response;
 };
+
+export const Register = async (data) => {
+  const response = await api.post("api/users/signup", JSON.stringify(data));
+
+  console.log(response);
+  return response;
+};

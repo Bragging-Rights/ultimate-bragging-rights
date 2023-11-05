@@ -1,16 +1,16 @@
 import React from "react";
-import { CountryDropdown } from "react-country-region-selector";
 import CustomSelect from "../CustomSelect/CustomSelect";
-import { Country } from "country-state-city";
 
-const CountrySelect = ({ value, onChange }) => {
-  const result = Country.getAllCountries();
+import { State } from "country-state-city";
+
+const StateSelect = ({ country, onChange }) => {
+  const result = State.getStatesOfCountry(country);
 
   return (
     <div className="element-container">
       <div>
         <label className="star">*</label>
-        <label className="input-label">Country</label>
+        <label className="input-label">Select state</label>
       </div>
       <CustomSelect
         options={result?.map((country) => ({
@@ -23,4 +23,4 @@ const CountrySelect = ({ value, onChange }) => {
   );
 };
 
-export default CountrySelect;
+export default StateSelect;
