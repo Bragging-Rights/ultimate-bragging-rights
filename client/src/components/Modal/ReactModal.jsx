@@ -17,6 +17,8 @@ import displayToast from "../../components/Alert/Alert";
 import StateSelect from "./StateSelect";
 import CitySelect from "./CitySelect";
 import PhoneNumber from "../PhoneNumber/PhoneNumber";
+import { ImCancelCircle } from "react-icons/im";
+import Loader from "../Loader/Loader";
 
 const customStyles = {
   content: {
@@ -46,17 +48,12 @@ const leaguesOptions = [
 ];
 const ReactModal = (props) => {
   const { isOpen, onRequestClose } = props;
-
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [availableTeams, setAvailableTeams] = useState([]);
   const [selectedLeague, setSelectedLeague] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
   const [league, setLeague] = useState("NHL");
-  const [selectedCountryCode, setSelectedCountryCode] = useState({
-    label: "+1",
-    value: "US",
-  }); // Default to US country code
 
   const {
     isLoading: loadingTeams,
@@ -93,7 +90,6 @@ const ReactModal = (props) => {
     firstName: "",
     lastName: "",
     email: "",
-    username: "",
     city: "",
     country: "",
     province: "",
@@ -102,9 +98,12 @@ const ReactModal = (props) => {
     password: "",
     confirmPassword: "",
     referralName: "",
-    leagues: [{ league: "", team: "", username: "" }],
     termsAccepted: false,
   });
+
+  const [userLeagues, setUserLeagues] = useState([
+    { league: "", team: "", username: "" },
+  ]);
 
   const [countryCode, setCountryCode] = useState("");
   const [stateCode, setStateCode] = useState("");
@@ -133,35 +132,37 @@ const ReactModal = (props) => {
     }));
   };
 
-  const handleRegionChange = (region) => {
-    setSelectedRegion(region);
-
-    // Update formData
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      selectedRegion: region,
-      selectedCity: "", // Reset the selected city in formData
-    }));
-  };
-
-  const [leaguesInfo, setLeaguesInfo] = useState([
-    {
-      selectedLeague: "",
-      formData: { username: "", team: "" },
-    },
-  ]);
-
   const addAnotherLeague = () => {
-    setLeaguesInfo([
-      ...leaguesInfo,
-      { selectedLeague: "", formData: { username: "", team: "" } },
+    setUserLeagues([
+      ...userLeagues,
+      { league: "nba", team: "Anaheim Ducks", username: "" },
     ]);
   };
 
   const handleRemoveLeague = (index) => {
-    const updatedLeaguesInfo = [...leaguesInfo];
+    const updatedLeaguesInfo = [...userLeagues];
     updatedLeaguesInfo.splice(index, 1);
-    setLeaguesInfo(updatedLeaguesInfo);
+    setUserLeagues(updatedLeaguesInfo);
+  };
+
+  const handleLeagueChange = (e, index) => {
+    const temp = [...userLeagues];
+    const { name, value } = e.target;
+    temp[index] = { ...temp[index], [name]: value };
+    setUserLeagues(temp);
+  };
+
+  const validateLeagues = (leagues) => {
+    for (const league of leagues) {
+      if (
+        league.league.trim() === "" ||
+        league.team.trim() === "" ||
+        league.username.trim() === ""
+      ) {
+        return false;
+      }
+    }
+    return true;
   };
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
@@ -174,17 +175,17 @@ const ReactModal = (props) => {
         if (rec?.data?.hasErrors) {
           displayToast(rec?.data?.message, "error");
         } else {
-          displayToast("Register successfulyl.", "success");
+          displayToast("Register successfully.", "success");
         }
       },
     }
   );
+
   const handleRegistration = async () => {
     const requiredFields = [
       "firstName",
       "lastName",
       "email",
-      "username",
       "city",
       "country",
       "province",
@@ -196,6 +197,8 @@ const ReactModal = (props) => {
       "termsAccepted",
     ];
 
+    // leagues
+
     const invalidFields = requiredFields.filter((field) => !formData[field]);
 
     if (invalidFields.length > 0) {
@@ -205,14 +208,28 @@ const ReactModal = (props) => {
       return;
     }
 
+    if (!validateLeagues(userLeagues)) {
+      displayToast(
+        `Please fill in all required fields in the leages,`,
+        "error"
+      );
+    }
+
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
-      displayToast("Passwords do not match. Please enter matching passwords.");
+      displayToast(
+        "Passwords do not match. Please enter matching passwords.",
+        "error"
+      );
       return;
     }
 
-    // If all checks pass, proceed with registration
-    mutate(formData);
+    const data = {
+      ...formData,
+      leagues: [...userLeagues],
+    };
+
+    mutate(data);
   };
 
   return (
@@ -247,7 +264,7 @@ const ReactModal = (props) => {
       </div>
       <div className="label-container">
         <label className="star">*</label>
-        <lable className="info-require">Mandatory information Required </lable>
+        <label className="info-require">Mandatory information Required </label>
         <div className=" line"></div>
       </div>
       <div className=" modal-form-container">
@@ -303,7 +320,7 @@ const ReactModal = (props) => {
           onChange={(e) =>
             setFormData({
               ...formData,
-              city: e.lable,
+              city: e.label,
             })
           }
           state={stateCode}
@@ -332,7 +349,7 @@ const ReactModal = (props) => {
         <ModalInput
           label={"Refer By"}
           placeholder={"Refer by"}
-          name="refer_by"
+          name="referralName"
           value={formData?.refer_by}
           onChange={inputChangeHandler}
         />
@@ -342,56 +359,48 @@ const ReactModal = (props) => {
         CHOICE LEAGUES YOU WANT TO PLAY IN
       </h2>
       <div>
-        {leaguesInfo.map((info, index) => (
-          <div className="modal-bottom" key={index}>
-            <button
-              onClick={() => handleRemoveLeague(index)}
-              className="bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors hover:bg-red-600"
-            >
-              X
-            </button>
-            <ModalSelect
-              label="Select League"
-              options={leaguesOptions}
-              name={`league_${index}`}
-              value={info.selectedLeague}
-              onChange={(e) => {
-                const updatedLeaguesInfo = [...leaguesInfo];
-                updatedLeaguesInfo[index].selectedLeague = e.target.value;
-                setLeaguesInfo(updatedLeaguesInfo);
-                setLeague(e.target.value);
-              }}
-            />
-            <ModalInput
-              label="Create Unique Username"
-              placeholder="User Name"
-              type="text"
-              name={`username_${index}`}
-              value={info.formData.username}
-              onChange={(e) => {
-                const updatedLeaguesInfo = [...leaguesInfo];
-                updatedLeaguesInfo[index].formData.username = e.target.value;
-                setLeaguesInfo(updatedLeaguesInfo);
-              }}
-            />
-            <ModalSelect
-              label="Select Your Favorite Team"
-              name={`team_${index}`}
-              value={info.formData.team}
-              onChange={(e) => {
-                const updatedLeaguesInfo = [...leaguesInfo];
-                updatedLeaguesInfo[index].formData.team = e.target.value;
-                setLeaguesInfo(updatedLeaguesInfo);
-              }}
-              options={availableTeams.map((team) => {
-                return {
-                  label: team?.displayName,
-                  value: team?.fullName,
-                };
-              })}
-            />
-          </div>
-        ))}
+        {userLeagues?.map((info, index) => {
+          console.log("info", info);
+          return (
+            <div className="modal-bottom relative mb-2" key={index}>
+              <button
+                onClick={() => handleRemoveLeague(index)}
+                className="bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center transition-colors hover:bg-red-600
+                 absolute right-0
+                "
+              >
+                <ImCancelCircle />
+              </button>
+              <ModalSelect
+                label="Select League"
+                options={leaguesOptions}
+                name={`league`}
+                value={info.selectedLeague}
+                onChange={(e) => handleLeagueChange(e, index)}
+              />
+              <ModalInput
+                label="Create Unique Username"
+                placeholder="User Name"
+                type="text"
+                name={`username`}
+                value={info.username}
+                onChange={(e) => handleLeagueChange(e, index)}
+              />
+              <ModalSelect
+                label="Select Your Favorite Team"
+                name={`team`}
+                value={info.team}
+                options={availableTeams.map((team) => {
+                  return {
+                    label: team?.displayName,
+                    value: team?.fullName,
+                  };
+                })}
+                onChange={(e) => handleLeagueChange(e, index)}
+              />
+            </div>
+          );
+        })}
         <div className="add-another-league" onClick={addAnotherLeague}>
           +Add Another League
         </div>
@@ -472,8 +481,8 @@ const ReactModal = (props) => {
       </div>
       <button className="submit-btn" onClick={handleRegistration}>
         GET ACCESS TO BRAGGING RIGHTS NOW!
+        {isLoading && <Loader />}
       </button>
-      <ToastContainer />{" "}
     </Modal>
   );
 };
