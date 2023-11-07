@@ -1,33 +1,55 @@
 const Game = require("../models/games");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
+const { moneyline } = require("../calculations/point");
 
 // Create a new game
 const createGame = async (req, res) => {
   console.log(req.body);
   try {
     const games = req.body.map((game) => {
+      const points = moneyline(
+        game.vML,
+        game.hML,
+        game.vSprd,
+        game.hSprd,
+        game.vOU,
+        game.hOU
+      );
+      console.log("points", points);
       return {
         league: game.league,
         seasonflag: game.season,
         gamedate: game.date,
         time: game.time,
-        "v-ml": game.vML,
-        "v-sprd": game.vSprd,
-        "v-sprd-odds": game.vSprdOdds,
-        "v-ou": game.vOU,
-        "v-ou-odds": game.vOUOdds,
-        "h-ml": game.hML,
-        "h-sprd": game.hSprd,
-        "h-sprd-odds": game.hSprdOdds,
-        "h-ou": game.hOU,
-        "h-ou-odds": game.hOUOdds,
+        "v-ml": game.vML, //use these values
+        "v-sprd": game.vSprd, //use these values
+        "v-sprd-odds": game.vSprdOdds, //use these values
+        "v-ou": game.vOU, //use these values
+        "v-ou-odds": game.vOUOdds, //use these values
+        "h-ml": game.hML, //use these values
+        "h-sprd": game.hSprd, //use these values
+        "h-sprd-odds": game.hSprdOdds, //use these values
+        "h-ou": game.hOU, //use these values
+        "h-ou-odds": game.hOUOdds, //use these values
         visitor: game.visitorTeam,
         home: game.homeTeam,
+
+        "v-ml-points": points.vml_point,
+        "h-ml-points": points.hml_point,
+        "v-sprd-points": points.vsprd_point,
+        "h-sprd-points": points.hsprd_point,
+        // "v-sprd-odds-points": "",
+        // "h-sprd-odds-points": "",
+        "v-ou-points": points.vou_point,
+        "h-ou-points": points.hou_point,
+        // "v-ou-odds-points": "",
+        // "h-ou-odds-points": "",
       };
     });
-    const result = await Game.insertMany(games);
-    console.log("games", result);
+
+    // const result = await Game.insertMany(games);
+    // console.log("games", result);
     res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
