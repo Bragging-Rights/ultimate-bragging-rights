@@ -5,10 +5,7 @@ import ModalInput from "./ModalInput";
 import ModalSelect from "./ModalSelect";
 import CountrySelect from "./CountrySelect";
 import { RegionDropdown } from "react-country-region-selector";
-import PhoneInput from "react-phone-input-2";
 import logo3 from "../../assets/logo.png";
-import Select from "react-select";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getTeasmByLeage } from "../../services/Teams";
 import { useMutation, useQuery } from "react-query";
@@ -19,6 +16,7 @@ import CitySelect from "./CitySelect";
 import PhoneNumber from "../PhoneNumber/PhoneNumber";
 import { ImCancelCircle } from "react-icons/im";
 import Loader from "../Loader/Loader";
+import LeagueHandler from "./LeagueHandler";
 
 const customStyles = {
   content: {
@@ -40,20 +38,29 @@ const customStyles = {
     background: " rgba(33, 34, 39, 0.90)",
   },
 };
-const leaguesOptions = [
-  { value: "nba", label: "NBA" },
-  { value: "nfl", label: "NFL" },
-  { value: "mlb", label: "MLB" },
-  { value: "nhl", label: "NHL" },
-];
+
 const ReactModal = (props) => {
   const { isOpen, onRequestClose } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [availableTeams, setAvailableTeams] = useState([]);
-  const [selectedLeague, setSelectedLeague] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState("");
+  const [availableTeams, setAvailableTeams] = useState([
+    {
+      label: "Select your favourite team",
+      key: "",
+    },
+  ]);
+
   const [league, setLeague] = useState("NHL");
+  const [userLeagues, setUserLeagues] = useState([
+    { league: "", team: "", username: "" },
+  ]);
+
+  const [leaguesOptions, setLeaguesOptions] = useState([
+    { value: "", label: "Select league" },
+    { value: "nba", label: "NBA", isSelected: false },
+    { value: "nfl", label: "NFL", isSelected: false },
+    { value: "mlb", label: "MLB", isSelected: false },
+    { value: "nhl", label: "NHL", isSelected: false },
+  ]);
 
   const {
     isLoading: loadingTeams,
@@ -61,8 +68,9 @@ const ReactModal = (props) => {
     data: teamsData,
     refetch,
   } = useQuery(["teams", league], getTeasmByLeage, {
+    enabled: !!league,
     onError: (err) => {
-      displayToast("An error occurred while getting the game.", "error");
+      displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
       const sortedTeams = rec.data.sort((a, b) => {
@@ -78,7 +86,7 @@ const ReactModal = (props) => {
         return 0;
       });
 
-      setAvailableTeams(sortedTeams);
+      setAvailableTeams([...sortedTeams]);
     },
   });
 
@@ -100,10 +108,6 @@ const ReactModal = (props) => {
     referralName: "",
     termsAccepted: false,
   });
-
-  const [userLeagues, setUserLeagues] = useState([
-    { league: "", team: "", username: "" },
-  ]);
 
   const [countryCode, setCountryCode] = useState("");
   const [stateCode, setStateCode] = useState("");
@@ -128,15 +132,13 @@ const ReactModal = (props) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       country: e.label,
-      selectedRegion: "",
     }));
   };
 
   const addAnotherLeague = () => {
-    setUserLeagues([
-      ...userLeagues,
-      { league: "nba", team: "Anaheim Ducks", username: "" },
-    ]);
+    if (userLeagues.length < 4) {
+      setUserLeagues([...userLeagues, { league: "", team: "", username: "" }]);
+    }
   };
 
   const handleRemoveLeague = (index) => {
@@ -224,8 +226,10 @@ const ReactModal = (props) => {
       return;
     }
 
+    const { confirmPassword, termsAccepted, ...rest } = formData;
+
     const data = {
-      ...formData,
+      ...rest,
       leagues: [...userLeagues],
     };
 
@@ -358,52 +362,36 @@ const ReactModal = (props) => {
       <h2 className="leage-option text-white">
         CHOICE LEAGUES YOU WANT TO PLAY IN
       </h2>
-      <div>
-        {userLeagues?.map((info, index) => {
-          console.log("info", info);
-          return (
-            <div className="modal-bottom relative mb-2" key={index}>
-              <button
-                onClick={() => handleRemoveLeague(index)}
-                className="bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center transition-colors hover:bg-red-600
-                 absolute right-0
-                "
-              >
-                <ImCancelCircle />
-              </button>
-              <ModalSelect
-                label="Select League"
-                options={leaguesOptions}
-                name={`league`}
-                value={info.selectedLeague}
-                onChange={(e) => handleLeagueChange(e, index)}
-              />
-              <ModalInput
-                label="Create Unique Username"
-                placeholder="User Name"
-                type="text"
-                name={`username`}
-                value={info.username}
-                onChange={(e) => handleLeagueChange(e, index)}
-              />
-              <ModalSelect
-                label="Select Your Favorite Team"
-                name={`team`}
-                value={info.team}
-                options={availableTeams.map((team) => {
-                  return {
-                    label: team?.displayName,
-                    value: team?.fullName,
-                  };
-                })}
-                onChange={(e) => handleLeagueChange(e, index)}
-              />
-            </div>
+      {userLeagues.map((info, index) => {
+        // Create a copy of the original leaguesOptions
+        const unselectedLeagues = [...leaguesOptions];
+
+        // Filter out the options already selected by other userLeagues
+        userLeagues.slice(0, index).forEach((userLeague) => {
+          unselectedLeagues.splice(
+            unselectedLeagues.findIndex(
+              (option) => option.value === userLeague.league
+            ),
+            1
           );
-        })}
-        <div className="add-another-league" onClick={addAnotherLeague}>
-          +Add Another League
-        </div>
+        });
+
+        return (
+          <LeagueHandler
+            key={index}
+            options={unselectedLeagues}
+            handleRemoveLeague={() => handleRemoveLeague(index)}
+            handleLeagueChange={(e) => handleLeagueChange(e, index)}
+            availableTeams={availableTeams}
+            info={info}
+            index={index}
+            addAnotherLeague={addAnotherLeague}
+          />
+        );
+      })}
+
+      <div className="add-another-league" onClick={addAnotherLeague}>
+        +Add Another League
       </div>
       <div className="line"></div>
       <div className="password-section">
