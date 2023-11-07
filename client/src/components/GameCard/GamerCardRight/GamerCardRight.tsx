@@ -86,13 +86,13 @@ const GamerCardRight = ({ gameData }) => {
           <div className=" flex flex-col justify-start ">
             <span className=" game-time ">Money Line</span>
             <div className=" box box h-12 w-24">
-              <label>{gameData?.["v-ml"]}</label> <label> Pts</label>
+              <label>{gameData?.["v-ml"]}</label> 
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box box h-12 w-24">
-              <label>{gameData?.["v-sprd"]}</label> <label> Pts</label>
+              <label>{gameData?.["v-sprd"]}</label> 
               {/* <label>____</label>
               <label>{gameData?.["v-sprd-odds"]}</label> */}
             </div>
@@ -102,7 +102,7 @@ const GamerCardRight = ({ gameData }) => {
 
             <div className=" box box h-12 w-24">
               <label>{gameData?.["v-ou"]}</label>
-              <label> Pts</label>
+              
               {/* <label>____</label>
               <label>{gameData?.["v-ou-odds"]}</label> */}
             </div>
@@ -148,13 +148,13 @@ const GamerCardRight = ({ gameData }) => {
           <div className=" flex flex-col ">
             <div className=" box box h-12 w-24">
               <label>{gameData?.["h-ml"]}</label>
-              <label> Pts</label>{" "}
+              {" "}
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box box h-12 w-24">
               <label>{gameData?.["h-sprd"]}</label>
-              <label> Pts</label>
+              
               {/* <label>____</label>
               <label>{gameData?.["h-sprd-odds"]}</label> */}
             </div>
@@ -162,7 +162,7 @@ const GamerCardRight = ({ gameData }) => {
           <div className=" flex flex-col">
             <div className=" box box h-12 w-24">
               <label>{gameData?.["h-ou"]}</label>
-              <label> Pts</label>
+              
               {/* <label>____</label>
               <label>{gameData?.["h-ou-odds"]}</label> */}
             </div>

@@ -112,14 +112,14 @@ const GameCard = ({ gameData }) => {
           >
             <span className=" game-time font-inter mb-3">Money Line</span>
             <div className=" box h-12 w-24">
-              <label>{gameData?.["v-ml"]}</label> <label> Pts</label>
+              <label>{gameData?.["v-ml"]}</label> <label></label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box h-12 w-24">
               <label>{gameData?.["v-sprd"]}</label>
-              <label> Pts</label>
+              {/* <label> Pts</label> */}
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
@@ -127,7 +127,7 @@ const GameCard = ({ gameData }) => {
 
             <div className=" box h-12 w-24">
               <label>{gameData?.["v-ou"]}</label>
-              <label> Pts</label>
+              {/* <label> Pts</label> */}
             </div>
           </div>
         </div>
@@ -170,24 +170,24 @@ const GameCard = ({ gameData }) => {
           </div>
           <div className=" flex flex-col ">
             <div className=" box h-12 w-24">
-              <label>{gameData?.["h-ml"]}</label> <label> Pts</label>
+              <label>{gameData?.["h-ml"]}</label> <label></label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box h-12 w-24">
-              <label>{gameData?.["h-sprd"]}</label> <label> Pts</label>
+              <label>{gameData?.["h-sprd"]}</label> <label></label>
             </div>
           </div>
           <div className=" flex flex-col">
             <div className=" box  h-12 w-24">
-              <label>{gameData?.["h-ou"]}</label> <label> Pts</label>
+              <label>{gameData?.["h-ou"]}</label> <label></label>
             </div>
           </div>
         </div>
 
         <div className=" flex justify-between items-center">
           <div className="card-id">ID: 625</div>
-          <Switches leage="Hocky" season={gameData?.seasonflag} />
+          <Switches league={gameData?.league} season={gameData?.seasonflag} />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>
               EDIT
