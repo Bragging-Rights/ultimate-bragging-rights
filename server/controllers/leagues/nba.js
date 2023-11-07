@@ -12,9 +12,18 @@ exports.createTeam = async (req, res) => {
 };
 
 // Read
+// exports.getTeams = async (req, res) => {
+//   try {
+//     const teams = await Nba.find();
+//     res.json(teams);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 exports.getTeams = async (req, res) => {
   try {
-    const teams = await Nba.find();
+    let teams = await Nba.find().sort({ displayName: 1 });
     res.json(teams);
   } catch (error) {
     res.status(500).json({ message: error.message });

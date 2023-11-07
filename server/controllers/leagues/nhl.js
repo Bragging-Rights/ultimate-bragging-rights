@@ -12,10 +12,20 @@ const createTeam = async (req, res) => {
 };
 
 // Get all teams
+// const getTeams = async (req, res) => {
+//   try {
+//     const teams = await nhl.find({});
+//     // console.log(teams);
+//     res.json(teams);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 const getTeams = async (req, res) => {
   try {
-    const teams = await nhl.find({});
-    // console.log(teams);
+    let teams = await nhl.find({});
+    teams = teams.sort((a, b) => a.displayName.localeCompare(b.displayName));
     res.json(teams);
   } catch (error) {
     console.log(error);

@@ -12,9 +12,17 @@ exports.createTeam = async (req, res) => {
 };
 
 // Read
+// exports.getTeams = async (req, res) => {
+//   try {
+//     const teams = await Mlb.find();
+//     res.json(teams);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 exports.getTeams = async (req, res) => {
   try {
-    const teams = await Mlb.find();
+    const teams = await Mlb.find().sort({ displayName: 1 });
     res.json(teams);
   } catch (error) {
     res.status(500).json({ message: error.message });

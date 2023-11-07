@@ -12,12 +12,21 @@ const createTeam = async (req, res) => {
 };
 
 // Read
+// const getTeams = async (req, res) => {
+//   try {
+//     const teams = await Nfl.find();
+//     res.json(teams);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 const getTeams = async (req, res) => {
   try {
-    const teams = await Nfl.find();
+    let teams = await Nfl.find({}).sort({ displayName: 1 });
     res.json(teams);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
