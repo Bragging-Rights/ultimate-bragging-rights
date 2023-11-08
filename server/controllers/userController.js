@@ -7,20 +7,69 @@ const generateOTP = require("../utils/optGenerator");
 const sendEmail = require("../utils/sendEmail");
 
 exports.signUpController = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-    gender,
-    city,
-    state,
-    country,
-    zipCode,
-    phone,
-  } = req.body;
-  console.log(process.env.PASSWORD);
+  console.log(req.body);
+  data = req.body;
+  const user = {
+    firstName: data.firstName, //
+    lastName: data.lastName, //
+    email: data.email, //
+    password: data.password, //
+    gender: data.gender, //
+    city: data.city, //
+    state: data.province, //
+    country: data.country, //
+    zipCode: data.postalCode,
+    phone: data.phoneNumber,
+    league: data.leagues[0].league,
+    username: data.leagues[0].username,
+    team: data.leagues[0].team,
+    league1: data.leagues[1].league,
+    username1: data.leagues[1].username,
+    team1: data.leagues[1].team,
+    league2: data.leagues[2].league,
+    username2: data.leagues[2].username,
+    team2: data.leagues[2].team,
+    league3: data.leagues[3].league,
+    username3: data.leagues[3].username,
+    team3: data.leagues[3].team,
+  };
+
+  // Check if the username is unique for each league
+  const leagues = [
+    data.leagues[0].league,
+    data.leagues[1].league,
+    data.leagues[2].league,
+    data.leagues[3].league,
+  ];
+  const usernames = [
+    data.leagues[0].team,
+    data.leagues[1].team,
+    data.leagues[2].team,
+    data.leagues[3].team,
+  ];
+
+  for (let i = 0; i < leagues.length; i++) {
+    const existingUser = await User.findOne({
+      username: data[usernames[i]],
+      league: data[leagues[i]],
+    });
+    if (existingUser) {
+      return res
+        .status(409)
+        .json(
+          responseObject(
+            {},
+            `Username ${data[usernames[i]]} already exists in league ${
+              data[leagues[i]]
+            }. Please try another one`,
+            false
+          )
+        );
+    }
+  }
+
+  // Check if the email is unique
+  const email = user.email;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -36,42 +85,50 @@ exports.signUpController = async (req, res) => {
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-    const otp = generateOTP();
+    const hash = await bcrypt.hash(user.password, salt);
 
-    const user = new User({
-      firstName,
-      lastName,
-      email,
-      username,
-      password: hash,
-      gender,
-      city,
-      state,
-      country,
-      zipCode,
-      phone,
-      otp,
-      emailVerified: false,
-    });
+    //otp
+    // const otp = generateOTP();
 
-    const savedUser = await user.save();
+    user.password = hash;
+
+    const newUser = new User(user);
+    // const user = new User({
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   username,
+    //   password: hash,
+    //   gender,
+    //   city,
+    //   state,
+    //   country,
+    //   zipCode,
+    //   phone,
+    //   otp,
+    //   emailVerified: false,
+    // });
+
+    const savedUser = await newUser.save();
     const userId = savedUser._id;
 
     const foundUser = await User.findById(userId);
     if (foundUser) {
       const user = foundUser.toObject();
       delete user.password;
-      delete user.otp;
+
+      //delete user.otp;
+      // delete user.otp;
       delete user.emailVerified;
       res
         .status(200)
         .json(responseObject(user, "User registered successfully.", false));
-      sendEmail(
-        email,
-        "OTP",
-        `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
-      );
+
+      // sendEmail(
+      //   email,
+      //   "OTP",
+      //   `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
+      // );
     } else {
       console.log("User not found after insertion.");
     }
