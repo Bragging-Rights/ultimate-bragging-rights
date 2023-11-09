@@ -111,7 +111,7 @@ const GameForm = () => {
 
     // Check if any of the required values is undefined or empty
     if (!league || !season || !date) {
-      console.error("Incomplete form data. Unable to add game card.");
+      displayToast("Incomplete form data. Unable to add game card.");
       return;
     }
 
@@ -166,7 +166,6 @@ const GameForm = () => {
     updatedGameCards.splice(index, 1);
     setGameCards(updatedGameCards);
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
