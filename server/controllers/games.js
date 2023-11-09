@@ -5,9 +5,11 @@ const { moneyline } = require("../calculations/point");
 
 // Create a new game
 const createGame = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
-    const games = req.body.map((game) => {
+    let data = [req.body];
+    console.log("data", data);
+    const games = data.map((game) => {
       const points = moneyline(
         game.vML,
         game.hML,
@@ -16,7 +18,7 @@ const createGame = async (req, res) => {
         game.vOU,
         game.hOU
       );
-      console.log("points", points);
+      // console.log("points", points);
       return {
         league: game.league,
         seasonflag: game.season,
@@ -34,7 +36,6 @@ const createGame = async (req, res) => {
         "h-ou-odds": game.hOUOdds, //use these values
         visitor: game.visitorTeam,
         home: game.homeTeam,
-
         "v-ml-points": points.vml_point,
         "h-ml-points": points.hml_point,
         "v-sprd-points": points.vsprd_point,
@@ -48,9 +49,9 @@ const createGame = async (req, res) => {
       };
     });
 
-    // const result = await Game.insertMany(games);
-    // console.log("games", result);
-    res.status(201).json(result);
+    const result = await Game.insertOne(games);
+    console.log("games", result);
+    // res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
     console.log(error);

@@ -44,16 +44,15 @@ const GameForm = () => {
 
         displayToast("Game added successfully.", "success");
 
-        // Extracting all game cards into an array
+        //extracting all game cards into an array
         const allGameCards = gameCards.map((gameCard) => ({
           ...gameCard,
-          // You might need to add any additional fields that are required
         }));
 
-        // Send all game cards in a single mutate call
-        mutate(allGameCards);
+        //sending all game cards in a single mutate call, wrapped in an array
+        mutate([allGameCards]);
 
-        reset(); // Reset the form
+        reset();
       },
     }
   );
