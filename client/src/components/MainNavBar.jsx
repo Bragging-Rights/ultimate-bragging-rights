@@ -80,7 +80,7 @@ const MainNavBar = () => {
       >
         {navItem.map((item, index) => {
           // Conditionally render "Admin" button based on user role
-          if (item.label === "Admin" && !userRole) {
+          if (item.label === "Admin" && userRole) {
             return null; // Hide the "Admin" button if user is not an admin
           }
           return (
