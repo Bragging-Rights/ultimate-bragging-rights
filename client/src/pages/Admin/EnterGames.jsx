@@ -36,10 +36,16 @@ const GameForm = () => {
     (data) => addGame(data),
     {
       onError: (err) => {
+        console.error("Error adding game:", err);
         displayToast("An error occurred while adding the game.", "error");
       },
       onSuccess: (rec) => {
+        console.log("Game added successfully:", rec);
         displayToast("Game added successfully.", "success");
+        gameCards.forEach((gameCard) => {
+          mutate(gameCard);
+        });
+        reset(); // Reset the form
       },
     }
   );
@@ -49,8 +55,9 @@ const GameForm = () => {
     isError: teamError,
     data: teamsData,
   } = useQuery(["teams", formData.league], getTeasmByLeage, {
+    enabled: !!formData.league, // Fetch only if formData.league is truthy
     onError: (err) => {
-      displayToast("An error occurred while getting  the game.", "error");
+      displayToast("An error occurred while getting the game.", "error");
     },
     onSuccess: (rec) => {
       console.log("rec", rec);
@@ -88,6 +95,10 @@ const GameForm = () => {
     setGameCards(updatedGameCards);
   };
 
+  const getFilteredTeams = (selectedTeam) => {
+    return teams.filter((team) => team.displayName !== selectedTeam);
+  };
+
   const handleAddGameCard = () => {
     const newGameCard = {
       ...formData, // Copy the common form data
@@ -97,6 +108,10 @@ const GameForm = () => {
     // Create a new copy of the formData object for each game card
     setGameCards((prevGameCards) => [...prevGameCards, newGameCard]);
     setFormData(initialFormData); // Clear the form after adding a game card
+
+    // Filter out the selected teams from the opposite dropdown
+    const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
+    setTeams(filteredTeams);
     console.log(newGameCard);
   };
 
@@ -169,7 +184,9 @@ const GameForm = () => {
         "error"
       );
     } else {
-      mutate(gameCards);
+      gameCards.forEach((gameCard) => {
+        mutate(gameCard);
+      });
     }
   };
 
@@ -423,7 +440,7 @@ const GameForm = () => {
                       Loading teams...
                     </option>
                   ) : (
-                    teams.map((team) => (
+                    getFilteredTeams(gameCard.visitorTeam).map((team) => (
                       <option key={team.id} value={team.displayName}>
                         {team.displayName}
                       </option>
