@@ -41,10 +41,18 @@ const GameForm = () => {
       },
       onSuccess: (rec) => {
         console.log("Game added successfully:", rec);
+
         displayToast("Game added successfully.", "success");
-        gameCards.forEach((gameCard) => {
-          mutate(gameCard);
-        });
+
+        // Extracting all game cards into an array
+        const allGameCards = gameCards.map((gameCard) => ({
+          ...gameCard,
+          // You might need to add any additional fields that are required
+        }));
+
+        // Send all game cards in a single mutate call
+        mutate(allGameCards);
+
         reset(); // Reset the form
       },
     }
