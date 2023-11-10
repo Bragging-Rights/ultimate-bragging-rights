@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import icons from a library like React Icons
+import { FaBars, FaTimes } from "react-icons/fa";
+import { UserRole } from "../Modal/SignInModal";
 
 const navItem = [
   {
@@ -48,6 +49,12 @@ const navItem = [
 const MainNavBar = () => {
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    // You can use the UserRole directly in this file
+    setUserRole(UserRole);
+  }, []);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -72,6 +79,10 @@ const MainNavBar = () => {
         } md:flex flex-wrap gap-4 h-full items-center`}
       >
         {navItem.map((item, index) => {
+          // Conditionally render "Admin" button based on user role
+          if (item.label === "Admin" && userRole) {
+            return null; // Hide the "Admin" button if user is not an admin
+          }
           return (
             <li
               key={index}

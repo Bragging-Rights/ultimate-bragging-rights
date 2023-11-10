@@ -51,9 +51,11 @@ export const SignInModal = (props) => {
           displayToast("Login successful.", "success");
 
           console.log("rec", rec);
+          console.log("userrole", rec.data.data.isAdmin);
           localStorage.setItem("username", rec.data.data.username);
           localStorage.setItem("email", rec.data.data.email);
           localStorage.setItem("_id", rec.data.data._id);
+          localStorage.setItem("isAdmin", rec.data.data.isAdmin);
         }
       },
     }
@@ -155,3 +157,5 @@ export const SignInModal = (props) => {
 
 export default SignInModal;
 export const userId = localStorage.getItem("_id");
+export const UserRole = localStorage.getItem("isAdmin");
+// export const UserRole = false; // Hardcoded value for testing

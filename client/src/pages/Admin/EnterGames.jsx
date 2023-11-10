@@ -25,7 +25,7 @@ const GameForm = () => {
 
   const [gameCards, setGameCards] = useState([]);
   const [formData, setFormData] = useState({
-    league: "nhl",
+    league: "",
     season: "",
     date: "",
   });
@@ -52,7 +52,7 @@ const GameForm = () => {
         //sending all game cards in a single mutate call, wrapped in an array
         mutate([allGameCards]);
 
-        reset();
+        // reset();
       },
     }
   );
@@ -107,19 +107,58 @@ const GameForm = () => {
   };
 
   const handleAddGameCard = () => {
+    const { league, season, date } = formData;
+
+    // Check if any of the required values is undefined or empty
+    if (!league || !season || !date) {
+      displayToast("Incomplete form data. Unable to add game card.");
+      return;
+    }
+
+    // Use the extracted values to construct new game card
     const newGameCard = {
-      ...formData, // Copy the common form data
-      ...initialFormData, // Initialize game-specific data
+      league,
+      season,
+      date,
+      time: "",
+      visitorTeam: "",
+      vML: "",
+      vSprd: "",
+      vSprdOdds: "",
+      vOU: "",
+      vOUOdds: "",
+      homeTeam: "",
+      hML: "",
+      hSprd: "",
+      hSprdOdds: "",
+      hOU: "",
+      hOUOdds: "",
     };
 
     // Create a new copy of the formData object for each game card
     setGameCards((prevGameCards) => [...prevGameCards, newGameCard]);
-    setFormData(initialFormData); // Clear the form after adding a game card
+
+    // Clear only the other fields, not season, league, and date
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      time: "",
+      visitorTeam: "",
+      vML: "",
+      vSprd: "",
+      vSprdOdds: "",
+      vOU: "",
+      vOUOdds: "",
+      homeTeam: "",
+      hML: "",
+      hSprd: "",
+      hSprdOdds: "",
+      hOU: "",
+      hOUOdds: "",
+    }));
 
     // Filter out the selected teams from the opposite dropdown
     const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
     setTeams(filteredTeams);
-    console.log(newGameCard);
   };
 
   const handleRemoveGameCard = (index) => {
