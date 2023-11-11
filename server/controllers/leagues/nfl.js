@@ -1,4 +1,4 @@
-const Nfl = require("../../models/leagues/nhl");
+const Nfl = require("../../models/leagues/nfl");
 
 // Create
 const createTeam = async (req, res) => {
