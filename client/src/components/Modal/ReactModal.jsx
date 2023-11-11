@@ -4,7 +4,6 @@ import "./Modal.css";
 import ModalInput from "./ModalInput";
 import ModalSelect from "./ModalSelect";
 import CountrySelect from "./CountrySelect";
-import { RegionDropdown } from "react-country-region-selector";
 import logo3 from "../../assets/logo.png";
 import "react-toastify/dist/ReactToastify.css";
 import { getTeasmByLeage } from "../../services/Teams";
@@ -49,11 +48,11 @@ const ReactModal = (props) => {
     },
   ]);
 
-  const [league, setLeague] = useState("NHL");
   const [userLeagues, setUserLeagues] = useState([
     { league: "", team: "", username: "" },
   ]);
 
+  const [league, setLeague] = useState("NHL");
   const [leaguesOptions, setLeaguesOptions] = useState([
     { value: "", label: "Select league" },
     { value: "nba", label: "NBA", isSelected: false },
@@ -68,31 +67,41 @@ const ReactModal = (props) => {
     data: teamsData,
     refetch,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    enabled: !!league,
     onError: (err) => {
       displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
-      const sortedTeams = rec.data.sort((a, b) => {
-        const nameA = a?.displayName;
-        const nameB = b?.displayName;
-
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      setAvailableTeams([...sortedTeams]);
+      setAvailableTeams({ ...availableTeams, nhl: [...rec.data] });
     },
   });
 
-  useEffect(() => {
-    refetch();
-  }, [league]);
+  const {} = useQuery(["teams", "nba"], getTeasmByLeage, {
+    onError: (err) => {
+      displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nab: [...rec.data] });
+    },
+  });
+
+  const {} = useQuery(["teams", "nfl"], getTeasmByLeage, {
+    onError: (err) => {
+      displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nfl: [...rec.data] });
+    },
+  });
+
+  const {} = useQuery(["teams", "mlb"], getTeasmByLeage, {
+    onError: (err) => {
+      displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      console.log("hamd", rec);
+      setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
+    },
+  });
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -136,6 +145,18 @@ const ReactModal = (props) => {
   };
 
   const addAnotherLeague = () => {
+    console.log("userLeagues", userLeagues);
+    const resp = userLeagues.some((item) => {
+      if (item.league == "" || item.team == "" || item.username == "") {
+        return true;
+      }
+    });
+
+    if (resp) {
+      displayToast("Please fill all the required fileds in the league.");
+      return;
+    }
+
     if (userLeagues.length < 4) {
       setUserLeagues([...userLeagues, { league: "", team: "", username: "" }]);
     }
@@ -215,6 +236,7 @@ const ReactModal = (props) => {
         `Please fill in all required fields in the leages,`,
         "error"
       );
+      return;
     }
 
     // Check if passwords match
@@ -363,10 +385,7 @@ const ReactModal = (props) => {
         CHOICE LEAGUES YOU WANT TO PLAY IN
       </h2>
       {userLeagues.map((info, index) => {
-        // Create a copy of the original leaguesOptions
         const unselectedLeagues = [...leaguesOptions];
-
-        // Filter out the options already selected by other userLeagues
         userLeagues.slice(0, index).forEach((userLeague) => {
           unselectedLeagues.splice(
             unselectedLeagues.findIndex(
