@@ -20,51 +20,63 @@ exports.signUpController = async (req, res) => {
     country: data.country, //
     zipCode: data.postalCode,
     phone: data.phoneNumber,
-    league: data.leagues[0].league,
-    username: data.leagues[0].username,
-    team: data.leagues[0].team,
-    league1: data.leagues[1].league,
-    username1: data.leagues[1].username,
-    team1: data.leagues[1].team,
-    league2: data.leagues[2].league,
-    username2: data.leagues[2].username,
-    team2: data.leagues[2].team,
-    league3: data.leagues[3].league,
-    username3: data.leagues[3].username,
-    team3: data.leagues[3].team,
+    league: data.leagues[0]?.league || null,
+    username: data.leagues[0]?.username || null,
+    team: data.leagues[0]?.team || null,
+    league1: data.leagues[1]?.league || null,
+    username1: data.leagues[1]?.username || null,
+    team1: data.leagues[1]?.team || null,
+    league2: data.leagues[2]?.league || null,
+    username2: data.leagues[2]?.username || null,
+    team2: data.leagues[2]?.team || null,
+    league3: data.leagues[3]?.league || null,
+    username3: data.leagues[3]?.username || null,
+    team3: data.leagues[3]?.team || null,
   };
 
   // Check if the username is unique for each league
   const leagues = [
-    data.leagues[0].league,
-    data.leagues[1].league,
-    data.leagues[2].league,
-    data.leagues[3].league,
+    data.leagues[0]?.league || null,
+    data.leagues[1]?.league || null,
+    data.leagues[2]?.league || null,
+    data.leagues[3]?.league || null,
   ];
   const usernames = [
-    data.leagues[0].team,
-    data.leagues[1].team,
-    data.leagues[2].team,
-    data.leagues[3].team,
+    data.leagues[0]?.team || null,
+    data.leagues[1]?.team || null,
+    data.leagues[2]?.team || null,
+    data.leagues[3]?.team || null,
   ];
 
   for (let i = 0; i < leagues.length; i++) {
-    const existingUser = await User.findOne({
-      username: data[usernames[i]],
-      league: data[leagues[i]],
-    });
-    if (existingUser) {
-      return res
-        .status(409)
-        .json(
-          responseObject(
-            {},
-            `Username ${data[usernames[i]]} already exists in league ${
-              data[leagues[i]]
-            }. Please try another one`,
-            false
-          )
-        );
+    if (
+      usernames != null &&
+      usernames[i] != null &&
+      leagues != null &&
+      leagues[i] != null
+    ) {
+      try {
+        const existingUser = await User.findOne({
+          username: usernames[i],
+          league: leagues[i],
+        });
+        if (existingUser) {
+          return res
+            .status(409)
+            .json(
+              responseObject(
+                {},
+                `Username ${usernames[i]} already exists in league ${leagues[i]}. Please try another one`,
+                false
+              )
+            );
+        }
+      } catch (error) {
+        console.error("Error finding user:", error);
+        return res
+          .status(500)
+          .json(responseObject({}, "Error registering user.", true));
+      }
     }
   }
 

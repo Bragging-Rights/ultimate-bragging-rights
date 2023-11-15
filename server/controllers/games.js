@@ -36,16 +36,14 @@ const createGame = async (req, res) => {
         "h-ou-odds": game.hOUOdds, //use these values
         visitor: game.visitorTeam,
         home: game.homeTeam,
+
+        ///
         "v-ml-points": points.vml_point,
         "h-ml-points": points.hml_point,
         "v-sprd-points": points.vsprd_point,
         "h-sprd-points": points.hsprd_point,
-        // "v-sprd-odds-points": "",
-        // "h-sprd-odds-points": "",
         "v-ou-points": points.vou_point,
         "h-ou-points": points.hou_point,
-        // "v-ou-odds-points": "",
-        // "h-ou-odds-points": "",
       };
     });
 
