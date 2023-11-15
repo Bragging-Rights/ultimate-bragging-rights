@@ -50,8 +50,6 @@ export const SignInModal = (props) => {
         } else {
           displayToast("Login successful.", "success");
 
-          console.log("rec", rec);
-          console.log("userrole", rec.data.data.isAdmin);
           localStorage.setItem("username", rec.data.data.username);
           localStorage.setItem("email", rec.data.data.email);
           localStorage.setItem("_id", rec.data.data._id);

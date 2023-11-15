@@ -216,7 +216,6 @@ const ReactModal = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
-      "referralName",
       "termsAccepted",
     ];
 
@@ -378,6 +377,7 @@ const ReactModal = (props) => {
           name="referralName"
           value={formData?.refer_by}
           onChange={inputChangeHandler}
+          isRequired={false}
         />
         <div className="line"></div>
       </div>
@@ -458,6 +458,7 @@ const ReactModal = (props) => {
             name="password"
             value={formData.password}
             onChange={inputChangeHandler}
+            type="password"
           />
           <ModalInput
             label={"Confirm Password"}
