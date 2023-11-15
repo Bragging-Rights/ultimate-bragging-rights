@@ -98,7 +98,27 @@ const GameForm = () => {
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     const updatedGameCards = [...gameCards];
-    updatedGameCards[index][name] = value;
+
+    // Mirror the Spread values for home team if it's the visitor's Spread
+    if (name === "vSprd") {
+      updatedGameCards[index]["hSprd"] = -value;
+    }
+
+    // Update the field with the entered value for vSprd
+    if (name === "vSprd") {
+      updatedGameCards[index][name] = value;
+    }
+
+    // Mirror the Over/Under values for home team if it's the visitor's Over/Under
+    if (name === "vOU") {
+      updatedGameCards[index]["hOU"] = value;
+    }
+
+    // Update the field with the entered value for vOU
+    if (name === "vOU") {
+      updatedGameCards[index][name] = value;
+    }
+
     setGameCards(updatedGameCards);
   };
 
@@ -156,6 +176,11 @@ const GameForm = () => {
       hOUOdds: "",
     }));
 
+    if (!newGameCard.time) {
+      displayToast("Please enter a time for the game.", "error");
+      return;
+    }
+
     // Filter out the selected teams from the opposite dropdown
     const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
     setTeams(filteredTeams);
@@ -186,6 +211,10 @@ const GameForm = () => {
 
     // Check each game card for missing fields
     gameCards.forEach((gameCard, index) => {
+      if (!gameCard.time) {
+        missingFields.push(`Time for game ${index + 1}`);
+      }
+
       if (!gameCard.visitorTeam) {
         missingFields.push(`Visitor Team for game ${index + 1}`);
       }

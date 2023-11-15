@@ -157,5 +157,5 @@ export const SignInModal = (props) => {
 
 export default SignInModal;
 export const userId = localStorage.getItem("_id");
-export const UserRole = localStorage.getItem("isAdmin");
-// export const UserRole = false; // Hardcoded value for testing
+// export const UserRole = localStorage.getItem("isAdmin");
+export const UserRole = false; // Hardcoded value for testing
