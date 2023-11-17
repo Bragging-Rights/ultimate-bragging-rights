@@ -11,7 +11,6 @@ const LeagueHandler = ({
   info,
   index,
 }) => {
-  console.log("availableTeams", availableTeams);
   return (
     <div className="modal-bottom relative mb-2" key={index}>
       <button

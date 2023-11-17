@@ -11,16 +11,13 @@ const config = {
 
 const api = {
   get: async (url) => {
-    console.log(`${BASE_URL}${url}`);
     return await axios.get(`${BASE_URL}${url}`, config);
   },
 
   post: async (url, data) => {
-    console.log(`${BASE_URL}${url}`);
     return await axios.post(`${BASE_URL}${url}`, data, config);
   },
   put: async (url, data) => {
-    console.log(`${BASE_URL}${url}`);
     return await axios.put(`${BASE_URL}${url}`, data, config);
   },
   delete: async (url, data) => {
