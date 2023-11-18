@@ -27,8 +27,8 @@ const gameSchema = new mongoose.Schema({
   "h-ou-points": Number,
   ///////////////////// needs to be done
   sports: String, //we will use this to determine which sport it is for calculations//create
-  vFinalScore: String, //create
-  hFinalScore: String, //create
+  vFinalScore: String, //update
+  hFinalScore: String, //update
   vPediction: String,
   hPediction: String,
   id: String, //create
@@ -52,8 +52,8 @@ const gameSchema = new mongoose.Schema({
   winnerOU: String, //calculated through points
   suspended: Boolean, //update
   suspendedReason: String, //update
-  conference: String, //update
-  devision: String, //update
+  //conference: String, //not using as of this time
+  //devision: String, //not using as of this time
   week: Number, //create
 });
 
