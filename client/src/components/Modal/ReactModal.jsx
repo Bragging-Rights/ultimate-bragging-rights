@@ -80,7 +80,7 @@ const ReactModal = (props) => {
       displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
-      setAvailableTeams({ ...availableTeams, nab: [...rec.data] });
+      setAvailableTeams({ ...availableTeams, nba: [...rec.data] });
     },
   });
 
@@ -98,7 +98,6 @@ const ReactModal = (props) => {
       displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
-      console.log("hamd", rec);
       setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
     },
   });
@@ -145,7 +144,6 @@ const ReactModal = (props) => {
   };
 
   const addAnotherLeague = () => {
-    console.log("userLeagues", userLeagues);
     const resp = userLeagues.some((item) => {
       if (item.league == "" || item.team == "" || item.username == "") {
         return true;
@@ -192,7 +190,8 @@ const ReactModal = (props) => {
     (data) => Register(data),
     {
       onError: (err) => {
-        displayToast("An error occurred in the registration", "error");
+        console.log("err", err);
+        displayToast(err.response.data.message, "error");
       },
       onSuccess: (rec) => {
         if (rec?.data?.hasErrors) {
@@ -216,7 +215,6 @@ const ReactModal = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
-      "referralName",
       "termsAccepted",
     ];
 
@@ -378,6 +376,7 @@ const ReactModal = (props) => {
           name="referralName"
           value={formData?.refer_by}
           onChange={inputChangeHandler}
+          isRequired={false}
         />
         <div className="line"></div>
       </div>
@@ -458,6 +457,7 @@ const ReactModal = (props) => {
             name="password"
             value={formData.password}
             onChange={inputChangeHandler}
+            type="password"
           />
           <ModalInput
             label={"Confirm Password"}

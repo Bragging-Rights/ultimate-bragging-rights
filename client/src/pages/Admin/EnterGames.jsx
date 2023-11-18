@@ -156,6 +156,11 @@ const GameForm = () => {
       hOUOdds: "",
     }));
 
+    if (!newGameCard.time) {
+      displayToast("Please enter a time for the game.", "error");
+      return;
+    }
+
     // Filter out the selected teams from the opposite dropdown
     const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
     setTeams(filteredTeams);
@@ -186,6 +191,10 @@ const GameForm = () => {
 
     // Check each game card for missing fields
     gameCards.forEach((gameCard, index) => {
+      if (!gameCard.time) {
+        missingFields.push(`Time for game ${index + 1}`);
+      }
+
       if (!gameCard.visitorTeam) {
         missingFields.push(`Visitor Team for game ${index + 1}`);
       }
