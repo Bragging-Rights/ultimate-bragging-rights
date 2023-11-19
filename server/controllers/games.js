@@ -13,10 +13,10 @@ const createGame = async (req, res) => {
       const points = moneyline(
         game.vML,
         game.hML,
-        game.vSprd,
-        game.hSprd,
-        game.vOU,
-        game.hOU
+        game.vSprdOdds,
+        game.hSprdOdds,
+        game.vOUOdds,
+        game.hOUOdds
       );
       // console.log("points", points);
       return {
@@ -95,9 +95,10 @@ const getGames = async (req, res) => {
       gamedate: req.params.date,
     }).sort({ gamedate: 1 });
     res.json(games);
+    console.log(games);
   } catch (error) {
-    res.status(500).json({ message: error.message });
     console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
