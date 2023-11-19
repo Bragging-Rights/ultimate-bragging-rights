@@ -25,6 +25,7 @@ const GameForm = () => {
 
   const [gameCards, setGameCards] = useState([]);
   const [formData, setFormData] = useState({
+    week: "",
     league: "",
     season: "",
     date: "",
@@ -98,7 +99,26 @@ const GameForm = () => {
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     const updatedGameCards = [...gameCards];
+
+    // Update the field with the entered value
     updatedGameCards[index][name] = value;
+
+    // Mirror the Spread values for home team if it's the visitor's Spread
+    if (name === "vSprd") {
+      updatedGameCards[index]["hSprd"] = -value;
+    }
+
+    // Mirror the Over/Under values for home team if it's the visitor's Over/Under
+    if (name === "vOU") {
+      updatedGameCards[index]["hOU"] = value;
+    }
+
+    // Add two decimal places to the left for vML, hML, vSprdOdds, and hSprdOdds
+    if (["vML", "hML", "vSprdOdds", "hSprdOdds"].includes(name)) {
+      const newValue = parseFloat(value) / 100;
+      updatedGameCards[index][name] = newValue.toFixed(2);
+    }
+
     setGameCards(updatedGameCards);
   };
 
@@ -107,10 +127,10 @@ const GameForm = () => {
   };
 
   const handleAddGameCard = () => {
-    const { league, season, date } = formData;
+    const { league, season, date, week } = formData;
 
     // Check if any of the required values is undefined or empty
-    if (!league || !season || !date) {
+    if (!league || !season || !date || !week) {
       displayToast("Incomplete form data. Unable to add game card.");
       return;
     }
@@ -120,6 +140,7 @@ const GameForm = () => {
       league,
       season,
       date,
+      week,
       time: "",
       visitorTeam: "",
       vML: "",
@@ -255,6 +276,24 @@ const GameForm = () => {
         className="text-white justify-center items-center h-screen text-yellow-500"
       >
         <div className="flex flex-wrap -mx-2 ">
+          <div className="mb-4 w-1/4 px-2">
+            <label htmlFor="week">Week</label>
+            <select
+              id="week"
+              name="week"
+              value={formData.week}
+              onChange={(e) =>
+                setFormData({ ...formData, week: e.target.value })
+              }
+              className="bg-gray-800 text-white p-2 rounded w-full"
+            >
+              {[...Array(40)].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  Week {index + 1}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="mb-4 w-1/4 px-2">
             <label htmlFor="date">Date</label>
             <input
