@@ -3,13 +3,14 @@ import { useQuery } from "react-query";
 import { getGames, enterGameResults } from "../../services/games";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { useLeagueContext } from "../../components/LeagueContext";
 
 // Create a new component for the form within each card
 function GameForm({ game, onUpdateGameData }) {
   const [formData, setFormData] = useState({
-    finalScoreVisitor: "",
-    finalScoreHome: "",
-    gameEnding: "Regular",
+    vFinalScore: "",
+    hFinalScore: "",
+    gameEnd: "Regular",
   });
 
   const [resultEntered, setResultEntered] = useState(false);
@@ -63,34 +64,34 @@ function GameForm({ game, onUpdateGameData }) {
           {/* Form fields */}
           <div className="flex space-x-4 w-full">
             <div className="mb-2 w-1/2">
-              <label htmlFor="finalScoreVisitor">{game.visitor}</label>
+              <label htmlFor="vFinalScore">{game.visitor}</label>
               <input
                 type="number"
-                id="finalScoreVisitor"
-                name="finalScoreVisitor"
-                value={formData.finalScoreVisitor}
+                id="vFinalScore"
+                name="vFinalScore"
+                value={formData.vFinalScore}
                 onChange={handleChange}
                 className="bg-gray-800 text-white p-2 rounded w-1/3"
               />
             </div>
             <span className="text-red-500">vs</span>{" "}
             <div className="mb-4 w-1/2">
-              <label htmlFor="finalScoreHome">{game.home}</label>
+              <label htmlFor="hFinalScore">{game.home}</label>
               <input
                 type="number"
-                id="finalScoreHome"
-                name="finalScoreHome"
-                value={formData.finalScoreHome}
+                id="hFinalScore"
+                name="hFinalScore"
+                value={formData.hFinalScore}
                 onChange={handleChange}
                 className="bg-gray-800 text-white p-2 rounded w-1/3"
               />
             </div>
             <div className="mb-4 w-full">
-              <label htmlFor="gameEnding"></label>
+              <label htmlFor="gameEnd"></label>
               <select
-                id="gameEnding"
-                name="gameEnding"
-                value={formData.gameEnding}
+                id="gameEnd"
+                name="gameEnd"
+                value={formData.gameEnd}
                 onChange={handleChange}
                 className="bg-gray-800 text-white p-2 rounded w-1/3"
               >
@@ -116,18 +117,23 @@ function GameForm({ game, onUpdateGameData }) {
 }
 
 const EnterResults = () => {
+  const { selectedLeague } = useLeagueContext();
   const [gameData, setGameData] = useState([]);
   const date = new Date();
   const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
-  useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
-    onSuccess: (fetchedData) => {
-      setGameData(fetchedData.data);
-    },
-    onError: (error) => {
-      console.error("An error occurred:", error);
-    },
-  });
+  const { data: fetchedData } = useQuery(
+    [selectedLeague, formattedDateForAPI],
+    getGames,
+    {
+      onSuccess: (fetchedData) => {
+        setGameData(fetchedData.data);
+      },
+      onError: (error) => {
+        console.error("An error occurred:", error);
+      },
+    }
+  );
 
   const updateGameData = (gameId, updatedData) => {
     // Find the game in gameData with the matching gameId
