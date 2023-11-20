@@ -35,7 +35,7 @@ const Games = () => {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
-  } = useQuery(["teams", formattedDateForAPI, selectedLeague], getGames, {
+  } = useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
