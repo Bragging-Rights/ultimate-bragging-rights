@@ -19,42 +19,39 @@ const gameSchema = new mongoose.Schema({
   "v-ou-odds": Number,
   "h-ou-odds": Number,
   /////////////////////points below
-  "v-ml-points": Number,
-  "h-ml-points": Number,
-  "v-sprd-points": Number,
-  "h-sprd-points": Number,
-  "v-ou-points": Number,
-  "h-ou-points": Number,
+  "v-ml-points": String,
+  "h-ml-points": String,
+  "v-sprd-points": String,
+  "h-sprd-points": String,
+  "v-ou-points": String,
+  "h-ou-points": String,
   ///////////////////// needs to be done
-  sports: String, //we will use this to determine which sport it is for calculations//create
-  vFinalScore: String, //update
-  hFinalScore: String, //update
+  sports: String, //we will use this to determine which sport it is for calculations
+  vFinalScore: String,
+  hFinalScore: String,
   vPediction: String,
   hPediction: String,
-  id: String, //create
+  id: String,
   gameEnd: {
-    //update
     type: String,
     enum: ["reg", "ot", "ei", "so"], //reg=regular,ot=overtime,ei=extra innings,so=shootout
   },
   extraInnings: {
-    //update
     type: Number,
     default: 0,
   },
   overTime: {
-    //update
     type: Number,
     default: 0,
   },
   winnerML: String, //calculated through points
   winnerSprd: String, //calculated through points
   winnerOU: String, //calculated through points
-  suspended: Boolean, //update
-  suspendedReason: String, //update
-  //conference: String, //not using as of this time
-  //devision: String, //not using as of this time
-  week: Number, //create
+  suspended: Boolean,
+  suspendedReason: String,
+  conference: String,
+  devision: String,
+  week: Number,
 });
 
 const Game = mongoose.model("Game", gameSchema);

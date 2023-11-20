@@ -20,23 +20,22 @@ const createGame = async (req, res) => {
       );
       // console.log("points", points);
       return {
+        league: game.league,
+        seasonflag: game.season,
         gamedate: game.date,
         time: game.time,
+        "v-ml": game.vML, //use these values
+        "v-sprd": game.vSprd, //use these values
+        "v-sprd-odds": game.vSprdOdds, //use these values
+        "v-ou": game.vOU, //use these values
+        "v-ou-odds": game.vOUOdds, //use these values
+        "h-ml": game.hML, //use these values
+        "h-sprd": game.hSprd, //use these values
+        "h-sprd-odds": game.hSprdOdds, //use these values
+        "h-ou": game.hOU, //use these values
+        "h-ou-odds": game.hOUOdds, //use these values
         visitor: game.visitorTeam,
         home: game.homeTeam,
-        seasonflag: game.season,
-        league: game.league,
-
-        "v-ml": game.vML, //use these values
-        "h-ml": game.hML, //use these values
-        "v-sprd": game.vSprd, //use these values
-        "h-sprd": game.hSprd, //use these values
-        "v-sprd-odds": game.vSprdOdds, //use these values
-        "h-sprd-odds": game.hSprdOdds, //use these values
-        "v-ou": game.vOU, //use these values
-        "h-ou": game.hOU, //use these values
-        "v-ou-odds": game.vOUOdds, //use these values
-        "h-ou-odds": game.hOUOdds, //use these values
 
         ///
         "v-ml-points": points.vml_point,
@@ -50,7 +49,7 @@ const createGame = async (req, res) => {
 
     const result = await Game.insertMany(games);
     console.log("games", result);
-    res.status(201).json(result);
+    // res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
     console.log(error);
