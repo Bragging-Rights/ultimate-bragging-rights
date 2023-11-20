@@ -34,7 +34,7 @@ const Games = () => {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
-  } = useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
+  } = useQuery(["today-games", formattedDateForAPI, "NHL"], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
@@ -51,7 +51,7 @@ const Games = () => {
     isLoading: loadingTomorrowGames,
     isError: tomorrowGamesError,
     data: tomorrowGamesData,
-  } = useQuery(["teams", formattedDateForTomorrow, "NHL"], getGames, {
+  } = useQuery(["tomorrows-games", formattedDateForTomorrow, "NHL"], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedTomorrowData", fetchedData);
       setTomorrowGameData(fetchedData.data);
@@ -97,10 +97,7 @@ const Games = () => {
           <p className="text-white">No games available.</p>
         )}
       </div>
-      {/* <div className=" grid grid-cols-2 gap-4 ">
-        <GameCard />
-        <GamerCardRight />
-      </div> */}
+
       <div className=" my-2">
         <Line />
       </div>

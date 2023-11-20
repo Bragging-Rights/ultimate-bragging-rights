@@ -17,7 +17,7 @@ export const getGames = async ({ queryKey }) => {
   const response = await api.get(
     `api/admin/games/getAllGames/${leage}/${date}`
   );
-
+  console.log("response", response);
   return response;
 };
 
