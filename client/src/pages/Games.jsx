@@ -19,9 +19,7 @@ const Games = () => {
   const [gameData, setGameData] = useState([]);
   const [tomorrowGameData, setTomorrowGameData] = useState([]); // Store tomorrow's games separately
 
-  console.log("gameData", gameData);
-  console.log("tomorrowGameData", tomorrowGameData);
-
+  console.log("selectedLeague", selectedLeague);
   const date = new Date();
   const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
@@ -35,13 +33,10 @@ const Games = () => {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
-  } = useQuery(["teams", formattedDateForAPI, "NHL"], getGames, {
+  } = useQuery(["teams", formattedDateForAPI, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
-      console.log("fetchedData", fetchedData);
+      console.log("hamd", fetchedData);
       setGameData(fetchedData.data);
-    },
-    onError: (error) => {
-      console.error("An error occurred:", error);
     },
   });
 
@@ -52,13 +47,10 @@ const Games = () => {
     isLoading: loadingTomorrowGames,
     isError: tomorrowGamesError,
     data: tomorrowGamesData,
-  } = useQuery(["teams", formattedDateForTomorrow, "NHL"], getGames, {
+  } = useQuery(["teams", formattedDateForTomorrow, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedTomorrowData", fetchedData);
       setTomorrowGameData(fetchedData.data);
-    },
-    onError: (error) => {
-      console.error("An error occurred:", error);
     },
   });
 
