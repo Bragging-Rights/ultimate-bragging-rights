@@ -11,6 +11,7 @@ function GameForm({ game, onUpdateGameData }) {
     vFinalScore: "",
     hFinalScore: "",
     gameEnd: "Regular",
+    stateReason: "",
   });
 
   const [resultEntered, setResultEntered] = useState(false);
@@ -99,8 +100,24 @@ function GameForm({ game, onUpdateGameData }) {
                 <option value="Overtime">Overtime</option>
                 <option value="Postponed">Postponed</option>
                 <option value="Cancelled">Cancelled</option>
+
                 {/* Add more game types as needed */}
               </select>
+            </div>
+            <div className="mb-4 w-full">
+              <label htmlFor="stateReason">State Reason</label>
+              <input
+                type="text"
+                id="stateReason"
+                name="stateReason"
+                value={formData.stateReason}
+                onChange={handleChange}
+                className="bg-gray-800 text-white p-2 rounded w-full"
+                // Conditionally hide/show based on gameEnd value
+                style={{
+                  display: formData.gameEnd === "Cancelled" ? "block" : "none",
+                }}
+              />
             </div>
           </div>
 

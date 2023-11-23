@@ -16,8 +16,15 @@ const GamerCardRight = ({ gameData }) => {
 
   let gameEnding = ""; // Change const to let
 
-  const handleEnterPick = () => {};
-
+  const handleEnterPick = () => {
+    setUserSelections({
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+    });
+  };
+  
   const handleLockIn = () => {
     const timestamp = new Date().toISOString();
     console.log("User ID in GameCard:", userId);
@@ -52,21 +59,14 @@ const GamerCardRight = ({ gameData }) => {
   return (
     <>
       <div
-        className="game-card grid col-span-2 xl:col-span-1 "
+        className="game-card"
         style={{
           boxShadow: "0px 4px 4px 0px #A2EB38",
         }}
       >
         <div className="flex justify-between">
           <div className=" flex flex-col ">
-            <span
-              className="game-time font-inter mb-3"
-              style={{
-                WebkitTextStroke: "0.3px black",
-                textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
-                fontSize: "14px",
-              }}
-            >
+            <span className=" game-time mb-3">
               {TimeFormat(gameData?.time)}
             </span>
             <input
@@ -74,66 +74,50 @@ const GamerCardRight = ({ gameData }) => {
               className="card-input mb-3"
               value={pick_visitor}
               onChange={handleInputChange}
-            />
+            />{" "}
           </div>
 
           <div className=" flex flex-col justify-start ">
             <span className=" game-date">{gameData?.gamedate}</span>
-            <div className=" box box px-7 h-12">
+            <div className=" box box h-12 w-24">
               <label>{gameData?.visitor}</label>
             </div>
           </div>
-          <div
-            className=" flex flex-col justify-start "
-            style={{
-              WebkitTextStroke: "0.3px black",
-
-              textShadow: "0px 1px 4px 0px #2CDD14",
-              fontSize: "16px",
-            }}
-          >
-            <span className=" game-time font-inter mb-3">Money Line</span>
-            <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[50%] text-center">
-                {gameData?.["v-ml"]}
-              </label>
-
-              <label>{gameData?.["v-ml-points"]} Pts</label>
+          <div className=" flex flex-col justify-start ">
+            <span className=" game-time ">Money Line</span>
+            <div className=" box box h-12 w-24">
+              <label>{gameData?.["v-ml"]}</label> 
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
-            <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[50%] text-center">
-                {gameData?.["v-sprd"]}
-              </label>
-
-              <label className=" text-white">
-                {gameData?.["v-sprd-points"]} Pts
-              </label>
+            <div className=" box box h-12 w-24">
+              <label>{gameData?.["v-sprd"]}</label> 
+              {/* <label>____</label>
+              <label>{gameData?.["v-sprd-odds"]}</label> */}
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
-            <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[50%] text-center">
-                {gameData?.["v-ou"]}
-              </label>
-              <label>{gameData?.["v-ou-points"]} Pts</label>
+            <div className=" box box h-12 w-24">
+              <label>{gameData?.["v-ou"]}</label>
+              
+              {/* <label>____</label>
+              <label>{gameData?.["v-ou-odds"]}</label> */}
             </div>
           </div>
         </div>
 
         <div className=" flex justify-between gap-1">
           <div
-            className="line"
+            className=" line "
             style={{
               width: "10%",
             }}
           ></div>
           <div
-            className="line"
+            className=" line "
             style={{
               width: "80%",
             }}
@@ -148,48 +132,46 @@ const GamerCardRight = ({ gameData }) => {
               className="card-input mb-3"
               value={pick_home}
               onChange={handleHomeChange}
-            />
+            />{" "}
           </div>
 
-          <div className="flex flex-col">
+          <div className=" flex flex-col justify-between">
             <div
-              className=" box px-7 h-12"
+              className=" box box h-12 w-24"
               style={{
-                marginLeft: "60px",
+                marginLeft: "25px",
               }}
             >
               <label>{gameData?.home}</label>
             </div>
           </div>
           <div className=" flex flex-col ">
-            <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[50%] text-center">
-                {gameData?.["h-ml"]}
-              </label>
-              <label>{gameData?.["h-ml-points"]} Pts</label>
+            <div className=" box box h-12 w-24">
+              <label>{gameData?.["h-ml"]}</label>
+              {" "}
             </div>
           </div>
           <div className=" flex flex-col ">
-            <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[50%] text-center">
-                {gameData?.["h-sprd"]}
-              </label>
-              <label>{gameData?.["h-sprd-points"]} Pts</label>
+            <div className=" box box h-12 w-24">
+              <label>{gameData?.["h-sprd"]}</label>
+              
+              {/* <label>____</label>
+              <label>{gameData?.["h-sprd-odds"]}</label> */}
             </div>
           </div>
           <div className=" flex flex-col">
-            <div className=" box  px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[50%] text-center">
-                {gameData?.["h-ou"]}
-              </label>
-              <label>{gameData?.["h-ou-points"]} Pts</label>
+            <div className=" box box h-12 w-24">
+              <label>{gameData?.["h-ou"]}</label>
+              
+              {/* <label>____</label>
+              <label>{gameData?.["h-ou-odds"]}</label> */}
             </div>
           </div>
         </div>
 
         <div className=" flex justify-between items-center">
-          <div className="card-id"></div>
-          <Switches league={gameData?.league} season={gameData?.seasonflag} />
+          <div className="card-id">ID: 625</div>
+          <Switches leage="Hocky" season={gameData?.seasonflag} />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>
               EDIT
