@@ -26,9 +26,10 @@ const gameSchema = new mongoose.Schema({
   "v-ou-points": String,
   "h-ou-points": String,
   ///////////////////// needs to be done
-  sports: String, //we will use this to determine which sport it is for calculations
-  vFinalScore: String,
-  hFinalScore: String,
+  sports: String, //we will use this to determine which sport it is for calculations//create
+  vFinalScore: String, //update
+  hFinalScore: String, //update
+
   vPediction: String,
   hPediction: String,
   id: String,
