@@ -5,17 +5,33 @@ import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
 import { userId } from "../../Modal/SignInModal"; // Replace with the correct path to SignInModal.jsx
 import { addPrediction } from "../../services/predictions";
+import InputValueHanlder from "../../hooks/InputValueHanlder";
+import { useLeagueContext } from "../LeagueContext";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedGameData, setEditedGameData] = useState({ ...gameData });
+  const { selectedLeague } = useLeagueContext();
 
   const handleInputChange = (e) => {
+    const resp = InputValueHanlder(e.target.value, pick_home, selectedLeague);
+    console.log(resp);
+    if (!resp) {
+      return;
+    }
     setPickVisitor(e.target.value);
   };
   const handleHomeChange = (e) => {
+    const resp = InputValueHanlder(
+      pick_visitor,
+      e.target.value,
+      selectedLeague
+    );
+    if (!resp) {
+      return;
+    }
     setPickHome(e.target.value);
   };
 
