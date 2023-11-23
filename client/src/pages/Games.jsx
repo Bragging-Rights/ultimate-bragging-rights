@@ -11,11 +11,10 @@ import GamerCardRight from "../components/GameCard/GamerCardRight/GamerCardRight
 import { getGames } from "../services/games";
 import { useQuery } from "react-query";
 import { format, add } from "date-fns";
-import { useLeagueContext } from "../components/LeagueContext";
 
 const Games = () => {
   const isAdmin = true; // Set this value based on whether the user is an admin or not
-  const { selectedLeague } = useLeagueContext(); // Access the selected league from the context
+
   const [gameData, setGameData] = useState([]);
   const [tomorrowGameData, setTomorrowGameData] = useState([]); // Store tomorrow's games separately
 
@@ -35,7 +34,7 @@ const Games = () => {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
-  } = useQuery(["teams", formattedDateForAPI, selectedLeague], getGames, {
+  } = useQuery(["teams", formattedDateForAPI, "NBA"], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
@@ -52,7 +51,7 @@ const Games = () => {
     isLoading: loadingTomorrowGames,
     isError: tomorrowGamesError,
     data: tomorrowGamesData,
-  } = useQuery(["teams", formattedDateForTomorrow, selectedLeague], getGames, {
+  } = useQuery(["teams", formattedDateForTomorrow, "NHL"], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedTomorrowData", fetchedData);
       setTomorrowGameData(fetchedData.data);

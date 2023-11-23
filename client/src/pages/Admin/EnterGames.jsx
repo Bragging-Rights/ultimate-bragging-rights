@@ -21,6 +21,7 @@ const GameForm = () => {
     hSprdOdds: "",
     hOU: "",
     hOUOdds: "",
+    sport: "",
   };
 
   const [gameCards, setGameCards] = useState([]);
@@ -113,12 +114,6 @@ const GameForm = () => {
       updatedGameCards[index]["hOU"] = value;
     }
 
-    // Add two decimal places to the left for vML, hML, vSprdOdds, and hSprdOdds
-    if (["vML", "hML", "vSprdOdds", "hSprdOdds"].includes(name)) {
-      const newValue = parseFloat(value) / 100;
-      updatedGameCards[index][name] = newValue.toFixed(2);
-    }
-
     setGameCards(updatedGameCards);
   };
 
@@ -133,6 +128,18 @@ const GameForm = () => {
     if (!league || !season || !date || !week) {
       displayToast("Incomplete form data. Unable to add game card.");
       return;
+    }
+
+    // Determine the sport based on the selected league
+    let sport = "";
+    if (league === "NFL") {
+      sport = "football";
+    } else if (league === "NBA") {
+      sport = "basketball";
+    } else if (league === "NHL") {
+      sport = "hockey";
+    } else if (league === "MLB") {
+      sport = "baseball";
     }
 
     // Use the extracted values to construct new game card
@@ -154,6 +161,7 @@ const GameForm = () => {
       hSprdOdds: "",
       hOU: "",
       hOUOdds: "",
+      sport: "",
     };
 
     // Create a new copy of the formData object for each game card

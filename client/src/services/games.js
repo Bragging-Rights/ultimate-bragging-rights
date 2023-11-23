@@ -13,7 +13,7 @@ export const addGame = async (data) => {
 
 export const getGames = async ({ queryKey }) => {
   const [_, date] = queryKey;
-  const { selectedLeague } = useLeagueContext(); 
+  const { selectedLeague } = useLeagueContext();
 
   console.log("Games Fetched", date, selectedLeague);
 
