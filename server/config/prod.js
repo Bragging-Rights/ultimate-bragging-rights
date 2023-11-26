@@ -9,9 +9,3 @@ module.exports = {
   emailPassword: process.env.EMAIL_PASSWORD,
   backendUrl: process.env.BACKEND_URL,
 };
-
-// host='162.250.126.19',
-//         port=3306,
-//         user='ultimate',
-//         password='K$4xg40CK@10U&',
-//         db='ultimate_BraggingRights',
