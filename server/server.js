@@ -48,7 +48,7 @@ app.use("/api/leagues/nhl", nhlTeams);
 app.use("/api/leagues/nba", nbaTeams);
 app.use("/api/leagues/nfl", nflTeams);
 app.use("/api/leagues/mlb", mlbTeams);
-app.use("api/user/gamesplayed", gamesPlayed);
+app.use("/api/user/gamesplayed", gamesPlayed);
 
 app.get("/", async (req, res) => {
   res.send("Server is running...");
