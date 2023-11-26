@@ -1,6 +1,4 @@
 import api from "./api";
-import { useLeagueContext } from "../components/LeagueContext";
-
 export const addGame = async (data) => {
   console.log(data);
   const response = await api.post(
@@ -12,10 +10,8 @@ export const addGame = async (data) => {
 };
 
 export const getGames = async ({ queryKey }) => {
-  const [_, date] = queryKey;
-  const { selectedLeague } = useLeagueContext();
-
-  console.log("Games Fetched", date, selectedLeague);
+  const [_, date, selectedLeague] = queryKey;
+  console.log("hamd", selectedLeague);
 
   const response = await api.get(
     `api/admin/games/getAllGames/${selectedLeague}/${date}`

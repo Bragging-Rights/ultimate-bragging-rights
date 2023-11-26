@@ -11,17 +11,16 @@ import GamerCardRight from "../components/GameCard/GamerCardRight/GamerCardRight
 import { getGames } from "../services/games";
 import { useQuery } from "react-query";
 import { format, add } from "date-fns";
+import { useLeagueContext } from "../components/LeagueContext";
 
 const Games = () => {
   const isAdmin = true; // Set this value based on whether the user is an admin or not
-
+  const { selectedLeague } = useLeagueContext();
   const [gameData, setGameData] = useState([]);
   const [tomorrowGameData, setTomorrowGameData] = useState([]); // Store tomorrow's games separately
 
-  console.log("gameData", gameData);
-  console.log("tomorrowGameData", tomorrowGameData);
-
   const date = new Date();
+
   const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
   const getNextDate = (dateString, daysToAdd) => {
@@ -34,7 +33,7 @@ const Games = () => {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
-  } = useQuery(["teams", formattedDateForAPI, "NBA"], getGames, {
+  } = useQuery(["teams", formattedDateForAPI, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
@@ -51,7 +50,7 @@ const Games = () => {
     isLoading: loadingTomorrowGames,
     isError: tomorrowGamesError,
     data: tomorrowGamesData,
-  } = useQuery(["teams", formattedDateForTomorrow, "NHL"], getGames, {
+  } = useQuery(["teams", formattedDateForTomorrow, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
       console.log("fetchedTomorrowData", fetchedData);
       setTomorrowGameData(fetchedData.data);

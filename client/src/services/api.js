@@ -1,11 +1,16 @@
-import axios from "axios";
-import { BACKEND_URL } from "../../config";
+// api.js
 
-const BASE_URL = BACKEND_URL || "http://localhost:8000/";
+import axios from "axios";
+
+const BASE_URL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_APP_BACKEND_URL // For production
+    : import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:8000/"; // For development fallback
+
 const config = {
   headers: {
-    Accept: "application/json", // Accept JSON response
-    "Content-Type": "application/json", // Send JSON data in the request body
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
 };
 
@@ -17,9 +22,11 @@ const api = {
   post: async (url, data) => {
     return await axios.post(`${BASE_URL}${url}`, data, config);
   },
+
   put: async (url, data) => {
     return await axios.put(`${BASE_URL}${url}`, data, config);
   },
+
   delete: async (url, data) => {
     return await axios.delete(`${BASE_URL}${url}`);
   },
