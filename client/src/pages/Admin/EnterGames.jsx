@@ -46,15 +46,15 @@ const GameForm = () => {
 
         displayToast("Game added successfully.", "success");
 
-        //extracting all game cards into an array
-        const allGameCards = gameCards.map((gameCard) => ({
-          ...gameCard,
-        }));
+        // //extracting all game cards into an array
+        // const allGameCards = gameCards.map((gameCard) => ({
+        //   ...gameCard,
+        // }));
 
-        //sending all game cards in a single mutate call, wrapped in an array
-        mutate([allGameCards]);
+        // //sending all game cards in a single mutate call, wrapped in an array
+        // mutate([allGameCards]);
 
-        // reset();
+        reset();
       },
     }
   );
@@ -69,7 +69,6 @@ const GameForm = () => {
       displayToast("An error occurred while getting the game.", "error");
     },
     onSuccess: (rec) => {
-      console.log("rec", rec);
       setTeams(rec.data);
     },
   });
@@ -185,10 +184,10 @@ const GameForm = () => {
       hOUOdds: "",
     }));
 
-    if (!newGameCard.time) {
-      displayToast("Please enter a time for the game.", "error");
-      return;
-    }
+    // if (!newGameCard.time) {
+    //   displayToast("Please enter a time for the game.", "error");
+    //   return;
+    // }
 
     // Filter out the selected teams from the opposite dropdown
     const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
@@ -206,17 +205,6 @@ const GameForm = () => {
     console.log(gameCards);
 
     const missingFields = [];
-
-    // // Check for missing league, season, and date
-    // if (!formData.league) {
-    //   missingFields.push("League");
-    // }
-    // if (!formData.season) {
-    //   missingFields.push("Season");
-    // }
-    // if (!formData.date) {
-    //   missingFields.push("Date");
-    // }
 
     // Check each game card for missing fields
     gameCards.forEach((gameCard, index) => {
@@ -268,9 +256,10 @@ const GameForm = () => {
         "error"
       );
     } else {
-      gameCards.forEach((gameCard) => {
-        mutate(gameCard);
-      });
+      mutate([...gameCards]);
+      // gameCards.forEach((gameCard) => {
+      //   mutate(gameCard);
+      // });
     }
   };
 
@@ -295,6 +284,7 @@ const GameForm = () => {
               }
               className="bg-gray-800 text-white p-2 rounded w-full"
             >
+              <option value="">Select a week</option>
               {[...Array(40)].map((_, index) => (
                 <option key={index + 1} value={index + 1}>
                   Week {index + 1}

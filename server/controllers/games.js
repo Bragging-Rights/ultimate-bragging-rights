@@ -7,7 +7,7 @@ const { moneyline } = require("../calculations/point");
 const createGame = async (req, res) => {
   // console.log(req.body);
   try {
-    let data = [req.body];
+    let data = req.body;
     console.log("data", data);
     const games = data.map((game) => {
       const points = moneyline(
@@ -49,7 +49,7 @@ const createGame = async (req, res) => {
 
     const result = await Game.insertMany(games);
     console.log("games", result);
-    // res.status(201).json(result);
+    res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
     console.log(error);
