@@ -20,6 +20,7 @@ import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const queryClient = new QueryClient();
+
   return (
     <Provider store={store}>
       <ToastContainer />
