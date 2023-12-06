@@ -49,7 +49,7 @@ const createGame = async (req, res) => {
 
     const result = await Game.insertMany(games);
     console.log("games", result);
-    // res.status(201).json(result);
+    res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
     console.log(error);
