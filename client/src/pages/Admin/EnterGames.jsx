@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import displayToast from "../../components/Alert/Alert";
 import { getTeasmByLeage } from "../../services/Teams";
+import Footer from "../../components/Footer";
 
 const GameForm = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const GameForm = () => {
     sport: "",
   };
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [gameCards, setGameCards] = useState([]);
   const [formData, setFormData] = useState({
     week: "",
@@ -46,15 +48,15 @@ const GameForm = () => {
 
         displayToast("Game added successfully.", "success");
 
-        //extracting all game cards into an array
-        const allGameCards = gameCards.map((gameCard) => ({
-          ...gameCard,
-        }));
+        // //extracting all game cards into an array
+        // const allGameCards = gameCards.map((gameCard) => ({
+        //   ...gameCard,
+        // }));
 
-        //sending all game cards in a single mutate call, wrapped in an array
-        mutate([allGameCards]);
+        // //sending all game cards in a single mutate call, wrapped in an array
+        // mutate([allGameCards]);
 
-        // reset();
+        reset();
       },
     }
   );
@@ -69,7 +71,6 @@ const GameForm = () => {
       displayToast("An error occurred while getting the game.", "error");
     },
     onSuccess: (rec) => {
-      console.log("rec", rec);
       setTeams(rec.data);
     },
   });
@@ -78,9 +79,9 @@ const GameForm = () => {
     return (
       <>
         <option value="">Select a season</option>
-        <option value="Pre Season">Pre Season</option>
-        <option value="Regular">Regular</option>
-        <option value="Playoffs">Playoffs</option>
+        <option value="Pre Season">Pre</option>
+        <option value="Regular">Reg</option>
+        <option value="Playoffs">Post</option>
       </>
     );
   };
@@ -185,10 +186,10 @@ const GameForm = () => {
       hOUOdds: "",
     }));
 
-    if (!newGameCard.time) {
-      displayToast("Please enter a time for the game.", "error");
-      return;
-    }
+    // if (!newGameCard.time) {
+    //   displayToast("Please enter a time for the game.", "error");
+    //   return;
+    // }
 
     // Filter out the selected teams from the opposite dropdown
     const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
@@ -201,22 +202,28 @@ const GameForm = () => {
     setGameCards(updatedGameCards);
   };
 
+  const handleResetForm = () => {
+    setGameCards([]);
+    setFormData({
+      ...initialFormData,
+      week: "",
+      league: "",
+      season: "",
+      date: "",
+    });
+    setFormSubmitted(false); // Reset the formSubmitted state
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(gameCards);
+    // console.log(gameCards);
+
+    if (formSubmitted) {
+      displayToast("Form already submitted.", "warning");
+      return;
+    }
 
     const missingFields = [];
-
-    // // Check for missing league, season, and date
-    // if (!formData.league) {
-    //   missingFields.push("League");
-    // }
-    // if (!formData.season) {
-    //   missingFields.push("Season");
-    // }
-    // if (!formData.date) {
-    //   missingFields.push("Date");
-    // }
 
     // Check each game card for missing fields
     gameCards.forEach((gameCard, index) => {
@@ -268,9 +275,8 @@ const GameForm = () => {
         "error"
       );
     } else {
-      gameCards.forEach((gameCard) => {
-        mutate(gameCard);
-      });
+      mutate([...gameCards]);
+      setFormSubmitted(true); // Set formSubmitted to true after successful submission
     }
   };
 
@@ -284,7 +290,7 @@ const GameForm = () => {
         className="text-white justify-center items-center h-screen text-yellow-500"
       >
         <div className="flex flex-wrap -mx-2 ">
-          <div className="mb-4 w-1/4 px-2">
+          <div className="mb-4 w-1/12 px-2">
             <label htmlFor="week">Week</label>
             <select
               id="week"
@@ -295,6 +301,7 @@ const GameForm = () => {
               }
               className="bg-gray-800 text-white p-2 rounded w-full"
             >
+              <option value="">Select a week</option>
               {[...Array(40)].map((_, index) => (
                 <option key={index + 1} value={index + 1}>
                   Week {index + 1}
@@ -302,7 +309,7 @@ const GameForm = () => {
               ))}
             </select>
           </div>
-          <div className="mb-4 w-1/4 px-2">
+          <div className="mb-4 w-1/8 px-2">
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -316,7 +323,7 @@ const GameForm = () => {
             />
           </div>
 
-          <div className="mb-4 w-1/4 px-2">
+          <div className="mb-4 w-1/12 px-2">
             <label htmlFor="league">League</label>
             <select
               id="league"
@@ -331,7 +338,7 @@ const GameForm = () => {
             </select>
           </div>
 
-          <div className="mb-4 w-1/4 px-2">
+          <div className="mb-4 w-1/12 px-2">
             <label htmlFor="season">Season</label>
             <select
               id="season"
@@ -417,10 +424,10 @@ const GameForm = () => {
               </div> */}
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex gap-2">
               <div
-                className="w-1/2 px-2 box box h-18 w-30"
-                style={{ marginRight: "8px" }}
+                className=" box box h-18 w-30"
+                style={{ marginLeft: "40px" }}
               >
                 <label htmlFor={`visitorteam-${index}`}>Visitor Team</label>
                 <select
@@ -430,7 +437,7 @@ const GameForm = () => {
                   onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 >
-                  <option value="">Select a team</option>
+                  <option value=""></option>
                   {loadingTeams ? (
                     <option value="" disabled>
                       Loading teams...
@@ -445,10 +452,7 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`vSprd-${index}`}>V Sprd</label>
                 <input
                   type="number"
@@ -461,10 +465,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`vSprdOdds-${index}`}>V Sprd Odds</label>
                 <input
                   type="number"
@@ -477,10 +478,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`vML-${index}`}>Visitor M/L</label>
                 <input
                   type="number"
@@ -493,10 +491,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`vOU-${index}`}>V O/U</label>
                 <input
                   type="number"
@@ -509,7 +504,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/8 px-2 box box h-18 w-15">
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`vOUOdds-${index}`}>V O/U Odds</label>
                 <input
                   type="number"
@@ -523,11 +518,8 @@ const GameForm = () => {
               </div>
             </div>
 
-            <div className="flex justify-between">
-              <div
-                className="w-1/2 px-2 box box h-18 w-30"
-                style={{ marginRight: "8px" }}
-              >
+            <div className="flex gap-2">
+              <div className="box box h-18 w-30" style={{ marginLeft: "40px" }}>
                 <label htmlFor={`hometeam-${index}`}>Home Team</label>
                 <select
                   id={`hometeam-${index}`}
@@ -536,7 +528,7 @@ const GameForm = () => {
                   onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 >
-                  <option value="">Select a team</option>
+                  <option value=""></option>
                   {loadingTeams ? (
                     <option value="" disabled>
                       Loading teams...
@@ -551,10 +543,7 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`hSprd-${index}`}>H Sprd</label>
                 <input
                   type="number"
@@ -567,10 +556,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`hSprdOdds-${index}`}>H Sprd Odds</label>
                 <input
                   type="number"
@@ -583,10 +569,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`hML-${index}`}>Home M/L</label>
                 <input
                   type="number"
@@ -599,10 +582,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div
-                className="w-1/8 px-2 box box h-18 w-15"
-                style={{ marginRight: "8px" }}
-              >
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`hOU-${index}`}>H O/U</label>
                 <input
                   type="number"
@@ -615,7 +595,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/8 px-2 box box h-18 w-15">
+              <div className="w-1/12 px-2 box box h-18 w-15">
                 <label htmlFor={`hOUOdds-${index}`}>H O/U Odds</label>
                 <input
                   type="number"
@@ -636,15 +616,21 @@ const GameForm = () => {
             onClick={handleAddGameCard}
             className="bg-green-500 text-white p-2 rounded"
             style={{ marginRight: "10px" }}
-          >
-            +
-          </button>
+          ></button>
           <button
             type="submit"
             className="bg-yellow-400 text-black p-2 rounded"
             onClick={handleSubmit}
           >
-            Display Games on Website ✔
+            Finish ✔
+          </button>
+          <button
+            type="button"
+            onClick={handleResetForm}
+            className="bg-red-500 text-white p-2 rounded"
+            style={{ marginLeft: "10px" }}
+          >
+            Reset Form
           </button>
         </div>
       </form>

@@ -7,7 +7,7 @@ const { moneyline } = require("../calculations/point");
 const createGame = async (req, res) => {
   // console.log(req.body);
   try {
-    let data = [req.body];
+    let data = req.body;
     console.log("data", data);
     const games = data.map((game) => {
       const points = moneyline(

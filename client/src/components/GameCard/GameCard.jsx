@@ -5,33 +5,17 @@ import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
 import { userId } from "../../Modal/SignInModal"; // Replace with the correct path to SignInModal.jsx
 import { addPrediction } from "../../services/predictions";
-import InputValueHanlder from "../../hooks/InputValueHanlder";
-import { useLeagueContext } from "../LeagueContext";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedGameData, setEditedGameData] = useState({ ...gameData });
-  const { selectedLeague } = useLeagueContext();
 
   const handleInputChange = (e) => {
-    const resp = InputValueHanlder(e.target.value, pick_home, selectedLeague);
-    console.log(resp);
-    if (!resp) {
-      return;
-    }
     setPickVisitor(e.target.value);
   };
   const handleHomeChange = (e) => {
-    const resp = InputValueHanlder(
-      pick_visitor,
-      e.target.value,
-      selectedLeague
-    );
-    if (!resp) {
-      return;
-    }
     setPickHome(e.target.value);
   };
 
@@ -89,7 +73,7 @@ const GameCard = ({ gameData }) => {
 
   return (
     <>
-      <div className="game-card">
+      <div className="game-card grid col-span-2 xl:col-span-1">
         <div className="flex justify-between">
           <div className=" flex flex-col ">
             <span
@@ -113,7 +97,7 @@ const GameCard = ({ gameData }) => {
 
           <div className=" flex flex-col justify-start ">
             <span className=" game-date">{gameData?.gamedate}</span>
-            <div className=" box box h-12 w-24">
+            <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
             </div>
           </div>
@@ -127,36 +111,47 @@ const GameCard = ({ gameData }) => {
             }}
           >
             <span className=" game-time font-inter mb-3">Money Line</span>
-            <div className=" box h-12 w-24">
-              <label>{gameData?.["v-ml"]}</label> <label></label>
+            <div className=" box px-7 h-12">
+              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
+                {gameData?.["v-ml"]}
+              </label>
+
+              <label>{gameData?.["v-ml-points"]} Pts</label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
-            <div className=" box h-12 w-24">
-              <label>{gameData?.["v-sprd"]}</label>
-              {/* <label> Pts</label> */}
+            <div className=" box px-7 h-12">
+              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
+                {gameData?.["v-sprd"]}
+              </label>
+
+              <label className=" text-white">
+                {gameData?.["v-sprd-points"]} Pts
+              </label>
             </div>
           </div>
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Over/Under</span>
 
-            <div className=" box h-12 w-24">
-              <label>{gameData?.["v-ou"]}</label>
-              {/* <label> Pts</label> */}
+            <div className=" box px-7 h-12">
+              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
+                {gameData?.["v-ou"]}
+              </label>
+              <label>{gameData?.["v-ou-points"]} Pts</label>
             </div>
           </div>
         </div>
 
         <div className=" flex justify-between gap-1">
           <div
-            className=" line "
+            className="line"
             style={{
               width: "10%",
             }}
           ></div>
           <div
-            className=" line "
+            className="line"
             style={{
               width: "80%",
             }}
@@ -171,12 +166,12 @@ const GameCard = ({ gameData }) => {
               className="card-input mb-3"
               value={pick_home}
               onChange={handleHomeChange}
-            />{" "}
+            />
           </div>
 
-          <div className=" flex flex-col ">
+          <div className="flex flex-col">
             <div
-              className=" box h-12 w-24"
+              className=" box px-7 h-12"
               style={{
                 marginLeft: "60px",
               }}
@@ -185,24 +180,33 @@ const GameCard = ({ gameData }) => {
             </div>
           </div>
           <div className=" flex flex-col ">
-            <div className=" box h-12 w-24">
-              <label>{gameData?.["h-ml"]}</label> <label></label>
+            <div className=" box px-7 h-12">
+              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
+                {gameData?.["h-ml"]}
+              </label>
+              <label>{gameData?.["h-ml-points"]} Pts</label>
             </div>
           </div>
           <div className=" flex flex-col ">
-            <div className=" box h-12 w-24">
-              <label>{gameData?.["h-sprd"]}</label> <label></label>
+            <div className=" box px-7 h-12">
+              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
+                {gameData?.["h-sprd"]}
+              </label>
+              <label>{gameData?.["h-sprd-points"]} Pts</label>
             </div>
           </div>
           <div className=" flex flex-col">
-            <div className=" box  h-12 w-24">
-              <label>{gameData?.["h-ou"]}</label> <label></label>
+            <div className=" box  px-7 h-12">
+              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
+                {gameData?.["h-ou"]}
+              </label>
+              <label>{gameData?.["h-ou-points"]} Pts</label>
             </div>
           </div>
         </div>
 
         <div className=" flex justify-between items-center">
-          <div className="card-id">ID: 625</div>
+          <div className="card-id"></div>
           <Switches league={gameData?.league} season={gameData?.seasonflag} />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>
