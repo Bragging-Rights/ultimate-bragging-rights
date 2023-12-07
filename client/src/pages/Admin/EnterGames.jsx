@@ -280,6 +280,34 @@ const GameForm = () => {
     }
   };
 
+  const handlePaste = (e, index) => {
+    const data = e.clipboardData.getData("text");
+    console.log(data);
+
+    const values = data.split("\n");
+    // console.log(values);
+
+    let cleanedData = values.map((item) => item.replace(/[\r|o|u]/g, ""));
+
+    const updatedGameCards = [...gameCards];
+    console.log(cleanedData);
+    console.log("index: ", index);
+    updatedGameCards[index].vSprd = cleanedData[0];
+    updatedGameCards[index].vSprdOdds = cleanedData[1];
+    updatedGameCards[index].vML = cleanedData[2];
+    updatedGameCards[index].vOU = cleanedData[3];
+    updatedGameCards[index].vOUOdds = cleanedData[4];
+    updatedGameCards[index].hSprd = cleanedData[5];
+    updatedGameCards[index].hSprdOdds = cleanedData[6];
+    updatedGameCards[index].hML = cleanedData[7];
+    updatedGameCards[index].hOU = cleanedData[8];
+    updatedGameCards[index].hOUOdds = cleanedData[9];
+    console.log(updatedGameCards[0]);
+
+    // Assuming you have a state setter for gameCards
+    setGameCards(updatedGameCards);
+  };
+
   return (
     <div className="p-4">
       <h2 className="text-white text-xl mb-4 align-items-center">
@@ -457,9 +485,12 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vSprd-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`vSprd`}
                   value={gameCard.vSprd}
-                  onChange={(e) => handleChange(e, index)}
+                  onChange={(e) => {
+                    handleChange(e, index);
+                  }}
                   step="0.1"
                   className="bg-gray-800 text-white p-2 rounded w-full"
                 />
@@ -470,6 +501,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vSprdOdds-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`vSprdOdds`}
                   value={gameCard.vSprdOdds}
                   onChange={(e) => handleChange(e, index)}
@@ -483,6 +515,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vML-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`vML`}
                   value={gameCard.vML}
                   onChange={(e) => handleChange(e, index)}
@@ -496,6 +529,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vOU-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`vOU`}
                   value={gameCard.vOU}
                   onChange={(e) => handleChange(e, index)}
@@ -509,6 +543,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vOUOdds-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`vOUOdds`}
                   value={gameCard.vOUOdds}
                   onChange={(e) => handleChange(e, index)}
@@ -548,6 +583,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hSprd-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`hSprd`}
                   value={gameCard.hSprd}
                   onChange={(e) => handleChange(e, index)}
@@ -561,6 +597,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hSprdOdds-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`hSprdOdds`}
                   value={gameCard.hSprdOdds}
                   onChange={(e) => handleChange(e, index)}
@@ -574,6 +611,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hML-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`hML`}
                   value={gameCard.hML}
                   onChange={(e) => handleChange(e, index)}
@@ -587,6 +625,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hOU-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`hOU`}
                   value={gameCard.hOU}
                   onChange={(e) => handleChange(e, index)}
@@ -600,6 +639,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hOUOdds-${index}`}
+                  onPaste={(e) => handlePaste(e, index)}
                   name={`hOUOdds`}
                   value={gameCard.hOUOdds}
                   onChange={(e) => handleChange(e, index)}

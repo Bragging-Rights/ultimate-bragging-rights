@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema(
     // },
     league: {
       type: String,
-      enum: ["nba", "nfl", "mlb", "nhl"],
+      enum: ["nba", "nfl", "mlb", "nhl", null],
       required: true,
     },
     username: {
@@ -80,7 +80,7 @@ const userSchema = new mongoose.Schema(
 
     league1: {
       type: String,
-      enum: ["nba", "nfl", "mlb", "nhl"],
+      enum: ["nba", "nfl", "mlb", "nhl", null],
       // required: true,
     },
     username1: {
@@ -95,7 +95,7 @@ const userSchema = new mongoose.Schema(
 
     league2: {
       type: String,
-      enum: ["nba", "nfl", "mlb", "nhl"],
+      enum: ["nba", "nfl", "mlb", "nhl", null],
       // required: true,
     },
     username2: {
@@ -110,7 +110,7 @@ const userSchema = new mongoose.Schema(
 
     league3: {
       type: String,
-      enum: ["nba", "nfl", "mlb", "nhl"],
+      enum: ["nba", "nfl", "mlb", "nhl", null],
       // required: true,
     },
     username3: {
