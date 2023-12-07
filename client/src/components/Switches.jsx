@@ -1,24 +1,64 @@
 import React from "react";
 
 const Switches = (props) => {
-  const { league, season } = props;
+  const {
+    league,
+    season,
+    setPick_num_ot,
+    setPick_so,
+    setPick_ot,
+    setPick_Reg,
+  } = props;
 
   if (league === "NHL" && (season === "Regular" || season === "Pre Season")) {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              console.log(e.target.value === "on");
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="O/T" />
+          <input
+            type="radio"
+            name="radio-group"
+            value="O/T"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(true);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">O/T</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="S/O" />
+          <input
+            type="radio"
+            name="radio-group"
+            value="S/O"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(false);
+                setPick_so(true);
+              }
+            }}
+          />
           <label className="card-label">S/O</label>
         </div>
-        <select>
+        <select onChange={(e) => setPick_num_ot(e.target.value)}>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -58,15 +98,35 @@ const Switches = (props) => {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="O/T" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(true);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">O/T</label>
         </div>
 
-        <select>
+        <select onChange={(e) => setPick_num_ot(e.target.value)}>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -86,15 +146,37 @@ const Switches = (props) => {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            value="Regular"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="O/T" />
+          <input
+            type="radio"
+            name="radio-group"
+            value="O/T"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(false);
+                setPick_so(true);
+              }
+            }}
+          />
           <label className="card-label">O/T</label>
         </div>
 
-        <select>
+        <select onChange={(e) => setPick_num_ot(e.target.value)}>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -114,15 +196,37 @@ const Switches = (props) => {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            value="Regular"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="OT" />
+          <input
+            type="radio"
+            name="radio-group"
+            value="OT"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(true);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">OT</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <select>
+          <select onChange={(e) => setPick_num_ot(e.target.value)}>
             {Array.from({ length: 10 }, (_, i) => (
               <option key={i}>{i + 1}</option>
             ))}
@@ -136,11 +240,31 @@ const Switches = (props) => {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="O/T" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(true);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">O/T</label>
         </div>
       </div>
@@ -151,15 +275,35 @@ const Switches = (props) => {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="O/T" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(true);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">O/T</label>
         </div>
 
-        <select>
+        <select onChange={(e) => setPick_num_ot(e.target.value)}>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -179,15 +323,35 @@ const Switches = (props) => {
     return (
       <div className="flex gap-5">
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="Regular" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(true);
+                setPick_ot(false);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">Reg</label>
         </div>
         <div className="flex mt-4 gap-1 items-center">
-          <input type="radio" name="radio-group" value="O/T" />
+          <input
+            type="radio"
+            name="radio-group"
+            onChange={(e) => {
+              if (e.target.value === "on") {
+                setPick_Reg(false);
+                setPick_ot(true);
+                setPick_so(false);
+              }
+            }}
+          />
           <label className="card-label">E/I</label>
         </div>
 
-        <select>
+        <select onChange={(e) => setPick_num_ot(e.target.value)}>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

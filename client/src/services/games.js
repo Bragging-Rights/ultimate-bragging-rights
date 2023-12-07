@@ -1,6 +1,5 @@
 import api from "./api";
 export const addGame = async (data) => {
-  console.log(data);
   const response = await api.post(
     "api/admin/games/createGame",
     JSON.stringify(data)

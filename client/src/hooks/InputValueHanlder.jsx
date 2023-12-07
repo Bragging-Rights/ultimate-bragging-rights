@@ -2,6 +2,20 @@ import React from "react";
 import { toast } from "react-toastify";
 
 const InputValueHanlder = (pred1, pred2, league) => {
+  switch (league) {
+    case "NHL":
+      break;
+
+    case "NBA":
+      break;
+
+    case "MLB":
+      break;
+
+    case "MLB":
+      break;
+  }
+
   if (league === "NHL" && (pred1 > 12 || pred2 > 12)) {
     toast.info("🦄 Are You Sure !", {
       position: "top-center",
@@ -65,7 +79,6 @@ const InputValueHanlder = (pred1, pred2, league) => {
     }
     return true;
   }
-  <div></div>;
 };
 
 export default InputValueHanlder;

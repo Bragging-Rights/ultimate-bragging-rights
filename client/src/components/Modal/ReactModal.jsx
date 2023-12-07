@@ -61,46 +61,55 @@ const ReactModal = (props) => {
     { value: "nhl", label: "NHL", isSelected: false },
   ]);
 
-  // const {
-  //   isLoading: loadingTeams,
-  //   isError: teamError,
-  //   data: teamsData,
-  //   refetch,
-  // } = useQuery(["teams", league], getTeasmByLeage, {
-  //   onError: (err) => {
-  //     displayToast("An error occurred while getting the teams.", "error");
-  //   },
-  //   onSuccess: (rec) => {
-  //     setAvailableTeams({ ...availableTeams, nhl: [...rec.data] });
-  //   },
-  // });
+  const {
+    isLoading: loadingTeams,
+    isError: teamError,
+    data: teamsData,
+    refetch: refetchNhl,
+  } = useQuery(["teams", league], getTeasmByLeage, {
+    enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nhl: [...rec.data] });
+    },
+  });
 
-  // const {} = useQuery(["teams", "nba"], getTeasmByLeage, {
-  //   onError: (err) => {
-  //     displayToast("An error occurred while getting the teams.", "error");
-  //   },
-  //   onSuccess: (rec) => {
-  //     setAvailableTeams({ ...availableTeams, nba: [...rec.data] });
-  //   },
-  // });
+  const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
+    enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nba: [...rec.data] });
+    },
+  });
 
-  // const {} = useQuery(["teams", "nfl"], getTeasmByLeage, {
-  //   onError: (err) => {
-  //     displayToast("An error occurred while getting the teams.", "error");
-  //   },
-  //   onSuccess: (rec) => {
-  //     setAvailableTeams({ ...availableTeams, nfl: [...rec.data] });
-  //   },
-  // });
+  const { refetch: refetchNfl } = useQuery(["teams", "nfl"], getTeasmByLeage, {
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nfl: [...rec.data] });
+    },
+  });
 
-  // const {} = useQuery(["teams", "mlb"], getTeasmByLeage, {
-  //   onError: (err) => {
-  //     displayToast("An error occurred while getting the teams.", "error");
-  //   },
-  //   onSuccess: (rec) => {
-  //     setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
-  //   },
-  // });
+  const { refetch: refetchMlb } = useQuery(["teams", "mlb"], getTeasmByLeage, {
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
+    },
+  });
+
+  useEffect(() => {
+    refetchMlb();
+    refetchNfl();
+    refetchNba();
+    refetchNhl();
+  }, []);
 
   const [formData, setFormData] = useState({
     firstName: "",
