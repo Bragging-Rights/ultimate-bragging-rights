@@ -106,14 +106,14 @@ const GameForm = () => {
     updatedGameCards[index][name] = value;
 
     // Mirror the Spread values for home team if it's the visitor's Spread
-    if (name === "vSprd") {
-      updatedGameCards[index]["hSprd"] = -value;
-    }
+    // if (name === "vSprd") {
+    //   updatedGameCards[index]["hSprd"] = -value;
+    // }
 
     // Mirror the Over/Under values for home team if it's the visitor's Over/Under
-    if (name === "vOU") {
-      updatedGameCards[index]["hOU"] = value;
-    }
+    // if (name === "vOU") {
+    //   updatedGameCards[index]["hOU"] = value;
+    // }
 
     setGameCards(updatedGameCards);
   };
@@ -292,20 +292,27 @@ const GameForm = () => {
     const updatedGameCards = [...gameCards];
     console.log(cleanedData);
     console.log("index: ", index);
+
     updatedGameCards[index].vSprd = cleanedData[0];
+    console.log(updatedGameCards[index].vSprd, cleanedData[0]);
+
     updatedGameCards[index].vSprdOdds = cleanedData[1];
     updatedGameCards[index].vML = cleanedData[2];
     updatedGameCards[index].vOU = cleanedData[3];
     updatedGameCards[index].vOUOdds = cleanedData[4];
+
     updatedGameCards[index].hSprd = cleanedData[5];
+    console.log(updatedGameCards[index].hSprd, cleanedData[5]);
+
     updatedGameCards[index].hSprdOdds = cleanedData[6];
     updatedGameCards[index].hML = cleanedData[7];
     updatedGameCards[index].hOU = cleanedData[8];
     updatedGameCards[index].hOUOdds = cleanedData[9];
-    console.log(updatedGameCards[0]);
+    console.log("newdata", updatedGameCards[index]);
 
     // Assuming you have a state setter for gameCards
     setGameCards(updatedGameCards);
+    console.log("final data", gameCards);
   };
 
   return (
@@ -420,6 +427,21 @@ const GameForm = () => {
                   className="bg-gray-800 text-white p-2 rounded w-full "
                 />
               </div>
+              <div
+                className="w-1/2 px-2 box box h-18 w-40"
+                style={{ marginRight: "250px", marginBottom: "8px" }}
+              >
+                <label htmlFor={`data-${index}`}>Data Paste</label>
+                <input
+                  type="text"
+                  id={`data-${index}`}
+                  name={`data`}
+                  // value={gameCard.time}
+                  onPaste={(e) => handlePaste(e, index)}
+                  // onChange={(e) => handleChange(e, index)}
+                  className="bg-gray-800 text-white p-2 rounded w-full "
+                />
+              </div>
               {/* <div
                 className="w-1/5 px-2 box box h-18 w-20"
                 style={{ marginRight: "90px" }}
@@ -501,7 +523,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vSprdOdds-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`vSprdOdds`}
                   value={gameCard.vSprdOdds}
                   onChange={(e) => handleChange(e, index)}
@@ -515,7 +537,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vML-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`vML`}
                   value={gameCard.vML}
                   onChange={(e) => handleChange(e, index)}
@@ -529,7 +551,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vOU-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`vOU`}
                   value={gameCard.vOU}
                   onChange={(e) => handleChange(e, index)}
@@ -543,7 +565,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`vOUOdds-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`vOUOdds`}
                   value={gameCard.vOUOdds}
                   onChange={(e) => handleChange(e, index)}
@@ -583,7 +605,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hSprd-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`hSprd`}
                   value={gameCard.hSprd}
                   onChange={(e) => handleChange(e, index)}
@@ -597,7 +619,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hSprdOdds-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`hSprdOdds`}
                   value={gameCard.hSprdOdds}
                   onChange={(e) => handleChange(e, index)}
@@ -611,7 +633,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hML-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`hML`}
                   value={gameCard.hML}
                   onChange={(e) => handleChange(e, index)}
@@ -625,7 +647,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hOU-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`hOU`}
                   value={gameCard.hOU}
                   onChange={(e) => handleChange(e, index)}
@@ -639,7 +661,7 @@ const GameForm = () => {
                 <input
                   type="number"
                   id={`hOUOdds-${index}`}
-                  onPaste={(e) => handlePaste(e, index)}
+                  // onPaste={(e) => handlePaste(e, index)}
                   name={`hOUOdds`}
                   value={gameCard.hOUOdds}
                   onChange={(e) => handleChange(e, index)}
