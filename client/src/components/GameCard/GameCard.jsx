@@ -3,7 +3,6 @@ import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
-import { userId } from "../../Modal/SignInModal"; // Replace with the correct path to SignInModal.jsx
 import { addPrediction } from "../../services/predictions";
 
 const GameCard = ({ gameData }) => {
@@ -11,6 +10,10 @@ const GameCard = ({ gameData }) => {
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedGameData, setEditedGameData] = useState({ ...gameData });
+  const [Pick_Reg, setPick_Reg] = useState(false);
+  const [Pick_ot, setPick_ot] = useState(false);
+  const [Pick_so, setPick_so] = useState(false);
+  const [Pick_num_ot, setPick_num_ot] = useState("");
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
@@ -18,16 +21,17 @@ const GameCard = ({ gameData }) => {
   const handleHomeChange = (e) => {
     setPickHome(e.target.value);
   };
+  const userId = localStorage.getItem("_id");
 
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    setUserSelections({
-      pick_visitor,
-      pick_home,
-      gameEnding,
-      userId,
-    });
+    // setUserSelections({
+    //   pick_visitor,
+    //   pick_home,
+    //   gameEnding,
+    //   userId,
+    // });
   };
 
   const handleLockIn = () => {
@@ -37,15 +41,18 @@ const GameCard = ({ gameData }) => {
     if (!gameEnding) {
       gameEnding = "null";
     }
-
+    console.log("hamd", Pick_num_ot, Pick_so, Pick_ot, Pick_Reg);
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
       pick_home,
       gameEnding,
       userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
     };
-    console.log("UserDatatoGamesPlayed", "data to save ", dataToSave);
 
     // Send the data to the database using an HTTP request
     addPrediction(dataToSave);
@@ -207,7 +214,14 @@ const GameCard = ({ gameData }) => {
 
         <div className=" flex justify-between items-center">
           <div className="card-id"></div>
-          <Switches league={gameData?.league} season={gameData?.seasonflag} />
+          <Switches
+            league={gameData?.league}
+            season={gameData?.seasonflag}
+            setPick_num_ot={setPick_num_ot}
+            setPick_so={setPick_so}
+            setPick_ot={setPick_ot}
+            setPick_Reg={setPick_Reg}
+          />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>
               EDIT

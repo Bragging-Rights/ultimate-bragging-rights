@@ -1,16 +1,16 @@
 import React, { useState, useRef } from "react";
+import { useLeagueContext } from "./LeagueContext";
 
 const totLeagues = ["NHL", "NBA", "MLB", "NFL", "WNBA", "CFL"];
 
 const LeagueSelect = () => {
-  const [selectedLeague, setSelectedLeague] = useState("NHL");
+  const { selectedLeague, setSelectedLeague } = useLeagueContext();
   const containerRef = useRef(null);
   const buttonsPerPage = 4; // Number of buttons to display per page
   const [currentPage, setCurrentPage] = useState(0);
 
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
-    console.log("Selected League:", item);
   };
 
   const nextPage = () => {
