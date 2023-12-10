@@ -2,11 +2,13 @@ import React from "react";
 // import AOS from "aos";
 import "aos/dist/aos.css";
 import "./HomePage.css";
+import MainNavBar from "../../components/MainNavBar";
 
 const HomePage = () => {
   
   return (
     <div>
+      <MainNavBar/>
       {/* HOME */}
       <div id="home" className="homepage-content-section homepage-home-content relative">
   <div className="homepage-container">

@@ -99,15 +99,17 @@ body {
   /*--- HOME ---*/
   .homepage-home-content {
     background: url(/src/assets/homepage.png) no-repeat;
-    background-size: 100% 100%; /* Adjusted for responsiveness */
+    background-size: 100% 100%;
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
     text-align: center;
-    height: 110vh;
-    margin-top: -20px;
-    width: 117%; /* Adjusted for responsiveness */
+    height: 94vh;
+    margin-top: -6%;
+    margin-left: -1.48%;
+    width: 120%;
     display: flex;
     align-items: center;
     justify-content: center;
+  z-index: -1;
   }
   
   .video-page {
