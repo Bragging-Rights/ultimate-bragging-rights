@@ -18,7 +18,6 @@ import logo from "../../assets/logo.png";
 const Registration = (props) => {
   const { isOpen, onRequestClose } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
-
   const [availableTeams, setAvailableTeams] = useState([
     {
       label: "Select your favourite team",
@@ -68,6 +67,10 @@ const Registration = (props) => {
   });
 
   useEffect(() => {
+    refetchMlb();
+    refetchNfl();
+    refetchNba();
+    refetchNhl();
     refetch();
   }, [league]);
 
@@ -127,11 +130,24 @@ const Registration = (props) => {
     }
     return true;
   };
+
   const addAnotherLeague = () => {
+    const resp = userLeagues.some((item) => {
+      if (item.league == "" || item.team == "" || item.username == "") {
+        return true;
+      }
+    });
+
+    if (resp) {
+      displayToast("Please fill all the required fileds in the league.");
+      return;
+    }
+
     if (userLeagues.length < 4) {
       setUserLeagues([...userLeagues, { league: "", team: "", username: "" }]);
     }
   };
+
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => Register(data),
     {
@@ -226,15 +242,10 @@ const Registration = (props) => {
     setCurrentStep(currentStep - 1);
   };
 
-  const setProgressBar = () => {
-    const percent = parseFloat((100 / 4) * currentStep);
-    return percent.toFixed();
-  };
-
-  const handleSubmit = () => {
-    // Add your form submission logic here
-    console.log("Form submitted", formData);
-  };
+  // const handleSubmit = () => {
+  //   // Add your form submission logic here
+  //   console.log("Form submitted", formData);
+  // };
   const displayErrorMessage = (message) => {
     // Implement your error display mechanism here
     console.error(message);
@@ -706,12 +717,19 @@ const Registration = (props) => {
             )}
             {index + 1 === 4 && (
               <>
-                <input
+                {/* <input
                   type="button"
                   onClick={handleSubmit}
                   className="submit action-button"
                   value="Submit"
-                />
+                /> */}
+                <button
+                  className="submit action-button"
+                  onClick={handleRegistration}
+                >
+                  GET ACCESS TO BRAGGING RIGHTS NOW!
+                  {isLoading && <Loader />}
+                </button>
                 <input
                   type="button"
                   onClick={prevStep}
