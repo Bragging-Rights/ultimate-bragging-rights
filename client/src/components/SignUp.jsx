@@ -277,6 +277,7 @@ const SignUp = ({ onSignUp }) => {
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
+                  <option value="other">Rather Not Say</option>
                 </select>
               </div>
 
@@ -328,7 +329,7 @@ const SignUp = ({ onSignUp }) => {
               <div className="col-md-4 col-lg-6">
                 <Input
                   label="Postal/Zip Code"
-                  type="text"
+                  type="number"
                   name="postalCode"
                   id="postalCode"
                   value={formData.postalCode}
@@ -480,22 +481,7 @@ const SignUp = ({ onSignUp }) => {
                 </div>
               </div>
 
-              <div className="col-md-4 col-lg-3">
-                {/* <button
-                  type="button"
-                  onClick={handleAddLeague}
-                  className="btn btn-warning me-3"
-                >
-                  Add League
-                </button> */}
-                {/* <button
-                  type="button"
-                  onClick={handleRemoveLeague}
-                  className="btn btn-secondary"
-                >
-                  Cancel
-                </button> */}
-              </div>
+           
             </div>
 
             <br></br>

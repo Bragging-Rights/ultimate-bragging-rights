@@ -23,3 +23,25 @@ font-style: normal;
 font-weight: 600;
 line-height: normal;
 }
+
+.element-container input {
+  padding: 14px 20px;
+  border-radius: 4px;
+  border: 1px solid #3C3C3C;
+  background: #2C2C2C;
+  color: white;
+}
+
+.zip-code{
+  height: 59px;
+}
+/* .flex {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+} */
+
+.w-2\/12 {
+  width: 1% ;
+}
