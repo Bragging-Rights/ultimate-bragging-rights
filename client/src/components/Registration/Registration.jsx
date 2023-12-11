@@ -39,36 +39,51 @@ const Registration = (props) => {
     { value: "nhl", label: "NHL", isSelected: false },
   ]);
 
+  // const {
+  //   isLoading: loadingTeams,
+  //   isError: teamError,
+  //   data: teamsData,
+  //   refetch,
+  // } = useQuery(["teams", league], getTeasmByLeage, {
+  //   enabled: !!league,
+  //   onError: () => {
+  //     displayErrorMessage("An error occurred while getting the teams.");
+  //   },
+  //   onSuccess: (rec) => {
+  //     const sortedTeams = rec.data.sort((a, b) => {
+  //       const nameA = a?.displayName;
+  //       const nameB = b?.displayName;
+
+  //       if (nameA < nameB) {
+  //         return -1;
+  //       }
+  //       if (nameA > nameB) {
+  //         return 1;
+  //       }
+  //       return 0;
+  //     });
+
+  //     setAvailableTeams([...sortedTeams]);
+  //   },
+  // });
+
   const {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
-      const sortedTeams = rec.data.sort((a, b) => {
-        const nameA = a?.displayName;
-        const nameB = b?.displayName;
-
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      setAvailableTeams([...sortedTeams]);
+      setAvailableTeams({ ...availableTeams, nhl: [...rec.data] });
     },
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -94,7 +109,6 @@ const Registration = (props) => {
       setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
     },
   });
-
   useEffect(() => {
     refetchMlb();
     refetchNfl();
