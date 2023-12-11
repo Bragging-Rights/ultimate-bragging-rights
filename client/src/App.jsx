@@ -17,10 +17,11 @@ import FbChallanges from "./pages/FbChallanges";
 import Admin from "./pages/Admin/FormToggle";
 import { LeagueProvider } from "./components/LeagueContext";
 import { ToastContainer } from "react-toastify";
+import Registration from "./components/Registration/Registration";
+import HomePage from "./pages/HomePage/HomePage";
 
 const App = () => {
   const queryClient = new QueryClient();
-
   return (
     <Provider store={store}>
       <ToastContainer />
@@ -40,6 +41,8 @@ const App = () => {
                 <Route path="/fb-challanges" element={<FbChallanges />} />
                 <Route path="/records" element={<Records />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/homepage" element={<HomePage />} />
               </Route>
             </Routes>
           </LeagueProvider>

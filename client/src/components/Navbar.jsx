@@ -122,7 +122,7 @@ const Navbar = () => {
           </Link>
 
           <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal}>
-            <Signup />
+            {/* <Signup /> */}
           </ReactModal>
         </div>
       </div>

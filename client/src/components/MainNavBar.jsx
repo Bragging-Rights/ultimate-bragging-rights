@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { UserRole } from "../Modal/SignInModal";
+import "./MainNavbar/MainNavBar.css"; // Import the CSS file
 
 const navItem = [
   {
@@ -45,14 +46,12 @@ const navItem = [
     path: "/admin",
   },
 ];
-
 const MainNavBar = () => {
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    // You can use the UserRole directly in this file
     setUserRole(UserRole);
   }, []);
 
@@ -61,12 +60,9 @@ const MainNavBar = () => {
   };
 
   return (
-    <div
-      className="w-full rounded border border-[#626262] my-5 flex items-center"
-      style={{
-        background: "linear-gradient(185deg, #45423A 15.54%, #202126 114.57%)",
-      }}
-    >
+    <div className="main-navbar-container">
+      {" "}
+      {/* Step 1: Add container div */}
       <button
         onClick={toggleNav}
         className="md:hidden absolute top-0 left-0 m-3 text-white"
@@ -79,9 +75,8 @@ const MainNavBar = () => {
         } md:flex flex-wrap gap-4 h-full items-center`}
       >
         {navItem.map((item, index) => {
-          // Conditionally render "Admin" button based on user role
           if (item.label === "Admin" && userRole) {
-            return null; // Hide the "Admin" button if user is not an admin
+            return null;
           }
           return (
             <li
