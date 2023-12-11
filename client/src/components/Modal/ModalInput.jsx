@@ -38,7 +38,8 @@ const ModalInput = (props) => {
 
       {type === "password" && (
         <button
-          className="eye-icon absolute right-4 bottom-3 "
+          type="button" // Add this line to specify that it's not a submit button
+          className="eye-icon absolute right-4 bottom-3"
           onClick={togglePasswordVisibility}
         >
           {showPassword ? <RiEyeFill size={20} /> : <RiEyeOffFill size={20} />}

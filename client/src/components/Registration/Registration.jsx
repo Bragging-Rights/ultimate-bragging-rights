@@ -18,6 +18,7 @@ import logo from "../../assets/logo.png";
 const Registration = (props) => {
   const { isOpen, onRequestClose } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
+
   const [availableTeams, setAvailableTeams] = useState([
     {
       label: "Select your favourite team",
@@ -42,11 +43,11 @@ const Registration = (props) => {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
-    refetch,
+    refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    enabled: !!league,
-    onError: () => {
-      displayErrorMessage("An error occurred while getting the teams.");
+    enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
       const sortedTeams = rec.data.sort((a, b) => {
@@ -66,13 +67,45 @@ const Registration = (props) => {
     },
   });
 
+  const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
+    enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nba: [...rec.data] });
+    },
+  });
+
+  const { refetch: refetchNfl } = useQuery(["teams", "nfl"], getTeasmByLeage, {
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, nfl: [...rec.data] });
+    },
+  });
+
+  const { refetch: refetchMlb } = useQuery(["teams", "mlb"], getTeasmByLeage, {
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
+    onSuccess: (rec) => {
+      setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
+    },
+  });
+
   useEffect(() => {
     refetchMlb();
     refetchNfl();
     refetchNba();
     refetchNhl();
-    refetch();
+    // refetch();
   }, [league]);
+
+  useEffect(() => {
+    console.log("Teams data:", teamsData); // Check teamsData in the console
+  }, [teamsData]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -104,6 +137,13 @@ const Registration = (props) => {
       ...formData,
       termsAccepted: e.target.checked,
     });
+  };
+  const handleCountryChange = (e) => {
+    setCountryCode(e.value);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      country: e.label,
+    }));
   };
 
   const handleRemoveLeague = (index) => {
@@ -195,6 +235,7 @@ const Registration = (props) => {
         `Please fill in all required fields in the leages,`,
         "error"
       );
+      return;
     }
 
     // Check if passwords match
@@ -216,22 +257,6 @@ const Registration = (props) => {
     mutate(data);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleCountryChange = (e) => {
-    setCountryCode(e.value);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      country: e.label,
-    }));
-  };
-
   const nextStep = () => {
     if (validateStep()) {
       setCurrentStep(currentStep + 1);
@@ -242,10 +267,6 @@ const Registration = (props) => {
     setCurrentStep(currentStep - 1);
   };
 
-  // const handleSubmit = () => {
-  //   // Add your form submission logic here
-  //   console.log("Form submitted", formData);
-  // };
   const displayErrorMessage = (message) => {
     // Implement your error display mechanism here
     console.error(message);
@@ -291,34 +312,6 @@ const Registration = (props) => {
       if (!validateLeagues(userLeagues)) {
         displayToast(
           `Please fill in all required fields in the leagues.`,
-          "error"
-        );
-        return false;
-      }
-    }
-
-    // Validation for the fourth step
-    if (currentStep === 4) {
-      const requiredFields = [
-        "email",
-        "password",
-        "confirmPassword",
-        "referralName",
-      ];
-      const invalidFields = requiredFields.filter((field) => !formData[field]);
-
-      if (invalidFields.length > 0) {
-        displayToast(
-          `Please fill in all required fields: ${invalidFields.join(" ")}`,
-          "error"
-        );
-        return false;
-      }
-
-      // Check if passwords match
-      if (formData.password !== formData.confirmPassword) {
-        displayToast(
-          "Passwords do not match. Please enter matching passwords.",
           "error"
         );
         return false;
@@ -660,11 +653,11 @@ const Registration = (props) => {
                     <div className="password-inputs">
                       <ModalInput
                         label={"Create Password"}
-                        type="password"
                         placeholder={"Create Password"}
                         name="password"
                         value={formData.password}
                         onChange={inputChangeHandler}
+                        type="password"
                       />
                       <ModalInput
                         label={"Confirm Password"}
@@ -727,8 +720,7 @@ const Registration = (props) => {
                   className="submit action-button"
                   onClick={handleRegistration}
                 >
-                  GET ACCESS TO BRAGGING RIGHTS NOW!
-                  {isLoading && <Loader />}
+                  Submit {isLoading && <Loader />}
                 </button>
                 <input
                   type="button"
