@@ -4,6 +4,8 @@ import "./GameCard.css";
 import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
 import { addPrediction } from "../../services/predictions";
+import { useLeagueContext } from "../LeagueContext";
+import displayToast from "../Alert/Alert";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -14,6 +16,7 @@ const GameCard = ({ gameData }) => {
   const [Pick_ot, setPick_ot] = useState(false);
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
+  const { selectedLeague } = useLeagueContext();
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
@@ -26,22 +29,6 @@ const GameCard = ({ gameData }) => {
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    // setUserSelections({
-    //   pick_visitor,
-    //   pick_home,
-    //   gameEnding,
-    //   userId,
-    // });
-  };
-
-  const handleLockIn = () => {
-    const timestamp = new Date().toISOString();
-    console.log("User ID in GameCard:", userId);
-
-    if (!gameEnding) {
-      gameEnding = "null";
-    }
-    console.log("hamd", Pick_num_ot, Pick_so, Pick_ot, Pick_Reg);
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -52,6 +39,32 @@ const GameCard = ({ gameData }) => {
       Pick_so,
       Pick_ot,
       Pick_Reg,
+      league: selectedLeague,
+    };
+    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
+    console.log(localStorage.getItem(gameData._id));
+    displayToast("Saved successfully!", "success");
+  };
+
+  const handleLockIn = () => {
+    const timestamp = new Date().toISOString();
+    console.log("User ID in GameCard:", userId);
+
+    if (!gameEnding) {
+      gameEnding = "null";
+    }
+
+    const dataToSave = {
+      gameData: gameData._id,
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
+      league: selectedLeague,
     };
 
     // Send the data to the database using an HTTP request

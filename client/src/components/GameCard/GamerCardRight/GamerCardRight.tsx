@@ -25,12 +25,21 @@ const GameCard = ({ gameData }) => {
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    // setUserSelections({
-    //   pick_visitor,
-    //   pick_home,
-    //   gameEnding,
-    //   userId,
-    // });
+    const dataToSave = {
+      gameData: gameData._id,
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
+      league: selectedLeague,
+    };
+    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
+    console.log(localStorage.getItem(gameData._id));
+    displayToast("Saved successfully!", "success");
   };
 
   const handleLockIn = () => {
