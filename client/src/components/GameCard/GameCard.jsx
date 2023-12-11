@@ -42,7 +42,6 @@ const GameCard = ({ gameData }) => {
       league: selectedLeague,
     };
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
-    console.log(localStorage.getItem(gameData._id));
     displayToast("Saved successfully!", "success");
   };
 

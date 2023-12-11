@@ -3,6 +3,8 @@ import Modal from "react-modal"; // Import the modal library
 import { addPrediction } from "../../../services/predictions";
 import TimeFormat from "../../../services/TimeFormat";
 import Switches from "../../Switches";
+import { useLeagueContext } from "../../LeagueContext";
+import displayToast from "../../Alert/Alert";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -13,6 +15,7 @@ const GameCard = ({ gameData }) => {
   const [Pick_ot, setPick_ot] = useState(false);
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
+  const { selectedLeague } = useLeagueContext();
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
