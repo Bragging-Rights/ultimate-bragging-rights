@@ -8,6 +8,7 @@ import Signup from "./SignUp";
 import SignInModal from "../Modal/SignInModal";
 import img1 from "../assets/homeh1.png";
 import img2 from "../assets/homeh2.png";
+import Registration from "./Registration/Registration";
 
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
@@ -121,9 +122,9 @@ const Navbar = () => {
             </button>
           </Link>
 
-          <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal}>
+          <Registration isOpen={modalIsOpen} onRequestClose={closeModal}>
             {/* <Signup /> */}
-          </ReactModal>
+          </Registration>
         </div>
       </div>
     </nav>

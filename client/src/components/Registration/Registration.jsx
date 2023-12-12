@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
+import "../Modal/Modal.css";
 import { useQuery, useMutation } from "react-query";
 import { getTeasmByLeage } from "../../services/Teams";
 import LeagueHandler from "../Modal/LeagueHandler";
@@ -15,6 +17,26 @@ import { Register } from "../../services/auth";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "../../assets/logo.png";
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    border: "1px solid #BE8200",
+    boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
+    height: "90vh",
+    width: "70%",
+    background: "#212227",
+    padding: "30px",
+  },
+  overlay: {
+    background: " rgba(33, 34, 39, 0.90)",
+  },
+};
 const Registration = (props) => {
   const { isOpen, onRequestClose } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -336,7 +358,7 @@ const Registration = (props) => {
   };
 
   return (
-    <section>
+    <Modal isOpen={isOpen} style={customStyles}>
       <form id="msform">
         <ul id="progressbar">
           <li className={currentStep === 1 ? "active" : ""} id="account">
@@ -348,8 +370,8 @@ const Registration = (props) => {
                 alt="Logo"
                 style={{
                   width: "61px",
-                  marginTop: "-75px",
-                  marginLeft: "71px",
+                  marginTop: "-25%",
+                  marginLeft: "40.2%",
                 }}
               />
             </div>
@@ -363,8 +385,8 @@ const Registration = (props) => {
                 alt="Logo"
                 style={{
                   width: "61px",
-                  marginTop: "-75px",
-                  marginLeft: "71px",
+                  marginTop: "-25%",
+                  marginLeft: "40.2%",
                 }}
               />
             </div>
@@ -378,8 +400,8 @@ const Registration = (props) => {
                 alt="Logo"
                 style={{
                   width: "61px",
-                  marginTop: "-75px",
-                  marginLeft: "71px",
+                  marginTop: "-25%",
+                  marginLeft: "40.2%",
                 }}
               />
             </div>
@@ -393,8 +415,8 @@ const Registration = (props) => {
                 alt="Logo"
                 style={{
                   width: "61px",
-                  marginTop: "-75px",
-                  marginLeft: "71px",
+                  marginTop: "-25%",
+                  marginLeft: "40.2%",
                 }}
               />
             </div>
@@ -648,7 +670,7 @@ const Registration = (props) => {
                   </div>
                   <div className="flex">
                     <div
-                      style={{ display: "flex", gap: "5px", width: "828px" }}
+                      style={{ display: "flex", gap: "5px", width: "1100px" }}
                     >
                       <ModalInput
                         label={"Email"}
@@ -657,8 +679,9 @@ const Registration = (props) => {
                         onChange={inputChangeHandler}
                         type="email"
                         name="email"
-                        style
-                      />
+                      >
+                        <div className="email-modal"></div>
+                      </ModalInput>
                     </div>
                   </div>
 
@@ -747,7 +770,7 @@ const Registration = (props) => {
           </fieldset>
         ))}
       </form>
-    </section>
+    </Modal>
   );
 };
 export default Registration;
