@@ -218,6 +218,7 @@ const Registration = (props) => {
     }
   );
   const handleRegistration = async () => {
+    event.preventDefault();
     const requiredFields = [
       "firstName",
       "lastName",
@@ -232,6 +233,8 @@ const Registration = (props) => {
       "referralName",
       "termsAccepted",
     ];
+
+    console.log(requiredFields);
 
     // leagues
 
