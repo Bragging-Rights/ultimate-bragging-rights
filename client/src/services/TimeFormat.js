@@ -4,19 +4,22 @@ import { utcToZonedTime } from "date-fns-tz";
 
 const TimeFormat = (inputTime) => {
   if (!inputTime) return;
-  // The input time string in "HH:mm" format
-  // console.log("inputTime", inputTime);
-  // Parse the input time string
-  const parsedTime = parse(inputTime, "HH:mm", new Date());
 
-  // Convert the time to the desired timezone (e.g., "EST")
-  const timeZone = "America/New_York";
-  const zonedTime = utcToZonedTime(parsedTime, timeZone);
+  // Assuming the input time is in "HH:mm" format
+  const inputTimeParsed = parse(inputTime, "HH:mm", new Date());
 
-  // Format the time in "h:mm a zzz" format
-  const formattedTime = format(zonedTime, "h:mm a zzz", { timeZone });
+  // Converting input time to Eastern Standard Time (America/New_York)
+  const easternTime = utcToZonedTime(inputTimeParsed, "America/New_York");
 
-  return formattedTime;
+  // Formatting the Eastern Standard Time (EST)
+  const formattedTime = format(easternTime, "h:mm a", {
+    timeZone: "America/New_York",
+  });
+
+  // Adding the "EST" abbreviation to the formatted time
+  const formattedTimeWithEST = formattedTime + " EST";
+
+  return formattedTimeWithEST;
 };
 
 export default TimeFormat;

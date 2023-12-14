@@ -89,6 +89,10 @@ const GameCard = ({ gameData }) => {
     setIsModalOpen(false);
   };
 
+  const date = new Date(gameData?.gamedate);
+  const options = { month: "short", day: "numeric", year: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
+
   return (
     <>
       <div
@@ -119,7 +123,7 @@ const GameCard = ({ gameData }) => {
           </div>
 
           <div className=" flex flex-col justify-start ">
-            <span className=" game-date">{gameData?.gamedate}</span>
+            <span className=" game-date">{formattedDate}</span>
             <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
             </div>
