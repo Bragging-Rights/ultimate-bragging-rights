@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import displayToast from "../../components/Alert/Alert";
 import { getTeasmByLeage } from "../../services/Teams";
 import Footer from "../../components/Footer";
+import handleTimeConversionToLocal from "../../services/ConvertTime";
 
 const GameForm = () => {
   const dispatch = useDispatch();
@@ -44,18 +45,7 @@ const GameForm = () => {
         displayToast("An error occurred while adding the game.", "error");
       },
       onSuccess: (rec) => {
-        console.log("Game added successfully:", rec);
-
         displayToast("Game added successfully.", "success");
-
-        // //extracting all game cards into an array
-        // const allGameCards = gameCards.map((gameCard) => ({
-        //   ...gameCard,
-        // }));
-
-        // //sending all game cards in a single mutate call, wrapped in an array
-        // mutate([allGameCards]);
-
         reset();
       },
     }
@@ -276,13 +266,12 @@ const GameForm = () => {
       );
     } else {
       mutate([...gameCards]);
-      setFormSubmitted(true); // Set formSubmitted to true after successful submission
+      setFormSubmitted(true);
     }
   };
 
   const handlePaste = (e, index) => {
     const data = e.clipboardData.getData("text");
-    console.log(data);
 
     const values = data.split("\n");
     // console.log(values);
@@ -290,11 +279,8 @@ const GameForm = () => {
     let cleanedData = values.map((item) => item.replace(/[\r|o|u]/g, ""));
 
     const updatedGameCards = [...gameCards];
-    console.log(cleanedData);
-    console.log("index: ", index);
 
     updatedGameCards[index].vSprd = cleanedData[0];
-    console.log(updatedGameCards[index].vSprd, cleanedData[0]);
 
     updatedGameCards[index].vSprdOdds = cleanedData[1];
     updatedGameCards[index].vML = cleanedData[2];
@@ -302,17 +288,14 @@ const GameForm = () => {
     updatedGameCards[index].vOUOdds = cleanedData[4];
 
     updatedGameCards[index].hSprd = cleanedData[5];
-    console.log(updatedGameCards[index].hSprd, cleanedData[5]);
 
     updatedGameCards[index].hSprdOdds = cleanedData[6];
     updatedGameCards[index].hML = cleanedData[7];
     updatedGameCards[index].hOU = cleanedData[8];
     updatedGameCards[index].hOUOdds = cleanedData[9];
-    console.log("newdata", updatedGameCards[index]);
 
     // Assuming you have a state setter for gameCards
     setGameCards(updatedGameCards);
-    console.log("final data", gameCards);
   };
 
   return (
@@ -322,10 +305,10 @@ const GameForm = () => {
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="text-white justify-center items-center h-screen text-yellow-500"
+        className="justify-center items-center h-screen text-yellow-500"
       >
         <div className="flex flex-wrap -mx-2 ">
-          <div className="mb-4 w-1/12 px-2">
+          <div className="mb-4 px-2">
             <label htmlFor="week">Week</label>
             <select
               id="week"
@@ -344,7 +327,7 @@ const GameForm = () => {
               ))}
             </select>
           </div>
-          <div className="mb-4 w-1/8 px-2">
+          <div className="mb-4  px-2">
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -358,7 +341,7 @@ const GameForm = () => {
             />
           </div>
 
-          <div className="mb-4 w-1/12 px-2">
+          <div className="mb-4  px-2">
             <label htmlFor="league">League</label>
             <select
               id="league"
@@ -373,7 +356,7 @@ const GameForm = () => {
             </select>
           </div>
 
-          <div className="mb-4 w-1/12 px-2">
+          <div className="mb-4  px-2">
             <label htmlFor="season">Season</label>
             <select
               id="season"
@@ -414,7 +397,7 @@ const GameForm = () => {
               </div>
 
               <div
-                className="w-1/2 px-2 box box h-18 w-40"
+                className="px-2 box box h-18 w-40"
                 style={{ marginRight: "250px", marginBottom: "8px" }}
               >
                 <label htmlFor={`time-${index}`}>Game Time</label>
@@ -428,7 +411,7 @@ const GameForm = () => {
                 />
               </div>
               <div
-                className="w-1/2 px-2 box box h-18 w-40"
+                className="px-2 box box h-18 w-40"
                 style={{ marginRight: "250px", marginBottom: "8px" }}
               >
                 <label htmlFor={`data-${index}`}>Data Paste</label>
@@ -436,9 +419,7 @@ const GameForm = () => {
                   type="text"
                   id={`data-${index}`}
                   name={`data`}
-                  // value={gameCard.time}
                   onPaste={(e) => handlePaste(e, index)}
-                  // onChange={(e) => handleChange(e, index)}
                   className="bg-gray-800 text-white p-2 rounded w-full "
                 />
               </div>
@@ -476,7 +457,7 @@ const GameForm = () => {
 
             <div className="flex gap-2">
               <div
-                className=" box box h-18 w-30"
+                className=" box box h-18 w-60"
                 style={{ marginLeft: "40px" }}
               >
                 <label htmlFor={`visitorteam-${index}`}>Visitor Team</label>
@@ -502,7 +483,7 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`vSprd-${index}`}>V Sprd</label>
                 <input
                   type="number"
@@ -518,7 +499,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`vSprdOdds-${index}`}>V Sprd Odds</label>
                 <input
                   type="number"
@@ -532,7 +513,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`vML-${index}`}>Visitor M/L</label>
                 <input
                   type="number"
@@ -546,7 +527,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`vOU-${index}`}>V O/U</label>
                 <input
                   type="number"
@@ -560,7 +541,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`vOUOdds-${index}`}>V O/U Odds</label>
                 <input
                   type="number"
@@ -575,8 +556,8 @@ const GameForm = () => {
               </div>
             </div>
 
-            <div className="flex gap-2">
-              <div className="box box h-18 w-30" style={{ marginLeft: "40px" }}>
+            <div className="flex gap-2 mt-5 ">
+              <div className="box box h-18 w-60" style={{ marginLeft: "40px" }}>
                 <label htmlFor={`hometeam-${index}`}>Home Team</label>
                 <select
                   id={`hometeam-${index}`}
@@ -600,7 +581,7 @@ const GameForm = () => {
                 </select>
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18">
                 <label htmlFor={`hSprd-${index}`}>H Sprd</label>
                 <input
                   type="number"
@@ -614,7 +595,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`hSprdOdds-${index}`}>H Sprd Odds</label>
                 <input
                   type="number"
@@ -628,7 +609,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`hML-${index}`}>Home M/L</label>
                 <input
                   type="number"
@@ -642,7 +623,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className=" px-2 box box h-18 ">
                 <label htmlFor={`hOU-${index}`}>H O/U</label>
                 <input
                   type="number"
@@ -656,7 +637,7 @@ const GameForm = () => {
                 />
               </div>
 
-              <div className="w-1/12 px-2 box box h-18 w-15">
+              <div className="px-2 box box h-18 ">
                 <label htmlFor={`hOUOdds-${index}`}>H O/U Odds</label>
                 <input
                   type="number"
@@ -672,16 +653,17 @@ const GameForm = () => {
             </div>
           </div>
         ))}
-        <div className="mb-4 w-1/4 px-2 flex">
+        <div className="mb-4 flex w-full gap-7">
           <button
             type="button"
             onClick={handleAddGameCard}
-            className="bg-green-500 text-white p-2 rounded"
-            style={{ marginRight: "10px" }}
-          ></button>
+            className="bg-green-500 text-white py-2 rounded px-5"
+          >
+            +
+          </button>
           <button
             type="submit"
-            className="bg-yellow-400 text-black p-2 rounded"
+            className="bg-yellow-400 text-black py-2 rounded px-5"
             onClick={handleSubmit}
           >
             Finish ✔
@@ -689,7 +671,7 @@ const GameForm = () => {
           <button
             type="button"
             onClick={handleResetForm}
-            className="bg-red-500 text-white p-2 rounded"
+            className="bg-red-500 text-white py-2 rounded px-5"
             style={{ marginLeft: "10px" }}
           >
             Reset Form

@@ -18,6 +18,8 @@ const GameCard = ({ gameData }) => {
   const [Pick_num_ot, setPick_num_ot] = useState("");
   const { selectedLeague } = useLeagueContext();
 
+  console.log("gameData", gameData.time);
+
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
   };
