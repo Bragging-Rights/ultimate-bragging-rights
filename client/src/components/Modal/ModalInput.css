@@ -47,3 +47,12 @@ text-transform: capitalize;
 .email-modal{
     width: 214%;
 }
+
+#progressbar li.active:before, #progressbar li.active:after {
+    background: #FFAE00;
+    background-image: url("../../assets/logo.png");
+    background-size: contain; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
+}

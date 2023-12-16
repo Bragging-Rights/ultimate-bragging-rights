@@ -15,7 +15,6 @@ import ModalSelect from "../Modal/ModalSelect";
 import displayToast from "../../components/Alert/Alert";
 import { Register } from "../../services/auth";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "../../assets/logo.png";
 
 const customStyles = {
   content: {
@@ -61,51 +60,36 @@ const Registration = (props) => {
     { value: "nhl", label: "NHL", isSelected: false },
   ]);
 
-  // const {
-  //   isLoading: loadingTeams,
-  //   isError: teamError,
-  //   data: teamsData,
-  //   refetch,
-  // } = useQuery(["teams", league], getTeasmByLeage, {
-  //   enabled: !!league,
-  //   onError: () => {
-  //     displayErrorMessage("An error occurred while getting the teams.");
-  //   },
-  //   onSuccess: (rec) => {
-  //     const sortedTeams = rec.data.sort((a, b) => {
-  //       const nameA = a?.displayName;
-  //       const nameB = b?.displayName;
-
-  //       if (nameA < nameB) {
-  //         return -1;
-  //       }
-  //       if (nameA > nameB) {
-  //         return 1;
-  //       }
-  //       return 0;
-  //     });
-
-  //     setAvailableTeams([...sortedTeams]);
-  //   },
-  // });
-
   const {
     isLoading: loadingTeams,
     isError: teamError,
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    // enabled: false,
+    enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
     onSuccess: (rec) => {
-      setAvailableTeams({ ...availableTeams, nhl: [...rec.data] });
+      const sortedTeams = rec.data.sort((a, b) => {
+        const nameA = a?.displayName;
+        const nameB = b?.displayName;
+
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      setAvailableTeams([...sortedTeams]);
     },
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    // enabled: false,
+    enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -131,6 +115,7 @@ const Registration = (props) => {
       setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
     },
   });
+
   useEffect(() => {
     refetchMlb();
     refetchNfl();
@@ -240,7 +225,6 @@ const Registration = (props) => {
     }
   );
   const handleRegistration = async () => {
-    event.preventDefault();
     const requiredFields = [
       "firstName",
       "lastName",
@@ -255,8 +239,6 @@ const Registration = (props) => {
       "referralName",
       "termsAccepted",
     ];
-
-    console.log(requiredFields);
 
     // leagues
 
@@ -363,71 +345,40 @@ const Registration = (props) => {
   return (
     <Modal isOpen={isOpen} style={customStyles}>
       <form id="msform">
-        <ul id="progressbar">
-          <li className={currentStep === 1 ? "active" : ""} id="account">
-            <strong>1: Account Owners</strong>
-            <div className="logo-container">
-              <img
-                src={logo}
-                className="logo1"
-                alt="Logo"
-                style={{
-                  width: "61px",
-                  marginTop: "-25%",
-                  marginLeft: "40.2%",
-                }}
-              />
-            </div>
-          </li>
-          <li className={currentStep === 2 ? "active" : ""} id="personal">
-            <strong>2: Location</strong>
-            <div className="logo-container">
-              <img
-                src={logo}
-                className="logo1"
-                alt="Logo"
-                style={{
-                  width: "61px",
-                  marginTop: "-25%",
-                  marginLeft: "40.2%",
-                }}
-              />
-            </div>
-          </li>
-          <li className={currentStep === 3 ? "active" : ""} id="payment">
-            <strong>3: Choose League</strong>
-            <div className="logo-container">
-              <img
-                src={logo}
-                className="logo1"
-                alt="Logo"
-                style={{
-                  width: "61px",
-                  marginTop: "-25%",
-                  marginLeft: "40.2%",
-                }}
-              />
-            </div>
-          </li>
-          <li className={currentStep === 4 ? "active" : ""} id="confirm">
-            <strong>4: Email & Password</strong>
-            <div className="logo-container">
-              <img
-                src={logo}
-                className="logo1"
-                alt="Logo"
-                style={{
-                  width: "61px",
-                  marginTop: "-25%",
-                  marginLeft: "40.2%",
-                }}
-              />
-            </div>
-          </li>
-          <br /> <br />
-          <br />
-          <br />
-        </ul>
+      <ul id="progressbar">
+  <li className={`step ${currentStep === 1 ? "active" : ""}`} id="account">
+    <strong>1: Account Owners</strong>
+    <div className="logo-container">
+      {/* Other content */}
+    </div>
+  </li>
+
+  <li className={`step ${currentStep === 2 ? "active" : ""}`} id="personal">
+    <strong>2: Location</strong>
+    <div className="logo-container">
+      {/* Other content */}
+    </div>
+  </li>
+
+  <li className={`step ${currentStep === 3 ? "active" : ""}`} id="payment">
+    <strong>3: Choose League</strong>
+    <div className="logo-container">
+      {/* Other content */}
+    </div>
+  </li>
+
+  <li className={`step ${currentStep === 4 ? "active" : ""}`} id="confirm">
+    <strong>4: Email & Password</strong>
+    <div className="logo-container">
+      {/* Other content */}
+    </div>
+  </li>
+
+  <br />
+  <br />
+  <br />
+  <br />
+</ul>
 
         {/* <h2 id="heading" className="signup-heading">
           Sign Up Your User Account
@@ -466,7 +417,6 @@ const Registration = (props) => {
                   </p>
                   <br />
                   <div className="label-container">
-                    <label className="star">*</label>
                     <label className="info-require">
                       Mandatory information Required{" "}
                     </label>
@@ -503,7 +453,6 @@ const Registration = (props) => {
                         { value: "", label: "Select Gender" },
                         { value: "male", label: "Male" },
                         { value: "female", label: "Female" },
-                        { value: "other", label: "Rather Not Say" },
                       ]}
                       name="gender"
                       onChange={inputChangeHandler}

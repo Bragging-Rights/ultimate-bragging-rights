@@ -5,7 +5,6 @@ const ModalSelect = (props) => {
   return (
     <div className="element-container">
       <div>
-        <label className="star">*</label>
         <label className="input-label">{label}</label>
       </div>
       <select onChange={onChange} name={name}>

@@ -3,8 +3,6 @@ import Modal from "react-modal"; // Import the modal library
 import { addPrediction } from "../../../services/predictions";
 import TimeFormat from "../../../services/TimeFormat";
 import Switches from "../../Switches";
-import { useLeagueContext } from "../../LeagueContext";
-import displayToast from "../../Alert/Alert";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -15,7 +13,6 @@ const GameCard = ({ gameData }) => {
   const [Pick_ot, setPick_ot] = useState(false);
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
-  const { selectedLeague } = useLeagueContext();
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
@@ -28,21 +25,12 @@ const GameCard = ({ gameData }) => {
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    const dataToSave = {
-      gameData: gameData._id,
-      pick_visitor,
-      pick_home,
-      gameEnding,
-      userId,
-      Pick_num_ot,
-      Pick_so,
-      Pick_ot,
-      Pick_Reg,
-      league: selectedLeague,
-    };
-    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
-    console.log(localStorage.getItem(gameData._id));
-    displayToast("Saved successfully!", "success");
+    // setUserSelections({
+    //   pick_visitor,
+    //   pick_home,
+    //   gameEnding,
+    //   userId,
+    // });
   };
 
   const handleLockIn = () => {
@@ -89,10 +77,6 @@ const GameCard = ({ gameData }) => {
     setIsModalOpen(false);
   };
 
-  const date = new Date(gameData?.gamedate);
-  const options = { month: "short", day: "numeric", year: "numeric" };
-  const formattedDate = date.toLocaleDateString("en-US", options);
-
   return (
     <>
       <div
@@ -123,7 +107,7 @@ const GameCard = ({ gameData }) => {
           </div>
 
           <div className=" flex flex-col justify-start ">
-            <span className=" game-date">{formattedDate}</span>
+            <span className=" game-date">{gameData?.gamedate}</span>
             <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
             </div>

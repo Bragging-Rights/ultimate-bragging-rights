@@ -3,18 +3,20 @@ import { format, parse } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
 const TimeFormat = (inputTime) => {
-  // Check correct time format and split into components
-  let time = inputTime
-    .toString()
-    .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [inputTime];
+  if (!inputTime) return;
+  // The input time string in "HH:mm" format
+  // console.log("inputTime", inputTime);
+  // Parse the input time string
+  const parsedTime = parse(inputTime, "HH:mm", new Date());
 
-  if (time.length > 1) {
-    // If time format correct
-    time = time.slice(1); // Remove full string match value
-    time[5] = +time[0] < 12 ? " AM EST" : " PM EST"; // Set AM/PM
-    time[0] = +time[0] % 12 || 12; // Adjust hours
-  }
-  return time.join("");
+  // Convert the time to the desired timezone (e.g., "EST")
+  const timeZone = "America/New_York";
+  const zonedTime = utcToZonedTime(parsedTime, timeZone);
+
+  // Format the time in "h:mm a zzz" format
+  const formattedTime = format(zonedTime, "h:mm a zzz", { timeZone });
+
+  return formattedTime;
 };
 
 export default TimeFormat;

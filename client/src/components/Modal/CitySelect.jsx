@@ -9,7 +9,6 @@ const CitySelect = ({ countryCode, stateCode, onChange }) => {
   return (
     <div className="element-container">
       <div>
-        <label className="star">*</label>
         <label className="input-label">Select City</label>
       </div>
       <CustomSelect

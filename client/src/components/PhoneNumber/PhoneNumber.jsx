@@ -4,7 +4,6 @@ const PhoneNumber = ({ value, onChange, onCountryChange }) => {
   return (
     <div className="element-container">
       <div>
-        <label className="star">*</label>
         <label className="input-label">Phone</label>
       </div>
       <PhoneInput

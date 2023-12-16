@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import heroImg from "../assets/gamesHero.png";
 import HeroSection from "../components/HeroSection";
 import MainNavBar from "../components/MainNavBar";
@@ -32,12 +32,12 @@ const Games = () => {
   const {
     isLoading: loadingTeams,
     isError: teamError,
-    refetch: refetchTodayGame,
+    data: teamsData,
   } = useQuery(["teams", formattedDateForAPI, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
+      console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
     },
-    enabled: false,
     onError: (error) => {
       console.error("An error occurred:", error);
     },
@@ -50,9 +50,9 @@ const Games = () => {
     isLoading: loadingTomorrowGames,
     isError: tomorrowGamesError,
     data: tomorrowGamesData,
-    refetch: refetchTomorrowGame,
   } = useQuery(["teams", formattedDateForTomorrow, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
+      console.log("fetchedTomorrowData", fetchedData);
       setTomorrowGameData(fetchedData.data);
     },
     onError: (error) => {
@@ -71,11 +71,6 @@ const Games = () => {
     "en-US",
     options
   );
-
-  useEffect(() => {
-    refetchTodayGame();
-    refetchTomorrowGame();
-  }, []);
 
   const tomorrowGames = tomorrowGameData.filter((game) => {
     const gameDate = new Date(game.date); // Assuming your game objects have a 'date' property

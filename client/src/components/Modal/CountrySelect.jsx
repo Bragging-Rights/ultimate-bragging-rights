@@ -9,7 +9,6 @@ const CountrySelect = ({ value, onChange }) => {
   return (
     <div className="element-container">
       <div>
-        <label className="star">*</label>
         <label className="input-label">Country</label>
       </div>
       <CustomSelect

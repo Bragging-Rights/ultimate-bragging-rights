@@ -24,7 +24,6 @@ const ModalInput = (props) => {
   return (
     <div className="element-container relative">
       <div>
-        {isRequired && <label className="star"> *</label>}
 
         <label className="input-label">{label}</label>
       </div>
