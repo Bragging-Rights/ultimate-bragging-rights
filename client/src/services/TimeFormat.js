@@ -3,20 +3,20 @@ import { format, parse } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
 const TimeFormat = (inputTime) => {
-  if (!inputTime) return;
-  // The input time string in "HH:mm" format
-  // console.log("inputTime", inputTime);
-  // Parse the input time string
-  const parsedTime = parse(inputTime, "HH:mm", new Date());
+  // Extracting hours and minutes from the time string
+  const [hours, minutes] = inputTime.split(":").map(Number);
 
-  // Convert the time to the desired timezone (e.g., "EST")
-  const timeZone = "America/New_York";
-  const zonedTime = utcToZonedTime(parsedTime, timeZone);
+  // Checking if hours are greater than 12 to determine AM or PM
+  const period = hours >= 12 ? "PM" : "AM";
 
-  // Format the time in "h:mm a zzz" format
-  const formattedTime = format(zonedTime, "h:mm a zzz", { timeZone });
+  // Converting hours to 12-hour format
+  let hours12 = hours % 12;
+  hours12 = hours12 ? hours12 : 12; // If hours is 0, set it to 12 for 12-hour format
 
-  return formattedTime;
+  // Formatting the time in 12-hour format
+  const time12 = `${hours12}:${String(minutes).padStart(2, "0")} ${period}`;
+
+  return time12;
 };
 
 export default TimeFormat;

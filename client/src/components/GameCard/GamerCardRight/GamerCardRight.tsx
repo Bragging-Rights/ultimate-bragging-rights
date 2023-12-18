@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+
 import Modal from "react-modal"; // Import the modal library
+import displayToast from "../../Alert/Alert";
 import { addPrediction } from "../../../services/predictions";
 import TimeFormat from "../../../services/TimeFormat";
 import Switches from "../../Switches";
+import { useMutation } from "react-query";
 
-const GameCard = ({ gameData }) => {
+const GamerCardRight = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,12 +28,19 @@ const GameCard = ({ gameData }) => {
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    // setUserSelections({
-    //   pick_visitor,
-    //   pick_home,
-    //   gameEnding,
-    //   userId,
-    // });
+    const dataToSave = {
+      gameData: gameData._id,
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
+    };
+    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
+    displayToast("Saved successfully!");
   };
 
   const handleLockIn = () => {
@@ -47,15 +57,27 @@ const GameCard = ({ gameData }) => {
       pick_home,
       gameEnding,
       userId,
-      setPick_num_ot,
-      setPick_so,
-      setPick_ot,
-      setPick_Reg,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
     };
 
     // Send the data to the database using an HTTP request
-    addPrediction(dataToSave);
+    mutate(dataToSave);
   };
+
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (data) => addPrediction(data),
+    {
+      onSuccess: (data) => {
+        displayToast("Preduction added successfully", "success");
+      },
+      onError: (error) => {
+        displayToast("Error while adding the preduction", "error");
+      },
+    }
+  );
 
   const handleEdit = () => {
     // Open the edit modal
@@ -79,19 +101,13 @@ const GameCard = ({ gameData }) => {
 
   return (
     <>
-      <div
-        className="game-card grid col-span-2 xl:col-span-1"
-        style={{
-          boxShadow: "0px 4px 4px 0px #A2EB38",
-        }}
-      >
+      <div className="game-card grid col-span-2 xl:col-span-1">
         <div className="flex justify-between">
           <div className=" flex flex-col ">
             <span
               className="game-time font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
-                WebkitTextStrokeColor: "0.3px black",
                 textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
                 fontSize: "14px",
               }}
@@ -116,7 +132,6 @@ const GameCard = ({ gameData }) => {
             className=" flex flex-col justify-start "
             style={{
               WebkitTextStroke: "0.3px black",
-              WebkitTextStrokeColor: "0.3px black",
               textShadow: "0px 1px 4px 0px #2CDD14",
               fontSize: "16px",
             }}
@@ -264,4 +279,4 @@ const GameCard = ({ gameData }) => {
   );
 };
 
-export default GameCard;
+export default GamerCardRight;

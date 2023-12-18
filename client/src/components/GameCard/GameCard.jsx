@@ -4,6 +4,8 @@ import "./GameCard.css";
 import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
 import { addPrediction } from "../../services/predictions";
+import displayToast from "../Alert/Alert";
+import { useMutation } from "react-query";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -26,12 +28,19 @@ const GameCard = ({ gameData }) => {
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    // setUserSelections({
-    //   pick_visitor,
-    //   pick_home,
-    //   gameEnding,
-    //   userId,
-    // });
+    const dataToSave = {
+      gameData: gameData._id,
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
+    };
+    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
+    displayToast("Saved successfully!", "success");
   };
 
   const handleLockIn = () => {
@@ -41,7 +50,7 @@ const GameCard = ({ gameData }) => {
     if (!gameEnding) {
       gameEnding = "null";
     }
-    console.log("hamd", Pick_num_ot, Pick_so, Pick_ot, Pick_Reg);
+
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -55,8 +64,20 @@ const GameCard = ({ gameData }) => {
     };
 
     // Send the data to the database using an HTTP request
-    addPrediction(dataToSave);
+    mutate(dataToSave);
   };
+
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (data) => addPrediction(data),
+    {
+      onSuccess: (data) => {
+        displayToast("Preduction added successfully", "success");
+      },
+      onError: (error) => {
+        displayToast("Error while adding the preduction", "error");
+      },
+    }
+  );
 
   const handleEdit = () => {
     // Open the edit modal
