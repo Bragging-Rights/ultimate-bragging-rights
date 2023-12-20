@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import heroImg from "../assets/gamesHero.png";
 import HeroSection from "../components/HeroSection";
 import MainNavBar from "../components/MainNavBar";
@@ -32,12 +32,13 @@ const Games = () => {
   const {
     isLoading: loadingTeams,
     isError: teamError,
-    data: teamsData,
+    refetch: refetchTodayGame,
   } = useQuery(["teams", formattedDateForAPI, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
-      console.log("fetchedData", fetchedData);
       setGameData(fetchedData.data);
     },
+    enabled: false,
+
     onError: (error) => {
       console.error("An error occurred:", error);
     },
@@ -50,9 +51,9 @@ const Games = () => {
     isLoading: loadingTomorrowGames,
     isError: tomorrowGamesError,
     data: tomorrowGamesData,
+    refetch: refetchTomorrowGame,
   } = useQuery(["teams", formattedDateForTomorrow, selectedLeague], getGames, {
     onSuccess: (fetchedData) => {
-      console.log("fetchedTomorrowData", fetchedData);
       setTomorrowGameData(fetchedData.data);
     },
     onError: (error) => {
@@ -72,6 +73,11 @@ const Games = () => {
     options
   );
 
+  useEffect(() => {
+    refetchTodayGame();
+    refetchTomorrowGame();
+  }, []);
+
   const tomorrowGames = tomorrowGameData.filter((game) => {
     const gameDate = new Date(game.date); // Assuming your game objects have a 'date' property
     return gameDate.toDateString() === tomorrow.toDateString();
@@ -79,8 +85,9 @@ const Games = () => {
 
   return (
     <div className=" w-full">
-      <HeroSection imgUrl={heroImg} />
       <MainNavBar />
+
+      <HeroSection imgUrl={heroImg} />
       <Line />
       <Banner date={formattedDate} label={"Upcoming Games"} />
       <div className=" grid grid-cols-2 gap-4 ">

@@ -1,126 +1,133 @@
+/* HomePage.css */
 
-  /*--- HOME ---*/
-  .homepage-home-content {
-    background: url(/src/assets/homepage.png) no-repeat;
-    background-size: 100% 100%;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-    text-align: center;
-    height: 94vh;
-    margin-top: -1.13%;
-    margin-left: -1.48%;
-    width: 119.7%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .video-page {
-    content: "";
-    position: absolute;
-    top: 42.6%;
-    left: 23.4%;
-    width: 50.5%;
-    height: 35.6%;
-    background-size: cover;
-    z-index: 1;
+/* Set up a grid for the entire page */
+
+
+/* HOME */
+#home {
+  background: url(/src/assets/homepage.png) no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-  .homepage-home-content h1 {
-    font-family: 'Advent Pro', sans-serif;
-    font-size: 96px;
-    color: #000;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    line-height: 90px;
-    margin-top: 60px;
-  }
-  
-  .homepage-home-content h1:after {
-    border-bottom: 1px solid #AAA;
-  }
-  
-  .homepage-home-content h5 {
-    font-size: 16px;
-    color: #555;
-  }
-  
-  @media screen and (min-width: 768px) {
-    .home-content h1 {
-      font-size: 120px;
-      line-height: 114px;
-    }
-    .home-content h5 {
-      font-size: 19px;
-    }
-  }
-  
-  @media screen and (min-width: 992px) {
-    .homepage-home-content h1 {
-      font-size: 132px;
-      margin-top: 70px;
-    }
-    .homepage-home-content h5 {
-      font-size: 21px;
-    }
-  }
-  
-  @media screen and (min-width: 1200px) {
-    .homepage-home-content h1 {
-      font-size: 142px;
-      line-height: 124px;
-    }
-    .homepage-home-content h5 {
-      font-size: 24px;
-    }
-  }
-  
-  /*--- PORTFOLIO ---*/
+#home h1 {
+  font-family: 'Advent Pro', sans-serif;
+  font-size: 3rem;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
 
-  /* Rest of the portfolio styles remain unchanged */
-  
-  /*--- CONTACT ---*/
+/* INTRODUCTION */
+#intro {
+  background: url(/src/assets/bglow.png) no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* Rest of the contact styles remain unchanged */
+#intro h1 {
+  font-size: 2rem;
+  color: gold;
+  margin-bottom: 1rem;
+}
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
 
-  
-  
-  /* Rest of the social button styles remain unchanged */
-  
-  .w-full {
-    width: 251vh;
+/* ABOUT */
+#about {
+  background: url(/src/assets/bottom.png) no-repeat center center;
+  background-size: cover;
+  text-align: center;
+  height: auto; /* Auto height to fit content */
+  width: 80%;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column; /* Adjust to a column layout */
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+}
+
+.text-golden-copyright {
+  color: #FFD700; /* Golden color */
+}
+
+.text-lg-copyright {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* INFO */
+#info {
+  background-size: cover;
+  text-align: left;
+  width: 100%;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Media queries for responsiveness */
+@media screen and (min-width: 600px) {
+  body {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, auto);
   }
-  
-  .homepage-green {
-    background: url(/src/assets/bglow.png) no-repeat;
-    background-size: 100% 100%;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-    text-align: center;
-    height: 34vh;
-    margin-top: -1.13%;
-    margin-left: -1.48%;
-    width: 119.7%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  #home {
+    height: 70vh;
   }
-  .homepage-about {
-    background: url(/src/assets/bottom.png) no-repeat center center;
-    background-size: 100% 100%;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-    text-align: center;
-    height: 18vh;
-    width: 80%; /* Adjust the width as needed */
-    margin: 0 0 10vh 35vh;
-        display: flex;
-    align-items: center;
-    justify-content: center;
+
+  #intro {
+    height: 80vh;
   }
-  
-  /* Add the following styles to override any potential conflicting styles */
-  body, html {
-    height: 100%;
-    margin: 0;
+
+  #about   {
+    width: 80%; /* Increase width for larger screens */
   }
-  
+
+  #info {
+    width: 80%; /* Increase width for larger screens */
+  }
+}
+
+@media screen and (min-width: 992px) {
+  body {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+  }
+
+  #home {
+    height: 100vh;
+  }
+
+  #intro {
+    height: 40vh;
+  }
+
+  #about   {
+    width: 70%;
+    margin: 0 auto;
+
+  }
+  #info {
+    width: 50%;
+    margin: 0 auto;
+
+  }
+}

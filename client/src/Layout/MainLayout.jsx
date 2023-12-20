@@ -16,11 +16,12 @@ const MainLayout = ({ children }) => {
     <>
       <Navbar />
 
-      <div className="flex w-full">
-        <div className=" w-10/12  ml-5 mt-4">
-          <Outlet />
-        </div>
-        <div className=" w-2/12"></div>
+      <div className="flex justify-content">
+  <div className="w-full ml-5 mt-4">
+    <Outlet />
+  </div>
+
+        {/* <div className=" w-100"></div> */}
       </div>
       {!shouldHideFooter() && <Footer />}
     </>

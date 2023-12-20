@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const isHomepage = location.pathname === "/";
 
-  Modal.setAppElement("#root"); // Set the app element
+  Modal.setAppElement("#root");
 
   const userName = localStorage.getItem("username");
   const userEmail = localStorage.getItem("email");
@@ -41,90 +41,63 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className="flex flex-col md:flex-row items-center bg-[#1B1C21] border border-[#313131] w-full relative
-       overflow-x-hidden
-      "
-      style={{
-        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-      }}
-    >
-      <div className="flex justify-between w-full mx-2 md:mx-14">
-        <div className="text-center md:text-left">
-          <Link to="/">
-            <img src={logo} alt="bragging-rights" width={80} height={60} />
-          </Link>
-        </div>
-        <div className="flex items-center">
-          {isHomepage ? (
-            <div className="hidden md:flex-center items-center">
-              <img src={img1} alt="img1" />
-              <p className="text-[#BE8200] text-lg font-extrabold">
-                Players Wanted For Weekly Sports Prediction Competition
-              </p>
-              <img src={img2} alt="img2" />
-            </div>
-          ) : (
-            <LeageSelect />
-          )}
-        </div>
-        <div className="flex flex-col md:flex-row items-center mt-2 md:mt-0">
-          {!isHomepage && (
-            <button
-              className="rounded h-8 px-4 text-[#1B1C21] font-extrabold mt-2 md:mt-0 md:ml-2"
-              style={{
-                background:
-                  "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)",
-                boxShadow: "0px 4px 40px 0px #000",
-              }}
-            >
-              Add League
-            </button>
-          )}
+    <nav className="bg-gray-800 border-b border-gray-700">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex-shrink-0">
+            <Link to="/">
+              <img className="h-8 w-8" src={logo} alt="Bragging Rights" />
+            </Link>
+          </div>
+          <div className="hidden md:flex-grow md:flex items-center space-x-4">
+            {isHomepage ? (
+              <div className="flex items-center space-x-4">
+                <img src={img1} alt="img1" className="h-6" />
+                <p className="text-yellow-500 text-sm font-extrabold">
+                  Players Wanted For Weekly Sports Prediction Competition
+                </p>
+                <img src={img2} alt="img2" className="h-6" />
+              </div>
+            ) : (
+              <LeageSelect />
+            )}
+          </div>
+          <div className="flex items-center space-x-4">
+            {!isHomepage && (
+              <button className="py-2 px-4 text-gray-800 font-extrabold bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 rounded-md shadow-md">
+                Add League
+              </button>
+            )}
 
-          {userEmail ? (
-            <Link className="custom-button" onClick={handleLogout}>
-              <button
-                className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
-                style={{
-                  boxShadow: "0px 4px 40px 0px #000",
-                }}
-              >
-                Logout
+            {userEmail ? (
+              <Link to="/" className="custom-button" onClick={handleLogout}>
+                <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
+                  Logout
+                </button>
+              </Link>
+            ) : (
+              <Link to="/" className="custom-button" onClick={openSignInModal}>
+                <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
+                  Sign In
+                </button>
+              </Link>
+            )}
+
+            <SignInModal
+              modalIsOpen={signInModalIsOpen}
+              closeModal={() => setSignInModalIsOpen(false)}
+            />
+
+            <Link to="/" className="custom-button" onClick={openModal}>
+              <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
+                REGISTER
               </button>
             </Link>
-          ) : (
-            <Link className="custom-button" onClick={openSignInModal}>
-              <button
-                className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
-                style={{
-                  boxShadow: "0px 4px 40px 0px #000",
-                }}
-              >
-                Sign In
-              </button>
-            </Link>
-          )}
 
-          <SignInModal
-            modalIsOpen={signInModalIsOpen}
-            closeModal={() => setSignInModalIsOpen(false)}
-          />
-
-          <Link className="custom-button" onClick={openModal}>
-            <button
-              className="rounded h-8 px-4 border border-[#BE8200] text-[#EFD261] font-extrabold mt-2 md:mt-0 md:ml-2"
-              style={{
-                boxShadow: "0px 4px 40px 0px #000",
-              }}
-            >
-              REGISTER
-            </button>
-          </Link>
-
-          <Registration isOpen={modalIsOpen} onRequestClose={closeModal}>
-            {/* <Signup /> */}
-          </Registration>
+            <Registration isOpen={modalIsOpen} onRequestClose={closeModal}>
+              {/* <Signup /> */}
+            </Registration>
+          </div>
         </div>
       </div>
     </nav>

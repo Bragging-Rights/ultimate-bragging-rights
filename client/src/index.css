@@ -41,7 +41,36 @@ line-height: normal;
   align-content: center;
   flex-wrap: wrap;
 } */
+/* styles for desktop devices */
+@media only screen and (min-width: 992px) {
+  body {
+    font-size: 16px;
+    width: 80%;
+    margin: auto;
+  }
+}
 
-.w-2\/12 {
-  width: 0%;
+/* styles for tablet devices */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  body {
+    font-size: 14px;
+    width: 90%;
+    margin: auto;
+  }
+}
+
+/* styles for mobile devices */
+@media only screen and (max-width: 767px) {
+  body {
+    font-size: 12px;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.bg-yellow-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(161 98 7 / var(--tw-bg-opacity));
+    width: 65px;
+    height: 4vh;
 }

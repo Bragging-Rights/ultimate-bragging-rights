@@ -219,6 +219,10 @@ const SignUp = ({ onSignUp }) => {
     setUsernameAvailable(isAvailable);
   };
 
+  // style={{
+  //   boxShadow: "0px 4px 4px 0px #A2EB38",
+  // }}
+
   return (
     <>
       <br></br>
@@ -480,8 +484,6 @@ const SignUp = ({ onSignUp }) => {
                   </p>
                 </div>
               </div>
-
-           
             </div>
 
             <br></br>

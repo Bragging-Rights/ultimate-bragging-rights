@@ -4,6 +4,9 @@ import "./GameCard.css";
 import Switches from "../Switches";
 import Modal from "react-modal"; // Import the modal library
 import { addPrediction } from "../../services/predictions";
+import displayToast from "../Alert/Alert";
+import { useMutation } from "react-query";
+import { useLeagueContext } from "../LeagueContext";
 
 const GameCard = ({ gameData }) => {
   const [pick_visitor, setPickVisitor] = useState("");
@@ -15,9 +18,13 @@ const GameCard = ({ gameData }) => {
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
 
+  const { selectedLeague } = useLeagueContext();
+
+  console.log("gameData", gameData.time);
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
   };
+
   const handleHomeChange = (e) => {
     setPickHome(e.target.value);
   };
@@ -26,22 +33,6 @@ const GameCard = ({ gameData }) => {
   let gameEnding = ""; // Change const to let
 
   const handleEnterPick = () => {
-    // setUserSelections({
-    //   pick_visitor,
-    //   pick_home,
-    //   gameEnding,
-    //   userId,
-    // });
-  };
-
-  const handleLockIn = () => {
-    const timestamp = new Date().toISOString();
-    console.log("User ID in GameCard:", userId);
-
-    if (!gameEnding) {
-      gameEnding = "null";
-    }
-    console.log("hamd", Pick_num_ot, Pick_so, Pick_ot, Pick_Reg);
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -53,15 +44,54 @@ const GameCard = ({ gameData }) => {
       Pick_ot,
       Pick_Reg,
     };
+    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
+    displayToast("Saved successfully!", "success");
+  };
+
+  const handleLockIn = () => {
+    const timestamp = new Date().toISOString();
+    console.log("User ID in GameCard:", userId);
+
+    if (!gameEnding) {
+      gameEnding = "null";
+    }
+
+    const dataToSave = {
+      gameData: gameData._id,
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
+      league: selectedLeague,
+    };
 
     // Send the data to the database using an HTTP request
-    addPrediction(dataToSave);
+    mutate(dataToSave);
   };
+
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (data) => addPrediction(data),
+    {
+      onSuccess: (data) => {
+        displayToast("Preduction added successfully", "success");
+      },
+      onError: (error) => {
+        displayToast("Error while adding the preduction", "error");
+      },
+    }
+  );
 
   const handleEdit = () => {
     // Open the edit modal
     setIsModalOpen(true);
   };
+  const date = new Date(gameData?.gamedate);
+  const options = { month: "short", day: "numeric", year: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
 
   const handleSaveEdit = () => {
     // Save the edited game data
@@ -103,7 +133,7 @@ const GameCard = ({ gameData }) => {
           </div>
 
           <div className=" flex flex-col justify-start ">
-            <span className=" game-date">{gameData?.gamedate}</span>
+            <span className=" game-date">{formattedDate}</span>
             <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
             </div>
