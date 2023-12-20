@@ -656,7 +656,9 @@ const GameForm = () => {
             onClick={handleAddGameCard}
             className="bg-green-500 text-white p-2 rounded"
             style={{ marginRight: "10px" }}
-          ></button>
+          >
+            +
+          </button>
           <button
             type="submit"
             className="bg-yellow-400 text-black p-2 rounded"
