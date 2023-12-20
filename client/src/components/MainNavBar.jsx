@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { UserRole } from "../Modal/SignInModal";
-import "./MainNavbar/MainNavBar.css"; // Import the CSS file
+import "./MainNavbar/MainNavbar.css"; // Import the CSS file
 
 const navItem = [
   {
