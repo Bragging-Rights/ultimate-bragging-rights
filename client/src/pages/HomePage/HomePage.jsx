@@ -9,7 +9,8 @@ import ReactPlayer from "react-player";
 const HomePage = () => {
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://s3.amazonaws.com/press-play-v2/2135671/2168572/outer.js";
+    script.src =
+      "https://s3.amazonaws.com/press-play-v2/2135671/2168572/outer.js";
     script.async = true;
     document.body.appendChild(script);
 
@@ -18,7 +19,6 @@ const HomePage = () => {
       document.body.removeChild(script);
     };
   }, []);
-
 
   return (
     <div>
@@ -30,9 +30,15 @@ const HomePage = () => {
       >
         <div className="homepage-container">
           <div className="row">
-            <div className="col-xs-12 ">
-            <div id="ppdiv-wrapper-2168572" style={{width: "640px", height: "360px"}}>
-                <div id="ppdiv_2168572" style={{width: "100%", height:"360px"}}></div>
+            <div className="col-xs-12 video">
+              <div
+                id="ppdiv-wrapper-2168572"
+                style={{ width: "640px", height: "360px" }}
+              >
+                <div
+                  id="ppdiv_2168572"
+                  style={{ width: "100%", height: "360px" }}
+                ></div>
               </div>
             </div>
           </div>

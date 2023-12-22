@@ -2,16 +2,19 @@
 
 /* Set up a grid for the entire page */
 
-
 /* HOME */
 #home {
   background: url(/src/assets/homepage.png) no-repeat;
   background-size: cover;
   text-align: center;
-  height: 50vh;
+  height: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#homepage {
+  margin-left: 10vh;
 }
 
 #home h1 {
@@ -35,7 +38,7 @@
 }
 
 #intro h1 {
-  font-size: 2rem;
+  font-size: 1rem;
   color: gold;
   margin-bottom: 1rem;
 }
@@ -62,7 +65,7 @@
 }
 
 .text-golden-copyright {
-  color: #FFD700; /* Golden color */
+  color: #ffd700; /* Golden color */
 }
 
 .text-lg-copyright {
@@ -75,18 +78,79 @@
   background-size: cover;
   text-align: left;
   width: 100%;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0 0 20px 20px;
 }
 
+#ppdiv-wrapper-2168572{
+  
+}
 /* Media queries for responsiveness */
-@media screen and (min-width: 600px) {
+/* Mobile devices */
+@media screen and (max-width: 767px) {
   body {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  #home {
+    height: 32.5vh;
+  }
+
+  #intro {
+    height: 80vh;
+  }
+
+  #about {
+    width: 100%;
+    height: 10vh;
+    margin: -60px auto;
+
+  }
+
+  #info {
+    width: 90%;
+    margin: 70px auto 10px;
+    font-size: 0.6rem;
+  }
+  .text-lg-copyright {
+    font-size: 0.6rem;
+    line-height: 1.5;
+  }
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+
+  #home {
+    height: 60vh;
+  }
+
+  #intro {
+    height: 80vh;
+  }
+
+  #about {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  #info {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* Small laptops and larger tablets */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  body {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   #home {
@@ -94,22 +158,53 @@
   }
 
   #intro {
-    height: 80vh;
+    height: 90vh;
   }
 
-  #about   {
-    width: 80%; /* Increase width for larger screens */
+  #about {
+    width: 70%;
+    margin: 0 auto;
   }
 
   #info {
-    width: 80%; /* Increase width for larger screens */
+    width: 70%;
+    margin: 0 auto;
+    margin: 0.5rem 0;
+    text-align: center;
+    
+
   }
 }
 
-@media screen and (min-width: 992px) {
+/* Medium and large laptops */
+@media screen and (min-width: 1280px) and (max-width: 1439px) {
+  body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #home {
+    height: 80vh;
+  }
+
+  #intro {
+    height: 100vh;
+  }
+
+  #about {
+    width: 100%;
+    margin: 5vh auto;
+  }
+
+  #info {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+
+/* Larger screens (desktops and TVs) */
+@media screen and (min-width: 1440px) {
   body {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
   }
 
   #home {
@@ -117,17 +212,18 @@
   }
 
   #intro {
-    height: 40vh;
+    height: 30vh;
+    
   }
 
-  #about   {
-    width: 70%;
-    margin: 0 auto;
-
+  #about {
+    width: 80%;
+    margin: 5vh auto;
+    height: 14vh;
   }
+
   #info {
-    width: 50%;
-    margin: 0 auto;
-
+    width: 80%;
+    margin: 10px auto 40px;
   }
 }

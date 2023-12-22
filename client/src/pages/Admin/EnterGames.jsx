@@ -374,7 +374,7 @@ const GameForm = () => {
               <div
                 className="mb-2 pt-6"
                 style={{
-                  marginRight: "50px",
+                  marginRight: "30px",
                   marginTop: "-50px",
                   marginLeft: "-10px",
                 }}
@@ -389,8 +389,22 @@ const GameForm = () => {
               </div>
 
               <div
+                className="w-1/2 px-2 box box h-18 w-40"
+                style={{ marginRight: "20px", marginBottom: "8px" }}
+              >
+                <label htmlFor={`time-${index}`}>Game Time</label>
+                <input
+                  type="time"
+                  id={`time-${index}`}
+                  name={`time`}
+                  value={gameCard.time}
+                  onChange={(e) => handleChange(e, index)}
+                  className="bg-gray-800 text-white p-2 rounded w-full "
+                />
+              </div>
+              <div
                 className="px-2 box box h-18 w-40"
-                style={{ marginRight: "250px", marginBottom: "8px" }}
+                style={{ marginBottom: "8px" }}
               >
                 <label htmlFor={`data-${index}`}>Data Paste</label>
                 <input
