@@ -3,12 +3,7 @@ import React, { useEffect } from "react";
 import "aos/dist/aos.css";
 import "./HomePage.css";
 import MainNavBar from "../../components/MainNavBar";
-<<<<<<< Updated upstream
 import { Helmet } from "react-helmet";
-=======
-// import { Helmet } from "react-helmet";
-// import MainNavBar from "../../components/MainNavBar";
->>>>>>> Stashed changes
 import ReactPlayer from "react-player";
 
 const HomePage = () => {
