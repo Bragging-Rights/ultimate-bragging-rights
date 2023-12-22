@@ -4,33 +4,21 @@ import "aos/dist/aos.css";
 import "./HomePage.css";
 import MainNavBar from "../../components/MainNavBar";
 import { Helmet } from "react-helmet";
-import MainNavBar from "../../components/MainNavBar";
 import ReactPlayer from "react-player";
 
 const HomePage = () => {
   useEffect(() => {
-    // Embed script
     const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://videosuite-player-wrapper.vercel.app/assets";
+    script.src = "https://s3.amazonaws.com/press-play-v2/2135671/2168572/outer.js";
     script.async = true;
-
-    // Function to initialize video player
-    const initializeVideoPlayer = () => {
-      // Replace this with the actual function provided by the script
-      window.initializeVideoPlayer();
-    };
-
-    script.addEventListener("load", initializeVideoPlayer);
-
-    document.head.appendChild(script);
+    document.body.appendChild(script);
 
     // Cleanup function to remove the script when the component unmounts
     return () => {
-      script.removeEventListener("load", initializeVideoPlayer);
-      document.head.removeChild(script);
+      document.body.removeChild(script);
     };
   }, []);
+
 
   return (
     <div>
@@ -43,12 +31,9 @@ const HomePage = () => {
         <div className="homepage-container">
           <div className="row">
             <div className="col-xs-12 ">
-              {/* <iframe
-          className="video-page"
-          src="https://videosuite-player-wrapper.vercel.app/assets"
-          title="Embedded Video"
-          allowFullScreen
-        ></iframe> */}
+            <div id="ppdiv-wrapper-2168572" style={{width: "640px", height: "360px"}}>
+                <div id="ppdiv_2168572" style={{width: "100%", height:"360px"}}></div>
+              </div>
             </div>
           </div>
         </div>
