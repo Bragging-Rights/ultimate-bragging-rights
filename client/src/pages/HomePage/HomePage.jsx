@@ -5,6 +5,8 @@ import "./HomePage.css";
 import MainNavBar from "../../components/MainNavBar";
 import { Helmet } from "react-helmet";
 import ReactPlayer from "react-player";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 const HomePage = () => {
   useEffect(() => {
@@ -21,7 +23,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
+      <Navbar />
       <MainNavBar />
       {/* HOME */}
       <div
@@ -32,13 +35,19 @@ const HomePage = () => {
           <div className="row">
             <div className="col-xs-12 video">
               <div
-                id="ppdiv-wrapper-2168572"
-                style={{ width: "640px", height: "360px" }}
+                className="video-page"
+                title="Embedded Video"
+                allowFullScreen
               >
                 <div
-                  id="ppdiv_2168572"
-                  style={{ width: "100%", height: "360px" }}
-                ></div>
+                  id="ppdiv-wrapper-2168572"
+                  // style={{ width: "640px", height: "360px" }}
+                >
+                  <div
+                    id="ppdiv_2168572"
+                    style={{ width: "100%", height: "360px" }}
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
@@ -171,6 +180,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
