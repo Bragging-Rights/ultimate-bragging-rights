@@ -28,7 +28,7 @@ const GamesPageSelect = ({ label, options }) => {
   }, []);
 
   return (
-    <div className="w-32 relative" ref={dropdownRef}>
+    <div className="w-28 relative" ref={dropdownRef}>
       <div
         className={`flex justify-center items-center h-10 rounded bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 cursor-pointer ${
           isOpen ? "border-t" : ""

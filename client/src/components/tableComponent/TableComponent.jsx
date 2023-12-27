@@ -1,4 +1,5 @@
-import "./tableComponent.css";
+import React from 'react';
+import './tableComponent.css';
 
 const headerOption = [
   "Visitor",
@@ -23,8 +24,13 @@ const headerOption = [
 ];
 
 const TableComponent = () => {
+  const handleDrag = (e, ui) => {
+    // Handle drag logic if needed
+  };
   return (
-    <table className=" mt-5 w-full table-auto border-separate ">
+      <div className="table-container">
+
+    <table className="  mt-5 w-full table-auto border-separate  ">
       <thead>
         <tr>
           <td>
@@ -412,6 +418,7 @@ const TableComponent = () => {
         </tr>
       </tbody>
     </table>
+    </div>
   );
 };
 
