@@ -66,7 +66,7 @@ const Registration = (props) => {
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -89,7 +89,7 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -210,6 +210,7 @@ const Registration = (props) => {
   };
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    
     (data) => Register(data),
     {
       onError: (err) => {
@@ -345,40 +346,44 @@ const Registration = (props) => {
   return (
     <Modal isOpen={isOpen} style={customStyles}>
       <form id="msform">
-      <ul id="progressbar">
-  <li className={`step ${currentStep === 1 ? "active" : ""}`} id="account">
-    <strong>1: Account Owners</strong>
-    <div className="logo-container">
-      {/* Other content */}
-    </div>
-  </li>
+        <ul id="progressbar">
+          <li
+            className={`step ${currentStep === 1 ? "active" : ""}`}
+            id="account"
+          >
+            <strong>1: Account Owners</strong>
+            <div className="logo-container">{/* Other content */}</div>
+          </li>
 
-  <li className={`step ${currentStep === 2 ? "active" : ""}`} id="personal">
-    <strong>2: Location</strong>
-    <div className="logo-container">
-      {/* Other content */}
-    </div>
-  </li>
+          <li
+            className={`step ${currentStep === 2 ? "active" : ""}`}
+            id="personal"
+          >
+            <strong>2: Location</strong>
+            <div className="logo-container">{/* Other content */}</div>
+          </li>
 
-  <li className={`step ${currentStep === 3 ? "active" : ""}`} id="payment">
-    <strong>3: Choose League</strong>
-    <div className="logo-container">
-      {/* Other content */}
-    </div>
-  </li>
+          <li
+            className={`step ${currentStep === 3 ? "active" : ""}`}
+            id="payment"
+          >
+            <strong>3: Choose League</strong>
+            <div className="logo-container">{/* Other content */}</div>
+          </li>
 
-  <li className={`step ${currentStep === 4 ? "active" : ""}`} id="confirm">
-    <strong>4: Email & Password</strong>
-    <div className="logo-container">
-      {/* Other content */}
-    </div>
-  </li>
+          <li
+            className={`step ${currentStep === 4 ? "active" : ""}`}
+            id="confirm"
+          >
+            <strong>4: Email & Password</strong>
+            <div className="logo-container">{/* Other content */}</div>
+          </li>
 
-  <br />
-  <br />
-  <br />
-  <br />
-</ul>
+          <br />
+          <br />
+          <br />
+          <br />
+        </ul>
 
         {/* <h2 id="heading" className="signup-heading">
           Sign Up Your User Account
