@@ -29,7 +29,7 @@ const App = () => {
         <Router>
           <LeagueProvider>
             <Routes>
-              <Route index element={<Home />} />
+              <Route index element={<HomePage />} />
               <Route element={<MainLayout />}>
                 <Route path="/games" element={<Games />} />
                 <Route path="/results" element={<Results />} />
@@ -42,7 +42,6 @@ const App = () => {
                 <Route path="/records" element={<Records />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/registration" element={<Registration />} />
-                <Route path="/homepage" element={<HomePage />} />
               </Route>
             </Routes>
           </LeagueProvider>
