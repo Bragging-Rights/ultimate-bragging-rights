@@ -15,6 +15,7 @@ import ModalSelect from "../Modal/ModalSelect";
 import displayToast from "../../components/Alert/Alert";
 import { Register } from "../../services/auth";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../Loader/Loader";
 
 const customStyles = {
   content: {
@@ -66,7 +67,7 @@ const Registration = (props) => {
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    // enabled: false,
+    enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -84,12 +85,12 @@ const Registration = (props) => {
         return 0;
       });
 
-      setAvailableTeams([...sortedTeams]);
+      setAvailableTeams({ ...availableTeams, nhl: [...rec.data] });
     },
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    // enabled: false,
+    enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -99,6 +100,7 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchNfl } = useQuery(["teams", "nfl"], getTeasmByLeage, {
+    enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -108,6 +110,7 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchMlb } = useQuery(["teams", "mlb"], getTeasmByLeage, {
+    enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -123,10 +126,6 @@ const Registration = (props) => {
     refetchNhl();
     // refetch();
   }, [league]);
-
-  useEffect(() => {
-    console.log("Teams data:", teamsData); // Check teamsData in the console
-  }, [teamsData]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -168,6 +167,10 @@ const Registration = (props) => {
   };
 
   const handleRemoveLeague = (index) => {
+    if (userLeagues.length === 1) {
+      displayToast("Can not remove League! One league is required!", "warning");
+      return;
+    }
     const updatedLeaguesInfo = [...userLeagues];
     updatedLeaguesInfo.splice(index, 1);
     setUserLeagues(updatedLeaguesInfo);
@@ -210,11 +213,13 @@ const Registration = (props) => {
   };
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
-    
     (data) => Register(data),
     {
       onError: (err) => {
-        displayToast("An error occurred in the registration", "error");
+        displayToast(
+          `An error occurred! ${err.response.data.message}`,
+          "error"
+        );
       },
       onSuccess: (rec) => {
         if (rec?.data?.hasErrors) {
@@ -345,6 +350,23 @@ const Registration = (props) => {
 
   return (
     <Modal isOpen={isOpen} style={customStyles}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={24}
+        height={25}
+        viewBox="0 0 24 25"
+        fill="none"
+        className="cross-btn cursor-pointer absolute right-2 top-1"
+        onClick={onRequestClose}
+      >
+        <path
+          d="M7 7.5L17 17.5M7 17.5L17 7.5"
+          stroke="#E61C1C"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
       <form id="msform">
         <ul id="progressbar">
           <li
@@ -713,6 +735,7 @@ const Registration = (props) => {
                 <button
                   className="submit action-button"
                   onClick={handleRegistration}
+                  type="button"
                 >
                   Submit {isLoading && <Loader />}
                 </button>
