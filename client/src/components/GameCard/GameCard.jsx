@@ -20,7 +20,6 @@ const GameCard = ({ gameData }) => {
 
   const { selectedLeague } = useLeagueContext();
 
-  console.log("gameData", gameData.time);
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
   };
@@ -85,13 +84,11 @@ const GameCard = ({ gameData }) => {
     }
   );
 
-  const handleEdit = () => {
-    // Open the edit modal
-    setIsModalOpen(true);
-  };
   const date = new Date(gameData?.gamedate);
+  console.log(date);
   const options = { month: "short", day: "numeric", year: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
+  console.log("formattedDate", formattedDate);
 
   const handleSaveEdit = () => {
     // Save the edited game data

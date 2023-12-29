@@ -76,12 +76,7 @@ const Games = () => {
   useEffect(() => {
     refetchTodayGame();
     refetchTomorrowGame();
-  }, []);
-
-  const tomorrowGames = tomorrowGameData.filter((game) => {
-    const gameDate = new Date(game.date); // Assuming your game objects have a 'date' property
-    return gameDate.toDateString() === tomorrow.toDateString();
-  });
+  }, [selectedLeague]);
 
   return (
     <div className=" w-full">

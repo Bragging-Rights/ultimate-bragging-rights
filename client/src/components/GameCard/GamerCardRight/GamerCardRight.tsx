@@ -18,7 +18,6 @@ const GamerCardRight = ({ gameData }) => {
   const [Pick_num_ot, setPick_num_ot] = useState("");
   const { selectedLeague } = useLeagueContext();
 
-
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
   };
@@ -67,8 +66,7 @@ const GamerCardRight = ({ gameData }) => {
 
     // Send the data to the database using an HTTP request
     // mutate(dataToSave); error msg
-    };
-  
+  };
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => addPrediction(data),
@@ -97,7 +95,6 @@ const GamerCardRight = ({ gameData }) => {
     console.log("Saved data:", editedGameData);
   };
 
-  
   const handleModalClose = () => {
     // Close the modal without saving
     setIsModalOpen(false);
@@ -105,9 +102,8 @@ const GamerCardRight = ({ gameData }) => {
 
   const date = new Date(gameData?.gamedate);
   const options = { month: "short", day: "numeric", year: "numeric" };
-  // const formattedDate = date.toLocaleDateString("en-US", options); Error msg
-  
-  
+  const formattedDate = date.toLocaleDateString("en-US", options);
+
   return (
     <>
       <div className="game-card grid col-span-2 xl:col-span-1">
@@ -132,7 +128,7 @@ const GamerCardRight = ({ gameData }) => {
           </div>
 
           <div className=" flex flex-col justify-start ">
-          {/* <span className=" game-date">{formattedDate}</span> Error Msg */}
+            <span className=" game-date">{formattedDate}</span>
 
             <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
@@ -264,27 +260,6 @@ const GamerCardRight = ({ gameData }) => {
           </button>{" "}
         </div>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={handleModalClose}
-        contentLabel="Edit Game Data"
-      >
-        <h2>Edit Game Data</h2>
-        <form>
-          {/* Render editable fields for editedGameData */}
-          {/* Example: */}
-          <input
-            type="text"
-            value={editedGameData?.visitor}
-            onChange={(e) =>
-              setEditedGameData({ ...editedGameData, visitor: e.target.value })
-            }
-          />
-          {/* Add more fields for other properties of editedGameData */}
-          <button onClick={handleSaveEdit}>Save</button>
-          <button onClick={handleModalClose}>Cancel</button>
-        </form>
-      </Modal>
     </>
   );
 };

@@ -19,7 +19,7 @@ import { LeagueProvider } from "./components/LeagueContext";
 import { ToastContainer } from "react-toastify";
 import Registration from "./components/Registration/Registration";
 import HomePage from "./pages/HomePage/HomePage";
-import Test from "./test/test";
+// import Test from "./test/test";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -43,7 +43,7 @@ const App = () => {
                 <Route path="/records" element={<Records />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/registration" element={<Registration />} />
-                <Route path="/test" element={<Test />} />
+                {/* <Route path="/test" element={<Test />} /> */}
               </Route>
             </Routes>
           </LeagueProvider>
