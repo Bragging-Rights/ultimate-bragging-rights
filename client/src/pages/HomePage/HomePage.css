@@ -38,7 +38,7 @@
 }
 
 #intro h1 {
-  font-size: 1rem;
+  font-size: 2rem;
   color: gold;
   margin-bottom: 1rem;
 }
@@ -241,7 +241,7 @@
   }
 
   #intro {
-    height: 30vh;
+    height: 60vh;
   }
 
   #about {

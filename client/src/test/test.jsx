@@ -9,7 +9,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import line from "../../assets/GoldDividerLine.png";
 
-const HomePage = () => {
+const Test = () => {
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -251,4 +251,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Test;

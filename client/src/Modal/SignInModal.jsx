@@ -6,6 +6,7 @@ import { login } from "../services/auth";
 import { useMutation } from "react-query";
 import displayToast from "../components/Alert/Alert";
 import { ForgotPasswordModal } from "./ForgotPasswordModal";
+import Registration from "../components/Registration/Registration";
 
 const customStyles = {
   content: {
@@ -26,12 +27,13 @@ const customStyles = {
   overlay: {
     background: "rgba(33, 34, 39, 0.90)",
   },
+  
 };
 
 export const SignInModal = (props) => {
   const { modalIsOpen, closeModal } = props;
   const userId = localStorage.getItem("_id");
-  console.log("User ID:", userId);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -69,11 +71,9 @@ export const SignInModal = (props) => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    // console.log("userCreds", formData);
 
     mutate(formData, {
       onSuccess: () => {
-        // Close the modal when the login is successful
         closeModal();
       },
     });
@@ -144,6 +144,13 @@ export const SignInModal = (props) => {
       <button className="submit-btn" onClick={handleSignIn}>
         SIGN IN
       </button>
+
+      <p className="text-white mt-2">
+        Don't have an account?
+        <a href={Registration} className="text-yellow-300">
+          Sign Up
+        </a>
+      </p>
       <ForgotPasswordModal
         modalIsOpen={isForgotPasswordModalOpen}
         closeModal={() => setForgotPasswordModalOpen(false)}
@@ -154,5 +161,4 @@ export const SignInModal = (props) => {
 
 export default SignInModal;
 export const userId = localStorage.getItem("_id");
-// export const UserRole = localStorage.getItem("isAdmin");
-export const UserRole = false; // Hardcoded value for testing
+export const UserRole = false;

@@ -78,3 +78,37 @@ line-height: normal;
 .w-40 {
   width: 40rem;
 }
+
+.r-modal-header .cross-btn {
+  position: absolute;
+  right: 19px;
+  top: 2px;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .md\:flex {
+margin-left: 45vh;
+    }
+}
+
+.bg-gray-800 {
+  background-image: url("./assets/GreenTopBanner.png") !important;
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-16 {
+    padding-left: 8rem;
+    padding-right: 0rem;
+    margin-top: -8vh;
+    font-size: 0.9rem;
+
+  }
+}
+
+@media (min-width: 640px) {
+  .sm\:gap-12 {
+    gap: 3rem;
+    margin-left: 43px;
+  }
+}
