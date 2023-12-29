@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 // import AOS from "aos";
 import "aos/dist/aos.css";
-import "./HomePage.css";
-import MainNavBar from "../../components/MainNavBar";
-import { Helmet } from "react-helmet";
-import ReactPlayer from "react-player";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import line from "../../assets/GoldDividerLine.png";
+import "../pages/HomePage/HomePage.css";
+import MainNavBar from "../components/MainNavBar";
+// import { Helmet } from "react-helmet";
+// import ReactPlayer from "react-player";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import line from "../assets/GoldDividerLine.png";
 
 const Test = () => {
   useEffect(() => {
