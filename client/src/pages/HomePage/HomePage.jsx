@@ -26,7 +26,7 @@ const HomePage = () => {
   return (
     <div className="w-full">
       <Navbar />
-      <MainNavBar />
+      {/* <MainNavBar /> */}
       {/* HOME */}
       <div
         id="home"
@@ -54,7 +54,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
+      <br />
+      <br />
       {/* Green */}
       <div
         id="intro"
@@ -207,6 +208,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <br />
+      <br />
       <br />
       {/* <div
         id="about"

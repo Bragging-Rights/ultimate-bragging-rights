@@ -45,18 +45,17 @@ const Navbar = () => {
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <Link to="/">
+            {/* <Link to="/">
               <img className="h-8 w-8" src={logo} alt="Bragging Rights" />
-            </Link>
+            </Link> */}
           </div>
-          <div className="hidden md:flex-grow md:flex items-center space-x-4">
+          <div className="hidden md:flex-grow md:flex  space-x-4">
             {isHomepage ? (
-              <div className="flex items-center space-x-4">
-                <img src={img1} alt="img1" className="h-6" />
-                <p className="text-yellow-500 text-sm font-extrabold">
-                  Players Wanted For Weekly Sports Prediction Competition
-                </p>
-                <img src={img2} alt="img2" className="h-6" />
+              <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl">
+                LIMITED FREE LIFE TIME MEMBERSHIP AVAILABLE{" "}
+                <span style={{ color: "red", textDecoration: "line-through" }}>
+                  $250
+                </span>
               </div>
             ) : (
               <LeageSelect />
@@ -88,15 +87,14 @@ const Navbar = () => {
               closeModal={() => setSignInModalIsOpen(false)}
             />
 
-            <Link to="/" className="custom-button" onClick={openModal}>
+            {/* <Link to="/" className="custom-button" onClick={openModal}>
               <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
                 REGISTER
               </button>
             </Link>
 
             <Registration isOpen={modalIsOpen} onRequestClose={closeModal}>
-              {/* <Signup /> */}
-            </Registration>
+            </Registration> */}
           </div>
         </div>
       </div>
