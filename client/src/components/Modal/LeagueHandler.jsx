@@ -19,6 +19,7 @@ const LeagueHandler = ({
         onClick={() => handleRemoveLeague(index)}
         className="bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center transition-colors hover:bg-red-600 absolute right-0"
         aria-label="Remove League"
+        type="button"
       >
         <ImCancelCircle />
       </button>

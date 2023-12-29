@@ -90,7 +90,6 @@ export const SignInModal = (props) => {
     >
       <div className="r-modal-header">
         <h2 className="title">SIGN IN</h2>
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
