@@ -87,14 +87,16 @@ const Navbar = () => {
               closeModal={() => setSignInModalIsOpen(false)}
             />
 
-            {/* <Link to="/" className="custom-button" onClick={openModal}>
+            <Link to="/" className="custom-button" onClick={openModal}>
               <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
                 REGISTER
               </button>
             </Link>
 
-            <Registration isOpen={modalIsOpen} onRequestClose={closeModal}>
-            </Registration> */}
+            <Registration
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+            ></Registration>
           </div>
         </div>
       </div>
