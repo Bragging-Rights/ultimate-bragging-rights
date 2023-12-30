@@ -9,12 +9,10 @@
 }
 
 .Captcha {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #eeeeee;
   font-family: sans-serif;
   text-align: center;
+}
+
+.password-section{
+  width: 140vh;
 }

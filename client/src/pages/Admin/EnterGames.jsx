@@ -651,24 +651,26 @@ const GameForm = () => {
             onClick={handleAddGameCard}
             className="bg-green-500 text-white py-2 rounded px-5"
           >
-            +
+            Add Games +
           </button>
-          <button
-            type="submit"
-            className="bg-yellow-400 text-black py-2 rounded px-5"
-            onClick={handleSubmit}
-          >
-            Finish ✔
-          </button>
-          <button
+
+          {/* <button
             type="button"
             onClick={handleResetForm}
             className="bg-red-500 text-white py-2 rounded px-5"
             style={{ marginLeft: "10px" }}
           >
             Reset Form
-          </button>
+          </button> */}
         </div>
+        <br />
+        <button
+          type="submit"
+          className="bg-yellow-400 text-black py-2 rounded px-5"
+          onClick={handleSubmit}
+        >
+          Submit ✔
+        </button>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-import "./Captcha.css";
+import "./Registration.css";
 
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 const DELAY = 1500;
@@ -46,7 +46,7 @@ class Captcha extends React.Component {
             style={{ display: "inline-block" }}
             theme="dark"
             ref={this._reCaptchaRef}
-            sitekey={TEST_SITE_KEY}
+            sitekey={"6Lc4-0ApAAAAAKr36N10JM08ji9hK6qJm1jJt7nq"}
             onChange={this.handleChange}
             asyncScriptOnLoad={this.asyncScriptOnLoad}
           />

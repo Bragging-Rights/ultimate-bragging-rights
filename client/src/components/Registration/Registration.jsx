@@ -16,6 +16,7 @@ import displayToast from "../../components/Alert/Alert";
 import { Register } from "../../services/auth";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
+import Captcha from "./Captcha";
 
 const customStyles = {
   content: {
@@ -702,6 +703,7 @@ const Registration = (props) => {
                       to the Terms of services and Privacy Policy.{" "}
                     </div>
                   </div>
+                  <br />
                 </>
               )}
             </div>
@@ -724,6 +726,7 @@ const Registration = (props) => {
                 )}
               </>
             )}
+                <Captcha />
             {index + 1 === 4 && (
               <>
                 {/* <input
