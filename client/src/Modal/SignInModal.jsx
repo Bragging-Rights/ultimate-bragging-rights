@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import ModalInput from "./ModalInput";
-import logoImg from "../assets/logo.png";
-import { login } from "../services/auth";
 import { useMutation } from "react-query";
 import displayToast from "../components/Alert/Alert";
 import { ForgotPasswordModal } from "./ForgotPasswordModal";
 import Registration from "../components/Registration/Registration";
+import { login } from "../services/auth";
 
 const customStyles = {
   content: {
@@ -27,7 +26,6 @@ const customStyles = {
   overlay: {
     background: "rgba(33, 34, 39, 0.90)",
   },
-  
 };
 
 export const SignInModal = (props) => {
@@ -50,12 +48,12 @@ export const SignInModal = (props) => {
         if (rec?.data?.hasErrors) {
           displayToast(rec?.data?.message, "error");
         } else {
-          displayToast("Login successful.", "success");
-
           localStorage.setItem("username", rec.data.data.username);
           localStorage.setItem("email", rec.data.data.email);
           localStorage.setItem("_id", rec.data.data._id);
           localStorage.setItem("isAdmin", rec.data.data.isAdmin);
+          closeModal();
+          displayToast("Logid in successfully", "success");
         }
       },
     }
@@ -72,11 +70,7 @@ export const SignInModal = (props) => {
   const handleSignIn = async (e) => {
     e.preventDefault();
 
-    mutate(formData, {
-      onSuccess: () => {
-        closeModal();
-      },
-    });
+    mutate(formData);
   };
 
   const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] =

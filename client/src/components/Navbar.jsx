@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LeageSelect from "./LeageSelect";
 import logo from "../assets/logo.png";
 import Modal from "react-modal";
@@ -14,6 +14,7 @@ const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const location = useLocation();
+  const naviagte = useNavigate();
 
   const closeModal = () => {
     setModalIsOpen(false);
@@ -35,9 +36,8 @@ const Navbar = () => {
   const userEmail = localStorage.getItem("email");
 
   const handleLogout = () => {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("email");
-    localStorage.removeItem("_id");
+    localStorage.clear();
+    naviagte("/");
   };
 
   return (
@@ -69,11 +69,12 @@ const Navbar = () => {
             )}
 
             {userEmail ? (
-              <Link to="/" className="custom-button" onClick={handleLogout}>
-                <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
-                  Logout
-                </button>
-              </Link>
+              <button
+                className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             ) : (
               <Link to="/" className="custom-button" onClick={openSignInModal}>
                 <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
