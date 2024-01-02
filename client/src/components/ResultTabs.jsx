@@ -1,7 +1,7 @@
 import React from "react";
 
 const ResultTabs = ({ changeTab, CurrentTab }) => {
-  const tabs = ["Game Breakdowns", "Nightly Results", "Nightly Stats"];
+  const tabs = ["Game Breakdowns", "Nightly Results"];
   return (
     <ul className=" flex h-12 items-center gap-5 border-b-[#393939] border-b-[1px]  mb-2">
       {tabs?.map((tab, ind) => (
