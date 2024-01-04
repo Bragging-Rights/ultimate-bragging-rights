@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import store from "./store/store";
@@ -23,6 +23,12 @@ import Test from "./test/test";
 
 const App = () => {
   const queryClient = new QueryClient();
+  const [isUserAdmin, setIsuserAdmin] = useState(false);
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("isAdmin");
+
+    setIsuserAdmin(JSON.parse(isAdmin));
+  }, []);
   return (
     <Provider store={store}>
       <ToastContainer />
@@ -41,7 +47,9 @@ const App = () => {
                 <Route path="/teams" element={<Teams />} />
                 <Route path="/fb-challanges" element={<FbChallanges />} />
                 <Route path="/records" element={<Records />} />
-                <Route path="/admin" element={<Admin />} />
+
+                {isUserAdmin && <Route path="/admin" element={<Admin />} />}
+
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/test" element={<Test />} />
               </Route>
