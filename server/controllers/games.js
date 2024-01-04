@@ -1,7 +1,14 @@
 const Game = require("../models/games");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
-const { moneyline } = require("../calculations/point");
+const { points } = require("../calculations/point");
+
+const formatPoints = (point) => {
+  if (Math.abs(Number(point)) >= 100) {
+    return Number(point.slice(0, -1) + "." + point.slice(-1));
+  }
+  return point;
+};
 
 // Create a new game
 const createGame = async (req, res) => {
@@ -10,7 +17,7 @@ const createGame = async (req, res) => {
     let data = req.body;
     console.log("data", data);
     const games = data.map((game) => {
-      const points = moneyline(
+      const points = points(
         game.vML,
         game.hML,
         game.vSprd,
@@ -38,11 +45,11 @@ const createGame = async (req, res) => {
         home: game.homeTeam,
 
         ///
-        "v-ml-points": points.vml_point,
+        "v-ml-points": formatPoints(points.vml_point),
         "h-ml-points": points.hml_point,
-        "v-sprd-points": points.vsprd_point,
+        "v-sprd-points": formatPoints(points.vsprd_point),
         "h-sprd-points": points.hsprd_point,
-        "v-ou-points": points.vou_point,
+        "v-ou-points": formatPoints(points.vou_point),
         "h-ou-points": points.hou_point,
       };
     });
