@@ -99,7 +99,7 @@
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 900;
   line-height: normal;
   background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
   background-clip: text;
@@ -107,6 +107,7 @@
   -webkit-text-fill-color: transparent;
   margin-top: 20px;
   cursor: pointer;
+  margin-left: 120vh;
 }
 
 .password-section h2 {

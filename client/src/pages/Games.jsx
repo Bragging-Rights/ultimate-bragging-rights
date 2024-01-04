@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import heroImg from "../assets/gamesHero.png";
+import heroImg from "../assets/Basketball-1.png";
 import HeroSection from "../components/HeroSection";
 import MainNavBar from "../components/MainNavBar";
 import Line from "../components/Line";

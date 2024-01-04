@@ -37,3 +37,10 @@
     background-color: #ffffff;
     color: #000000;
 }
+
+@media (min-width: 768px){
+
+    .md\:flex.navbar {
+      margin-left: 20vh;
+    }
+  }

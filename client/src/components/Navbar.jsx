@@ -49,7 +49,7 @@ const Navbar = () => {
               <img className="h-8 w-8" src={logo} alt="Bragging Rights" />
             </Link> */}
           </div>
-          <div className="hidden md:flex-grow md:flex  space-x-4">
+          <div className=" md:flex-grow md:flex  space-x-4">
             {isHomepage ? (
               <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl">
                 LIMITED FREE LIFE TIME MEMBERSHIP AVAILABLE{" "}

@@ -81,8 +81,10 @@ element-container{
   }
   
   .form-card {
-    text-align: left
-  }
+    text-align: left;
+    margin-left: -10px;
+    width: 143vh;
+}
   
   #msform fieldset:not(:first-of-type) {
     display: none

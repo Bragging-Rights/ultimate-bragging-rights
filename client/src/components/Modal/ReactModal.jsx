@@ -420,6 +420,7 @@ const ReactModal = (props) => {
       <div className="add-another-league" onClick={addAnotherLeague}>
         +Add Another League
       </div>
+      <br />
       <div className="line"></div>
       <div className="password-section">
         <h2>Create strong password</h2>

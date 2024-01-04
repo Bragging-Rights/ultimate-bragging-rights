@@ -1,4 +1,5 @@
 import React from "react";
+import "./Switches.css";
 
 const Switches = (props) => {
   const {
@@ -10,374 +11,142 @@ const Switches = (props) => {
     setPick_Reg,
   } = props;
 
-  if (league === "NHL" && (season === "Regular" || season === "Pre Season")) {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              console.log(e.target.value === "on");
-              if (e.target.value === "on") {
+  return (
+    <div className="flex flex-col md:flex-row gap-5">
+      {(league === "NHL" &&
+        (season === "Regular" || season === "Pre Season")) ||
+      (league === "NHL" && season === "Playoffs") ? (
+        <>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              onChange={() => {
                 setPick_Reg(true);
                 setPick_ot(false);
                 setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            value="O/T"
-            onChange={(e) => {
-              if (e.target.value === "on") {
+              }}
+            />
+            <label className="card-label">Reg</label>
+          </div>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              onChange={() => {
                 setPick_Reg(false);
                 setPick_ot(true);
                 setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">O/T</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            value="S/O"
-            onChange={(e) => {
-              if (e.target.value === "on") {
+              }}
+            />
+            <label className="card-label">O/T</label>
+          </div>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              onChange={() => {
                 setPick_Reg(false);
                 setPick_ot(false);
                 setPick_so(true);
-              }
-            }}
-          />
-          <label className="card-label">S/O</label>
-        </div>
-        <select onChange={(e) => setPick_num_ot(e.target.value)}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-          <option value={11}>11</option>
-          <option value={12}>12</option>
-          <option value={13}>13</option>
-          <option value={14}>14</option>
-          <option value={15}>15</option>
-          <option value={16}>16</option>
-          <option value={17}>17</option>
-          <option value={18}>18</option>
-          <option value={19}>19</option>
-          <option value={20}>20</option>
-          <option value={21}>21</option>
-          <option value={22}>22</option>
-          <option value={23}>23</option>
-          <option value={24}>24</option>
-          <option value={25}>25</option>
-          <option value={26}>26</option>
-          <option value={27}>27</option>
-          <option value={28}>28</option>
-          <option value={29}>29</option>
-          <option value={30}>30</option>
-        </select>
-      </div>
-    );
-  }
-
-  if (league === "NHL" && season === "Playoffs") {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(true);
-                setPick_ot(false);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(false);
-                setPick_ot(true);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">O/T</label>
-        </div>
-
-        <select onChange={(e) => setPick_num_ot(e.target.value)}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-        </select>
-      </div>
-    );
-  }
-
-  if (league === "NBA") {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            value="Regular"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(true);
-                setPick_ot(false);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            value="O/T"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(false);
-                setPick_ot(false);
-                setPick_so(true);
-              }
-            }}
-          />
-          <label className="card-label">O/T</label>
-        </div>
-
-        <select onChange={(e) => setPick_num_ot(e.target.value)}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-        </select>
-      </div>
-    );
-  }
-
-  if (league === "NBA" && season === "Playoffs") {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            value="Regular"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(true);
-                setPick_ot(false);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            value="OT"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(false);
-                setPick_ot(true);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">OT</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <select onChange={(e) => setPick_num_ot(e.target.value)}>
-            {Array.from({ length: 10 }, (_, i) => (
-              <option key={i}>{i + 1}</option>
+              }}
+            />
+            <label className="card-label">S/O</label>
+          </div>
+          <select
+            className="mt-4"
+            onChange={(e) => setPick_num_ot(e.target.value)}
+          >
+            {Array.from({ length: 30 }, (_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
             ))}
           </select>
-        </div>
-      </div>
-    );
-  }
+        </>
+      ) : null}
 
-  if (league === "NFL" && (season === "Regular" || season === "Pre Season")) {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
+      {league === "NBA" && (
+        <>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              value="Regular"
+              onChange={() => {
                 setPick_Reg(true);
                 setPick_ot(false);
                 setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
+              }}
+            />
+            <label className="card-label">Reg</label>
+          </div>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              value="O/T"
+              onChange={() => {
                 setPick_Reg(false);
-                setPick_ot(true);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">O/T</label>
-        </div>
-      </div>
-    );
-  }
+                setPick_ot(false);
+                setPick_so(true);
+              }}
+            />
+            <label className="card-label">O/T</label>
+          </div>
+          <select
+            className="mt-4"
+            onChange={(e) => setPick_num_ot(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
 
-  if (league === "NFL" && season === "Playoffs") {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
+      {league === "MLB" && (
+        <>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              onChange={() => {
                 setPick_Reg(true);
                 setPick_ot(false);
                 setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
+              }}
+            />
+            <label className="card-label">Reg</label>
+          </div>
+          <div className="flex mt-4 gap-1 items-center">
+            <input
+              type="radio"
+              name="radio-group"
+              onChange={() => {
                 setPick_Reg(false);
                 setPick_ot(true);
                 setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">O/T</label>
-        </div>
-
-        <select onChange={(e) => setPick_num_ot(e.target.value)}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-        </select>
-      </div>
-    );
-  }
-
-  if (league === "MLB") {
-    return (
-      <div className="flex gap-5">
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(true);
-                setPick_ot(false);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">Reg</label>
-        </div>
-        <div className="flex mt-4 gap-1 items-center">
-          <input
-            type="radio"
-            name="radio-group"
-            onChange={(e) => {
-              if (e.target.value === "on") {
-                setPick_Reg(false);
-                setPick_ot(true);
-                setPick_so(false);
-              }
-            }}
-          />
-          <label className="card-label">E/I</label>
-        </div>
-
-        <select onChange={(e) => setPick_num_ot(e.target.value)}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-          <option value={11}>11</option>
-          <option value={12}>12</option>
-          <option value={13}>13</option>
-          <option value={14}>14</option>
-          <option value={15}>15</option>
-          <option value={16}>16</option>
-          <option value={17}>17</option>
-          <option value={18}>18</option>
-          <option value={19}>19</option>
-          <option value={20}>20</option>
-        </select>
-      </div>
-    );
-  }
-
-  return null;
+              }}
+            />
+            <label className="card-label">E/I</label>
+          </div>
+          <select
+            className="mt-4"
+            onChange={(e) => setPick_num_ot(e.target.value)}
+          >
+            {Array.from({ length: 20 }, (_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Switches;

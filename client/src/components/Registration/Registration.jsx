@@ -243,7 +243,6 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
-      "referralName",
       "termsAccepted",
     ];
 
@@ -665,7 +664,6 @@ const Registration = (props) => {
                     </div>
                   </div>
 
-                  <div className="line"></div>
                   <div className="password-section">
                     <div className="password-inputs">
                       <ModalInput
@@ -691,13 +689,13 @@ const Registration = (props) => {
                       />
                     </div>
                   </div>
-                  <div className="line"></div>
                   <div className="privacy-policy">
                     <input
                       type="checkbox"
                       checked={formData.termsAccepted}
                       onChange={handleTermsChange}
                     />
+                    <br />
                     <div>
                       I certify that I am at least 18 years old and that I agree
                       to the Terms of services and Privacy Policy.{" "}
@@ -706,27 +704,26 @@ const Registration = (props) => {
                   <br />
                 </>
               )}
-            </div>
 
-            {index + 1 < 4 && (
-              <>
-                <input
-                  type="button"
-                  onClick={nextStep}
-                  className="next action-button"
-                  value="Next"
-                />
-                {index > 0 && (
+              {index + 1 < 4 && (
+                <>
                   <input
                     type="button"
-                    onClick={prevStep}
-                    className="previous action-button-previous"
-                    value="Previous"
+                    onClick={nextStep}
+                    className="next action-button"
+                    value="Next"
                   />
-                )}
-              </>
-            )}
-                <Captcha />
+                  {index > 0 && (
+                    <input
+                      type="button"
+                      onClick={prevStep}
+                      className="previous action-button-previous"
+                      value="Previous"
+                    />
+                  )}
+                </>
+              )}
+            </div>
             {index + 1 === 4 && (
               <>
                 {/* <input
@@ -748,6 +745,7 @@ const Registration = (props) => {
                   className="previous action-button-previous"
                   value="Previous"
                 />
+                <Captcha />
               </>
             )}
           </fieldset>

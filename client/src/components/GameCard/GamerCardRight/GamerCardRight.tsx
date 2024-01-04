@@ -128,7 +128,7 @@ const GamerCardRight = ({ gameData }) => {
           </div>
 
           <div className=" flex flex-col justify-start ">
-            <span className=" game-date">{formattedDate}</span>
+            <span className=" game-date">Team</span>
 
             <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
@@ -193,6 +193,7 @@ const GamerCardRight = ({ gameData }) => {
         <div className=" w-full flex justify-between mt-3 ">
           <div className=" flex flex-col ">
             <input
+          
               type="text"
               id="pick-home"
               className="card-input mb-3"
@@ -205,7 +206,8 @@ const GamerCardRight = ({ gameData }) => {
             <div
               className=" box px-7 h-12"
               style={{
-                marginLeft: "60px",
+                marginLeft: "40px",
+                
               }}
             >
               <label>{gameData?.home}</label>

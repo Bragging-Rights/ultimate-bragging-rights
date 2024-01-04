@@ -86,11 +86,7 @@ line-height: normal;
   cursor: pointer;
 }
 
-@media (min-width: 768px) {
-  .md\:flex {
-margin-left: 45vh;
-    }
-}
+
 
 .bg-gray-800 {
   background-image: url("./assets/GreenTopBanner.png") !important;
@@ -139,4 +135,47 @@ margin-left: 45vh;
 
 .gap-1 {
   gap: 0.75rem;
+}
+
+
+/* Styles for mobile devices */
+@media only screen and (max-width: 767px) {
+  .md\:flex {
+    margin-left: 38vh;
+  }
+}
+
+/* Styles for tablet devices */
+@media only screen and (min-width: 820px) and (max-width: 991px) {
+  .md\:flex {
+    margin-left: 40vh;
+  }
+}
+
+/* Styles for desktop devices */
+@media only screen and (min-width: 992px) {
+  .md\:flex {
+    margin-left: 38vh;
+  }
+}
+
+/* Styles for TV devices */
+@media only screen and (min-width: 1200px) {
+  .md\:flex {
+    margin-left: 38vh;
+  }
+}
+
+/* Styles for Android devices */
+@media only screen and (min-width: 360px) and (max-width: 767px) {
+  .md\:flex {
+    margin-left: -1vh;
+  }
+}
+
+/* Styles for iPhone devices */
+@media only screen and (min-width: 320px) and (max-width: 359px) {
+  .md\:flex {
+    margin-left: 38vh;
+  }
 }
