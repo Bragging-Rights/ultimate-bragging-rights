@@ -30,151 +30,147 @@ const Results = () => {
   const formattedDate = date.toLocaleDateString("en-US", options);
 
   return (
-    
     <>
-    <MainNavBar />
+      <MainNavBar />
 
-<div className="flex flex-wrap gap-1 items-center">
+      <div className="flex flex-wrap gap-1 items-center">
+        <GamesPageSelect
+          options={[
+            "Season",
+            "Pre-Season",
+            "Regular",
+            "Playoffs",
+            "Play-In",
+            "Wild Card",
+          ]}
+        />
+        <GamesPageSelect
+          options={[
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ]}
+          label={"DAY"}
+        />
+        <GamesPageSelect
+          options={[
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ]}
+          label={"MONTH"}
+        />
+        <GamesPageSelect
+          options={["2023-2024", "2023-2024", "2023-2024", "2023-2024"]}
+          label={"2023-2024"}
+        />
+        <GamesPageSelect
+          options={[
+            "Season",
+            "Pre-Season",
+            "Regular",
+            "Playoffs",
+            "Play-In",
+            "Wild Card",
+          ]}
+        />
+        <GamesPageSelect
+          options={[
+            "Season",
+            "Pre-Season",
+            "Regular",
+            "Playoffs",
+            "Play-In",
+            "Wild Card",
+          ]}
+          label={"SEASON"}
+        />
+        <GamesPageSelect
+          options={[
+            "Season",
+            "Pre-Season",
+            "Regular",
+            "Playoffs",
+            "Play-In",
+            "Wild Card",
+          ]}
+          label={"TEAMS"}
+        />
+        <GamesPageSelect
+          options={[
+            "Season",
+            "Pre-Season",
+            "Regular",
+            "Playoffs",
+            "Play-In",
+            "Wild Card",
+          ]}
+          label={"ALL DIVISIONS"}
+        />
+        <GamesPageSelect
+          options={[
+            "Season",
+            "Pre-Season",
+            "Regular",
+            "Playoffs",
+            "Play-In",
+            "Wild Card",
+          ]}
+          label={"ALL CONFERE..."}
+        />
+        <button className="w-32 h-10 rounded bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 cursor-pointer text-[#1B1C21] text-xs font-extrabold">
+          Reset
+        </button>
 
-  <GamesPageSelect
-    options={[
-      "Season",
-      "Pre-Season",
-      "Regular",
-      "Playoffs",
-      "Play-In",
-      "Wild Card",
-    ]}
-    />
-  <GamesPageSelect
-    options={[
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ]}
-    label={"DAY"}
-    />
-  <GamesPageSelect
-    options={[
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ]}
-    label={"MONTH"}
-    />
-  <GamesPageSelect
-    options={["2023-2024", "2023-2024", "2023-2024", "2023-2024"]}
-    label={"2023-2024"}
-    />
-  <GamesPageSelect
-    options={[
-      "Season",
-      "Pre-Season",
-      "Regular",
-      "Playoffs",
-      "Play-In",
-      "Wild Card",
-    ]}
-    />
-  <GamesPageSelect
-    options={[
-      "Season",
-      "Pre-Season",
-      "Regular",
-      "Playoffs",
-      "Play-In",
-      "Wild Card",
-    ]}
-    label={"SEASON"}
-    />
-  <GamesPageSelect
-    options={[
-      "Season",
-      "Pre-Season",
-      "Regular",
-      "Playoffs",
-      "Play-In",
-      "Wild Card",
-    ]}
-    label={"TEAMS"}
-    />
-  <GamesPageSelect
-    options={[
-      "Season",
-      "Pre-Season",
-      "Regular",
-      "Playoffs",
-      "Play-In",
-      "Wild Card",
-    ]}
-    label={"ALL DIVISIONS"}
-    />
-  <GamesPageSelect
-    options={[
-      "Season",
-      "Pre-Season",
-      "Regular",
-      "Playoffs",
-      "Play-In",
-      "Wild Card",
-    ]}
-    label={"ALL CONFERE..."}
-    />
-  <button
-    className="w-32 h-10 rounded bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 cursor-pointer text-[#1B1C21] text-xs font-extrabold"
-    >
-    Reset
-  </button>
+        <HeroSection imgUrl={resultHero} alt="img" />
+        <Line />
 
-      <HeroSection imgUrl={resultHero} alt="img" />
-      <Line />
-
-      <Banner date={formattedDate} label={"Game Breakdowns"} />
-      <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
-      {CurrentTab === 0 ? (
-        <TableComponent />
+        <Banner date={formattedDate} label={"Game Breakdowns"} />
+        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
+        {CurrentTab === 0 ? (
+          <TableComponent />
         ) : CurrentTab === 1 ? (
           <NightResult />
-          ) : CurrentTab === 2 ? (
-            <NightlyStatsTable />
-            ) : (
-              ""
-              )}
-      <Line />
+        ) : CurrentTab === 2 ? (
+          <NightlyStatsTable />
+        ) : (
+          ""
+        )}
+        <Line />
 
-      <div className=" flex gap-8 my-4">
-        <div>
-          <img src={img1} alt="img1" className=" w-full" />
+        <div className=" flex gap-8 my-4">
+          <div>
+            <img src={img1} alt="img1" className=" w-full" />
+          </div>
+          <div>
+            <img src={img2} alt="img2" className=" w-full" />
+          </div>
         </div>
-        <div>
-          <img src={img2} alt="img2" className=" w-full" />
-        </div>
+        <Banner date={formattedDate} label={"Game Breakdowns"} />
+
+        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
+        {CurrentTab === 0 ? (
+          <TableComponent />
+        ) : CurrentTab === 1 ? (
+          <NightResult />
+        ) : (
+          ""
+        )}
       </div>
-      <Banner date={formattedDate} label={"Game Breakdowns"} />
-
-      <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
-      {CurrentTab === 0 ? (
-        <TableComponent />
-        ) : CurrentTab === 1 ? (
-          <NightResult />
-          ) : (
-            ""
-            )}
-    </div>
-            </>
+    </>
   );
 };
 

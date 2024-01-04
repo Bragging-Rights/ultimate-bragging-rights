@@ -1,6 +1,6 @@
 // v-ml,h-ml,v-sprd,h-sprd,v-ou-odds,h-ou-odds,
 
-exports.moneyline = (v_ml, h_ml, v_sprd, h_sprd, v_ou, h_ou) => {
+exports.points = (v_ml, h_ml, v_sprd, h_sprd, v_ou, h_ou) => {
   let vml_point;
   //convert moneyline into points
   if (v_ml > 0) {
@@ -71,73 +71,3 @@ exports.moneyline = (v_ml, h_ml, v_sprd, h_sprd, v_ou, h_ou) => {
   };
 };
 
-// export const HspreadOddPoints = (h_sprd_odds) => {
-//   let HspreadOddPoints = 0;
-//   if (h_sprd_odds > 0) {
-//     //this is positive
-//     if (0 < h_sprd_odds < 1.99) {
-//       //if it is in the hundreds
-//       HspreadOddPoints = h_sprd_odds * 2;
-//     } else {
-//       //if it is greater than hundreds
-//       HspreadOddPoints = h_sprd_odds * 2;
-//     }
-//   } else if (h_sprd_odds < 0) {
-//     //this is for negative
-//     if (h_sprd_odds < 0 && h_sprd_odds > -1.99) {
-//       //if it is in the hundreds
-//       HspreadOddPoints = h_sprd_odds;
-//     } else {
-//       //if it is greater than hundreds
-//       HspreadOddPoints = h_sprd_odds / 2;
-//     }
-//   }
-//   return HspreadOddPoints;
-// };
-
-// export const VspreadOddsPoints = (v_sprd_odds) => {
-//   let VspreadOddsPoints = 0;
-//   if (v_sprd_odds > 0) {
-//     //this is positive
-//     if (0 < v_sprd_odds < 1.99) {
-//       //if it is in the hundreds
-//       VspreadOddsPoints = v_sprd_odds * 2;
-//     } else {
-//       //if it is greater than hundreds
-//       VspreadOddsPoints = v_sprd_odds * 2;
-//     }
-//   } else if (v_sprd_odds < 0) {
-//     //this is for negative
-//     if (v_sprd_odds < 0 && v_sprd_odds > -1.99) {
-//       //if it is in the hundreds
-//       VspreadOddsPoints = v_sprd_odds;
-//     } else {
-//       //if it is greater than hundreds
-//       VspreadOddsPoints = v_sprd_odds / 2;
-//     }
-//   }
-//   VspreadOddsPoints;
-// };
-
-// export const ou_spreadPoints = (finalscorevisitor,finalscorehome,) => {
-//   let totalfinalScore=finalscorevisitor+finalscorehome;
-//  if(totalfinalScore> v_ou){
-//   //award the points
-//  }
-
-// };
-
-// export const compareSpread = (
-//   finalPickHome,
-//   finalPickVisitor,
-//   finalScoreHome,
-//   finalScoreVisitor
-// ) => {
-//   //add spread points to final pick
-
-//   if (finalScoreHome > finalScoreVisitor) {
-//     finalPickHome == finalScoreHome;
-//   } else {
-//     finalPickVisitor == finalScoreVisitor;
-//   }
-// };

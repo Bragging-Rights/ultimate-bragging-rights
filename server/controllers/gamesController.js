@@ -3,11 +3,9 @@ const GamesPlayed = require("../models/gamesPlayed");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
 
-
-const seasonModel = mongoose.model('seasons', {});
-const gamesModel = mongoose.model('games', {}, "games");
-const League = mongoose.model('league', {}, "league");
-
+const seasonModel = mongoose.model("seasons", {});
+const gamesModel = mongoose.model("games", {}, "games");
+const League = mongoose.model("league", {}, "league");
 
 exports.getLeaguesController = async (req, res) => {
   try {
@@ -22,7 +20,6 @@ exports.getLeaguesController = async (req, res) => {
       .json(responseObject(error, "An unknown error occured", true));
   }
 };
-
 
 exports.getSeasonsController = async (req, res) => {
   try {
@@ -75,7 +72,7 @@ exports.getGames = async (req, res) => {
       totalPages: totalPages,
       data: games,
       message: "Data Fetched Successfully",
-      error: false
+      error: false,
     };
 
     res.status(200).json(responseObject);
@@ -103,15 +100,15 @@ exports.getGamesPlayed = async (req, res) => {
     // Calculate the total number of pages
     const totalPages = Math.ceil(totalGamesCount / pageSize);
 
-    res
-      .status(200)
-      .json(responseObject({
+    res.status(200).json(
+      responseObject({
         currentPage: currentPage,
         totalPages: totalPages,
         data: games,
         message: `Data Fetched Successfully`,
-        error: false
-      }));
+        error: false,
+      })
+    );
   } catch (error) {
     res
       .status(400)
@@ -121,7 +118,9 @@ exports.getGamesPlayed = async (req, res) => {
 
 exports.getLeagueGames = async (req, res) => {
   try {
-    const games = await gamesModel.find({ league: req.body.league_name }).limit(1000);
+    const games = await gamesModel
+      .find({ league: req.body.league_name })
+      .limit(1000);
     res
       .status(200)
       .json(responseObject(games, "Data Fetched Successfully", false));
@@ -146,15 +145,15 @@ exports.getResults = async (req, res) => {
     // Calculate the total number of pages
     const totalPages = Math.ceil(totalGamesCount / pageSize);
 
-    res
-      .status(200)
-      .json(responseObject({
+    res.status(200).json(
+      responseObject({
         currentPage: currentPage,
         totalPages: totalPages,
         data: games,
         message: `Data Fetched Successfully`,
-        error: false
-      }));
+        error: false,
+      })
+    );
   } catch (error) {
     res
       .status(400)
@@ -210,9 +209,7 @@ exports.addPrediction = async (req, res) => {
 };
 
 exports.lockPrediction = async (req, res) => {
-  const {
-    lock_prediction
-  } = req.body;
+  const { lock_prediction } = req.body;
 
   const getGame = GamePoints.findOne({ _id: req.params.id });
   try {
@@ -220,9 +217,7 @@ exports.lockPrediction = async (req, res) => {
     getGame.save();
     res
       .status(200)
-      .json(
-        responseObject(getGame, "Prediction locked successfully", false)
-      );
+      .json(responseObject(getGame, "Prediction locked successfully", false));
   } catch (error) {
     res
       .status(400)
@@ -280,7 +275,6 @@ const calculatePoints = (prediction, actual) => {
   return points;
 };
 
-
 // // Route to update game score and calculate points for all entries
 // exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
 //   try {
@@ -311,10 +305,13 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
 
     // Calculate implied probability for favorite and underdog
     const impliedProbabilityFavorite =
-      100 / (Math.abs(gameData.moneyLineOddsFavorite) / (Math.abs(gameData.moneyLineOddsFavorite) + 1));
+      100 /
+      (Math.abs(gameData.moneyLineOddsFavorite) /
+        (Math.abs(gameData.moneyLineOddsFavorite) + 1));
 
     const impliedProbabilityUnderdog =
-      100 / (gameData.moneyLineOddsUnderdog / (gameData.moneyLineOddsUnderdog + 1));
+      100 /
+      (gameData.moneyLineOddsUnderdog / (gameData.moneyLineOddsUnderdog + 1));
 
     // Calculate points for picking the winner correctly
     let winnerPoints = 0;
@@ -327,10 +324,14 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
 
     // Calculate implied probability for point spread
     const impliedProbabilitySpreadFavorite =
-      100 / (gameData.pointSpreadOddsFavorite / (gameData.pointSpreadOddsFavorite + 1));
+      100 /
+      (gameData.pointSpreadOddsFavorite /
+        (gameData.pointSpreadOddsFavorite + 1));
 
     const impliedProbabilitySpreadUnderdog =
-      100 / (gameData.pointSpreadOddsUnderdog / Math.abs(gameData.pointSpreadOddsUnderdog + 1));
+      100 /
+      (gameData.pointSpreadOddsUnderdog /
+        Math.abs(gameData.pointSpreadOddsUnderdog + 1));
 
     // Calculate points for picking the spread correctly
     let spreadPoints = 0;
@@ -338,7 +339,10 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
     if (predictionData.spreadPrediction > 0 && gameData.actualSpread > 0) {
       // Picked the favorite to win by more than the spread
       spreadPoints = (100 - impliedProbabilitySpreadFavorite) / 10;
-    } else if (predictionData.spreadPrediction < 0 && gameData.actualSpread < 0) {
+    } else if (
+      predictionData.spreadPrediction < 0 &&
+      gameData.actualSpread < 0
+    ) {
       // Picked the underdog to lose by less than the spread
       spreadPoints = (100 - impliedProbabilitySpreadUnderdog) / 10;
     }
@@ -353,19 +357,28 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
     // Calculate points for picking over/under correctly
     let overUnderPoints = 0;
 
-    if (predictionData.overUnderPrediction === 'Over' && gameData.actualScore > gameData.overUnderLine) {
+    if (
+      predictionData.overUnderPrediction === "Over" &&
+      gameData.actualScore > gameData.overUnderLine
+    ) {
       overUnderPoints = (100 - impliedProbabilityOver) / 10;
-    } else if (predictionData.overUnderPrediction === 'Under' && gameData.actualScore < gameData.overUnderLine) {
+    } else if (
+      predictionData.overUnderPrediction === "Under" &&
+      gameData.actualScore < gameData.overUnderLine
+    ) {
       overUnderPoints = (100 - impliedProbabilityUnder) / 10;
     }
 
     let scores2Points = 0;
 
-    if (predictionData.scorePrediction1 === gameData.actualScore1 && predictionData.scorePrediction2 === gameData.actualScore2) {
+    if (
+      predictionData.scorePrediction1 === gameData.actualScore1 &&
+      predictionData.scorePrediction2 === gameData.actualScore2
+    ) {
       // Picked both scores correctly
       scores2Points = Math.abs(gameData.moneyLineOddsLosingTeam);
     } else {
-      scores2Points = 0
+      scores2Points = 0;
     }
 
     // Calculate score1Points
@@ -386,25 +399,33 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
     if (predictionData.winnerPrediction === gameData.actualWinner) {
       // Picked the winner correctly
       const totalPointsWinner = gameData.totalPointsWinner; // Adjust this based on your data model
-      score1PointsForBaseball = predictionData.winnerPrediction === gameData.favoriteTeam
-        ? (totalPointsWinner * 0.25) // 25% of total points available for the winning team
-        : (totalPointsWinner * 0.10); // 10% of total points available for the winning team
+      score1PointsForBaseball =
+        predictionData.winnerPrediction === gameData.favoriteTeam
+          ? totalPointsWinner * 0.25 // 25% of total points available for the winning team
+          : totalPointsWinner * 0.1; // 10% of total points available for the winning team
     }
 
     let shutoutPoints = 0;
 
-    if (gameData.sport === 'Hockey') {
+    if (gameData.sport === "Hockey") {
       if (gameData.wentToShutOut) {
         shutoutPoints = 6;
       }
       // For Hockey
-      if (predictionData.shutoutPrediction === 'OneTeam' && gameData.actualScoreTeam1 === 0) {
+      if (
+        predictionData.shutoutPrediction === "OneTeam" &&
+        gameData.actualScoreTeam1 === 0
+      ) {
         // Picked a shutout for one team, and that team scored 0 points
         shutoutPoints = 10;
       }
-    } else if (gameData.sport === 'Football') {
+    } else if (gameData.sport === "Football") {
       // For Football
-      if (predictionData.shutoutPrediction === 'TwoTeams' && gameData.actualScoreTeam1 === 0 && gameData.actualScoreTeam2 === 0) {
+      if (
+        predictionData.shutoutPrediction === "TwoTeams" &&
+        gameData.actualScoreTeam1 === 0 &&
+        gameData.actualScoreTeam2 === 0
+      ) {
         // Picked a shutout for both teams, and both teams scored 0 points
         shutoutPoints = 50;
       }
@@ -413,7 +434,10 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
     // Calculate points for picking overtime
     let overtimePoints = 0;
 
-    if (predictionData.overtimePrediction === 'Overtime' && gameData.wentToOvertime) {
+    if (
+      predictionData.overtimePrediction === "Overtime" &&
+      gameData.wentToOvertime
+    ) {
       // Picked overtime correctly and the game actually went to overtime
       overtimePoints = 4;
     }
@@ -421,7 +445,10 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
     // Calculate points for picking extra innings
     let extraInningsPoints = 0;
 
-    if (predictionData.extraInningsPrediction === true && gameData.wentToExtraInnings === true) {
+    if (
+      predictionData.extraInningsPrediction === true &&
+      gameData.wentToExtraInnings === true
+    ) {
       // Predicted that the game goes into extra innings and it did
       extraInningsPoints = 5;
 
@@ -429,21 +456,33 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
       // You may need to adjust the logic based on your data structure
       const extraInningsPredicted = predictionData.extraInningsPredicted || 0;
       const extraInningsActual = gameData.extraInningsActual || 0;
-      const correctExtraInnings = Math.min(extraInningsPredicted, extraInningsActual);
+      const correctExtraInnings = Math.min(
+        extraInningsPredicted,
+        extraInningsActual
+      );
       extraInningsPoints += correctExtraInnings;
     }
 
     console.log(
-      "winner", winnerPoints,
-      "spread", spreadPoints,
-      "overUnder", overUnderPoints,
-      "score1Points", score1Points,
-      "score2Points", scores2Points,
-      "score1PointsBaseball", score1PointsForBaseball,
-      "shutOutPoints", shutoutPoints,
-      "overTimePoints", overtimePoints,
-      "extraInningsPoints", extraInningsPoints,
-    )
+      "winner",
+      winnerPoints,
+      "spread",
+      spreadPoints,
+      "overUnder",
+      overUnderPoints,
+      "score1Points",
+      score1Points,
+      "score2Points",
+      scores2Points,
+      "score1PointsBaseball",
+      score1PointsForBaseball,
+      "shutOutPoints",
+      shutoutPoints,
+      "overTimePoints",
+      overtimePoints,
+      "extraInningsPoints",
+      extraInningsPoints
+    );
     // Calculate total points
     // const totalPoints = winnerPoints + spreadPoints + overUnderPoints;
 
@@ -453,7 +492,7 @@ exports.updateActualScoresAndCalculatePredictions = async (req, res) => {
     // res.json({ points: totalPoints });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 // // Function to calculate points based on predictions and actual scores
@@ -577,7 +616,6 @@ exports.addActualScores = async (req, res) => {
   }
 };
 
-
 // _id: "6512a36f8737bbcac785b157"
 // id: "41"
 // user: "peter@e-partner.com"
@@ -604,5 +642,3 @@ exports.addActualScores = async (req, res) => {
 // sports: "Basketball"
 // timestamping: "2023-09-03 09:33:05"
 // gamedate: "2018-05-07"
-
-
