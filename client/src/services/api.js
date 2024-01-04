@@ -23,6 +23,10 @@ const api = {
     return await axios.post(`${BASE_URL}${url}`, data, config);
   },
 
+  patch: async (url, data) => {
+    return await axios.patch(`${BASE_URL}${url}`, data, config);
+  },
+
   put: async (url, data) => {
     return await axios.put(`${BASE_URL}${url}`, data, config);
   },

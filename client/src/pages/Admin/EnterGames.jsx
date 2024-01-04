@@ -201,6 +201,10 @@ const GameForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (gameCards?.length === 0) {
+      return;
+    }
+
     // console.log(gameCards);
 
     if (formSubmitted) {
@@ -219,39 +223,39 @@ const GameForm = () => {
       if (!gameCard.visitorTeam) {
         missingFields.push(`Visitor Team for game ${index + 1}`);
       }
-      if (gameCard.vML === "") {
-        missingFields.push(`Visitor M/L for game ${index + 1}`);
-      }
-      if (gameCard.vSprd === "") {
-        missingFields.push(`V Sprd for game ${index + 1}`);
-      }
-      if (gameCard.vSprdOdds === "") {
-        missingFields.push(`V Sprd Odds for game ${index + 1}`);
-      }
-      if (gameCard.vOU === "") {
-        missingFields.push(`V O/U for game ${index + 1}`);
-      }
-      if (gameCard.vOUOdds === "") {
-        missingFields.push(`V O/U Odds for game ${index + 1}`);
-      }
-      if (!gameCard.homeTeam) {
-        missingFields.push(`Home Team for game ${index + 1}`);
-      }
-      if (gameCard.hML === "") {
-        missingFields.push(`Home M/L for game ${index + 1}`);
-      }
-      if (gameCard.hSprd === "") {
-        missingFields.push(`H Sprd for game ${index + 1}`);
-      }
-      if (gameCard.hSprdOdds === "") {
-        missingFields.push(`H Sprd Odds for game ${index + 1}`);
-      }
-      if (gameCard.hOU === "") {
-        missingFields.push(`H O/U for game ${index + 1}`);
-      }
-      if (gameCard.hOUOdds === "") {
-        missingFields.push(`H O/U Odds for game ${index + 1}`);
-      }
+      // if (gameCard.vML === "") {
+      //   missingFields.push(`Visitor M/L for game ${index + 1}`);
+      // }
+      // if (gameCard.vSprd === "") {
+      //   missingFields.push(`V Sprd for game ${index + 1}`);
+      // }
+      // if (gameCard.vSprdOdds === "") {
+      //   missingFields.push(`V Sprd Odds for game ${index + 1}`);
+      // }
+      // if (gameCard.vOU === "") {
+      //   missingFields.push(`V O/U for game ${index + 1}`);
+      // }
+      // if (gameCard.vOUOdds === "") {
+      //   missingFields.push(`V O/U Odds for game ${index + 1}`);
+      // }
+      // if (!gameCard.homeTeam) {
+      //   missingFields.push(`Home Team for game ${index + 1}`);
+      // }
+      // if (gameCard.hML === "") {
+      //   missingFields.push(`Home M/L for game ${index + 1}`);
+      // }
+      // if (gameCard.hSprd === "") {
+      //   missingFields.push(`H Sprd for game ${index + 1}`);
+      // }
+      // if (gameCard.hSprdOdds === "") {
+      //   missingFields.push(`H Sprd Odds for game ${index + 1}`);
+      // }
+      // if (gameCard.hOU === "") {
+      //   missingFields.push(`H O/U for game ${index + 1}`);
+      // }
+      // if (gameCard.hOUOdds === "") {
+      //   missingFields.push(`H O/U Odds for game ${index + 1}`);
+      // }
     });
 
     if (missingFields.length > 0) {

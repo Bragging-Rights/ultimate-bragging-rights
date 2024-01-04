@@ -38,7 +38,6 @@ const Games = () => {
       setGameData(fetchedData.data);
     },
     enabled: false,
-
     onError: (error) => {
       console.error("An error occurred:", error);
     },
