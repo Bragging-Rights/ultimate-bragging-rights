@@ -297,7 +297,7 @@ const ReactModal = (props) => {
       </div>
       <div className="label-container">
         <label className="star">*</label>
-        <label className="info-require">Mandatory information Required </label>
+        <label className="info-require">Information Needed </label>
         <div className=" line"></div>
       </div>
       <div className=" modal-form-container">

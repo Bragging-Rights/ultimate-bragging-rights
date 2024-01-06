@@ -1,12 +1,33 @@
 
+#progressbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#progressbar li {
+  display: inline-block;
+  width: 20%; /* Adjust the width based on the number of steps */
+  position: relative;
+  text-align: center;
+  line-height: 50px; /* Adjust as needed */
+}
+
+
+
+
 #progressbar li.active:before, #progressbar li.active:after {
   background: #FFAE00;
-  background-image: url("../../assets/logo.png");
+  background-image: url("../../assets/RedCircle-BR-Logo.png");
   background-size: contain; /* Adjust as needed */
   background-repeat: no-repeat;
   background-position: center center;
 
 }
+
+/* Add your other styles as needed */
+
 
 .Captcha {
   font-family: sans-serif;
@@ -15,4 +36,8 @@
 
 .password-section{
   width: 140vh;
+}
+
+.custom-modal{
+  overflow: auto;
 }

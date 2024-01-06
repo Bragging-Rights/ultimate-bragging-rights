@@ -265,6 +265,7 @@ const ReactModal = (props) => {
       <h2 className="leage-option">CHOICE LEAGUES YOU WANT TO PLAY IN</h2>
 
       <div className="modal-bottom">
+        <br />
         <ModalSelect
           label={"Select League"}
           options={leaguesOptions}

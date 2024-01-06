@@ -24,7 +24,15 @@ const LeagueHandler = ({
         <ImCancelCircle />
       </button>
       <ModalSelect
-        label="Select League"
+          label={
+            <h2
+              id="heading"
+              className="signup-heading"
+              style={{ fontSize: "14px", color: "#FFAE00" }}
+            >
+              * 
+            </h2>
+          }
         options={options}
         name={`league`}
         value={info?.league}
@@ -33,16 +41,32 @@ const LeagueHandler = ({
         }}
       />
       <ModalInput
-        label="Create Unique Username"
+          label={
+            <h2
+              id="heading"
+              className="signup-heading"
+              style={{ fontSize: "14px", color: "#FFAE00" }}
+            >
+              * CREATE USERNAME
+            </h2>
+          }
         placeholder="Username"
         type="text"
         name={`username`}
         value={info?.username}
         onChange={(e) => handleLeagueChange(e, index)}
-        aria-label="Create Unique Username"
+        aria-label="Create Username"
       />
       <ModalSelect
-        label="Select Your Favorite Team"
+          label={
+            <h2
+              id="heading"
+              className="signup-heading"
+              style={{ fontSize: "14px", color: "#FFAE00" }}
+            >
+              * SELECT YOUR FAVOURUTE TEAM
+            </h2>
+          }
         name={`team`}
         value={info?.team}
         options={[

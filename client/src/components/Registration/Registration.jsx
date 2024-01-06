@@ -18,26 +18,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "8px",
-    border: "1px solid #BE8200",
-    boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
-    height: "90vh",
-    width: "70%",
-    background: "#212227",
-    padding: "30px",
-  },
-  overlay: {
-    background: " rgba(33, 34, 39, 0.90)",
-  },
-};
 const Registration = (props) => {
   const { isOpen, onRequestClose } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -55,7 +35,7 @@ const Registration = (props) => {
   ]);
 
   const [leaguesOptions, setLeaguesOptions] = useState([
-    { value: "", label: "Select league" },
+    // { value: "", label: "Select league" },
     { value: "nba", label: "NBA", isSelected: false },
     { value: "nfl", label: "NFL", isSelected: false },
     { value: "mlb", label: "MLB", isSelected: false },
@@ -131,6 +111,8 @@ const Registration = (props) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
+    couponcode: "",
+
     lastName: "",
     email: "",
     city: "",
@@ -204,7 +186,7 @@ const Registration = (props) => {
     });
 
     if (resp) {
-      displayToast("Please fill all the required fileds in the league.");
+      displayToast(" all the required fileds Please fillin the league.");
       return;
     }
 
@@ -349,7 +331,7 @@ const Registration = (props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} style={customStyles}>
+    <Modal isOpen={isOpen} className="custom-modal">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={24}
@@ -373,7 +355,13 @@ const Registration = (props) => {
             className={`step ${currentStep === 1 ? "active" : ""}`}
             id="account"
           >
-            <strong>1: Account Owners</strong>
+            <strong
+              style={{
+                color: currentStep === 1 ? "#FFAE00" : "inherit",
+              }}
+            >
+              Account Owner
+            </strong>
             <div className="logo-container">{/* Other content */}</div>
           </li>
 
@@ -381,7 +369,13 @@ const Registration = (props) => {
             className={`step ${currentStep === 2 ? "active" : ""}`}
             id="personal"
           >
-            <strong>2: Location</strong>
+            <strong
+              style={{
+                color: currentStep === 2 ? "#FFAE00" : "inherit",
+              }}
+            >
+              Location
+            </strong>
             <div className="logo-container">{/* Other content */}</div>
           </li>
 
@@ -389,7 +383,13 @@ const Registration = (props) => {
             className={`step ${currentStep === 3 ? "active" : ""}`}
             id="payment"
           >
-            <strong>3: Choose League</strong>
+            <strong
+              style={{
+                color: currentStep === 3 ? "#FFAE00" : "inherit",
+              }}
+            >
+              Choose League
+            </strong>
             <div className="logo-container">{/* Other content */}</div>
           </li>
 
@@ -397,7 +397,27 @@ const Registration = (props) => {
             className={`step ${currentStep === 4 ? "active" : ""}`}
             id="confirm"
           >
-            <strong>4: Email & Password</strong>
+            <strong
+              style={{
+                color: currentStep === 4 ? "#FFAE00" : "inherit",
+              }}
+            >
+              Email & Password
+            </strong>
+            <div className="logo-container">{/* Other content */}</div>
+          </li>
+
+          <li
+            className={`step ${currentStep === 5 ? "active" : ""}`}
+            id="confirm"
+          >
+            <strong
+              style={{
+                color: currentStep === 5 ? "#FFAE00" : "inherit",
+              }}
+            >
+              Setup Account
+            </strong>
             <div className="logo-container">{/* Other content */}</div>
           </li>
 
@@ -407,36 +427,16 @@ const Registration = (props) => {
           <br />
         </ul>
 
-        {/* <h2 id="heading" className="signup-heading">
-          Sign Up Your User Account
-        </h2>
-        <p className="signup-subtitle">
-          Fill all form fields to go to the next step
-        </p> */}
-
-        {/* <div className="progress">
-          <div
-            className="progress-bar progress-bar-striped progress-bar-animated"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            style={{ width: `${setProgressBar()}%` }}
-          />
-        </div> */}
-
-        {Array.from({ length: 4 }, (_, index) => (
+        {Array.from({ length: 5 }, (_, index) => (
           <fieldset
             key={index}
             style={{ display: index + 1 === currentStep ? "block" : "none" }}
           >
             <div className="form-card">
+              <br /> <br />
               {index === 0 && (
                 <>
-                  <h2
-                    id="heading"
-                    className="signup-heading"
-                    style={{ marginRight: "564px" }}
-                  >
+                  <h2 id="heading" className="signup-heading">
                     LET'S CREATE YOUR ACCOUNT!
                   </h2>
                   <p className="signup-subtitle">
@@ -445,20 +445,22 @@ const Registration = (props) => {
                   <br />
                   <div className="label-container">
                     <label className="info-require">
-                      Mandatory information Required{" "}
+                      * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: "10px",
-                      maxWidth: "1200px",
-                    }}
-                  >
+                  <br />
+                  <div className="form-container">
                     <ModalInput
-                      label={"FIRST NAME"}
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * FIRST NAME
+                        </h2>
+                      }
                       placeholder={"First Name"}
                       name="firstName"
                       value={formData.firstName}
@@ -467,7 +469,15 @@ const Registration = (props) => {
                       requiredFields
                     />
                     <ModalInput
-                      label={"LAST NAME"}
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * LAST NAME
+                        </h2>
+                      }
                       placeholder={"Last Name"}
                       name="lastName"
                       value={formData.lastName}
@@ -475,7 +485,15 @@ const Registration = (props) => {
                       style={{ flex: "1" }}
                     />
                     <ModalSelect
-                      label={"SEX"}
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * SEX
+                        </h2>
+                      }
                       options={[
                         { value: "", label: "Select Gender" },
                         { value: "male", label: "Male" },
@@ -486,42 +504,62 @@ const Registration = (props) => {
                       style={{ flex: "1" }}
                     />
                     <ModalInput
-                      label={"Refer By"}
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * REFER BY
+                        </h2>
+                      }
                       placeholder={"Refer by"}
                       name="referralName"
                       value={formData?.refer_by}
                       onChange={inputChangeHandler}
                     />
+                    <ModalInput
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * COUPON CODE
+                        </h2>
+                      }
+                      placeholder={"Coupon Code"}
+                      name="couponCode"
+                      value={formData.couponcode}
+                      onChange={inputChangeHandler}
+                      style={{ flex: "1" }}
+                      requiredFields
+                    />
                   </div>
                 </>
               )}
-
               {index === 1 && (
                 <>
-                  <h2
-                    id="heading"
-                    className="signup-heading"
-                    style={{ marginRight: "564px" }}
-                  >
+                  <h2 id="heading" className="signup-heading">
                     WE NEED YOUR LOCATION!
                   </h2>
                   <p className="signup-subtitle">
                     To Determine Which Conference and Division you will play in
                   </p>
+
                   <br />
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                      gap: "15px",
-                      maxWidth: "1200px",
-                    }}
-                  >
+                  <div className="label-container">
+                    <label className="info-require">
+                      * Information Needed{" "}
+                    </label>
+                    <div className=" line"></div>
+                  </div>
+                  <br />
+                  <div className="form-container">
                     <CountrySelect
                       value={selectedCountry}
                       onChange={(e) => handleCountryChange(e)}
+                      defaultValue={{ value: "CA", label: "Canada" }} // Set the default value to Canada
                     />
                     <StateSelect
                       country={countryCode}
@@ -547,9 +585,17 @@ const Registration = (props) => {
                     />
 
                     <ModalInput
-                      label={"Postal/ZIP Code"}
-                      placeholder={"Postal/ZIP code"}
-                      type="string"
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * Postal/ZIP Code
+                        </h2>
+                      }
+                      placeholder="Postal/ZIP code"
+                      type="text" // Assuming "string" was a typo, and you intended to use "text" as the type
                       name="postalCode"
                       value={formData.postalCode}
                       onChange={inputChangeHandler}
@@ -571,20 +617,23 @@ const Registration = (props) => {
               )}
               {index === 2 && (
                 <>
-                  <h2
-                    id="heading"
-                    className="signup-heading"
-                    style={{ marginRight: "490px" }}
                   >
-                    PLAY AS MANY LEAGUES AS YOU WANT!
+                  <h2 id="heading" className="signup-heading">
+                    Join the Leagues You want
                   </h2>
                   <p className="signup-subtitle">
-                    Create a Unique Username in Each League{" "}
+                    by creating a username in that league{" "}
                   </p>
+                  <br />
+                  <div className="label-container">
+                    <label className="info-require">
+                      * You Must Join At least One League{" "}
+                    </label>
+                    <div className=" line"></div>
+                  </div>
                   <br />
                   <div className="row">
                     <div className="col-md-4 col-lg-6">
-                      <h2 className="leage-option text-white">ALMOST DONE </h2>
                       {userLeagues.map((info, innerIndex) => {
                         const unselectedLeagues = [...leaguesOptions];
                         userLeagues
@@ -611,28 +660,17 @@ const Registration = (props) => {
                             availableTeams={availableTeams}
                             info={info}
                             index={innerIndex}
-                            addAnotherLeague={addAnotherLeague}
+                            isDisabled={true} // set input fields to be disabled
                           />
                         );
                       })}
-
-                      <div
-                        className="add-another-league"
-                        onClick={addAnotherLeague}
-                      >
-                        +Add Another League
-                      </div>
                     </div>
                   </div>
                 </>
               )}
               {index === 3 && (
                 <>
-                  <h2
-                    id="heading"
-                    className="signup-heading"
-                    style={{ marginRight: "490px" }}
-                  >
+                  <h2 id="heading" className="signup-heading">
                     LOGIN INFORMATION TIME!
                   </h2>
                   <p className="signup-subtitle">
@@ -643,16 +681,23 @@ const Registration = (props) => {
                   <br />
                   <div className="label-container">
                     <label className="info-require">
-                      Mandatory information Required{" "}
+                      * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
+                  <br />
                   <div className="flex">
-                    <div
-                      style={{ display: "flex", gap: "5px", width: "1100px" }}
-                    >
+                    <div className="form-container">
                       <ModalInput
-                        label={"Email"}
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * EMAIL
+                          </h2>
+                        }
                         placeholder={"Email"}
                         value={formData.email}
                         onChange={inputChangeHandler}
@@ -663,11 +708,18 @@ const Registration = (props) => {
                       </ModalInput>
                     </div>
                   </div>
-
                   <div className="password-section">
                     <div className="password-inputs">
                       <ModalInput
-                        label={"Create Password"}
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * CREATE PASSWORD
+                          </h2>
+                        }
                         placeholder={"Create Password"}
                         name="password"
                         value={formData.password}
@@ -675,7 +727,15 @@ const Registration = (props) => {
                         type="password"
                       />
                       <ModalInput
-                        label={"Confirm Password"}
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * CONFIRM PASSWORD
+                          </h2>
+                        }
                         placeholder={"Confirm Password"}
                         type="password"
                         name="confirmPassword"
@@ -695,8 +755,9 @@ const Registration = (props) => {
                       checked={formData.termsAccepted}
                       onChange={handleTermsChange}
                     />
-                    <br />
-                    <div>
+                    <br /> <br />
+                    <br /> <br />
+                    <div style={{ color: "white" }}>
                       I certify that I am at least 18 years old and that I agree
                       to the Terms of services and Privacy Policy.{" "}
                     </div>
@@ -704,8 +765,53 @@ const Registration = (props) => {
                   <br />
                 </>
               )}
-
-              {index + 1 < 4 && (
+              {index === 4 && (
+                <>
+                  <h2 id="heading" className="signup-heading">
+                    PLEASE CHECK YOUR EMAIL FOR THE CONFIRMATION CODE
+                  </h2>
+                  <p className="signup-subtitle">
+                    Once Enter We Will Setup Your Account. Enter Confirmation
+                    Code Below
+                  </p>
+                  <br />
+                  <div className="label-container">
+                    <label className="info-require">
+                      * Information Needed{" "}
+                    </label>
+                    <div className=" line"></div>
+                  </div>
+                  <div className="form-container">
+                    <ModalInput
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * ENTER YOUR VERIFICATION CODE
+                        </h2>
+                      }
+                      placeholder={"Enter Your Verification Code"}
+                      name="code"
+                      value={formData.VERIFY_CODE}
+                      onChange={inputChangeHandler}
+                      style={{ flex: "1" }}
+                    />
+                  </div>
+                  <br />
+                  <div style={{ color: "red", textAlign: "center" }}>
+                    * If you close this window without entering the confirmation
+                    code, you will have to start the whole process all over
+                    again!
+                    <br />
+                    Please go check your email now for the code. If you do not
+                    see it, please check your Spam or Junk Folder.
+                  </div>
+                </>
+              )}
+              <br />
+              {index + 1 < 5 && (
                 <>
                   <input
                     type="button"
@@ -724,20 +830,14 @@ const Registration = (props) => {
                 </>
               )}
             </div>
-            {index + 1 === 4 && (
+            {index + 1 === 5 && (
               <>
-                {/* <input
-                  type="button"
-                  onClick={handleSubmit}
-                  className="submit action-button"
-                  value="Submit"
-                /> */}
                 <button
                   className="submit action-button"
                   onClick={handleRegistration}
                   type="button"
                 >
-                  Submit {isLoading && <Loader />}
+                  Create Account {isLoading && <Loader />}
                 </button>
                 <input
                   type="button"

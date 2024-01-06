@@ -8,9 +8,16 @@ const CitySelect = ({ countryCode, stateCode, onChange }) => {
 
   return (
     <div className="element-container">
-      <div>
-        <label className="input-label">Select City</label>
-      </div>
+      <label>
+        <h2
+          id="heading"
+          className="signup-heading"
+          style={{ fontSize: "14px", color: "#FFAE00" }}
+        >
+          * Select City
+        </h2>
+      </label>
+
       <CustomSelect
         options={result?.map((city) => ({
           label: city?.name,

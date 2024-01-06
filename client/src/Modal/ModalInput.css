@@ -29,7 +29,7 @@ element-container{
   }
   .element-container input {
   
-    padding: 14px 20px;
+    padding: 17px 20px;
     border-radius: 4px;
     border: 1px solid #3C3C3C;
     background: #2C2C2C;
@@ -80,17 +80,92 @@ element-container{
     position: relative
   }
   
-  .form-card {
-    text-align: left;
-    margin-left: -10px;
-    width: 143vh;
+/* Default styles for all screens */
+/* Default styles for all screens */
+.form-card {
+  text-align: left;
+  margin-left: 41px;
+  width: 132vh;
 }
-  
-  #msform fieldset:not(:first-of-type) {
+
+
+
+/* Default styles for all screens */
+.form-card {
+  text-align: left;
+  margin-left: 41px;
+  width: 132vh;
+}
+
+.custom-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  border: 1px solid #BE8200;
+  box-shadow: 0px 4px 40px 0px rgba(190, 130, 0, 0.60);
+  height: 90vh;
+  width: 70%;
+  background: #212227;
+  padding: 30px;
+}
+
+.custom-modal-overlay {
+  background: rgba(33, 34, 39, 0.90);
+}
+
+/* Media query for smaller screens, like mobile phones */
+@media only screen and (max-width: 600px) {
+  .form-card {
+    margin-left: -10px;  
+    width: 100%;       
+      overflow-x: auto; /* Enable horizontal scrolling if needed */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    max-height: 50vh; /* Limit the maximum height if needed */
+  }
+
+
+  .custom-modal {
+      width: 90%; 
+  }
+
+
+}
+
+/* Media query for medium-sized screens, like tablets */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .form-card {
+    width: 100%;
+  }
+
+  .custom-modal {
+    width: 80%;
+  }
+
+
+
+
+}
+
+
+/* Media query for larger screens, like laptops and desktops */
+@media only screen and (min-width: 1025px) {
+  .form-card {
+      width: 90%;  /* Adjust the width for larger screens */
+  }
+
+
+}
+
+
+   fieldset:not(:first-of-type) {
     display: none
   }
   
-  #msform textarea {
+   textarea {
     padding: 8px 15px 8px 15px;
     border: 1px solid #ccc;
     border-radius: 0px;
@@ -105,8 +180,8 @@ element-container{
     letter-spacing: 1px
   }
   
-  #msform input:focus,
-  #msform textarea:focus {
+   input:focus,
+   textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -114,27 +189,27 @@ element-container{
     outline-width: 0
   }
   
-  #msform .action-button {
-    width: 100px;
-    background: #FFAE00;
+   .action-button {
+    width: 132px;
+    background: #FFAE00 !important;
     font-weight: bold;
     color: white;
     border: 0 none;
     border-radius: 0px;
     cursor: pointer;
     padding: 10px 5px;
-    margin: 10px 0px 10px 5px;
-    float: right
+    margin: 10px 100px 10px 5px;
+    float: right;
   }
   
-  #msform .action-button:hover,
-  #msform .action-button:focus {
+   .action-button:hover,
+   .action-button:focus {
     background-color: #311B92
   }
   
-  #msform .action-button-previous {
+   .action-button-previous {
     width: 100px;
-    background: #616161;
+    background: #616161 !important;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -142,11 +217,11 @@ element-container{
     cursor: pointer;
     padding: 10px 5px;
     margin: 10px 5px 10px 0px;
-    float: right
+    float: right;
   }
   
-  #msform .action-button-previous:hover,
-  #msform .action-button-previous:focus {
+   .action-button-previous:hover,
+   .action-button-previous:focus {
     background-color: #000000
   }
   
@@ -276,3 +351,99 @@ element-container{
     border-radius: 5px;
     transition: transform 0.2s ease-in-out;
   }
+  
+/* Common styles for all devices */
+
+
+@media only screen and (max-width: 767px) {
+  .form-container {
+    flex-direction: column;
+    width: 65vh;
+    
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+}
+
+@media only screen and (min-width: 1280px) and (max-width: 1400px){
+}
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  row-gap: 40px;
+  column-gap: 18px;
+
+}
+
+@media only screen and (min-width: 1440px) {
+  .form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    row-gap: 40px;
+    column-gap: 18px;
+  }
+}
+
+
+
+
+
+/* Styles for mobile devices (e.g., iPhone, Android) */
+@media only screen and (max-width: 767px) {
+  .action-button{
+    margin: 10px 247px; 
+
+  }
+  .action-button-previous {
+    margin: 10px -130px; 
+  }
+  .mb-2 {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 68vh;
+}
+.camcel-circle{
+  margin: 10px -130px; 
+}
+.add-another-league{
+  margin: 10px 194px; 
+}
+}
+
+/* Styles for tablets (e.g., iPad) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .action-button,
+  .action-button-previous {
+  }
+}
+
+/* Styles for small desktops and laptops */
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+  .action-button,
+  .action-button-previous {
+  }
+}
+
+/* Styles for larger desktops and TVs */
+@media only screen and (min-width: 1280px) {
+}
+
+/* Styles for iMac or large screens */
+@media only screen and (min-width: 1440px) {
+}
+
+/* 
+password section */
+.password-section .password-inputs {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  width: 120vh;
+}

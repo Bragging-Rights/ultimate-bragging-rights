@@ -9,7 +9,17 @@ const StateSelect = ({ country, onChange }) => {
   return (
     <div className="element-container">
       <div>
-        <label className="input-label">State / Province</label>
+      <label>
+  <h2
+    id="heading"
+    className="signup-heading"
+    style={{ fontSize: "14px", color: "#FFAE00" }}
+  >
+   * State / Province
+  </h2>
+</label>
+
+  
       </div>
       <CustomSelect
         options={result?.map((country) => ({
