@@ -1,4 +1,3 @@
-
 #progressbar {
   list-style-type: none;
   margin: 0;
@@ -14,30 +13,28 @@
   line-height: 50px; /* Adjust as needed */
 }
 
-
-
-
-#progressbar li.active:before, #progressbar li.active:after {
-  background: #FFAE00;
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #ffae00;
   background-image: url("../../assets/RedCircle-BR-Logo.png");
   background-size: contain; /* Adjust as needed */
   background-repeat: no-repeat;
   background-position: center center;
-
 }
 
 /* Add your other styles as needed */
 
-
 .Captcha {
   font-family: sans-serif;
-  text-align: center;
+  /* text-align: center; */
+  margin-top: 10px;
+  width: 100%;
 }
 
-.password-section{
+.password-section {
   width: 140vh;
 }
 
-.custom-modal{
+.custom-modal {
   overflow: auto;
 }

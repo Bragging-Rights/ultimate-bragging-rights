@@ -21,6 +21,7 @@ import Captcha from "./Captcha";
 const Registration = (props) => {
   const { isOpen, onRequestClose } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [captchaState, setCaptchaState] = useState(false);
 
   const [availableTeams, setAvailableTeams] = useState([
     {
@@ -617,7 +618,6 @@ const Registration = (props) => {
               )}
               {index === 2 && (
                 <>
-                  >
                   <h2 id="heading" className="signup-heading">
                     Join the Leagues You want
                   </h2>
@@ -799,6 +799,10 @@ const Registration = (props) => {
                       style={{ flex: "1" }}
                     />
                   </div>
+                  <Captcha
+                    setCaptchaState={setCaptchaState}
+                    captchaState={captchaState}
+                  />
                   <br />
                   <div style={{ color: "red", textAlign: "center" }}>
                     * If you close this window without entering the confirmation
@@ -833,9 +837,12 @@ const Registration = (props) => {
             {index + 1 === 5 && (
               <>
                 <button
-                  className="submit action-button"
+                  className={`submit action-button ${
+                    !captchaState && "cursor-not-allowed"
+                  }`}
                   onClick={handleRegistration}
                   type="button"
+                  disabled={!captchaState}
                 >
                   Create Account {isLoading && <Loader />}
                 </button>
@@ -845,7 +852,6 @@ const Registration = (props) => {
                   className="previous action-button-previous"
                   value="Previous"
                 />
-                <Captcha />
               </>
             )}
           </fieldset>
