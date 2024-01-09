@@ -44,9 +44,7 @@ text-transform: capitalize;
     color: white
 } 
 
-.email-modal{
-    width: 214%;
-}
+
 
 #progressbar li.active:before, #progressbar li.active:after {
     background: #FFAE00;

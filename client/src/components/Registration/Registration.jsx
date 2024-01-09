@@ -214,6 +214,7 @@ const Registration = (props) => {
       },
     }
   );
+
   const handleRegistration = async () => {
     const requiredFields = [
       "firstName",
@@ -327,7 +328,23 @@ const Registration = (props) => {
         return false;
       }
     }
+    if (currentStep === 4) {
+      const requiredFields = [
+        "email",
+        "password",
+        "confirmPassword",
+        "termsAccepted",
+      ];
+      const invalidFields = requiredFields.filter((field) => !formData[field]);
 
+      if (invalidFields.length > 0) {
+        displayToast(
+          `Please fill in all required fields: ${invalidFields.join(" ")}`,
+          "error"
+        );
+        return false;
+      }
+    }
     return true;
   };
 
@@ -531,8 +548,8 @@ const Registration = (props) => {
                       }
                       placeholder={"Coupon Code"}
                       name="couponCode"
-                      value={formData.couponcode}
-                      onChange={inputChangeHandler}
+                      // value={formData.couponcode}
+                      // onChange={inputChangeHandler}
                       style={{ flex: "1" }}
                       requiredFields
                     />
@@ -686,27 +703,25 @@ const Registration = (props) => {
                     <div className=" line"></div>
                   </div>
                   <br />
-                  <div className="flex">
-                    <div className="form-container">
-                      <ModalInput
-                        label={
-                          <h2
-                            id="heading"
-                            className="signup-heading"
-                            style={{ fontSize: "14px", color: "#FFAE00" }}
-                          >
-                            * EMAIL
-                          </h2>
-                        }
-                        placeholder={"Email"}
-                        value={formData.email}
-                        onChange={inputChangeHandler}
-                        type="email"
-                        name="email"
-                      >
-                        <div className="email-modal"></div>
-                      </ModalInput>
-                    </div>
+                  <div className="form-container">
+                    <ModalInput
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * EMAIL
+                        </h2>
+                      }
+                      placeholder={"Email"}
+                      value={formData.email}
+                      onChange={inputChangeHandler}
+                      type="email"
+                      name="email"
+                    >
+                      <div className="email-modal"></div>
+                    </ModalInput>
                   </div>
                   <div className="password-section">
                     <div className="password-inputs">
@@ -752,6 +767,7 @@ const Registration = (props) => {
                   <div className="privacy-policy">
                     <input
                       type="checkbox"
+                      name="termsAccepted"
                       checked={formData.termsAccepted}
                       onChange={handleTermsChange}
                     />
@@ -763,11 +779,15 @@ const Registration = (props) => {
                     </div>
                   </div>
                   <br />
+                  <Captcha
+                    setCaptchaState={setCaptchaState}
+                    captchaState={captchaState}
+                  />
                 </>
               )}
               {index === 4 && (
                 <>
-                  <h2 id="heading" className="signup-heading">
+                  {/* <h2 id="heading" className="signup-heading">
                     PLEASE CHECK YOUR EMAIL FOR THE CONFIRMATION CODE
                   </h2>
                   <p className="signup-subtitle">
@@ -781,8 +801,8 @@ const Registration = (props) => {
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <div className="form-container">
-                    <ModalInput
+                  <div className="form-container"> */}
+                  {/* <ModalInput
                       label={
                         <h2
                           id="heading"
@@ -794,15 +814,11 @@ const Registration = (props) => {
                       }
                       placeholder={"Enter Your Verification Code"}
                       name="code"
-                      value={formData.VERIFY_CODE}
+                      value={formData.verifyCode}
                       onChange={inputChangeHandler}
                       style={{ flex: "1" }}
                     />
                   </div>
-                  <Captcha
-                    setCaptchaState={setCaptchaState}
-                    captchaState={captchaState}
-                  />
                   <br />
                   <div style={{ color: "red", textAlign: "center" }}>
                     * If you close this window without entering the confirmation
@@ -811,7 +827,7 @@ const Registration = (props) => {
                     <br />
                     Please go check your email now for the code. If you do not
                     see it, please check your Spam or Junk Folder.
-                  </div>
+                  </div> */}
                 </>
               )}
               <br />
