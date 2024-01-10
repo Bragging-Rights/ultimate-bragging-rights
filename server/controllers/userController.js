@@ -32,6 +32,7 @@ exports.signUpController = async (req, res) => {
     league3: data.leagues[3]?.league || null,
     username3: data.leagues[3]?.username || null,
     team3: data.leagues[3]?.team || null,
+    referralName: data.referralName,
   };
 
   // Check if the username is unique for each league
@@ -100,27 +101,12 @@ exports.signUpController = async (req, res) => {
     const hash = await bcrypt.hash(user.password, salt);
 
     //otp
-    // const otp = generateOTP();
-
+    const otp = generateOTP();
+    user.otp = otp;
+    user.isVerified = false;
     user.password = hash;
 
     const newUser = new User(user);
-    // const user = new User({
-    //   firstName,
-    //   lastName,
-    //   email,
-    //   username,
-    //   password: hash,
-    //   gender,
-    //   city,
-    //   state,
-    //   country,
-    //   zipCode,
-    //   phone,
-    //   otp,
-    //   emailVerified: false,
-    // });
-
     const savedUser = await newUser.save();
     const userId = savedUser._id;
 
@@ -129,18 +115,17 @@ exports.signUpController = async (req, res) => {
       const user = foundUser.toObject();
       delete user.password;
 
-      //delete user.otp;
-      // delete user.otp;
-      delete user.emailVerified;
+      delete user.otp;
+      delete user.isVerified;
       res
         .status(200)
         .json(responseObject(user, "User registered successfully.", false));
 
-      // sendEmail(
-      //   email,
-      //   "OTP",
-      //   `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
-      // );
+      sendEmail(
+        email,
+        "OTP",
+        `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
+      );
     } else {
       console.log("User not found after insertion.");
     }

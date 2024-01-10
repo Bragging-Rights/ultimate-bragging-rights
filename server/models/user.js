@@ -55,10 +55,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // otp: {
-    //   type: String,
-    //   required: true,
-    // },
+    otp: {
+      type: String,
+      required: true,
+    },
     // emailVerified: {
     //   type: Boolean,
     //   required: true,
@@ -125,6 +125,14 @@ const userSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    referralName: {
+      type: String,
+      default: null,
     },
   },
   { collection: "user_temp" }

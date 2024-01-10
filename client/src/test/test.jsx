@@ -5,17 +5,18 @@ import MainNavBar from "../components/MainNavBar";
 import line from "../assets/GoldDividerLine.png";
 
 const Test = () => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://videosuite-player-wrapper.vercel.app/assets";
-    script.async = true;
-    document.body.appendChild(script);
-
-    // Cleanup function to remove the script when the component unmounts
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  const videoHTML = `
+    <script type="text/javascript" src="https://videosuite-player-wrapper.vercel.app/assets" async></script>
+    <div class="iv-player_responsive_padding" style="padding:56.25% 0 0 0;position:relative;" data-hash="6570dd3125e25">
+      <div class="iv-player_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+        <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
+          <div class="iv-player_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;width:100%;">
+            <img src="https://i-fast.b-cdn.net/live/21872_65708a4a7ee21.png" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" />
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
   return (
     <div className="w-full">
@@ -26,46 +27,10 @@ const Test = () => {
       >
         <div className="homepage-container">
           <div className="row">
-            <div className="col-xs-12 video">
-              <div
-                className="iv-player_responsive_padding"
-                style={{ padding: "56.25% 0 0 0", position: "relative" }}
-                data-hash="654cfcd1064a6"
-              >
-                <div
-                  className="iv-player_responsive_wrapper"
-                  style={{
-                    height: "100%",
-                    left: "0",
-                    position: "absolute",
-                    top: "0",
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    className="iv-player_embed iv-player_async_p2z7746nud videoFoam=true"
-                    style={{
-                      height: "100%",
-                      position: "relative",
-                      width: "100%",
-                    }}
-                  >
-                    <div
-                      className="iv-player_swatch"
-                      style={{
-                        height: "100%",
-                        left: "0",
-                        opacity: "0",
-                        overflow: "hidden",
-                        position: "absolute",
-                        top: "0",
-                        width: "100%",
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div
+              className="col-xs-12 video"
+              dangerouslySetInnerHTML={{ __html: videoHTML }}
+            ></div>
           </div>
         </div>
       </div>
