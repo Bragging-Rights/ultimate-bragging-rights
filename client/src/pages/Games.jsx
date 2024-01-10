@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import heroImg from "../assets/Basketball-1.png";
 import HeroSection from "../components/HeroSection";
 import MainNavBar from "../components/MainNavBar";
 import Line from "../components/Line";
@@ -12,8 +11,32 @@ import { getGames } from "../services/games";
 import { useQuery } from "react-query";
 import { format, add } from "date-fns";
 import { useLeagueContext } from "../components/LeagueContext";
+import imgBasketball1 from "../assets/Basketball-1.png";
+import imgBasketball5 from "../assets/Basketball-5.png";
+import imgFootball1 from "../assets/Football-1.png";
+import imgFootball6 from "../assets/Football-6.png";
+import imgHosckey1 from "../assets/Hockey-1.png";
+import imgHosckey4 from "../assets/Hockey-4.png";
 
+
+
+const images = [
+  imgBasketball1,
+  imgBasketball5,
+  imgFootball1,
+  imgFootball6,
+  imgHosckey1,
+  imgHosckey4,
+];
+
+const getRandomImage = () => {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  return images[randomIndex];
+};
+      
 const Games = () => {
+  const [heroImg, setHeroImg] = useState(getRandomImage());
+
   const isAdmin = true; // Set this value based on whether the user is an admin or not
   const { selectedLeague } = useLeagueContext();
   const [gameData, setGameData] = useState([]);
@@ -77,11 +100,26 @@ const Games = () => {
     refetchTomorrowGame();
   }, [selectedLeague]);
 
+//Images
+
+
+  useEffect(() => {
+    setHeroImg(getRandomImage());
+  }, []);
+
+
   return (
     <div className=" w-full">
       <MainNavBar />
 
-      <HeroSection imgUrl={heroImg} />
+      
+
+          <div>
+            {/* Your existing code */}
+            <HeroSection imgUrl={heroImg} />
+            {/* Your existing code */}
+          </div>
+       
       <Line />
       <Banner date={formattedDate} label={"Upcoming Games"} />
       <div className=" grid grid-cols-2 gap-4 ">
