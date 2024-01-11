@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "aos/dist/aos.css";
 import "../pages/HomePage/HomePage.css";
 import MainNavBar from "../components/MainNavBar";
 import line from "../assets/GoldDividerLine.png";
-
+import Helmet from "react-helmet";
 const Test = () => {
-  const videoHTML = `
-    <script type="text/javascript" src="https://videosuite-player-wrapper.vercel.app/assets" async></script>
+  const iframeHTML = `
     <div class="iv-player_responsive_padding" style="padding:56.25% 0 0 0;position:relative;" data-hash="6570dd3125e25">
       <div class="iv-player_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
         <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
-          <div class="iv-player_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;width:100%;">
-            <img src="https://i-fast.b-cdn.net/live/21872_65708a4a7ee21.png" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" />
-          </div>
+          <iframe
+            src="https://videosuite-player.vercel.app/?hash=6570dd3125e25&amp;apiUrl=https://videosuite.app&amp;analyticsUrl=https://api.vidanalytics.io&amp;appEnv=live"
+            width="100%"
+            height="100%"
+            frameborder="none"
+            class="_vs_ictr_player"
+            id="6570dd3125e25"
+          ></iframe>
         </div>
       </div>
     </div>
   `;
-
   return (
     <div className="w-full">
       <MainNavBar />
@@ -29,12 +32,11 @@ const Test = () => {
           <div className="row">
             <div
               className="col-xs-12 video"
-              dangerouslySetInnerHTML={{ __html: videoHTML }}
+              dangerouslySetInnerHTML={{ __html: iframeHTML }}
             ></div>
           </div>
         </div>
       </div>
-
       {/* Green */}
       <div
         id="intro"
