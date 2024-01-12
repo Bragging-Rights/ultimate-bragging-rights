@@ -528,7 +528,7 @@ const Registration = (props) => {
                           className="signup-heading"
                           style={{ fontSize: "14px", color: "#FFAE00" }}
                         >
-                          * REFER BY
+                          REFER BY
                         </h2>
                       }
                       placeholder={"Refer by"}
@@ -543,7 +543,7 @@ const Registration = (props) => {
                           className="signup-heading"
                           style={{ fontSize: "14px", color: "#FFAE00" }}
                         >
-                          * COUPON CODE
+                          COUPON CODE
                         </h2>
                       }
                       placeholder={"Coupon Code"}

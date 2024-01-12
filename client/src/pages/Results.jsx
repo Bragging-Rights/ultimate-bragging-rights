@@ -34,7 +34,7 @@ const Results = () => {
       <MainNavBar />
 
       <div className="flex flex-wrap gap-1 items-center">
-        <GamesPageSelect
+        {/* <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -133,12 +133,16 @@ const Results = () => {
         />
         <button className="w-32 h-10 rounded bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 cursor-pointer text-[#1B1C21] text-xs font-extrabold">
           Reset
-        </button>
+        </button> */}
 
         <HeroSection imgUrl={resultHero} alt="img" />
         <Line />
+        <Banner
+          date={formattedDate}
+          label={"Game Breakdowns"}
+          
+        />
 
-        <Banner date={formattedDate} label={"Game Breakdowns"} />
         <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
         {CurrentTab === 0 ? (
           <TableComponent />

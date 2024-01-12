@@ -9,12 +9,21 @@ body{
   text-shadow: 0px 0px 40px #1EFF00;
  
 }
-.league-selected{
-
+.text-\[\#FEF098\] {
+  --tw-text-opacity: 1;
+  /* color: rgb(254 240 152 / var(--tw-text-opacity)); */
+  color: #FF0000;
+}
+.border-b-\[\#BE8200\] {
+  --tw-border-opacity: 1;
+  /* border-bottom-color: rgb(190 130 0 / var(--tw-border-opacity)); */
+  border-bottom-color: #FF0000;
 }
 
+
+
 .active-item{
-  background:linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
+  background:linear-gradient(180deg, #BE8200 0%, #fea498 47.4%, #EFD261 100%);
 box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.25);
 color: #1B1C21;
 text-shadow: 0px 4px 4px rgba(236, 250, 242, 0.12);
@@ -47,6 +56,10 @@ line-height: normal;
     font-size: 16px;
     width: 80%;
     margin: auto;
+  }
+  .flex {
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -143,6 +156,15 @@ line-height: normal;
   .md\:flex {
     margin-left: 38vh;
   }
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+.bg-gray-800 {
+  height: 14vh;
+}
 }
 
 /* Styles for tablet devices */
@@ -150,6 +172,15 @@ line-height: normal;
   .md\:flex {
     margin-left: 40vh;
   }
+  .flex {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.bg-gray-800 {
+  background-image: url(/src/assets/GreenTopBanner.png) !important;
+  height: 14vh;
+}
 }
 
 /* Styles for desktop devices */
@@ -162,7 +193,7 @@ line-height: normal;
 /* Styles for TV devices */
 @media only screen and (min-width: 1200px) {
   .md\:flex {
-    margin-left: 38vh;
+    margin-left: 63vh;
   }
 }
 

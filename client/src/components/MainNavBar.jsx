@@ -3,11 +3,13 @@ import { NavLink, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./MainNavbar/MainNavbar.css"; // Imp
 const navItem = [
-  { label: "Home", path: "/" },
+  // { label: "Home", path: "/" },
   { label: "Games", path: "/games" },
   { label: "Results", path: "/results" },
   { label: "Standings", path: "/standings" },
   { label: "Stats", path: "/stats" },
+  { label: "Shares", path: "/share" },
+
   // { label: "Teams", path: "/teams" },
   // { label: "Pools", path: "/pools" },
   // { label: "FB Challenge", path: "/fb-challenges" },
@@ -29,7 +31,7 @@ const MainNavBar = () => {
   };
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 flex items-center justify-center">
+    <nav className="bg-1E1E1E border-gray-200 dark:bg-gray-900 flex items-center justify-center">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <button
           onClick={toggleNav}
@@ -56,9 +58,9 @@ const MainNavBar = () => {
               return (
                 <li
                   key={index}
-                  className={`py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-700 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
+                  className={`py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 dark:text-white md:dark:hover:text-red-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
                     location.pathname === item.path
-                      ? "bg-orange-700 text-white"
+                      ? "bg-red-700 text-white"
                       : ""
                   }`}
                 >

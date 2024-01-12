@@ -62,11 +62,11 @@ const Navbar = () => {
             )}
           </div>
           <div className="flex items-center space-x-4">
-            {!isHomepage && (
+            {/* {!isHomepage && (
               <button className="py-2 px-4 text-gray-800 font-extrabold bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 rounded-md shadow-md">
                 Add League
               </button>
-            )}
+            )} */}
 
             {userEmail ? (
               <button
