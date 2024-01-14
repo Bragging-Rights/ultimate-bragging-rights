@@ -79,6 +79,16 @@ line-height: normal;
     width: 100%;
     margin: 0;
   }
+
+  @media (prefers-color-scheme: dark){
+
+    .dark\:bg-gray-800 {
+     margin-left: 43vh;
+    }
+  }
+
+
+
 }
 
 .bg-yellow-700 {
@@ -188,6 +198,10 @@ line-height: normal;
   .md\:flex {
     margin-left: 38vh;
   }
+  .flex {
+    display: flex;
+    justify-content: space-between;
+}
 }
 
 /* Styles for TV devices */
@@ -210,3 +224,36 @@ line-height: normal;
     margin-left: 38vh;
   }
 }
+
+/* Navbar */
+
+@media (prefers-color-scheme: dark){
+  .dark\:bg-gray-900 {
+    --tw-bg-opacity: 1;
+    background-image: url(./assets/GreenTopBanner.png);
+  }
+}
+
+
+@media (prefers-color-scheme: dark){
+  .md\:dark\:bg-gray-900 {
+    width: 0vh;
+    margin: 0 -34vh;
+    column-gap: 20px;
+  }
+}
+
+@media (prefers-color-scheme: dark){
+
+  .dark\:bg-gray-800 {
+   
+  }
+}
+
+
+.md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(2rem * var(--tw-space-x-reverse));
+    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+/* Navbar */
