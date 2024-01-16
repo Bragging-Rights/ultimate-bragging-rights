@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  background: #212227;
+body {
+  background: #000;
 }
 .league-selected{
   text-shadow: 0px 0px 40px #1EFF00;
@@ -112,7 +112,7 @@ line-height: normal;
 
 
 .bg-gray-800 {
-  background-image: url("./assets/GreenTopBanner.png") !important;
+  background-image: url("./assets/Green.png") !important;
 }
 
 @media (min-width: 1024px) {
@@ -121,6 +121,7 @@ line-height: normal;
     padding-right: 0rem;
     margin-top: -8vh;
     font-size: 0.9rem;
+    margin-top: 2vh;
 
   }
 }
@@ -150,9 +151,9 @@ line-height: normal;
 
 @media (min-width: 1024px){
 .lg\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    margin-left: -299px;
+    font-size: 0.9rem !important;
+    /* line-height: 1.05rem; */
+    margin-left: -482px;
 }
 }
 
@@ -190,6 +191,7 @@ line-height: normal;
 .bg-gray-800 {
   background-image: url(/src/assets/GreenTopBanner.png) !important;
   height: 14vh;
+  opacity: 3.9;
 }
 }
 
@@ -201,6 +203,14 @@ line-height: normal;
   .flex {
     display: flex;
     justify-content: space-between;
+    height: 5vh;
+    
+}
+.footer-container  {
+  display: flex;
+  justify-content: space-between;
+  height: 27vh;
+  
 }
 }
 
@@ -231,6 +241,7 @@ line-height: normal;
   .dark\:bg-gray-900 {
     --tw-bg-opacity: 1;
     background-image: url(./assets/GreenTopBanner.png);
+    width: 168vh;
   }
 }
 
@@ -257,3 +268,20 @@ line-height: normal;
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
 /* Navbar */
+@media (min-width: 1024px){
+
+  .lg\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin: 6px 8px 0px 9px;
+  }
+}
+
+@media screen and (min-width: 1440px){
+
+  .video-page {
+    top: 42.6% !important;
+    left: 23.4%;
+    width: 50.5%;
+  }
+}

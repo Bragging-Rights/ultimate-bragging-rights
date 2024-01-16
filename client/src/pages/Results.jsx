@@ -31,8 +31,6 @@ const Results = () => {
 
   return (
     <>
-      <MainNavBar />
-
       <div className="flex flex-wrap gap-1 items-center">
         {/* <GamesPageSelect
           options={[
@@ -43,8 +41,8 @@ const Results = () => {
             "Play-In",
             "Wild Card",
           ]}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Sunday",
             "Monday",
@@ -72,8 +70,8 @@ const Results = () => {
             "December",
           ]}
           label={"MONTH"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={["2023-2024", "2023-2024", "2023-2024", "2023-2024"]}
           label={"2023-2024"}
         />
@@ -97,8 +95,8 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"SEASON"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -108,8 +106,8 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"TEAMS"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -119,8 +117,8 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"ALL DIVISIONS"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -136,8 +134,11 @@ const Results = () => {
         </button> */}
 
         <HeroSection imgUrl={resultHero} alt="img" />
+       
+        <MainNavBar />
+       
         <Line />
-          <Banner date={formattedDate} label={"Game Breakdowns"} />
+        <Banner date={formattedDate} label={"Game Breakdowns"} />
         <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
         {CurrentTab === 0 ? (
           <TableComponent />

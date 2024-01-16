@@ -4,7 +4,7 @@
 
 /* HOME */
 #home {
-  background: url(/src/assets/homepage.png) no-repeat;
+  background: url(/src/assets/homepage.jpg) no-repeat;
   background-size: cover;
   text-align: center;
   height: 25vh;
@@ -41,6 +41,7 @@
   font-size: 2rem;
   color: gold;
   margin-bottom: 1rem;
+  background-color: black;
 }
 
 .grid-container {
@@ -89,7 +90,7 @@
 .video-page {
   content: "";
   position: absolute;
-  top: 42.6%;
+  top: 42.6% ;
   left: 23.4%;
   width: 50.5%;
   background-size: cover;
@@ -129,7 +130,7 @@
   }
 
   .video-page {
-    top: 40%;
+    top: 42.6% ;
     left: 20%;
     width: 60%;
   }
@@ -224,7 +225,7 @@
   }
 
   .video-page {
-    top: 42.6%;
+    top: 42.6% ;
     left: 23.4%;
     width: 50.5%;
   }
@@ -237,12 +238,11 @@
   }
 
   #home {
-    height: 100vh;
+    height: 104vh;
   }
 
   #intro {
-    height: 60vh;
-  }
+    height: 40vh;  }
 
   #about {
     width: 80%;
@@ -256,9 +256,8 @@
   }
 
   .video-page {
-    top: 42.6%;
+    top: 45.6% ;
     left: 23.4%;
     width: 50.5%;
   }
 }
-  
