@@ -1,9 +1,10 @@
 const Game = require("../models/games");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
-const { points } = require("../calculations/point");
+const { calculatePoints } = require("../calculations/point");
 
 const formatPoints = (point) => {
+  point = String(point); // Ensure point is a string
   if (Math.abs(Number(point)) >= 100) {
     return Number(point.slice(0, -1) + "." + point.slice(-1));
   }
@@ -17,7 +18,7 @@ const createGame = async (req, res) => {
     let data = req.body;
     console.log("data", data);
     const games = data.map((game) => {
-      const points = points(
+      const points = calculatePoints(
         game.vML,
         game.hML,
         game.vSprd,

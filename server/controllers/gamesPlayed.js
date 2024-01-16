@@ -1,11 +1,17 @@
 const GamesPlayed = require("../models/gamesPlayed");
+const {calculatePoints} = require("../calculations/calculations");
+const Game = require("../models/games");
 
 // Create a new game played record
 exports.createGamePlayed = async (req, res) => {
   console.log("req.body:", req.body);
   try {
     const gamePlayed = new GamesPlayed(req.body);
-    await gamePlayed.save();
+    const gameData=await Game.find({
+      _id:gamePlayed.gameData
+    })
+console.log("gameData:",gameData);
+    // await gamePlayed.save();
     res.status(201).json({
       success: true,
       message: "Game played record created successfully.",

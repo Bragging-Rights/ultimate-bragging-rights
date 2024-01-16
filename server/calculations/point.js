@@ -1,6 +1,6 @@
 // v-ml,h-ml,v-sprd,h-sprd,v-ou-odds,h-ou-odds,
 
-exports.points = (v_ml, h_ml, v_sprd, h_sprd, v_ou, h_ou) => {
+exports.calculatePoints = (v_ml, h_ml, v_sprd, h_sprd, v_ou, h_ou) => {
   let vml_point;
   //convert moneyline into points
   if (v_ml > 0) {

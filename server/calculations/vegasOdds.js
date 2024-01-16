@@ -25,7 +25,7 @@ exports.pickingFavorite=(sport,moneyline)=>{
 
    
 }
-exports.pickingUnderdog(sport){
+exports.pickingUnderdog=(sport)=>{
 
     if(v_moneyline_odds>0){
         v =1;
