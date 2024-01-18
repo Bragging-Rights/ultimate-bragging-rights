@@ -42,7 +42,10 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 border-b border-gray-700">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8"
+   
+      >
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             {/* <Link to="/">
@@ -52,15 +55,8 @@ const Navbar = () => {
           <div className="md:flex-grow md:flex space-x-4">
             {isHomepage ? (
               <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl">
-                LIMITED FREE LIFE TIME MEMBERSHIPS AVAILABLE{" "}
-                <span
-                  style={{
-                    color: "red",
-                    textDecoration: "line-through white",
-                    marginLeft: "2vh",
-                    fontSize: "1.3rem",
-                  }}
-                >
+                LIMITED FREE LIFE TIME MEMBERSHIP AVAILABLE{" "}
+                <span style={{ color: "red", textDecoration: "line-through" }}>
                   $250
                 </span>
               </div>
@@ -69,45 +65,25 @@ const Navbar = () => {
             )}
           </div>
           <div className="flex items-center space-x-4">
-            {isHomepage ? (
-              <>
-                <div
-                  className="text-white text-sm sm:text-base md:text-lg lg:text-xl"
-                  style={{ margin: "0px 12px 0px 0px" }}
-                >
-                  ALREADY A MEMBER?
-                </div>
-                <Link
-                  to="/"
-                  className="custom-button"
-                  onClick={openSignInModal}
-                >
-                  <button className="py-1 px-2 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md text-sm">
-                    Sign In
-                  </button>
-                </Link>
-              </>
+            {/* {!isHomepage && (
+              <button className="py-2 px-4 text-gray-800 font-extrabold bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 rounded-md shadow-md">
+                Add League
+              </button>
+            )} */}
+
+            {userEmail ? (
+              <button
+                className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             ) : (
-              <>
-                {userEmail ? (
-                  <button
-                    className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
-                ) : (
-                  <Link
-                    to="/"
-                    className="custom-button"
-                    onClick={openSignInModal}
-                  >
-                    <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
-                      Sign In
-                    </button>
-                  </Link>
-                )}
-              </>
+              <Link to="/" className="custom-button" onClick={openSignInModal}>
+                <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
+                  Sign In
+                </button>
+              </Link>
             )}
 
             <SignInModal
@@ -115,13 +91,11 @@ const Navbar = () => {
               closeModal={() => setSignInModalIsOpen(false)}
             />
 
-            {!isHomepage && (
-              <Link to="/" className="custom-button" onClick={openModal}>
-                <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
-                  REGISTER
-                </button>
-              </Link>
-            )}
+            <Link to="/" className="custom-button" onClick={openModal}>
+              <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
+                REGISTER
+              </button>
+            </Link>
 
             <Registration
               isOpen={modalIsOpen}

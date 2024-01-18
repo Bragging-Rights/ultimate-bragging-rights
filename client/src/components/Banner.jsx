@@ -3,7 +3,7 @@ import React from "react";
 const Banner = ({ date, label }) => {
   return (
     <div
-      className="h-14 my-5 justify-center" // Update className to "justify-center"
+      className="h-14 my-5 justify-start"
       style={{
         backgroundColor: "#FF0000",
         // background:
@@ -12,7 +12,7 @@ const Banner = ({ date, label }) => {
       }}
     >
       <div className="w-full md:w-3/3 ">
-        <div className="md:ml-8 text-lg font-bold md:text-xl lg:text-2xl text-center">
+        <div className="md:ml-8 text-lg font-bold md:text-xl lg:text-2xl">
           {date}
         </div>
         {/* <div className="md:ml-8 text-lg font-bold md:text-xl lg:text-2xl">
