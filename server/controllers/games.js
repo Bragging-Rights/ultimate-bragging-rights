@@ -5,9 +5,24 @@ const { calculatePoints } = require("../calculations/point");
 
 const formatPoints = (point) => {
   point = String(point); // Ensure point is a string
-  if (Math.abs(Number(point)) >= 100) {
-    return Number(point.slice(0, -1) + "." + point.slice(-1));
+  console.log("string value:", point);
+  const numValue = Number(point); // Convert the string to a number
+  console.log("number value:", numValue);
+
+  // Check if the absolute value of the number is greater than or equal to 10
+  if (Math.abs(numValue) >= 10) {
+    const sign = Math.sign(numValue); // Get the sign of the number
+    const leftSide = point.slice(0, 1); // Extract the first digit from the left
+    const rightSide = point.slice(1); // Extract the rest of the digits
+
+    // Combine the formatted string with only one digit on the left side of the decimal point
+    const formattedResult = Number(`${sign}${leftSide}.${rightSide}`);
+    console.log(`Formatted result: ${formattedResult}`);
+    return formattedResult;
   }
+
+  // If the absolute value is less than 10, return the original point without modifications
+  console.log(`No formatting needed, returning original point: ${point}`);
   return point;
 };
 
@@ -47,11 +62,11 @@ const createGame = async (req, res) => {
 
         ///
         "v-ml-points": formatPoints(points.vml_point),
-        "h-ml-points": points.hml_point,
+        "h-ml-points": formatPoints(points.hml_point),
         "v-sprd-points": formatPoints(points.vsprd_point),
-        "h-sprd-points": points.hsprd_point,
+        "h-sprd-points": formatPoints(points.hsprd_point),
         "v-ou-points": formatPoints(points.vou_point),
-        "h-ou-points": points.hou_point,
+        "h-ou-points": formatPoints(points.hou_point),
       };
     });
 

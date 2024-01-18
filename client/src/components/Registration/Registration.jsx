@@ -49,7 +49,7 @@ const Registration = (props) => {
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -72,7 +72,7 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -82,7 +82,7 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchNfl } = useQuery(["teams", "nfl"], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
@@ -92,7 +92,7 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchMlb } = useQuery(["teams", "mlb"], getTeasmByLeage, {
-    enabled: false,
+    // enabled: false,
     onError: (err) => {
       // displayToast("An error occurred while getting the teams.", "error");
     },
