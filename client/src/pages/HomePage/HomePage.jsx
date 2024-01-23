@@ -1,13 +1,65 @@
 import React, { useEffect } from "react";
-// import AOS from "aos";
-import "aos/dist/aos.css";
-import "./HomePage.css";
-import MainNavBar from "../../components/MainNavBar";
+import { Container, Grid, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
-import ReactPlayer from "react-player";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import line from "../../assets/GoldDividerLine.png";
+
+const styles = {
+  introContainer: {
+    backgroundImage: "url(/src/assets/bglow.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    textAlign: "center",
+    height: "60vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  contentContainer: {
+    maxWidth: "90%",
+    margin: "0 auto",
+  },
+  header: {
+    fontSize: "2rem",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: "1rem",
+    color: "#FFD700",
+    fontStyle: "italic",
+  },
+  image: {
+    width: "100%",
+    maxWidth: "135vh",
+    margin: "0 auto",
+  },
+  textContainer: {
+    maxWidth: "100%",
+  },
+  column: {
+    marginBottom: "2rem",
+  },
+  introContainer: {
+    padding: "50px 0",
+    backgroundImage: "url(/src/assets/bglow.png)",
+    backgroundSize: "cover",
+  },
+  contentContainer: {
+    textAlign: "center",
+  },
+
+  image: {
+    width: "100%",
+    maxWidth: "150px",
+    margin: "20px 0",
+  },
+  column: {
+    padding: "0 15px",
+  },
+  textContainer: {
+    margin: "20px 0",
+  },
+};
 
 const HomePage = () => {
   useEffect(() => {
@@ -24,233 +76,142 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <Container>
       <Navbar />
       {/* <MainNavBar /> */}
       {/* HOME */}
-      <div
-        id="home"
-        className="homepage-content-section homepage-home-content relative"
-      >
-        <div className="homepage-container">
-          <div className="row">
-            <div className="col-xs-12 video">
-              <div
-                className="video-page"
-                title="Embedded Video"
-                allowFullScreen
-              >
+      <Grid>
+        <div
+          id="home"
+          className="homepage-content-section homepage-home-content relative"
+          style={{
+            backgroundImage: `url(/src/assets/homepage.jpg)`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            textAlign: "center",
+            minHeight: "45vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div className="homepage-container">
+            <div className="row">
+              <div className="col-xs-12 video">
                 <div
-                  id="ppdiv-wrapper-2168572"
-                  // style={{ width: "640px", height: "360px" }}
+                  className="video-page"
+                  title="Embedded Video"
+                  allowFullScreen
                 >
                   <div
-                    id="ppdiv_2168572"
-                    style={{ width: "100%", height: "360px" }}
-                  ></div>
+                    id="ppdiv-wrapper-2168572"
+                    // style={{ width: "640px", height: "360px" }}
+                  >
+                    <div
+                      id="ppdiv_2168572"
+                      style={{ width: "100%", height: "360px" }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Grid>
       <br />
       <br />
       {/* Green */}
-      <div
-        id="intro"
-        className="homepage-content-section homepage-green relative"
-      >
-        <div className="homepage-container">
-          <div className="container mx-auto px-4 sm:px-8 lg:px-16">
-            <h1 className="text-2xl font-bold text-center mb-8 golden-text italic">
-              T<span className="mr-2"></span>H<span className="mr-2"></span>I
-              <span className="mr-2"></span>S<span className="mr-2"></span> S
-              <span className="mr-2"></span>I<span className="mr-2"></span>T
-              <span className="mr-2"></span>E<span className="mr-2"></span> I
-              <span className="mr-2"></span>S<span className="mr-2"></span> B
-              <span className="mr-2"></span>U<span className="mr-2"></span>I
-              <span className="mr-2"></span>L<span className="mr-2"></span>T
-              <span className="mr-2"></span> F<span className="mr-2"></span>O
-              <span className="mr-2"></span>R<span className="mr-2"></span> S
-              <span className="mr-2"></span>P<span className="mr-2"></span>O
-              <span className="mr-2"></span>R<span className="mr-2"></span>T
-              <span className="mr-2"></span>S<span className="mr-2"></span> F
-              <span className="mr-2"></span>A<span className="mr-2"></span>N
-              <span className="mr-2"></span>S<span className="mr-2"></span> W
-              <span className="mr-2"></span>H<span className="mr-2"></span>O
-              <span className="mr-2"></span> L<span className="mr-2"></span>O
-              <span className="mr-2"></span>V<span className="mr-2"></span>E
-            </h1>
-            <img
-              src={line}
-              alt="Image"
-              className="mx-auto"
-              style={{ width: "135vh" }}
-            />
+
+      <Grid container>
+        <Grid item xs={12} sx={styles.introContainer}>
+          <div style={styles.contentContainer}>
+            <Typography variant="h4" component="h1" sx={styles.header}>
+              THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
+            </Typography>
             <br />
             <br />
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12">
-              <div className="space-y-4 text-left">
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font1",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-futbol-o mr-2 text-blue-500"></i> Watching
-                  Pre-Game Shows
-                </p>
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font2",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-tv mr-2 text-blue-500"></i> Watching
-                  Post-Game Shows
-                </p>
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font3",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-tv mr-2 text-blue-500"></i> And All The
-                  Games They Can
-                </p>
-              </div>
-              <div
-                className="space-y-4 text-left"
-                style={{ marginLeft: "6vh" }}
-              >
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font4",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
-                  Checking Stats
-                </p>
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font5",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-share-alt mr-2 text-blue-500"></i> Sharing
-                  Stats
-                </p>
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font6",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-tv mr-2 text-blue-500"></i> Predicting
-                  Stats
-                </p>
-              </div>
-              <div className="space-y-4 text-left">
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font7",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-trophy mr-2 text-blue-500"></i> Telling
-                  You Whose Gonna Win
-                </p>
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font8",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-headphones mr-2 text-blue-500"></i>{" "}
-                  Listening To Friends Predictions
-                </p>
-                <p
-                  style={{
-                    marginBottom: "1rem",
-                    fontFamily: "Font9",
-                    color: "white",
-                  }}
-                >
-                  <i className="fa fa-tv mr-2 text-blue-500"></i> Predicting Who
-                  Is Going To Win
-                </p>
-              </div>
-              <div className="space-y-4 text-left">
-                <p style={{ marginBottom: "1rem", color: "#ffff00" }}>
-                  <i className="fa fa-microphone mr-2 text-blue-500"></i> SAYING
-                  'I TOLD YOU SO!!'
-                </p>
-                <p style={{ marginBottom: "1rem", color: "#ffff00" }}>
-                  <i className="fa fa-heart mr-2 text-blue-500"></i> AND LOVE
-                  HAVING
-                </p>
-                <p style={{ marginBottom: "1rem", color: "#ffff00" }}>
-                  <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate
-                  Bragging Rights
-                </p>
-              </div>
-            </div>
+            <Grid container spacing={1}>
+              {/* First Column */}
+              <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                <div style={styles.textContainer}>
+                  <Typography variant="body1">
+                    <i className="fa fa-futbol-o mr-2 text-blue-500"></i>{" "}
+                    Watching Pre-Game Shows
+                  </Typography>
+                  <Typography variant="body1">
+                    <i className="fa fa-tv mr-2 text-blue-500"></i> Watching
+                    Post-Game Shows
+                  </Typography>
+                  <Typography variant="body1">
+                    <i className="fa fa-tv mr-2 text-blue-500"></i> And All The
+                    Games They Can
+                  </Typography>
+                </div>
+              </Grid>
+
+              {/* Second Column */}
+              <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                <div style={styles.textContainer}>
+                  <Typography variant="body1">
+                    <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
+                    Checking Stats
+                  </Typography>
+                  <Typography variant="body1">
+                    <i className="fa fa-share-alt mr-2 text-blue-500"></i>{" "}
+                    Sharing Stats
+                  </Typography>
+                  <Typography variant="body1">
+                    <i className="fa fa-tv mr-2 text-blue-500"></i> Predicting
+                    Stats
+                  </Typography>
+                </div>
+              </Grid>
+
+              {/* Third Column */}
+              <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                <div style={styles.textContainer}>
+                  <Typography variant="body1">
+                    <i className="fa fa-trophy mr-2 text-blue-500"></i> Telling
+                    You Whose Gonna Win
+                  </Typography>
+                  <Typography variant="body1">
+                    <i className="fa fa-headphones mr-2 text-blue-500"></i>{" "}
+                    Listening To Friends Predictions
+                  </Typography>
+                  <Typography variant="body1">
+                    <i className="fa fa-tv mr-2 text-blue-500"></i> Predicting
+                    Who Is Going To Win
+                  </Typography>
+                </div>
+              </Grid>
+
+              {/* Fourth Column */}
+              <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                <div style={styles.textContainer}>
+                  <Typography variant="body1" style={{ color: "#ffff00" }}>
+                    <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
+                    SAYING 'I TOLD YOU SO!!'
+                  </Typography>
+                  <Typography variant="body1" style={{ color: "#ffff00" }}>
+                    <i className="fa fa-heart mr-2 text-blue-500"></i> AND LOVE
+                    HAVING
+                  </Typography>
+                  <Typography variant="body1" style={{ color: "#ffff00" }}>
+                    <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate
+                    Bragging Rights
+                  </Typography>
+                </div>
+              </Grid>
+            </Grid>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
       <br />
       <br />
       <br />
-      {/* <div
-        id="about"
-        className="homepage-content-section homepage-about relative"
-      >
-        <div className="homepage-container">
-          <div className="row">
-            <p className="text-center text-lg-copyright  text-golden-copyright">
-              ©2023 Sports Fans Challenges - A Global Sports Network
-              <br />
-              All Rights Reserved.{" "}
-              <span className="text-golden-copyright">Terms of Use</span> / New{" "}
-              <span className="text-golden">Privacy Policy</span>
-            </p>
-            <p className="text-center text-lg-copyright text-golden-copyright">
-              We do not sell your personal information
-            </p>
-          </div>
-        </div>
-      </div> */}
-      {/* Info */}
-      {/* <div
-        id="info"
-        className="homepage-content-section homepage-info relative"
-      >
-        <div className="homepage-container">
-          <div className="row">
-            <p>
-              Disclaimer: This site is 100% for entertainment purposes only and
-              does not involve real money betting. - Play responsibly.
-            </p>
-            <p>
-              If you or someone you know has a gambling problem, seek
-              confidential support. USA 1-800 Gambler (426-2537) Canada
-              1-800-463-1554
-            </p>
-          </div>
-        </div>
-      </div> */}
+
       <Footer />
-    </div>
+    </Container>
   );
 };
 

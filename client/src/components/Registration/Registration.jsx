@@ -227,7 +227,6 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
-      "termsAccepted",
     ];
 
     // leagues
@@ -422,10 +421,10 @@ const Registration = (props) => {
             >
               Email & Password
             </strong>
-            <div className="logo-container">{/* Other content */}</div>
+            <div className="logo-container"></div>
           </li>
 
-          <li
+          {/* <li
             className={`step ${currentStep === 5 ? "active" : ""}`}
             id="confirm"
           >
@@ -436,8 +435,8 @@ const Registration = (props) => {
             >
               Setup Account
             </strong>
-            <div className="logo-container">{/* Other content */}</div>
-          </li>
+            <div className="logo-container"></div>
+          </li> */}
 
           <br />
           <br />
@@ -445,7 +444,7 @@ const Registration = (props) => {
           <br />
         </ul>
 
-        {Array.from({ length: 5 }, (_, index) => (
+        {Array.from({ length: 4 }, (_, index) => (
           <fieldset
             key={index}
             style={{ display: index + 1 === currentStep ? "block" : "none" }}
@@ -785,9 +784,9 @@ const Registration = (props) => {
                   />
                 </>
               )}
-              {index === 4 && (
+              {/* {index === 4 && (
                 <>
-                  {/* <h2 id="heading" className="signup-heading">
+                  <h2 id="heading" className="signup-heading">
                     PLEASE CHECK YOUR EMAIL FOR THE CONFIRMATION CODE
                   </h2>
                   <p className="signup-subtitle">
@@ -801,8 +800,8 @@ const Registration = (props) => {
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <div className="form-container"> */}
-                  {/* <ModalInput
+                  <div className="form-container">
+                  <ModalInput
                       label={
                         <h2
                           id="heading"
@@ -827,11 +826,11 @@ const Registration = (props) => {
                     <br />
                     Please go check your email now for the code. If you do not
                     see it, please check your Spam or Junk Folder.
-                  </div> */}
+                  </div>
                 </>
-              )}
+              )} */}
               <br />
-              {index + 1 < 5 && (
+              {index + 1 < 4 && (
                 <>
                   <input
                     type="button"
@@ -850,7 +849,7 @@ const Registration = (props) => {
                 </>
               )}
             </div>
-            {index + 1 === 5 && (
+            {index + 1 === 4 && (
               <>
                 <button
                   className={`submit action-button ${

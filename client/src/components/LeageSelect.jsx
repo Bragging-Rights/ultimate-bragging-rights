@@ -61,10 +61,10 @@ const LeagueSelect = () => {
               }`}
               style={{
                 textShadow: "0px 2px 4px rgba(255, 255, 255, 0.25)",
-                color: item === selectedLeague ? "#FF0000" : "white",
-                borderBottom:
-                  item === selectedLeague ? "2px solid #FF0000" : "none",
-                paddingBottom: item === selectedLeague ? "10px" : "0",
+                color: item === selectedLeague ? "white" : "white", // Change text color to white
+                backgroundColor: item === selectedLeague ? "#FF0000" : "transparent",
+                borderRadius: item === selectedLeague ? "4px" : "0",
+                border: item === selectedLeague ? "2px solid #FF0000" : "none",
               }}
               onClick={() => handleLeagueSelect(item)}
             >

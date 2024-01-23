@@ -1,110 +1,145 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LeageSelect from "./LeageSelect";
-import logo from "../assets/logo.png";
-import Modal from "react-modal";
-import ReactModal from "./Modal/ReactModal";
-import Signup from "./SignUp";
 import SignInModal from "../Modal/SignInModal";
-import img1 from "../assets/homeh1.png";
-import img2 from "../assets/homeh2.png";
-import Registration from "./Registration/Registration";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  Grid,
+} from "@mui/material";
 
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const location = useLocation();
-  const naviagte = useNavigate();
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const openSignInModal = () => {
-    setSignInModalIsOpen(true);
-  };
+  const navigate = useNavigate();
 
   const isHomepage = location.pathname === "/";
 
-  Modal.setAppElement("#root");
-
-  const userName = localStorage.getItem("username");
   const userEmail = localStorage.getItem("email");
 
   const handleLogout = () => {
     localStorage.clear();
-    naviagte("/");
+    navigate("/");
   };
 
   return (
-    <nav className="bg-gray-800 border-b border-gray-700">
-      <div
-        className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8"
-   
-      >
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            {/* <Link to="/">
-              <img className="h-8 w-8" src={logo} alt="Bragging Rights" />
-            </Link> */}
-          </div>
-          <div className="md:flex-grow md:flex space-x-4">
-            {isHomepage ? (
-              <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl">
-                LIMITED FREE LIFE TIME MEMBERSHIP AVAILABLE{" "}
-                <span style={{ color: "red", textDecoration: "line-through" }}>
-                  $250
-                </span>
+    <AppBar position="static" className="Navbar-Header">
+      <Container maxWidth="lg">
+        <Toolbar>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid item xs={4}>
+              {isHomepage && (
+                <Typography
+                  variant="body1"
+                  color="inherit"
+                  sx={{
+                    fontSize: { xs: "0.8rem", sm: "0.8rem" },
+                  }}
+                >
+                  LIMITED FREE LIFETIME MEMBERSHIP AVAILABLE{" "}
+                  <span
+                    style={{
+                      color: "red",
+                      textDecoration: "line-through white",
+                    }}
+                  >
+                    $250
+                  </span>
+                </Typography>
+              )}
+            </Grid>
+            <Grid
+              item
+              xs={4}
+              style={{ textAlign: "center", marginTop: "-3vh" }}
+            >
+              {!isHomepage && <LeageSelect />}
+            </Grid>
+            <Grid item xs={4} style={{ textAlign: "right" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Typography
+                  variant="body1"
+                  color="inherit"
+                  sx={{
+                    marginLeft: "40%",
+                    fontSize: "0.7rem",
+                    float: "",
+                  }}
+                >
+                  ALREADY A MEMBER
+                </Typography>
+                <SignInModal
+                  modalIsOpen={signInModalIsOpen}
+                  closeModal={() => setSignInModalIsOpen(false)}
+                />
+
+                {userEmail ? (
+                  <Button
+                    className="logout-button"
+                    onClick={handleLogout}
+                    style={{
+                      border: "2px solid #f6e05e",
+                      color: "#f0e68c",
+                      fontWeight: 800,
+                      borderRadius: "0.375rem",
+                      boxShadow:
+                        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                    }}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  isHomepage && (
+                    <React.Fragment>
+                      <Button
+                        className="sign-in-button"
+                        onClick={() => setSignInModalIsOpen(true)}
+                        style={{
+                          border: "2px solid #f6e05e",
+                          color: "#f0e68c",
+                          fontWeight: 800,
+                          borderRadius: "0.375rem",
+                          boxShadow:
+                            "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                          marginLeft: "auto", // Add this line to push the button to the right
+                        }}
+                      >
+                        SignIn
+                      </Button>
+                      {/* Uncomment the following lines if you have a registration route */}
+                      {/* <Link to="/registration" style={{ textDecoration: "none" }}>
+                        <Button
+                          className="register-button"
+                          onClick={() => setModalIsOpen(true)}
+                          style={{
+                            border: "2px solid #f6e05e",
+                            color: "#f0e68c",
+                            fontWeight: 800,
+                            borderRadius: "0.375rem",
+                            boxShadow:
+                              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                          }}
+                        >
+                          REGISTER
+                        </Button>
+                      </Link> */}
+                    </React.Fragment>
+                  )
+                )}
               </div>
-            ) : (
-              <LeageSelect />
-            )}
-          </div>
-          <div className="flex items-center space-x-4">
-            {/* {!isHomepage && (
-              <button className="py-2 px-4 text-gray-800 font-extrabold bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 rounded-md shadow-md">
-                Add League
-              </button>
-            )} */}
-
-            {userEmail ? (
-              <button
-                className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            ) : (
-              <Link to="/" className="custom-button" onClick={openSignInModal}>
-                <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
-                  Sign In
-                </button>
-              </Link>
-            )}
-
-            <SignInModal
-              modalIsOpen={signInModalIsOpen}
-              closeModal={() => setSignInModalIsOpen(false)}
-            />
-
-            <Link to="/" className="custom-button" onClick={openModal}>
-              <button className="py-2 px-4 border border-yellow-500 text-yellow-300 font-extrabold rounded-md shadow-md">
-                REGISTER
-              </button>
-            </Link>
-
-            <Registration
-              isOpen={modalIsOpen}
-              onRequestClose={closeModal}
-            ></Registration>
-          </div>
-        </div>
-      </div>
-    </nav>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

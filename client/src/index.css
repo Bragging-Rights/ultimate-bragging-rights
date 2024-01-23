@@ -59,7 +59,7 @@ line-height: normal;
   }
   .flex {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
   }
 }
 
@@ -111,149 +111,72 @@ line-height: normal;
 
 
 
-.bg-gray-800 {
-  background-image: url("./assets/GreenTopBanner.png") !important;
-}
 
-@media (min-width: 1024px) {
-  .lg\:px-16 {
-    padding-left: 8rem;
-    padding-right: 0rem;
-    margin-top: -8vh;
-    font-size: 0.9rem;
-
-  }
-}
-
-@media (min-width: 640px) {
-  .sm\:gap-12 {
-    gap: 3rem;
-    margin-left: 43px;
-  }
-}
-
-@media (min-width: 768px) {
-  .md\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    margin-left: -317px;
-  }
-}
-
-@media (min-width: 768px){
-.md\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    margin-left: -482px;
-}
-}
-
-@media (min-width: 1024px){
-.lg\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    margin-left: -299px;
-}
-}
 
 .gap-1 {
   gap: 0.75rem;
 }
 
 
-/* Styles for mobile devices */
-@media only screen and (max-width: 767px) {
-  .md\:flex {
-    margin-left: 38vh;
-  }
-  .flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
 
-}
-.bg-gray-800 {
-  height: 14vh;
-}
-}
-
-/* Styles for tablet devices */
-@media only screen and (min-width: 820px) and (max-width: 991px) {
-  .md\:flex {
-    margin-left: 40vh;
-  }
-  .flex {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.bg-gray-800 {
-  background-image: url(/src/assets/GreenTopBanner.png) !important;
-  height: 14vh;
-}
-}
 
 /* Styles for desktop devices */
-@media only screen and (min-width: 992px) {
-  .md\:flex {
-    margin-left: 38vh;
-  }
-  .flex {
-    display: flex;
-    justify-content: space-between;
+
+
+.Navbar-Header{
+  background-image: url("./assets/GreenTopBanner.png")  ;
+  
 }
+@media (max-width: 768px) {
+
+  .container {
+    direction: column;
+  }
+  .css-1lgwsod-MuiTypography-root{
+    font-size: 0.6rem;
+  }
+  
 }
 
-/* Styles for TV devices */
-@media only screen and (min-width: 1200px) {
-  .md\:flex {
-    margin-left: 63vh;
-  }
+.css-1lgwsod-MuiTypography-root {
+  font-size: 0.9rem;
 }
-
-/* Styles for Android devices */
-@media only screen and (min-width: 360px) and (max-width: 767px) {
-  .md\:flex {
-    margin-left: -1vh;
-  }
+.sign-in-button,
+.register-button {
+  /* Styles for the Sign In and Register buttons */
+  padding: 10px 20px;
+  border: 2px solid #FFD700; /* Yellow color */
+  color: #FFD700; /* Yellow color */
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #FFF; /* White background */
+  cursor: pointer;
+  margin-right: 10px;
 }
-
-/* Styles for iPhone devices */
-@media only screen and (min-width: 320px) and (max-width: 359px) {
-  .md\:flex {
-    margin-left: 38vh;
-  }
-}
-
-/* Navbar */
 
 @media (prefers-color-scheme: dark){
+
   .dark\:bg-gray-900 {
     --tw-bg-opacity: 1;
-    background-image: url(./assets/GreenTopBanner.png);
+    background-image: url("./assets/GreenTopBanner.png");
+    width: 100%;
   }
 }
 
+    
 
-@media (prefers-color-scheme: dark){
-  .md\:dark\:bg-gray-900 {
-    width: 0vh;
-    margin: 0 -34vh;
-    column-gap: 20px;
-  }
+.css-yji0va-MuiButtonBase-root-MuiListItem-root.Mui-selected {
+  background-color: #FF0000;
+  color: white;
 }
 
-@media (prefers-color-scheme: dark){
-
-  .dark\:bg-gray-800 {
-   
-  }
+.css-ahj2mt-MuiTypography-root {
+  margin: 0;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  color: white;
 }
-
-
-.md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(2rem * var(--tw-space-x-reverse));
-    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
-}
-/* Navbar */

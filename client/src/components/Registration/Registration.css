@@ -7,7 +7,7 @@
 
 #progressbar li {
   display: inline-block;
-  width: 20%; /* Adjust the width based on the number of steps */
+  /* width: 20%;  */
   position: relative;
   text-align: center;
   line-height: 50px; /* Adjust as needed */

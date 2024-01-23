@@ -1,25 +1,45 @@
 import React from "react";
+import { Box, Typography, Container } from "@mui/material";
 
 const Banner = ({ date, label }) => {
   return (
-    <div
+    <Box
+      component="div"
       className="h-14 my-5 justify-start"
-      style={{
+      sx={{
         backgroundColor: "#FF0000",
         // background:
         //   "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)",
         color: "white",
       }}
     >
-      <div className="w-full md:w-3/3 ">
-        <div className="md:ml-8 text-lg font-bold md:text-xl lg:text-2xl">
-          {date}
-        </div>
-        {/* <div className="md:ml-8 text-lg font-bold md:text-xl lg:text-2xl">
-        {label}
-      </div> */}
-      </div>
-    </div>
+      <Container maxWidth="md">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            fontSize={{ xs: "lg", md: "xl", lg: "2xl" }}
+          >
+            {date}
+          </Typography>
+          {/* Uncomment the lines below if you want to display the 'label' */}
+          {/* <Typography
+            variant="h6"
+            fontWeight="bold"
+            fontSize={{ xs: "lg", md: "xl", lg: "2xl" }}
+          >
+            {label}
+          </Typography> */}
+        </Box>
+      </Container>
+    </Box>
   );
 };
 

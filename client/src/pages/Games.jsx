@@ -18,8 +18,6 @@ import imgFootball6 from "../assets/Football-6.png";
 import imgHosckey1 from "../assets/Hockey-1.png";
 import imgHosckey4 from "../assets/Hockey-4.png";
 
-
-
 const images = [
   imgBasketball1,
   imgBasketball5,
@@ -33,7 +31,7 @@ const getRandomImage = () => {
   const randomIndex = Math.floor(Math.random() * images.length);
   return images[randomIndex];
 };
-      
+
 const Games = () => {
   const [heroImg, setHeroImg] = useState(getRandomImage());
 
@@ -100,26 +98,21 @@ const Games = () => {
     refetchTomorrowGame();
   }, [selectedLeague]);
 
-//Images
-
+  //Images
 
   useEffect(() => {
     setHeroImg(getRandomImage());
   }, []);
 
-
   return (
     <div className=" w-full">
+      <div>
+        {/* Your existing code */}
+        <HeroSection imgUrl={heroImg} />
+        {/* Your existing code */}
+      </div>
       <MainNavBar />
 
-      
-
-          <div>
-            {/* Your existing code */}
-            <HeroSection imgUrl={heroImg} />
-            {/* Your existing code */}
-          </div>
-       
       <Line />
       <Banner date={formattedDate} label={"Upcoming Games"} />
       <div className=" grid grid-cols-2 gap-4 ">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Box, Typography, List, ListItem } from "@mui/material";
 
 const ResultTabs = ({ changeTab, CurrentTab }) => {
   const tabs = [
@@ -14,56 +15,79 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
   };
 
   return (
-    <div style={{ marginRight: "55vh" }}>
-      <ul className="flex h-12 items-center gap-5 border-b-[#393939] border-b-[1px] mb-2">
+    <Box style={{ marginRight: "55vh" }}>
+      <List
+        sx={{
+          display: "flex",
+          height: "12vh",
+          alignItems: "center",
+          borderBottom: "1px solid #393939",
+          marginBottom: "2vh",
+        }}
+      >
         {tabs.map((tab, index) => (
-          <li
-            className={`h-full cursor-pointer text-base font-medium ${
-              selectedTab === index
-                ? "text-white bg-[#FF0000] border-b-[1px] border-b-[#BE8200]"
-                : "text-white"
-            }`}
+          <ListItem
             key={index}
             onClick={() => handleTabClick(index)}
-            style={{
-              width: "19vh",
+            sx={{
+              cursor: "pointer",
+              flex: "0 0 19vh",
+              textAlign: "center",
+              padding: "8px",
+              color: "white", // Set text color to white
+              backgroundColor:
+                selectedTab === index ? "#FF0000" : "transparent",
+              border: selectedTab === index ? "1px solid #BE8200" : "none",
               borderRadius: "3px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease", // Add transition for smooth animation
+              transition: "background-color 0.3s ease",
               display: "flex",
-              justifyContent: "center", // Center the text horizontally
-              alignItems: "center", // Center the text vertically
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {tab.label}
-          </li>
+            <Typography variant="body1">{tab.label}</Typography>
+          </ListItem>
         ))}
-      </ul>
-      <ul className="flex h-12 items-center gap-5 border-b-[#393939] border-b-[1px] mb-2">
+      </List>
+      <List
+        sx={{
+          display: "flex",
+          height: "12vh",
+          alignItems: "center",
+          borderBottom: "1px solid #393939",
+          marginBottom: "2vh",
+        }}
+      >
         {tabs[selectedTab].options.map((option, index) => (
-          <li
-            className={`h-full cursor-pointer text-base font-medium ${
-              CurrentTab === index + tabs.length
-                ? "text-white bg-[#FF0000] border-b-[1px] border-b-[#BE8200]"
-                : "text-white"
-            }`}
+          <ListItem
             key={index + tabs.length}
             onClick={() => changeTab(index + tabs.length)}
-            style={{
-              width: "13vh",
+            sx={{
+              cursor: "pointer",
+              flex: "0 0 13vh",
+              textAlign: "center",
+              padding: "8px",
+              color: "white", // Set text color to white
+              backgroundColor:
+                CurrentTab === index + tabs.length ? "#FF0000" : "transparent",
+              border:
+                CurrentTab === index + tabs.length
+                  ? "1px solid #BE8200"
+                  : "none",
               borderRadius: "8px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease", // Add transition for smooth animation
+              transition: "background-color 0.3s ease",
               display: "flex",
-              justifyContent: "center", // Center the text horizontally
-              alignItems: "center", // Center the text vertically
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {option}
-          </li>
+            <Typography variant="body1">{option}</Typography>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Box>
   );
 };
 

@@ -31,7 +31,6 @@ const Results = () => {
 
   return (
     <>
-      <MainNavBar />
 
       <div className="flex flex-wrap gap-1 items-center">
         {/* <GamesPageSelect
@@ -43,8 +42,8 @@ const Results = () => {
             "Play-In",
             "Wild Card",
           ]}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Sunday",
             "Monday",
@@ -55,8 +54,8 @@ const Results = () => {
             "Saturday",
           ]}
           label={"DAY"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "January",
             "February",
@@ -72,12 +71,12 @@ const Results = () => {
             "December",
           ]}
           label={"MONTH"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={["2023-2024", "2023-2024", "2023-2024", "2023-2024"]}
           label={"2023-2024"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -86,8 +85,8 @@ const Results = () => {
             "Play-In",
             "Wild Card",
           ]}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -97,8 +96,8 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"SEASON"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -108,8 +107,8 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"TEAMS"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -119,8 +118,8 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"ALL DIVISIONS"}
-        />
-        <GamesPageSelect
+          />
+          <GamesPageSelect
           options={[
             "Season",
             "Pre-Season",
@@ -130,24 +129,25 @@ const Results = () => {
             "Wild Card",
           ]}
           label={"ALL CONFERE..."}
-        />
-        <button className="w-32 h-10 rounded bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 cursor-pointer text-[#1B1C21] text-xs font-extrabold">
+          />
+          <button className="w-32 h-10 rounded bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 cursor-pointer text-[#1B1C21] text-xs font-extrabold">
           Reset
         </button> */}
 
         <HeroSection imgUrl={resultHero} alt="img" />
+        <MainNavBar />
         <Line />
           <Banner date={formattedDate} label={"Game Breakdowns"} />
         <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
         {CurrentTab === 0 ? (
           <TableComponent />
-        ) : CurrentTab === 1 ? (
-          <NightResult />
-        ) : CurrentTab === 2 ? (
-          <NightlyStatsTable />
-        ) : (
-          ""
-        )}
+          ) : CurrentTab === 1 ? (
+            <NightResult />
+            ) : CurrentTab === 2 ? (
+              <NightlyStatsTable />
+              ) : (
+                ""
+                )}
         <Line />
 
         <div className=" flex gap-8 my-4">
