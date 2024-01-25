@@ -2,29 +2,41 @@ const Game = require("../models/games");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
 const { calculatePoints } = require("../calculations/point");
+const { formatPoints } = require("../calculations/pointsFormatter");
 
-const formatPoints = (point) => {
-  point = String(point); // Ensure point is a string
-  console.log("string value:", point);
-  const numValue = Number(point); // Convert the string to a number
-  console.log("number value:", numValue);
+// const formatPoints = (point) => {
+//   point = String(point); // Ensure point is a string
+//   console.log("Initial point value:", point);
 
-  // Check if the absolute value of the number is greater than or equal to 10
-  if (Math.abs(numValue) >= 10) {
-    const sign = Math.sign(numValue); // Get the sign of the number
-    const leftSide = point.slice(0, 1); // Extract the first digit from the left
-    const rightSide = point.slice(1); // Extract the rest of the digits
+//   const numValue = Number(point); // Convert the string to a number
+//   console.log("Converted to number:", numValue);
 
-    // Combine the formatted string with only one digit on the left side of the decimal point
-    const formattedResult = Number(`${sign}${leftSide}.${rightSide}`);
-    console.log(`Formatted result: ${formattedResult}`);
-    return formattedResult;
-  }
+//   const sign = numValue >= 0 ? '' : '-'; // Get the sign of the number
+//   console.log("Sign of the number:", sign);
 
-  // If the absolute value is less than 10, return the original point without modifications
-  console.log(`No formatting needed, returning original point: ${point}`);
-  return point;
-};
+//   const absoluteValue = Math.abs(numValue); // Get the absolute value of the number
+//   console.log("Absolute value:", absoluteValue);
+
+//   const leftSide = String(absoluteValue).slice(0, 1); // Extract the first digit from the left
+//   console.log("First digit from the left:", leftSide);
+
+//   const rightSide = String(absoluteValue).slice(1); // Extract the rest of the digits
+//   console.log("Rest of the digits:", rightSide);
+
+//   // Combine the formatted string with only one digit on the left side of the decimal point
+//   const formattedResult = Number(`${leftSide}.${rightSide}`);
+//   console.log("Formatted result before fixing to two decimal places:", formattedResult);
+
+//   const finalResult = formattedResult.toFixed(2); // Ensure two decimal places
+//   console.log("Final result:", sign + finalResult);
+
+//   return sign + finalResult;
+// };
+
+// console.log("Output of formatPoints(15):", formatPoints(15));
+// console.log("Output of formatPoints(15):", formatPoints(-15));
+// console.log("Output of formatPoints(15):", formatPoints(12.5));
+
 
 // Create a new game
 const createGame = async (req, res) => {
