@@ -59,10 +59,26 @@ const styles = {
   textContainer: {
     margin: "20px 0",
   },
-  
 };
 
 const HomePage = () => {
+  const iframeHTML = `
+  <div class="iv-player_responsive_padding" style="padding:56.25% 0 0 0;position:relative;" data-hash="6570dd3125e25">
+    <div class="iv-player_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+      <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
+        <iframe
+          src="https://videosuite-player.vercel.app/?hash=6570dd3125e25&amp;apiUrl=https://videosuite.app&amp;analyticsUrl=https://api.vidanalytics.io&amp;appEnv=live"
+          width="100px"
+          height="100px"
+          frameborder="none"
+          class="_vs_ictr_player"
+          id="6570dd3125e25"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+`;
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -98,23 +114,10 @@ const HomePage = () => {
         >
           <div className="homepage-container">
             <div className="row">
-              <div className="col-xs-12 video">
-                <div
-                  className="video-page"
-                  title="Embedded Video"
-                  allowFullScreen
-                >
-                  <div
-                    id="ppdiv-wrapper-2168572"
-                    style={{ width: "100%", height: "auto", margin: "-76px 0 0 4vh"  }}
-                  >
-                    <div
-                      id="ppdiv_2168572"
-                      style={{ width: "100%", height: "360px", margin:"-60px 0 0 1vh" }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
+              <div
+                className="col-xs-12 video"
+                dangerouslySetInnerHTML={{ __html: iframeHTML }}
+              ></div>
             </div>
           </div>
         </div>

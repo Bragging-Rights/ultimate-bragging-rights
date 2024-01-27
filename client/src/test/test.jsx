@@ -11,8 +11,8 @@ const Test = () => {
         <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
           <iframe
             src="https://videosuite-player.vercel.app/?hash=6570dd3125e25&amp;apiUrl=https://videosuite.app&amp;analyticsUrl=https://api.vidanalytics.io&amp;appEnv=live"
-            width="100%"
-            height="100%"
+            width="100px"
+            height="100px"
             frameborder="none"
             class="_vs_ictr_player"
             id="6570dd3125e25"
