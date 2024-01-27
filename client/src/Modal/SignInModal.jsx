@@ -6,6 +6,7 @@ import displayToast from "../components/Alert/Alert";
 import { ForgotPasswordModal } from "./ForgotPasswordModal";
 import Registration from "../components/Registration/Registration";
 import { login } from "../services/auth";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -30,7 +31,7 @@ const customStyles = {
 
 export const SignInModal = (props) => {
   const { modalIsOpen, closeModal } = props;
-  const userId = localStorage.getItem("_id");
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -53,7 +54,8 @@ export const SignInModal = (props) => {
           localStorage.setItem("_id", rec.data.data._id);
           localStorage.setItem("isAdmin", rec.data.data.isAdmin);
           closeModal();
-          displayToast("Logid in successfully", "success");
+          displayToast("Logged in successfully", "success");
+          navigate('/games');
         }
       },
     }
@@ -69,7 +71,6 @@ export const SignInModal = (props) => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-
     mutate(formData);
   };
 
@@ -106,7 +107,6 @@ export const SignInModal = (props) => {
         className="modal-form-container"
         style={{ display: "flex", flexDirection: "column" }}
       >
-        {/* Email input */}
         <ModalInput
           label={"Email"}
           placeholder={"Email"}
@@ -115,8 +115,6 @@ export const SignInModal = (props) => {
           value={formData.email}
           onChange={inputChangeHandler}
         />
-
-        {/* Password input */}
         <ModalInput
           label={"Password"}
           placeholder={"Password"}
@@ -138,7 +136,6 @@ export const SignInModal = (props) => {
       <button className="submit-btn" onClick={handleSignIn}>
         SIGN IN
       </button>
-
       <p className="text-white mt-2">
         Don't have an account?
         <a href={Registration} className="text-yellow-300">

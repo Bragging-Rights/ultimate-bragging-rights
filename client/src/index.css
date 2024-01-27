@@ -123,10 +123,14 @@ line-height: normal;
 /* Styles for desktop devices */
 
 
-.Navbar-Header{
-  background-image: url("./assets/GreenTopBanner.png")  ;
-  
+.Navbar-Header, #homepage {
+  background-image: url("./assets/GreenTopBanner.png");
+  height: 5vh;
+  display: flex;
+  justify-content: space-around;
 }
+
+
 @media (max-width: 768px) {
 
   .container {
@@ -180,3 +184,10 @@ line-height: normal;
   letter-spacing: 0.00938em;
   color: white;
 }
+
+.css-hip9hq-MuiPaper-root-MuiAppBar-root {
+
+  background-color: transparent !important;
+  }
+
+  

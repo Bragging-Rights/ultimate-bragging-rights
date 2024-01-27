@@ -59,6 +59,7 @@ const styles = {
   textContainer: {
     margin: "20px 0",
   },
+  
 };
 
 const HomePage = () => {
@@ -105,11 +106,11 @@ const HomePage = () => {
                 >
                   <div
                     id="ppdiv-wrapper-2168572"
-                    // style={{ width: "640px", height: "360px" }}
+                    style={{ width: "100%", height: "auto", margin: "-76px 0 0 4vh"  }}
                   >
                     <div
                       id="ppdiv_2168572"
-                      style={{ width: "100%", height: "360px" }}
+                      style={{ width: "100%", height: "360px", margin:"-60px 0 0 1vh" }}
                     ></div>
                   </div>
                 </div>

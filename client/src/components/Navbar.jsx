@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LeageSelect from "./LeageSelect";
+import LeagueSelect from "./LeageSelect";
 import SignInModal from "../Modal/SignInModal";
 import {
   AppBar,
@@ -9,12 +9,16 @@ import {
   Button,
   Container,
   Grid,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isHomepage = location.pathname === "/";
 
@@ -23,6 +27,11 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
+  };
+
+  const handleSignIn = () => {
+    setSignInModalIsOpen(false);
+    navigate('/games');
   };
 
   return (
@@ -35,13 +44,13 @@ const Navbar = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
               {isHomepage && (
                 <Typography
                   variant="body1"
                   color="inherit"
                   sx={{
-                    fontSize: { xs: "0.8rem", sm: "0.8rem" },
+                    fontSize: isMobileView ? "0.4rem" : "0.8rem",
                   }}
                 >
                   LIMITED FREE LIFETIME MEMBERSHIP AVAILABLE{" "}
@@ -49,6 +58,8 @@ const Navbar = () => {
                     style={{
                       color: "red",
                       textDecoration: "line-through white",
+                      fontSize: isMobileView ? "0.4rem" : "0.8rem",
+
                     }}
                   >
                     $250
@@ -56,42 +67,45 @@ const Navbar = () => {
                 </Typography>
               )}
             </Grid>
-            <Grid
-              item
-              xs={4}
-              style={{ textAlign: "center", marginTop: "-3vh" }}
-            >
-              {!isHomepage && <LeageSelect />}
+            <Grid item xs={6} sm={4} style={{ textAlign: "center", marginTop: isHomepage && isMobileView ? "-3vh" : 0 }}>
+              {!isHomepage && <LeagueSelect />}
             </Grid>
-            <Grid item xs={4} style={{ textAlign: "right" }}>
+            <Grid item xs={6} sm={4} style={{ textAlign: "right" }}>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Typography
-                  variant="body1"
-                  color="inherit"
-                  sx={{
-                    marginLeft: "40%",
-                    fontSize: "0.7rem",
-                    float: "",
-                  }}
-                >
-                  ALREADY A MEMBER
-                </Typography>
+                {isHomepage && (
+                  <Typography
+                    variant="body1"
+                    color="inherit"
+                    sx={{
+                      marginLeft:isMobileView ? "20%" : "40%",
+                      fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                    }}
+                  >
+                    ALREADY A MEMBER
+                  </Typography>
+                )}
                 <SignInModal
                   modalIsOpen={signInModalIsOpen}
                   closeModal={() => setSignInModalIsOpen(false)}
+                  onSignIn={handleSignIn}
                 />
 
                 {userEmail ? (
                   <Button
                     className="logout-button"
                     onClick={handleLogout}
-                    style={{
+                    size="small"
+                    sx={{
                       border: "2px solid #f6e05e",
                       color: "#f0e68c",
                       fontWeight: 800,
                       borderRadius: "0.375rem",
                       boxShadow:
                         "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                      fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                      marginRight:isMobileView ? "-20%" : "-10px",
+
+
                     }}
                   >
                     Logout
@@ -102,19 +116,24 @@ const Navbar = () => {
                       <Button
                         className="sign-in-button"
                         onClick={() => setSignInModalIsOpen(true)}
-                        style={{
+                        size="small"
+                        sx={{
                           border: "2px solid #f6e05e",
                           color: "#f0e68c",
                           fontWeight: 800,
                           borderRadius: "0.375rem",
                           boxShadow:
                             "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                          marginLeft: "auto", // Add this line to push the button to the right
+                          marginLeft: "auto",
+                          fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                          marginRight:isMobileView ? "-20%" : "-10px",
+
                         }}
                       >
                         SignIn
                       </Button>
-                      {/* Uncomment the following lines if you have a registration route */}
+
+                              {/* Uncomment the following lines if you have a registration route */}
                       {/* <Link to="/registration" style={{ textDecoration: "none" }}>
                         <Button
                           className="register-button"

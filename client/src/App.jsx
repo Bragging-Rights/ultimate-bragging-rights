@@ -17,7 +17,6 @@ import FbChallanges from "./pages/FbChallanges";
 import Admin from "./pages/Admin/FormToggle";
 import { LeagueProvider } from "./components/LeagueContext";
 import { ToastContainer } from "react-toastify";
-import Registration from "./components/Registration/Registration";
 import HomePage from "./pages/HomePage/HomePage";
 import Test from "./test/test";
 import Share from "./pages/Share";
@@ -51,7 +50,6 @@ const App = () => {
 
                 {isUserAdmin && <Route path="/admin" element={<Admin />} />}
 
-                <Route path="/registration" element={<Registration />} />
                 <Route path="/test" element={<Test />} />
                 <Route path="/share" element={<Share />} />
 
