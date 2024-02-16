@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LeagueSelect from "./LeageSelect";
+import LeagueSelect from "./LeagueSelect";
 import SignInModal from "./Modal/SignInModal";
 import {
   AppBar,

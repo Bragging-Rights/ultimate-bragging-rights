@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import displayToast from "./Alert/Alert";
+import displayToast from "../Alert/Alert";
 import ModalInput from "./ModalInput";
-
+//  import { sendPasswordResetEmail } from "../../Apis/auth"; 
 
 const customStyles = {
     content: {
@@ -37,7 +37,7 @@ const customStyles = {
   
     const handleSendPasswordResetEmail = async () => {
       try {
-        await sendPasswordResetEmail(email);
+        // await sendPasswordResetEmail(email);
         setIsEmailSent(true);
         displayToast("Password reset email sent.", "success");
       } catch (error) {
