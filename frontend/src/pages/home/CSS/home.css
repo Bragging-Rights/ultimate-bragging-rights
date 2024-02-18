@@ -1,0 +1,11 @@
+@media (max-width: 600px) {
+    /* Adjust styles for smaller screens */
+    .css-11lq3yg-MuiGrid-root {
+      margin-top:-75vh; /* Adjust the margin-top value as needed */
+    }
+    .textContainer {
+      padding: 5px;
+    }
+    /* Add more responsive styles as needed */
+  }
+  

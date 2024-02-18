@@ -1,0 +1,57 @@
+.element-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 49%;
+}
+.element-container .star{
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-transform: capitalize;
+background:  linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.element-container .input-label{
+
+color: #FFF;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+text-transform: capitalize;
+}
+.element-container input {
+
+    padding: 17px 20px;
+    border-radius: 4px;
+    border: 1px solid #3C3C3C;
+    background: #2C2C2C;
+    color: white;
+} 
+.element-container select{
+
+    padding: 16px 20px;
+    border-radius: 4px;
+    border: 1px solid #3C3C3C;
+    background: #2C2C2C;
+    color: white
+} 
+
+
+
+#progressbar li.active:before, #progressbar li.active:after {
+    background: #FFAE00;
+    background-image: url("../../assets/RedCircle-BR-Logo.png");
+    background-size: contain; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
+}
+

@@ -1,0 +1,264 @@
+/* HomePage.css */
+
+/* Set up a grid for the entire page */
+
+/* HOME */
+#home {
+  background: url(/src/assets/homepage.png) no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 25vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#homepage {
+  margin-left: 10vh;
+}
+
+#home h1 {
+  font-family: 'Advent Pro', sans-serif;
+  font-size: 3rem;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+/* INTRODUCTION */
+#intro {
+  background: url(/src/assets/bglow.png) no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#intro h1 {
+  font-size: 2rem;
+  color: gold;
+  margin-bottom: 1rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+/* ABOUT */
+#about {
+  background: url(/src/assets/bottom.png) no-repeat center center;
+  background-size: cover;
+  text-align: center;
+  height: auto; /* Auto height to fit content */
+  width: 80%;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column; /* Adjust to a column layout */
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+}
+
+.text-golden-copyright {
+  color: #ffd700; /* Golden color */
+}
+
+.text-lg-copyright {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* INFO */
+#info {
+  background-size: cover;
+  text-align: left;
+  width: 100%;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Video Page */
+.video-page {
+  content: "";
+  position: absolute;
+  top: 42.6%;
+  left: 23.4%;
+  width: 50.5%;
+  background-size: cover;
+}
+
+/* Media queries for responsiveness */
+/* Mobile devices */
+@media screen and (max-width: 767px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  #home {
+    height: 32.5vh;
+  }
+
+  #intro {
+    height: 80vh;
+  }
+
+  #about {
+    width: 100%;
+    height: 10vh;
+    margin: -60px auto;
+  }
+
+  #info {
+    width: 90%;
+    margin: 70px auto 10px;
+    font-size: 0.6rem;
+  }
+
+  .text-lg-copyright {
+    font-size: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .video-page {
+    top: 40%;
+    left: 20%;
+    width: 60%;
+  }
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+
+  #home {
+    height: 60vh;
+  }
+
+  #intro {
+    height: 80vh;
+  }
+
+  #about {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  #info {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .video-page {
+    top: 40%;
+    left: 20%;
+    width: 60%;
+  }
+}
+
+/* Small laptops and larger tablets */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #home {
+    height: 70vh;
+  }
+
+  #intro {
+    height: 90vh;
+  }
+
+  #about {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  #info {
+    width: 70%;
+    margin: 0 auto;
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .video-page {
+    top: 42.6%;
+    left: 23.4%;
+    width: 50.5%;
+  }
+}
+
+/* Medium and large laptops */
+@media screen and (min-width: 1280px) and (max-width: 1439px) {
+  body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #home {
+    height: 80vh;
+  }
+
+  #intro {
+    height: 100vh;
+  }
+
+  #about {
+    width: 100%;
+    margin: 5vh auto;
+  }
+
+  #info {
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .video-page {
+    top: 42.6%;
+    left: 23.4%;
+    width: 50.5%;
+  }
+}
+
+/* Larger screens (desktops and TVs) */
+@media screen and (min-width: 1440px) {
+  body {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #home {
+    height: 100vh;
+  }
+
+  #intro {
+    height: 60vh;
+  }
+
+  #about {
+    width: 80%;
+    margin: 5vh auto;
+    height: 14vh;
+  }
+
+  #info {
+    width: 80%;
+    margin: 10px auto 40px;
+  }
+
+  .video-page {
+    top: 42.6%;
+    left: 23.4%;
+    width: 50.5%;
+  }
+}
+  

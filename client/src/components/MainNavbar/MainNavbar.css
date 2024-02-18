@@ -1,0 +1,46 @@
+.main-navbar-container {
+    width: 100%;
+    border: 1px solid #626262;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(185deg, #45423a 15.54%, #202126 114.57%);
+    overflow-x: auto; /* Add overflow property for horizontal scrolling on small screens */
+}
+
+.main-navbar-container button {
+    color: white;
+}
+
+.main-navbar-container ul {
+    list-style: none; /* Remove default list styles */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    max-width: 100%; /* Ensure the navbar doesn't overflow on small screens */
+    overflow: hidden; /* Hide overflowing items */
+}
+
+.main-navbar-container li {
+    font-size: 16px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    color: white;
+}
+
+.main-navbar-container li.active-item {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+@media (min-width: 768px){
+
+    .md\:flex.navbar {
+      margin-left: 20vh;
+    }
+  }

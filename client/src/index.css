@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background: #212227;
+}
+.league-selected{
+  text-shadow: 0px 0px 40px #1EFF00;
+ 
+}
+.text-\[\#FEF098\] {
+  --tw-text-opacity: 1;
+  /* color: rgb(254 240 152 / var(--tw-text-opacity)); */
+  color: #FF0000;
+}
+.border-b-\[\#BE8200\] {
+  --tw-border-opacity: 1;
+  /* border-bottom-color: rgb(190 130 0 / var(--tw-border-opacity)); */
+  border-bottom-color: #FF0000;
+}
+
+
+
+.active-item{
+  background:linear-gradient(180deg, #BE8200 0%, #fea498 47.4%, #EFD261 100%);
+box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.25);
+color: #1B1C21;
+text-shadow: 0px 4px 4px rgba(236, 250, 242, 0.12);
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.element-container input {
+  padding: 17px 20px;
+  border-radius: 4px;
+  border: 1px solid #3C3C3C;
+  background: #2C2C2C;
+  color: white;
+}
+
+.zip-code{
+  height: 59px;
+}
+/* .flex {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+} */
+/* styles for desktop devices */
+@media only screen and (min-width: 992px) {
+  body {
+    font-size: 16px;
+    width: 80%;
+    margin: auto;
+  }
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/* styles for tablet devices */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  body {
+    font-size: 14px;
+    width: 90%;
+    margin: auto;
+  }
+}
+
+/* styles for mobile devices */
+@media only screen and (max-width: 767px) {
+  body {
+    font-size: 12px;
+    width: 100%;
+    margin: 0;
+  }
+
+  @media (prefers-color-scheme: dark){
+
+    .dark\:bg-gray-800 {
+     margin-left: 43vh;
+    }
+  }
+
+
+
+}
+
+.bg-yellow-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(161 98 7 / var(--tw-bg-opacity));
+    width: 65px;
+    height: 4vh;
+}
+
+.w-40 {
+  width: 40rem;
+}
+
+.r-modal-header .cross-btn {
+  position: absolute;
+  right: 19px;
+  top: 2px;
+  cursor: pointer;
+}
+
+
+
+
+
+.gap-1 {
+  gap: 0.75rem;
+}
+
+
+
+
+/* Styles for desktop devices */
+
+
+.Navbar-Header, #homepage {
+  background-image: url("./assets/GreenTopBanner.png");
+  height: 5vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+@media (max-width: 768px) {
+
+  .container {
+    direction: column;
+  }
+  .css-1lgwsod-MuiTypography-root{
+    font-size: 0.6rem;
+  }
+  
+}
+
+.css-1lgwsod-MuiTypography-root {
+  font-size: 0.9rem;
+}
+.sign-in-button,
+.register-button {
+  /* Styles for the Sign In and Register buttons */
+  padding: 10px 20px;
+  border: 2px solid #FFD700; /* Yellow color */
+  color: #FFD700; /* Yellow color */
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #FFF; /* White background */
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+@media (prefers-color-scheme: dark){
+
+  .dark\:bg-gray-900 {
+    --tw-bg-opacity: 1;
+    background-image: url("./assets/GreenTopBanner.png");
+    width: 100%;
+  }
+}
+
+    
+
+.css-yji0va-MuiButtonBase-root-MuiListItem-root.Mui-selected {
+  background-color: #FF0000;
+  color: white;
+}
+
+.css-ahj2mt-MuiTypography-root {
+  margin: 0;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  color: white;
+}
+
+.css-hip9hq-MuiPaper-root-MuiAppBar-root {
+
+  background-color: transparent !important;
+  }
+
+  
