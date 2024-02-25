@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TimeFormat from "../../services/TimeFormat.js/index.js";
+import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 import Switches from "../Switches.js";
 import Modal from "react-modal"; // Import the modal library

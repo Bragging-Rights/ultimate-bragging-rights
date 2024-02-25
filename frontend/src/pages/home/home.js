@@ -4,12 +4,13 @@ import { Helmet } from "react-helmet";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import line from "../../assets/GoldDividerLine.png";
-
-
+import "./CSS/home.css";
+import homepage from "../../assets/homepage.jpg";
+import bglow from "../../assets/bgloww.png";
 
 const styles = {
   introContainer: {
-    backgroundImage: "url(/src/assets/bglow.png)",
+    backgroundImage: `url(${bglow})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     textAlign: "center",
@@ -43,7 +44,7 @@ const styles = {
   },
   introContainer: {
     padding: "50px 0",
-    backgroundImage: "url(/src/assets/bglow.png)",
+    backgroundImage: `url(${bglow})`,
     backgroundSize: "cover",
   },
   contentContainer: {
@@ -70,17 +71,18 @@ const HomePage = () => {
       <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
         <iframe
           src="https://videosuite-player.vercel.app/?hash=6570dd3125e25&amp;apiUrl=https://videosuite.app&amp;analyticsUrl=https://api.vidanalytics.io&amp;appEnv=live"
-          width="100px"
-          height="100px"
+          width="70%"
+          height="60%"
           frameborder="none"
           class="_vs_ictr_player"
           id="6570dd3125e25"
+          
         ></iframe>
       </div>
     </div>
   </div>
 `;
-
+  const inMobileView = window.innerWidth <= 767;
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -97,18 +99,16 @@ const HomePage = () => {
   return (
     <Container>
       <Navbar />
-      {/* <MainNavBar /> */}
-      {/* HOME */}
       <Grid>
         <div
           id="home"
           className="homepage-content-section homepage-home-content relative"
           style={{
-            backgroundImage: `url(/src/assets/homepage.jpg)`,
+            backgroundImage: `url(${homepage})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "contain",
             textAlign: "center",
-            minHeight: "45vh",
+            minHeight: "88vh",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -117,17 +117,21 @@ const HomePage = () => {
           <div className="homepage-container">
             <div className="row">
               <div
-                className="col-xs-12 video"
+                className={`col-xs-12 video iframe${
+                  inMobileView ? " mobile-view" : ""
+                }`}
                 dangerouslySetInnerHTML={{ __html: iframeHTML }}
+                style={{
+                  marginLeft: inMobileView ? "0vh" : "0vh",
+                  width: inMobileView ? "30vh" : "100vh",
+                  height: inMobileView ? "10vh" : "24vh",
+                  marginTop: inMobileView ? "-34vh" : "0vh",
+                }}
               ></div>
             </div>
           </div>
         </div>
       </Grid>
-      <br />
-      <br />
-      {/* Green */}
-
       <Grid container>
         <Grid item xs={12} sx={styles.introContainer}>
           <div style={styles.contentContainer}>
@@ -212,9 +216,6 @@ const HomePage = () => {
           </div>
         </Grid>
       </Grid>
-      <br />
-      <br />
-      <br />
 
       <Footer />
     </Container>
@@ -222,4 +223,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

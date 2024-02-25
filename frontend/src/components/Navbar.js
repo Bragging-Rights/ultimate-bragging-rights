@@ -12,6 +12,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import img from "../assets/green.png";
 
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
@@ -35,7 +36,11 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" className="Navbar-Header">
+    <AppBar
+      position="static"
+      className="Navbar-Header"
+      style={{ backgroundColor: "transparent", backgroundImage: `url(${img})` }}
+    >
       <Container maxWidth="lg">
         <Toolbar>
           <Grid
@@ -50,7 +55,8 @@ const Navbar = () => {
                   variant="body1"
                   color="inherit"
                   sx={{
-                    fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                    fontSize: isMobileView ? "0.7rem" : "0.8rem",
+                    textAlign: "left",
                   }}
                 >
                   LIMITED FREE LIFETIME MEMBERSHIP AVAILABLE{" "}
@@ -58,7 +64,7 @@ const Navbar = () => {
                     style={{
                       color: "red",
                       textDecoration: "line-through white",
-                      fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                      fontSize: isMobileView ? "0.7rem" : "0.8rem",
                     }}
                   >
                     $250
@@ -66,26 +72,24 @@ const Navbar = () => {
                 </Typography>
               )}
             </Grid>
-            <Grid
-              item
-              xs={6}
-              sm={4}
-              style={{
-                textAlign: "center",
-                marginTop: isHomepage && isMobileView ? "-3vh" : 0,
-              }}
-            >
+            <Grid item xs={6} sm={4} style={{ textAlign: "center" }}>
               {!isHomepage && <LeagueSelect />}
             </Grid>
             <Grid item xs={6} sm={4} style={{ textAlign: "right" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                }}
+              >
                 {isHomepage && (
                   <Typography
                     variant="body1"
                     color="inherit"
                     sx={{
-                      marginLeft: isMobileView ? "20%" : "40%",
-                      fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                      marginLeft: "auto",
+                      fontSize: isMobileView ? "0.6rem" : "0.8rem",
                     }}
                   >
                     ALREADY A MEMBER
@@ -96,7 +100,6 @@ const Navbar = () => {
                   closeModal={() => setSignInModalIsOpen(false)}
                   onSignIn={handleSignIn}
                 />
-
                 {userEmail ? (
                   <Button
                     className="logout-button"
@@ -109,8 +112,7 @@ const Navbar = () => {
                       borderRadius: "0.375rem",
                       boxShadow:
                         "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                      fontSize: isMobileView ? "0.4rem" : "0.8rem",
-                      marginRight: isMobileView ? "-20%" : "-10px",
+                      fontSize: isMobileView ? "0.8rem" : "1rem",
                     }}
                   >
                     Logout
@@ -129,31 +131,12 @@ const Navbar = () => {
                           borderRadius: "0.375rem",
                           boxShadow:
                             "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                          marginLeft: "auto",
-                          fontSize: isMobileView ? "0.4rem" : "0.8rem",
-                          marginRight: isMobileView ? "-20%" : "-10px",
+                          fontSize: isMobileView ? "0.8rem" : "1rem",
+                          marginLeft: isMobileView ? "10%" : 0,
                         }}
                       >
                         SignIn
                       </Button>
-
-                      {/* Uncomment the following lines if you have a registration route */}
-                      {/* <Link to="/registration" style={{ textDecoration: "none" }}>
-                          <Button
-                            className="register-button"
-                            onClick={() => setModalIsOpen(true)}
-                            style={{
-                              border: "2px solid #f6e05e",
-                              color: "#f0e68c",
-                              fontWeight: 800,
-                              borderRadius: "0.375rem",
-                              boxShadow:
-                                "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                            }}
-                          >
-                            REGISTER
-                          </Button>
-                        </Link> */}
                     </React.Fragment>
                   )
                 )}

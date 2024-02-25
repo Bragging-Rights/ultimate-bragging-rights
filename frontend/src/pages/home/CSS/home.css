@@ -1,0 +1,19 @@
+@media (max-width: 600px) {
+    .css-11lq3yg-MuiGrid-root {
+      margin-top:-63vh; 
+
+    }
+    .css-1fv6ny9-MuiTypography-root {
+     
+      font-size: 0.8rem;
+    
+  }
+    .textContainer {
+      padding: 5px;
+    }
+  }
+  
+  /* iframe{
+    margin-top: 20%;
+    margin-left: 10vh;
+  } */
