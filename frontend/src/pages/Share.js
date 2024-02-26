@@ -7,7 +7,7 @@ import GameCard from "../components/GameCard/GameCard";
 import img1 from "../assets/card.png";
 import img2 from "../assets/card2.png";
 import GamerCardRight from "../components/GameCard/GamerCardRight/GamerCardRight";
-import { getGames } from "../services/games";
+import { getGames } from "../Apis/games";
 import { useQuery } from "react-query";
 import { format, add } from "date-fns";
 import { useLeagueContext } from "../components/LeagueContext";
@@ -17,8 +17,6 @@ import imgFootball1 from "../assets/Football-1.png";
 import imgFootball6 from "../assets/Football-6.png";
 import imgHosckey1 from "../assets/Hockey-1.png";
 import imgHosckey4 from "../assets/Hockey-4.png";
-
-
 
 const images = [
   imgBasketball1,
@@ -33,7 +31,7 @@ const getRandomImage = () => {
   const randomIndex = Math.floor(Math.random() * images.length);
   return images[randomIndex];
 };
-      
+
 const Share = () => {
   const [heroImg, setHeroImg] = useState(getRandomImage());
 
@@ -100,26 +98,22 @@ const Share = () => {
     refetchTomorrowGame();
   }, [selectedLeague]);
 
-//Images
-
+  //Images
 
   useEffect(() => {
     setHeroImg(getRandomImage());
   }, []);
 
-
   return (
     <div className=" w-full">
       <MainNavBar />
 
-      
+      <div>
+        {/* Your existing code */}
+        <HeroSection imgUrl={heroImg} />
+        {/* Your existing code */}
+      </div>
 
-          <div>
-            {/* Your existing code */}
-            <HeroSection imgUrl={heroImg} />
-            {/* Your existing code */}
-          </div>
-       
       <Line />
       <Banner date={formattedDate} label={"Upcoming Games"} />
       <div className=" grid grid-cols-2 gap-4 ">
@@ -142,8 +136,6 @@ const Share = () => {
       <div className=" my-2">
         <Line />
       </div>
-
-    
     </div>
   );
 };
