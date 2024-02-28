@@ -1,71 +1,39 @@
-import React, { useEffect } from "react";
-import { Container, Grid, Typography } from "@mui/material";
-import { Helmet } from "react-helmet";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import line from "../../assets/GoldDividerLine.png";
-import "./CSS/home.css";
+import React, { useEffect } from 'react';
+import { Grid, Container, Typography } from '@mui/material';
 import homepage from "../../assets/homepage.jpg";
-import bglow from "../../assets/bgloww.png";
+import image2 from "../../assets/bgloww.png"; // Replace with your image 2 URL
+import Footer from '../../components/Footer';
+import Navbar from '../../components/Navbar';
+
 
 const styles = {
   introContainer: {
-    backgroundImage: `url(${bglow})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    textAlign: "center",
-    height: "60vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    textAlign: 'center',
+    color: 'white',
+    width: '100%',
   },
   contentContainer: {
-    maxWidth: "90%",
-    margin: "0 auto",
+    padding: '20px',
   },
   header: {
-    fontSize: "2rem",
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: "1rem",
-    color: "#FFD700",
-    fontStyle: "italic",
-  },
-  image: {
-    width: "100%",
-    maxWidth: "135vh",
-    margin: "0 auto",
-  },
-  textContainer: {
-    maxWidth: "100%",
-  },
-  column: {
-    marginBottom: "2rem",
-  },
-  introContainer: {
-    padding: "50px 0",
-    backgroundImage: `url(${bglow})`,
-    backgroundSize: "cover",
-  },
-  contentContainer: {
-    textAlign: "center",
-  },
+    fontWeight: 'italic',
 
-  image: {
-    width: "100%",
-    maxWidth: "150px",
-    margin: "20px 0",
+    marginBottom: '-40px',
+    color:"#FFFF00"
   },
   column: {
-    padding: "0 15px",
+    marginBottom: '20px',
   },
   textContainer: {
-    margin: "20px 0",
+    padding: '10px',
+    borderRadius: '5px',
   },
 };
-
-const HomePage = () => {
-  const iframeHTML = `
+const iframeHTML = `
   <div class="iv-player_responsive_padding" style="padding:56.25% 0 0 0;position:relative;" data-hash="6570dd3125e25">
     <div class="iv-player_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
       <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
@@ -76,13 +44,29 @@ const HomePage = () => {
           frameborder="none"
           class="_vs_ictr_player"
           id="6570dd3125e25"
-          
         ></iframe>
       </div>
     </div>
   </div>
 `;
-  const inMobileView = window.innerWidth <= 767;
+
+const inMobileView = window.innerWidth <= 767;
+
+const homepageContainerStyles = {
+  position: "relative",
+  marginTop: inMobileView ? "-20px" : "0",
+};
+
+const videoContainerStyles = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: inMobileView ? "90%" : "50%", // Adjust the width as needed
+  maxWidth: "600px", // Set a maximum width if necessary
+};
+
+const HomePage = () => {
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -90,50 +74,38 @@ const HomePage = () => {
     script.async = true;
     document.body.appendChild(script);
 
-    // Cleanup function to remove the script when the component unmounts
     return () => {
       document.body.removeChild(script);
     };
   }, []);
 
   return (
+
+    <>
+    <Navbar/>
     <Container>
-      <Navbar />
-      <Grid>
-        <div
-          id="home"
-          className="homepage-content-section homepage-home-content relative"
-          style={{
-            backgroundImage: `url(${homepage})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "contain",
-            textAlign: "center",
-            minHeight: "88vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div className="homepage-container">
-            <div className="row">
-              <div
-                className={`col-xs-12 video iframe${
-                  inMobileView ? " mobile-view" : ""
-                }`}
-                dangerouslySetInnerHTML={{ __html: iframeHTML }}
-                style={{
-                  marginLeft: inMobileView ? "0vh" : "0vh",
-                  width: inMobileView ? "30vh" : "100vh",
-                  height: inMobileView ? "10vh" : "24vh",
-                  marginTop: inMobileView ? "-34vh" : "0vh",
-                }}
-              ></div>
-            </div>
+      <Grid container spacing={2} direction="column" alignItems="center">
+        {/* Image 1 with centered iframe */}
+        <Grid item xs={12}>
+          <div style={{ position: "relative" }}>
+            <img src={homepage} alt="Image 1" width="100%" />
+            <div
+              style={{
+                position: "absolute",
+                top: "65%",
+                left: "58%",
+                transform: "translate(-50%, -50%)",
+                width: "60%", // Adjust as needed
+                height: "auto", // Automatically adjust height based on width
+              }}
+              dangerouslySetInnerHTML={{ __html: iframeHTML }}
+            />
           </div>
-        </div>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} sx={styles.introContainer}>
+        </Grid>
+        {/* Image 2 */}
+        <Grid item xs={12} style={{ position: 'relative' }}>
+        <img src={image2} alt="Image 2" style={{ width: '100%' }} />
+        <div style={styles.introContainer}>
           <div style={styles.contentContainer}>
             <Typography variant="h4" component="h1" sx={styles.header}>
               THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
@@ -214,11 +186,12 @@ const HomePage = () => {
               </Grid>
             </Grid>
           </div>
-        </Grid>
+        </div>
       </Grid>
-
-      <Footer />
+    </Grid>
     </Container>
+    <Footer/>
+                </>
   );
 };
 

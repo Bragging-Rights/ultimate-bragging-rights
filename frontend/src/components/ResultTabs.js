@@ -15,7 +15,7 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
   };
 
   return (
-    <Box style={{ marginRight: "55vh" }}>
+    <Box style={{ marginRight: "68vh" }}>
       <List
         sx={{
           display: "flex",
