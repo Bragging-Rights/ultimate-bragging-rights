@@ -33,10 +33,11 @@ export const getGameById = async (id) => {
   return response;
 };
 
-export const enterGameResults = async (gameId, results) => {
-  const response = await api.put(
-    `api/admin/games/enterResults/${gameId}`,
-    JSON.stringify(results)
+export const enterGameResults = async (data) => {
+  const { game_id, ...rest } = data;
+  const response = await api.patch(
+    `api/admin/games/updateGame/${game_id}`,
+    JSON.stringify(rest)
   );
 
   return response;

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import { getGames, enterGameResults } from "../../Apis/games";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { useLeagueContext } from "../../components/LeagueContext";
+import displayToast from "../../components/Alert/Alert";
 
 // Create a new component for the form within each card
 function GameForm({ game, onUpdateGameData }) {
@@ -21,6 +22,18 @@ function GameForm({ game, onUpdateGameData }) {
     setResultEntered(false);
   };
 
+  const { mutate, isLoading, isError, data, error, reset } = useMutation(
+    (data) => enterGameResults(data),
+    {
+      onSuccess: (data) => {
+        displayToast("Result added successfully", "success");
+      },
+      onError: (error) => {
+        displayToast("Error while adding result", "error");
+      },
+    }
+  );
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -29,15 +42,11 @@ function GameForm({ game, onUpdateGameData }) {
 
     // Set the resultEntered flag to true
     setResultEntered(true);
-
-    // Call your API to send the results to the backend
-    enterGameResults(game._id, formData)
-      .then((response) => {
-        console.log("Data sent to the backend:", response);
-      })
-      .catch((error) => {
-        console.error("Error sending data to the backend:", error);
-      });
+    console.log("formData", formData);
+    mutate({
+      ...formData,
+      game_id: game._id,
+    });
   };
 
   const handleChange = (e) => {
@@ -75,7 +84,9 @@ function GameForm({ game, onUpdateGameData }) {
                 className="bg-gray-800 text-white p-2 rounded w-1/3"
               />
             </div>
-            <span className="text-red-500">vs</span>{" "}
+            <span className="" style={{ marginRight: "10px" }}>
+              vs
+            </span>
             <div className="mb-4 w-1/2">
               <label htmlFor="hFinalScore">{game.home}</label>
               <input
@@ -87,8 +98,8 @@ function GameForm({ game, onUpdateGameData }) {
                 className="bg-gray-800 text-white p-2 rounded w-1/3"
               />
             </div>
-            <div className="mb-4 w-full">
-              <label htmlFor="gameEnd"></label>
+            <div className="mb-4  w-1/2" style={{ marginLeft: "10px" }}>
+              <label htmlFor="gameEnd">type</label>
               <select
                 id="gameEnd"
                 name="gameEnd"
@@ -100,8 +111,6 @@ function GameForm({ game, onUpdateGameData }) {
                 <option value="Overtime">Overtime</option>
                 <option value="Postponed">Postponed</option>
                 <option value="Cancelled">Cancelled</option>
-
-                {/* Add more game types as needed */}
               </select>
             </div>
             <div className="mb-4 w-full">
@@ -135,22 +144,31 @@ function GameForm({ game, onUpdateGameData }) {
 
 const EnterResults = () => {
   const { selectedLeague } = useLeagueContext();
+  console.log("selectedLeague", selectedLeague);
   const [gameData, setGameData] = useState([]);
   const date = new Date();
   const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
-  const { data: fetchedData } = useQuery(
-    [selectedLeague, formattedDateForAPI],
+  const { data: fetchedData, refetch } = useQuery(
+    ["matches", formattedDateForAPI, selectedLeague],
     getGames,
+
     {
-      onSuccess: (fetchedData) => {
-        setGameData(fetchedData.data);
+      onSuccess: (data) => {
+        setGameData(data.data);
       },
       onError: (error) => {
         console.error("An error occurred:", error);
       },
+      enabled: false,
     }
   );
+
+  useEffect(() => {
+    if (selectedLeague) {
+      refetch();
+    }
+  }, [selectedLeague]);
 
   const updateGameData = (gameId, updatedData) => {
     // Find the game in gameData with the matching gameId
@@ -179,31 +197,12 @@ const EnterResults = () => {
       <h1 className="text-xl mb-4 align-items-center">
         Enter Results for today's matches:
       </h1>
-      {/* <p>
-        <span className="text-red-500">Red is Visitor</span>
-        <br />
-        <span className="text-blue-500">Blue is Home</span>
-      </p> */}
 
-      <div className="flex flex-col w-full">
-        {gameData.map((game) => (
-          <div key={game._id} className="w-1/2 p-4 border border-blue-300">
-            {/* <span>
-              <span className="text-orange-500">Match: </span>{" "}
-              <span className="">{game.visitor}</span>{" "}
-              <span className="text-red-500">vs</span>{" "}
-              <span className="">{game.home}</span>
-            </span> */}
-            {/* <p>
-              <span className="text-pink-500">ID: </span>
-              <span>{game._id}</span>
-            </p> */}
-            <br />
-            {/* Render the form component for this card */}
-            <GameForm game={game} onUpdateGameData={updateGameData} />
-          </div>
-        ))}
-      </div>
+      {gameData.map((game) => (
+        <div key={game._id} className="mr-2 p-4 border border-blue-300 mt-2">
+          <GameForm game={game} onUpdateGameData={updateGameData} />
+        </div>
+      ))}
     </div>
   );
 };

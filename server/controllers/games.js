@@ -84,10 +84,10 @@ const getTeamsOfLeaguesController = async (req, res) => {
 const getGames = async (req, res) => {
   console.log(req.params);
   try {
-    const games = await Game.find({
+    const games = await Game?.find({
       league: req.params.league,
       gamedate: req.params.date,
-    }).sort((a, b) => new Date(a.gamedate) - new Date(b.gamedate));
+    });
     res.json(games);
   } catch (error) {
     res.status(500).json({ message: error.message });
