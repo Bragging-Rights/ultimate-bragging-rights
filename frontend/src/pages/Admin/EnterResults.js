@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { useLeagueContext } from "../../components/LeagueContext";
 import displayToast from "../../components/Alert/Alert";
+import TableData from "./TableData";
 
 // Create a new component for the form within each card
 function GameForm({ game, onUpdateGameData }) {
@@ -194,15 +195,7 @@ const EnterResults = () => {
 
   return (
     <div className="p-4 text-white">
-      <h1 className="text-xl mb-4 align-items-center">
-        Enter Results for today's matches:
-      </h1>
-
-      {gameData.map((game) => (
-        <div key={game._id} className="mr-2 p-4 border border-blue-300 mt-2">
-          <GameForm game={game} onUpdateGameData={updateGameData} />
-        </div>
-      ))}
+<TableData/>
     </div>
   );
 };
