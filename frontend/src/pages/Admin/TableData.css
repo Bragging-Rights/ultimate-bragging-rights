@@ -29,7 +29,8 @@
 /* Styles for the active tab */
 .Mui-selected {
 
-    background-color: antiquewhite !important;
+    background-color: #FF0000 !important;
+    color: white !important;
 }
 
 .css-1wf8b0h-MuiTabs-flexContainer {
