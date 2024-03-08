@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Box from "@mui/material/Box";
+
 import HeroSection from "../components/HeroSection.js";
 import MainNavBar from "../components/MainNavBar";
 import Line from "../components/Line.js";
@@ -33,6 +41,11 @@ const getRandomImage = () => {
 };
 
 const Games = () => {
+  const gridStyles = {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: "1rem", // You can adjust the gap value accordingly
+  };
   const [heroImg, setHeroImg] = useState(getRandomImage());
 
   const isAdmin = true; // Set this value based on whether the user is an admin or not
@@ -104,66 +117,75 @@ const Games = () => {
     setHeroImg(getRandomImage());
   }, []);
   return (
-    <div className=" w-full">
-      <div>
-        {/* Your existing code */}
+    <Grid container spacing={2} direction="column">
+      <Grid item>
         <HeroSection imgUrl={heroImg} />
-        {/* Your existing code */}
-      </div>
-      <MainNavBar />
-      <Line />
-      <Banner date={formattedDate} label={"Upcoming Games"} />
-      <div className=" grid grid-cols-2 gap-4 ">
-        {gameData && gameData.length > 0 ? (
-          gameData.map((game, index) =>
-            index % 2 === 0 ? (
-              <GameCard key={game.id} gameData={game} isAdmin={isAdmin} />
-            ) : (
-              <GamerCardRight key={game.id} gameData={game} />
-            )
-          )
-        ) : (
-          <p className="text-white">No games available.</p>
-        )}
-      </div>
-      {/* <div className=" grid grid-cols-2 gap-4 ">
-        <GameCard />
-        <GamerCardRight />
-      </div> */}
-      <div className=" my-2">
+      </Grid>
+      <Grid item>
+        <MainNavBar />
+      </Grid>
+      <Grid item>
         <Line />
-      </div>
-
-      <div className=" flex gap-8 my-4">
-        <div>
-          <img src={img1} alt="img1" className=" w-full" />
-        </div>
-        <div>
-          <img src={img2} alt="img2" className=" w-full" />
-        </div>
-      </div>
-      <Banner date={nextFormattedDate} label={"Tomorrow's Games"} />
-      <div className=" grid grid-cols-2 gap-4 ">
+      </Grid>
+      <Grid item>
+        <Banner date={formattedDate} label="Upcoming Games" />
+      </Grid>
+      <Grid container item spacing={2} justifyContent="center">
+        {gameData && gameData.length > 0 ? (
+          gameData.map((game, index) => (
+            <Grid key={game.id} item xs={12} md={6}>
+              {index % 2 === 0 ? (
+                <GameCard gameData={game} isAdmin={isAdmin} />
+              ) : (
+                <GamerCardRight gameData={game} />
+              )}
+            </Grid>
+          ))
+        ) : (
+          <Typography variant="body1" color="textSecondary">
+            No games available.
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        <Line />
+      </Grid>
+      <Grid container item spacing={2} justifyContent="center">
+        <Grid item xs={12} md={6}>
+          <img src={img1} alt="img1" className="w-full" />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <img src={img2} alt="img2" className="w-full" />
+        </Grid>
+      </Grid>
+      <Grid item>
+        <Banner date={nextFormattedDate} label="Tomorrow's Games" />
+      </Grid>
+      <Grid container item spacing={2} justifyContent="center">
         {tomorrowGameData ? (
           tomorrowGameData.length > 0 ? (
-            tomorrowGameData.map((game, index) =>
-              index % 2 === 0 ? (
-                <GameCard key={game.id} gameData={game} isAdmin={isAdmin} />
-              ) : (
-                <GamerCardRight key={game.id} gameData={game} />
-              )
-            )
+            tomorrowGameData.map((game, index) => (
+              <Grid key={game.id} item xs={12} md={6}>
+                {index % 2 === 0 ? (
+                  <GameCard gameData={game} isAdmin={isAdmin} />
+                ) : (
+                  <GamerCardRight gameData={game} />
+                )}
+              </Grid>
+            ))
           ) : (
-            <p className="text-white">No games available for tomorrow.</p>
+            <Typography variant="body1" color="textSecondary">
+              No games available for tomorrow.
+            </Typography>
           )
         ) : (
-          <p className="text-white">Loading tomorrow's games...</p>
+          <Typography variant="body1" color="textSecondary">
+            Loading tomorrow's games...
+          </Typography>
         )}
-      </div>
-      <br></br>
-      <br></br>
-      <br></br>
-    </div>
+      </Grid>
+      <Box m={3} />
+    </Grid>
   );
 };
 

@@ -1,36 +1,34 @@
-/* Default styles for all screen sizes */
 .game-card {
-    border-radius: 6px;
-    border: 1px solid #626262;
-    background: #212121;
-    padding: 24px;
-    margin-bottom: 20px; /* Add margin to separate cards */
-  }
-  
-  .game-time,
-  .game-date,
-  .box,
-  .card-input,
-  .line,
-  .card-id,
-  .card-label,
-  .card-btn-outline,
-  .card-btn {
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  
-  .game-time {
-    color: #fef098;
-  }
-  
-  .game-date {
-    color: #fff;
-  }
-  
+  border-radius: 6px;
+  border: 1px solid #626262;
+  background: #212121;
+  padding: 24px;
+  margin-bottom: 20px; /* Add margin to separate cards */
+  font-family: Inter;
+}
+
+.game-time,
+.game-date,
+.box,
+.card-input,
+.line,
+.card-id,
+.card-label,
+.card-btn-outline,
+.card-btn {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.game-time {
+  color: #fef098;
+}
+
+.game-date {
+  color: #fff;
+}  
   .box {
     background: linear-gradient(185deg, #45423a 15.54%, #202126 114.57%);
     font-weight: 800;
@@ -111,4 +109,72 @@
     height: 40px !important;
     margin-bottom: 0.4rem;
   }
-  
+  .flex-col{
+    flex-direction: column;
+  }
+
+
+  .px-7 {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+}
+
+.h-12 {
+    height: 3rem;
+}
+.box label {
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .game-card {
+      padding: 16px;
+      gap: 10px; /* Add row gap for smaller screens */
+  }
+
+  .game-time,
+  .game-date,
+  .box,
+  .card-input,
+  .line,
+  .card-id,
+  .card-label,
+  .card-btn-outline,
+  .card-btn {
+      font-size: 12px; /* Adjust font size for smaller screens */
+  }
+
+  .box {
+      padding: 8px; /* Adjust padding for smaller screens */
+  }
+
+  .card-input {
+      width: 100%; /* Make the input full width on mobile */
+      height: 36px; /* Adjust height for smaller screens */
+  }
+
+  .line {
+      height: 4px; /* Adjust height for smaller screens */
+  }
+
+  /* Additional adjustments for mobile views */
+  .flex {
+      display: block;
+  }
+
+  .flex-col {
+      flex-direction: column;
+  }
+
+  .px-7 {
+      padding-left: 1.75rem;
+      padding-right: 1.75rem;
+  }
+
+  .h-12 {
+      height: 3rem;
+  }
+}
