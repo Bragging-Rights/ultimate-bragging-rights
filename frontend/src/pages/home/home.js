@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Grid, Container, Typography } from "@mui/material";
-import homepage from "../../assets/homepage.jpg";
-import image2 from "../../assets/bgloww.png"; // Replace with your image 2 URL
+import homepage from "../../assets/TopSection.png";
+import image2 from "../../assets/BottomSection.png"; // Replace with your image 2 URL
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 
@@ -81,8 +81,8 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar />
       <Container>
+        <Navbar />
         <Grid container spacing={2} direction="column" alignItems="center">
           {/* Image 1 with centered iframe */}
           <Grid item xs={12}>
@@ -91,7 +91,7 @@ const HomePage = () => {
               <div
                 style={{
                   position: "absolute",
-                  top: "65%",
+                  top: "75%",
                   left: "58%",
                   transform: "translate(-50%, -50%)",
                   width: "60%", // Adjust as needed
@@ -106,14 +106,14 @@ const HomePage = () => {
             <img src={image2} alt="Image 2" style={{ width: "100%" }} />
             <div style={styles.introContainer}>
               <div style={styles.contentContainer}>
-                <Typography variant="h4" component="h1" sx={styles.header}>
+                {/* <Typography variant="h4" component="h1" sx={styles.header}>
                   THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
                 </Typography>
                 <br />
                 <br />
-                <Grid container spacing={1}>
-                  {/* First Column */}
-                  <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                <Grid container spacing={1}> */}
+                {/* First Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
                     <div style={styles.textContainer}>
                       <Typography variant="body1">
                         <i className="fa fa-futbol-o mr-2 text-blue-500"></i>{" "}
@@ -128,10 +128,10 @@ const HomePage = () => {
                         The Games They Can
                       </Typography>
                     </div>
-                  </Grid>
+                  </Grid> */}
 
-                  {/* Second Column */}
-                  <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                {/* Second Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
                     <div style={styles.textContainer}>
                       <Typography variant="body1">
                         <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
@@ -146,10 +146,10 @@ const HomePage = () => {
                         Predicting Stats
                       </Typography>
                     </div>
-                  </Grid>
+                  </Grid> */}
 
-                  {/* Third Column */}
-                  <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                {/* Third Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
                     <div style={styles.textContainer}>
                       <Typography variant="body1">
                         <i className="fa fa-trophy mr-2 text-blue-500"></i>{" "}
@@ -164,10 +164,10 @@ const HomePage = () => {
                         Predicting Who Is Going To Win
                       </Typography>
                     </div>
-                  </Grid>
+                  </Grid> */}
 
-                  {/* Fourth Column */}
-                  <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                {/* Fourth Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
                     <div style={styles.textContainer}>
                       <Typography variant="body1" style={{ color: "#ffff00" }}>
                         <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
@@ -183,13 +183,13 @@ const HomePage = () => {
                       </Typography>
                     </div>
                   </Grid>
-                </Grid>
+                </Grid> */}
               </div>
             </div>
           </Grid>
         </Grid>
+        <Footer />
       </Container>
-      <Footer />
     </>
   );
 };
