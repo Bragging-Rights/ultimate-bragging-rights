@@ -42,3 +42,9 @@ export const enterGameResults = async (data) => {
 
   return response;
 };
+
+export const getGamesByDate = async (date) => {
+  const response = await api.get(`api/admin/games/getGameBydate/${date}`);
+
+  return response;
+};
