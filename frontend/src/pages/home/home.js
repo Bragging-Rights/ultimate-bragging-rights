@@ -1,36 +1,35 @@
-import React, { useEffect } from 'react';
-import { Grid, Container, Typography } from '@mui/material';
-import homepage from "../../assets/homepage.jpg";
-import image2 from "../../assets/bgloww.png"; // Replace with your image 2 URL
-import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
-
+import React, { useEffect } from "react";
+import { Grid, Container, Typography } from "@mui/material";
+import homepage from "../../assets/TopSection.png";
+import image2 from "../../assets/BottomSection.png"; // Replace with your image 2 URL
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
 
 const styles = {
   introContainer: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    textAlign: 'center',
-    color: 'white',
-    width: '100%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    color: "white",
+    width: "100%",
   },
   contentContainer: {
-    padding: '20px',
+    padding: "20px",
   },
   header: {
-    fontWeight: 'italic',
+    fontWeight: "italic",
 
-    marginBottom: '-40px',
-    color:"#FFFF00"
+    marginBottom: "-40px",
+    color: "#FFFF00",
   },
   column: {
-    marginBottom: '20px',
+    marginBottom: "20px",
   },
   textContainer: {
-    padding: '10px',
-    borderRadius: '5px',
+    padding: "10px",
+    borderRadius: "5px",
   },
 };
 const iframeHTML = `
@@ -80,118 +79,117 @@ const HomePage = () => {
   }, []);
 
   return (
-
     <>
-    <Navbar/>
-    <Container>
-      <Grid container spacing={2} direction="column" alignItems="center">
-        {/* Image 1 with centered iframe */}
-        <Grid item xs={12}>
-          <div style={{ position: "relative" }}>
-            <img src={homepage} alt="Image 1" width="100%" />
-            <div
-              style={{
-                position: "absolute",
-                top: "65%",
-                left: "58%",
-                transform: "translate(-50%, -50%)",
-                width: "60%", // Adjust as needed
-                height: "auto", // Automatically adjust height based on width
-              }}
-              dangerouslySetInnerHTML={{ __html: iframeHTML }}
-            />
-          </div>
+      <Container>
+        <Navbar />
+        <Grid container spacing={2} direction="column" alignItems="center">
+          {/* Image 1 with centered iframe */}
+          <Grid item xs={12}>
+            <div style={{ position: "relative" }}>
+              <img src={homepage} alt="Image 1" width="100%" />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "75%",
+                  left: "58%",
+                  transform: "translate(-50%, -50%)",
+                  width: "60%", // Adjust as needed
+                  height: "auto", // Automatically adjust height based on width
+                }}
+                dangerouslySetInnerHTML={{ __html: iframeHTML }}
+              />
+            </div>
+          </Grid>
+          {/* Image 2 */}
+          <Grid item xs={12} style={{ position: "relative" }}>
+            <img src={image2} alt="Image 2" style={{ width: "100%" }} />
+            <div style={styles.introContainer}>
+              <div style={styles.contentContainer}>
+                {/* <Typography variant="h4" component="h1" sx={styles.header}>
+                  THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
+                </Typography>
+                <br />
+                <br />
+                <Grid container spacing={1}> */}
+                {/* First Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                    <div style={styles.textContainer}>
+                      <Typography variant="body1">
+                        <i className="fa fa-futbol-o mr-2 text-blue-500"></i>{" "}
+                        Watching Pre-Game Shows
+                      </Typography>
+                      <Typography variant="body1">
+                        <i className="fa fa-tv mr-2 text-blue-500"></i> Watching
+                        Post-Game Shows
+                      </Typography>
+                      <Typography variant="body1">
+                        <i className="fa fa-tv mr-2 text-blue-500"></i> And All
+                        The Games They Can
+                      </Typography>
+                    </div>
+                  </Grid> */}
+
+                {/* Second Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                    <div style={styles.textContainer}>
+                      <Typography variant="body1">
+                        <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
+                        Checking Stats
+                      </Typography>
+                      <Typography variant="body1">
+                        <i className="fa fa-share-alt mr-2 text-blue-500"></i>{" "}
+                        Sharing Stats
+                      </Typography>
+                      <Typography variant="body1">
+                        <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
+                        Predicting Stats
+                      </Typography>
+                    </div>
+                  </Grid> */}
+
+                {/* Third Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                    <div style={styles.textContainer}>
+                      <Typography variant="body1">
+                        <i className="fa fa-trophy mr-2 text-blue-500"></i>{" "}
+                        Telling You Whose Gonna Win
+                      </Typography>
+                      <Typography variant="body1">
+                        <i className="fa fa-headphones mr-2 text-blue-500"></i>{" "}
+                        Listening To Friends Predictions
+                      </Typography>
+                      <Typography variant="body1">
+                        <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
+                        Predicting Who Is Going To Win
+                      </Typography>
+                    </div>
+                  </Grid> */}
+
+                {/* Fourth Column */}
+                {/* <Grid item xs={12} sm={6} md={3} style={styles.column}>
+                    <div style={styles.textContainer}>
+                      <Typography variant="body1" style={{ color: "#ffff00" }}>
+                        <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
+                        SAYING 'I TOLD YOU SO!!'
+                      </Typography>
+                      <Typography variant="body1" style={{ color: "#ffff00" }}>
+                        <i className="fa fa-heart mr-2 text-blue-500"></i> AND
+                        LOVE HAVING
+                      </Typography>
+                      <Typography variant="body1" style={{ color: "#ffff00" }}>
+                        <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate
+                        Bragging Rights
+                      </Typography>
+                    </div>
+                  </Grid>
+                </Grid> */}
+              </div>
+            </div>
+          </Grid>
         </Grid>
-        {/* Image 2 */}
-        <Grid item xs={12} style={{ position: 'relative' }}>
-        <img src={image2} alt="Image 2" style={{ width: '100%' }} />
-        <div style={styles.introContainer}>
-          <div style={styles.contentContainer}>
-            <Typography variant="h4" component="h1" sx={styles.header}>
-              THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
-            </Typography>
-            <br />
-            <br />
-            <Grid container spacing={1}>
-              {/* First Column */}
-              <Grid item xs={12} sm={6} md={3} style={styles.column}>
-                <div style={styles.textContainer}>
-                  <Typography variant="body1">
-                    <i className="fa fa-futbol-o mr-2 text-blue-500"></i>{" "}
-                    Watching Pre-Game Shows
-                  </Typography>
-                  <Typography variant="body1">
-                    <i className="fa fa-tv mr-2 text-blue-500"></i> Watching
-                    Post-Game Shows
-                  </Typography>
-                  <Typography variant="body1">
-                    <i className="fa fa-tv mr-2 text-blue-500"></i> And All The
-                    Games They Can
-                  </Typography>
-                </div>
-              </Grid>
-
-              {/* Second Column */}
-              <Grid item xs={12} sm={6} md={3} style={styles.column}>
-                <div style={styles.textContainer}>
-                  <Typography variant="body1">
-                    <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
-                    Checking Stats
-                  </Typography>
-                  <Typography variant="body1">
-                    <i className="fa fa-share-alt mr-2 text-blue-500"></i>{" "}
-                    Sharing Stats
-                  </Typography>
-                  <Typography variant="body1">
-                    <i className="fa fa-tv mr-2 text-blue-500"></i> Predicting
-                    Stats
-                  </Typography>
-                </div>
-              </Grid>
-
-              {/* Third Column */}
-              <Grid item xs={12} sm={6} md={3} style={styles.column}>
-                <div style={styles.textContainer}>
-                  <Typography variant="body1">
-                    <i className="fa fa-trophy mr-2 text-blue-500"></i> Telling
-                    You Whose Gonna Win
-                  </Typography>
-                  <Typography variant="body1">
-                    <i className="fa fa-headphones mr-2 text-blue-500"></i>{" "}
-                    Listening To Friends Predictions
-                  </Typography>
-                  <Typography variant="body1">
-                    <i className="fa fa-tv mr-2 text-blue-500"></i> Predicting
-                    Who Is Going To Win
-                  </Typography>
-                </div>
-              </Grid>
-
-              {/* Fourth Column */}
-              <Grid item xs={12} sm={6} md={3} style={styles.column}>
-                <div style={styles.textContainer}>
-                  <Typography variant="body1" style={{ color: "#ffff00" }}>
-                    <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
-                    SAYING 'I TOLD YOU SO!!'
-                  </Typography>
-                  <Typography variant="body1" style={{ color: "#ffff00" }}>
-                    <i className="fa fa-heart mr-2 text-blue-500"></i> AND LOVE
-                    HAVING
-                  </Typography>
-                  <Typography variant="body1" style={{ color: "#ffff00" }}>
-                    <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate
-                    Bragging Rights
-                  </Typography>
-                </div>
-              </Grid>
-            </Grid>
-          </div>
-        </div>
-      </Grid>
-    </Grid>
-    </Container>
-    <Footer/>
-                </>
+        <Footer />
+      </Container>
+    </>
   );
 };
 

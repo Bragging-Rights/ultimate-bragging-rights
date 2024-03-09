@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #212227;
+  background: #000000;
     font-size: 16px;
     width: 80%;
     margin: auto;
@@ -462,4 +462,8 @@ border-radius: 5px;
   border-radius: 5px;
   color:rgb(44, 221, 20);
 
+}
+
+.css-1bnhfwg-MuiGrid-root>.MuiGrid-item {
+  padding-top: 0px ;
 }
