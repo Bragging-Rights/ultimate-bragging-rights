@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Grid, Container, Typography } from "@mui/material";
-import homepage from "../../assets/TopSection.png";
+import homepage from "../../assets/TopSectionFrame.png";
 import image2 from "../../assets/BottomSection.png"; // Replace with your image 2 URL
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
@@ -33,7 +33,7 @@ const styles = {
   },
 };
 const iframeHTML = `
-  <div class="iv-player_responsive_padding" style="padding:56.25% 0 0 0;position:relative;" data-hash="65cd2c70a107e">
+  <div class="iv-player_responsive_padding" style="padding:56.25% 0 0 0;position:relative; width:130%;" data-hash="65cd2c70a107e">
     <div class="iv-player_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
       <div class="iv-player_embed iv-player_async_p2z7746nud videoFoam=true" style="height:100%;position:relative;width:100%">
         <iframe
@@ -91,11 +91,11 @@ const HomePage = () => {
               <div
                 style={{
                   position: "absolute",
-                  top: "75%",
-                  left: "58%",
-                  transform: "translate(-50%, -50%)",
-                  width: "60%", // Adjust as needed
-                  height: "auto", // Automatically adjust height based on width
+                  top: "60%",
+                  left: "46%",
+                  transform: "translate(-55%, -50%)",
+                  width: "35%", // Adjust as needed
+                  height: "38%", // Automatically adjust height based on width
                 }}
                 dangerouslySetInnerHTML={{ __html: iframeHTML }}
               />
