@@ -87,7 +87,7 @@ const getGames = async (req, res) => {
     const games = await Game?.find({
       league: req.params.league,
       gamedate: req.params.date,
-    });
+    }).sort("time");
     res.json(games);
   } catch (error) {
     res.status(500).json({ message: error.message });
