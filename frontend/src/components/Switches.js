@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Switches = (props) => {
-  const {
+ const {
     league,
     season,
     setPick_num_ot,
@@ -9,15 +9,15 @@ const Switches = (props) => {
     setPick_ot,
     setPick_Reg,
     setPick_Ei,
-  } = props;
+ } = props;
 
-  const [regChecked, setRegChecked] = useState(true);
-  const [otChecked, setOtChecked] = useState(false);
-  const [soChecked, setSoChecked] = useState(false);
-  const [eiChecked, setEiChecked] = useState(false);
+ const [regChecked, setRegChecked] = useState(true);
+ const [otChecked, setOtChecked] = useState(false);
+ const [soChecked, setSoChecked] = useState(false);
+ const [eiChecked, setEiChecked] = useState(false);
 
-  return (
-    <div className="flex flex-col md:flex-row gap-5">
+ return (
+    <div className="flex md:flex-row gap-5">
       {(league === "NHL" &&
         (season === "Regular" || season === "Pre Season")) ||
       (league === "NHL" && season === "Playoffs") ? (
@@ -26,7 +26,7 @@ const Switches = (props) => {
             <input
               type="radio"
               name="radio-group"
-              onChange={() => {
+              onClick={() => {
                 setRegChecked(true);
                 setOtChecked(false);
                 setSoChecked(false);
@@ -35,6 +35,7 @@ const Switches = (props) => {
                 setPick_so(false);
               }}
               checked={regChecked}
+              key={`reg-${regChecked}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -42,7 +43,7 @@ const Switches = (props) => {
             <input
               type="radio"
               name="radio-group"
-              onChange={() => {
+              onClick={() => {
                 setRegChecked(false);
                 setOtChecked(true);
                 setSoChecked(false);
@@ -51,6 +52,7 @@ const Switches = (props) => {
                 setPick_so(false);
               }}
               checked={otChecked}
+              key={`ot-${otChecked}`}
             />
             <label className="card-label">O/T</label>
           </div>
@@ -58,7 +60,7 @@ const Switches = (props) => {
             <input
               type="radio"
               name="radio-group"
-              onChange={() => {
+              onClick={() => {
                 setRegChecked(false);
                 setOtChecked(false);
                 setSoChecked(true);
@@ -67,6 +69,7 @@ const Switches = (props) => {
                 setPick_so(true);
               }}
               checked={soChecked}
+              key={`so-${soChecked}`}
             />
             <label className="card-label">S/O</label>
           </div>
@@ -90,14 +93,14 @@ const Switches = (props) => {
             <input
               type="radio"
               name="radio-group"
-              value="Regular"
-              onChange={() => {
+              onClick={() => {
                 setRegChecked(true);
                 setOtChecked(false);
                 setPick_Reg(true);
                 setPick_ot(false);
               }}
-              checked={true}
+              checked={regChecked}
+              key={`reg-${regChecked}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -105,13 +108,14 @@ const Switches = (props) => {
             <input
               type="radio"
               name="radio-group"
-              value="O/T"
-              onChange={() => {
+              onClick={() => {
                 setRegChecked(false);
                 setOtChecked(true);
                 setPick_Reg(false);
                 setPick_ot(true);
               }}
+              checked={otChecked}
+              key={`ot-${otChecked}`}
             />
             <label className="card-label">O/T</label>
           </div>
@@ -135,18 +139,30 @@ const Switches = (props) => {
             <input
               type="radio"
               name="radio-group"
-              onChange={() => {
+              onClick={() => {
                 setRegChecked(true);
                 setEiChecked(false);
                 setPick_Reg(true);
                 setPick_Ei(false);
               }}
-              checked={true}
+              checked={regChecked}
+              key={`reg-${regChecked}`}
             />
             <label className="card-label">Reg</label>
           </div>
           <div className="flex mt-4 gap-1 items-center">
-            <input />
+            <input
+              type="radio"
+              name="radio-group"
+              onClick={() => {
+                setRegChecked(false);
+                setEiChecked(true);
+                setPick_Reg(false);
+                setPick_Ei(true);
+              }}
+              checked={eiChecked}
+              key={`ei-${eiChecked}`}
+            />
             <label className="card-label">E/I</label>
           </div>
 
@@ -163,7 +179,7 @@ const Switches = (props) => {
         </>
       )}
     </div>
-  );
+ );
 };
 
 export default Switches;
