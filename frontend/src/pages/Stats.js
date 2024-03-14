@@ -18,7 +18,7 @@ import flag from "../assets/download.png";
 const Stats = () => {
   const [mainNavTab, setMainNavTab] = useState(0);
   const [cardNavTabs, setCardNavTabs] = useState([0, 0]);
-  
+
   const changeMainNavTab = (val, event) => {
     event.preventDefault();
     setMainNavTab(val);
@@ -95,12 +95,20 @@ const Stats = () => {
                     {[0, 1, 2].map((tabIndex) => (
                       <li
                         key={tabIndex}
-                        className={`li-stats ${cardNavTabs[index] === tabIndex ? "active" : ""}`}
-                        onClick={(event) => changeCardNavTab(tabIndex, index, event)}
+                        className={`li-stats ${
+                          cardNavTabs[index] === tabIndex ? "active" : ""
+                        }`}
+                        onClick={(event) =>
+                          changeCardNavTab(tabIndex, index, event)
+                        }
                         style={{ marginRight: "20px" }}
                       >
                         <button className="a-stats">
-                          {tabIndex === 0 ? "TP" : tabIndex === 1 ? "BR" : "ASSISTS"}
+                          {tabIndex === 0
+                            ? "TP"
+                            : tabIndex === 1
+                            ? "BR"
+                            : "ASSISTS"}
                         </button>
                       </li>
                     ))}
@@ -125,7 +133,7 @@ const Stats = () => {
                         src={card.image} // Image source from card object
                         alt="Avatar"
                         className="img-fluid my-5"
-                        style={{ width: "80px", borderRadius:"50px" }}
+                        style={{ width: "80px", borderRadius: "50px" }}
                       />
                       <img
                         src={flag}
@@ -200,6 +208,7 @@ const Stats = () => {
         <div>
           <img src={img1} alt="img1" className="w-full" />
         </div>
+
         <div>
           <img src={img2} alt="img2" className="w-full" />
         </div>
