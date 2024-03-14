@@ -95,14 +95,7 @@ const ScoreEntry = () => {
                 <TableCell>
                   <TextField variant="outlined" size="small" />
                 </TableCell>
-                <TableCell>
-                  <RadioGroup>
-                    <FormControlLabel
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
+
                 <TableCell>
                   <RadioGroup>
                     <FormControlLabel
@@ -236,18 +229,7 @@ const ScoreEntry = () => {
                     />
                   </RadioGroup>
                 </TableCell>
-                <TableCell>
-                  <RadioGroup
-                    value={selectedValue}
-                    onChange={handleRadioChange}
-                  >
-                    <FormControlLabel
-                      value="option3"
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
+
                 <TableCell>
                   <RadioGroup
                     value={selectedValue}
