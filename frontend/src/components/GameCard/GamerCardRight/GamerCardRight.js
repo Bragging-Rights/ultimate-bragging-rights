@@ -8,6 +8,11 @@ import { useMutation } from "react-query";
 import { useLeagueContext } from "../../LeagueContext";
 
 const GamerCardRight = ({ gameData }) => {
+  const labelStyles = {
+    borderBottom: "2px solid #BE8200",
+    width: "90%",
+    textAlign: "center",
+  };
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -144,9 +149,7 @@ const GamerCardRight = ({ gameData }) => {
           >
             <span className=" game-time font-inter mb-3">Money Line</span>
             <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
-                {gameData?.["v-ml"]}
-              </label>
+              <label style={labelStyles}>{gameData?.["v-ml"]}</label>
 
               <label>{gameData?.["v-ml-points"]} Pts</label>
             </div>
@@ -154,9 +157,7 @@ const GamerCardRight = ({ gameData }) => {
           <div className=" flex flex-col justify-start ">
             <span className=" game-time">Spread</span>
             <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
-                {gameData?.["v-sprd"]}
-              </label>
+              <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
 
               <label className=" text-white">
                 {gameData?.["v-sprd-points"]} Pts
@@ -167,9 +168,7 @@ const GamerCardRight = ({ gameData }) => {
             <span className=" game-time">Over/Under</span>
 
             <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
-                {gameData?.["v-ou"]}
-              </label>
+              <label style={labelStyles}>{gameData?.["v-ou"]}</label>
               <label>{gameData?.["v-ou-points"]} Pts</label>
             </div>
           </div>
@@ -190,7 +189,10 @@ const GamerCardRight = ({ gameData }) => {
           ></div>
         </div>
 
-        <div className=" w-full flex justify-between mt-3 ">
+        <div
+          className=" w-full flex justify-between mt-3 "
+          style={{ columnGap: "10px" }}
+        >
           <div className=" flex flex-col ">
             <input
               type="text"
@@ -213,25 +215,19 @@ const GamerCardRight = ({ gameData }) => {
           </div>
           <div className=" flex flex-col ">
             <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
-                {gameData?.["h-ml"]}
-              </label>
+              <label style={labelStyles}>{gameData?.["h-ml"]}</label>
               <label>{gameData?.["h-ml-points"]} Pts</label>
             </div>
           </div>
           <div className=" flex flex-col ">
             <div className=" box px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
-                {gameData?.["h-sprd"]}
-              </label>
+              <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
               <label>{gameData?.["h-sprd-points"]} Pts</label>
             </div>
           </div>
           <div className=" flex flex-col">
             <div className=" box  px-7 h-12">
-              <label className=" border-b-2 border-[#BE8200] w-[90%] text-center">
-                {gameData?.["h-ou"]}
-              </label>
+              <label style={labelStyles}>{gameData?.["h-ou"]}</label>
               <label>{gameData?.["h-ou-points"]} Pts</label>
             </div>
           </div>

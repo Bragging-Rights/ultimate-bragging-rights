@@ -5,8 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { useLeagueContext } from "../../components/LeagueContext";
 import displayToast from "../../components/Alert/Alert";
+import TableData from "./TableData";
 
-// Create a new component for the form within each card
 function GameForm({ game, onUpdateGameData }) {
   const [formData, setFormData] = useState({
     vFinalScore: "",
@@ -18,31 +18,22 @@ function GameForm({ game, onUpdateGameData }) {
   const [resultEntered, setResultEntered] = useState(false);
 
   const handleResultChange = () => {
-    // Set the resultEntered flag to false to enable result change
     setResultEntered(false);
   };
 
-  const { mutate, isLoading, isError, data, error, reset } = useMutation(
-    (data) => enterGameResults(data),
-    {
-      onSuccess: (data) => {
-        displayToast("Result added successfully", "success");
-      },
-      onError: (error) => {
-        displayToast("Error while adding result", "error");
-      },
-    }
-  );
+  const { mutate, reset } = useMutation((data) => enterGameResults(data), {
+    onSuccess: () => {
+      displayToast("Result added successfully", "success");
+    },
+    onError: () => {
+      displayToast("Error while adding result", "error");
+    },
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Update the specific card's game data
     onUpdateGameData(game._id, formData);
-
-    // Set the resultEntered flag to true
     setResultEntered(true);
-    console.log("formData", formData);
     mutate({
       ...formData,
       game_id: game._id,
@@ -71,7 +62,6 @@ function GameForm({ game, onUpdateGameData }) {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          {/* Form fields */}
           <div className="flex space-x-4 w-full">
             <div className="mb-2 w-1/2">
               <label htmlFor="vFinalScore">{game.visitor}</label>
@@ -122,7 +112,6 @@ function GameForm({ game, onUpdateGameData }) {
                 value={formData.stateReason}
                 onChange={handleChange}
                 className="bg-gray-800 text-white p-2 rounded w-full"
-                // Conditionally hide/show based on gameEnd value
                 style={{
                   display: formData.gameEnd === "Cancelled" ? "block" : "none",
                 }}
@@ -144,23 +133,41 @@ function GameForm({ game, onUpdateGameData }) {
 
 const EnterResults = () => {
   const { selectedLeague } = useLeagueContext();
-  console.log("selectedLeague", selectedLeague);
   const [gameData, setGameData] = useState([]);
   const date = new Date();
   const formattedDateForAPI = format(date, "yyyy-MM-dd");
 
-  const { data: fetchedData, refetch } = useQuery(
+  const initialFormData = {
+    time: "",
+    visitorTeam: "",
+    vML: "",
+    vSprd: "",
+    vSprdOdds: "",
+    vOU: "",
+    vOUOdds: "",
+    homeTeam: "",
+    hML: "",
+    hSprd: "",
+    hSprdOdds: "",
+    hOU: "",
+    hOUOdds: "",
+    sport: "",
+  };
+
+  console.log("Initial Form Data:", initialFormData);
+
+  const { refetch } = useQuery(
     ["matches", formattedDateForAPI, selectedLeague],
     getGames,
-
     {
       onSuccess: (data) => {
         setGameData(data.data);
+        console.log("Game Data:", data.data);
       },
       onError: (error) => {
         console.error("An error occurred:", error);
       },
-      enabled: false,
+      enabled: !!selectedLeague,
     }
   );
 
@@ -171,39 +178,24 @@ const EnterResults = () => {
   }, [selectedLeague]);
 
   const updateGameData = (gameId, updatedData) => {
-    // Find the game in gameData with the matching gameId
-    const updatedGameData = gameData.map((game) => {
-      if (game._id === gameId) {
-        // Update the specific game data
-        const updatedGame = {
-          ...game,
-          ...updatedData,
-        };
-
-        // Log the updated data to the console
-        console.log("AdminResultstoGamesForRewards", updatedGame);
-
-        return updatedGame;
-      }
-      return game;
+    setGameData((prevGameData) => {
+      return prevGameData.map((game) => {
+        if (game._id === gameId) {
+          return {
+            ...game,
+            ...updatedData,
+          };
+        }
+        return game;
+      });
     });
-
-    // Update the state with the updated data
-    setGameData(updatedGameData);
   };
 
   return (
     <div className="p-4 text-white">
-      <h1 className="text-xl mb-4 align-items-center">
-        Enter Results for today's matches:
-      </h1>
-
-      {gameData.map((game) => (
-        <div key={game._id} className="mr-2 p-4 border border-blue-300 mt-2">
-          <GameForm game={game} onUpdateGameData={updateGameData} />
-        </div>
-      ))}
+      <TableData gameData={gameData} onUpdateGameData={updateGameData} />
     </div>
   );
 };
+
 export default EnterResults;

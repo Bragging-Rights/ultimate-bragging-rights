@@ -1,0 +1,61 @@
+/* ScoreEntry.css */
+
+.score-entry-container {
+    background-color: #020121 !important;
+    color: rgba(190, 130, 0, 1) !important;
+}
+
+
+
+.css-1ygcj2i-MuiTableCell-root,
+.css-1ex1afd-MuiTableCell-root {
+    color: rgba(190, 130, 0, 1) !important;
+
+}
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+
+    background-color: white !important;
+}
+
+.MuiTabs-root {
+    padding: 10px;
+    border-bottom: 2px solid rgba(190, 130, 0, 1);
+    /* Add a bottom border to the tabs */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add a box shadow to the tabs */
+}
+
+/* Styles for the active tab */
+.Mui-selected {
+
+    background-color: #FF0000 !important;
+    color: white !important;
+}
+
+.css-1wf8b0h-MuiTabs-flexContainer {
+
+    display: flex !important;
+    justify-content: flex-start !important;
+    column-gap: 1vh !important;
+}
+
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+    background-color: white !important;
+    border-radius: 15px;
+}
+
+/* Date */
+.css-4jnixx-MuiStack-root>.MuiTextField-root {
+    background-color: gray;
+}
+
+.centered-button {
+    display: flex;
+    justify-content: center;
+}
+
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked,
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root {
+    color: white !important;
+}

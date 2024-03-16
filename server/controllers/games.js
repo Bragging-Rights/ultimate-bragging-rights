@@ -87,7 +87,7 @@ const getGames = async (req, res) => {
     const games = await Game?.find({
       league: req.params.league,
       gamedate: req.params.date,
-    });
+    }).sort("time");
     res.json(games);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -137,6 +137,18 @@ const deleteGame = async (req, res) => {
   }
 };
 
+const getGamesByDate = async (req, res) => {
+  const date = req.params.gamedate;
+  console.log(date);
+  try {
+    const games = await Game.find({ gamedate: date });
+    res.json(games);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.log(error);
+  }
+};
+
 module.exports = {
   createGame,
   getGames,
@@ -144,4 +156,5 @@ module.exports = {
   updateGame,
   deleteGame,
   getTeamsOfLeaguesController,
+  getGamesByDate, // new method
 };
