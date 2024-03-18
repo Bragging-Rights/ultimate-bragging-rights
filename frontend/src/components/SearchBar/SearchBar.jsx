@@ -44,7 +44,7 @@ const SearchBar = () => {
   const [year, setYear] = useState("SELECT YEAR");
   const currentYear = date.getFullYear();
   const nextYear = date.getFullYear() + 1;
-  const yearsOption = [currentYear + "-" + nextYear];
+  const yearsOption = ["All Years", currentYear + "-" + nextYear];
   const [season, setSeason] = useState("SEASON");
   const [team, setTeam] = useState("ALL TEAMS");
   const [division, setDivision] = useState("ALL DIVSION");
@@ -273,6 +273,7 @@ const SearchBar = () => {
                 <img src={imgDown} alt="caret" />
               </button>
               <ul name="day-submenu" className="nav-button-submenu">
+                <li onClick={() => setMonthDate("All Dates")}>All Dates</li>
                 {Array.from({ length: 31 }, (_, index) => (
                   <li key={index + 1} onClick={() => setMonthDate(index + 1)}>
                     {index + 1}
@@ -312,7 +313,10 @@ const SearchBar = () => {
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu">
-                <li onClick={() => setYear("2024-2025")}>2024-2025</li>
+                {yearsOption.map((item) => {
+                  return <li onClick={() => setYear(item)}>{item}</li>;
+                })}
+                {/* <li onClick={() => setYear("2024-2025")}>2024-2025</li> */}
               </ul>
             </div>
             <div className="nav-button-container">
@@ -326,6 +330,7 @@ const SearchBar = () => {
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu">
+                <li onClick={() => setSeason("All Season")}>All Season</li>
                 <li onClick={() => setSeason("Preseason")}>Preseason</li>
                 <li onClick={() => setSeason("Regular Season")}>
                   Regular Season
