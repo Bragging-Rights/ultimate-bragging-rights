@@ -42,10 +42,12 @@ const SearchBar = () => {
   const [month, setMonth] = useState("MONTH");
   const date = new Date();
   const [year, setYear] = useState("SELECT YEAR");
-  const yearsOption = [date.getFullYear + "-" + date.getFullYear + 1];
+  const currentYear = date.getFullYear();
+  const nextYear = date.getFullYear() + 1;
+  const yearsOption = [currentYear + "-" + nextYear];
   const [season, setSeason] = useState("SEASON");
   const [team, setTeam] = useState("ALL TEAMS");
-  const [devision, setDevision] = useState("ALL DIVSION");
+  const [division, setDivision] = useState("ALL DIVSION");
   const [conference, setConference] = useState("ALL CONFERENCE");
   const { selectedLeague } = useLeagueContext();
 
@@ -57,7 +59,7 @@ const SearchBar = () => {
     setYear(initialValues.year);
     setSeason(initialValues.season);
     setTeam(initialValues.team);
-    setDevision(initialValues.division);
+    setDivision(initialValues.division);
     setConference(initialValues.conference);
     setDisable({
       week: false,
@@ -92,6 +94,7 @@ const SearchBar = () => {
         ...disable,
         week: true,
       });
+      setYear(yearsOption[0]);
     }
 
     if (monthDate !== initialValues.monthDate) {
@@ -99,6 +102,7 @@ const SearchBar = () => {
         ...disable,
         week: true,
       });
+      setYear(yearsOption[0]);
     }
 
     if (month !== initialValues.month) {
@@ -106,6 +110,7 @@ const SearchBar = () => {
         ...disable,
         week: true,
       });
+      setYear(yearsOption[0]);
     }
 
     if (season !== initialValues.season) {
@@ -118,12 +123,12 @@ const SearchBar = () => {
     if (team !== initialValues.team) {
       setDisable({
         ...disable,
-        devision: true,
+        division: true,
         conference: true,
       });
     }
 
-    if (devision !== initialValues.division) {
+    if (division !== initialValues.division) {
       setDisable({
         ...disable,
         conference: true,
@@ -134,7 +139,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     updateAllButtons();
-  }, [week, day, monthDate, month, year, season, team, devision, conference]);
+  }, [week, day, monthDate, month, year, season, team, division, conference]);
 
   useEffect(() => {
     const resp = populateWeeks();
@@ -142,7 +147,7 @@ const SearchBar = () => {
   }, []);
 
   function updateTeamsBasedOnDivision() {
-    console.log(devision, teamsData);
+    console.log(division, teamsData);
   }
   useEffect(() => {
     // Get all nav buttons
@@ -339,13 +344,22 @@ const SearchBar = () => {
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu teams">
-                {devision !== "ALL DIVSION"
+                {division !== "ALL DIVSION"
                   ? teamsData[selectedLeague]
-                      ?.filter((item) => item.division === devision)
+                      ?.filter((item) => item.division === division)
                       .map((team) => (
                         <li
                           key={team?.name}
-                          onClick={() => setTeam(team?.name)}
+                          onClick={() => {
+                            setTeam(team?.name);
+                            setDivision(team.division);
+                            setConference(team.conference);
+                            setDisable({
+                              ...disable,
+                              division: true,
+                              conference: true,
+                            });
+                          }}
                         >
                           {team?.name}
                         </li>
@@ -354,7 +368,16 @@ const SearchBar = () => {
                       return (
                         <li
                           key={team?.name}
-                          onClick={() => setTeam(team?.name)}
+                          onClick={() => {
+                            setTeam(team?.name);
+                            setDivision(team.division);
+                            setConference(team.conference);
+                            setDisable({
+                              ...disable,
+                              division: true,
+                              conference: true,
+                            });
+                          }}
                         >
                           {team?.name}
                         </li>
@@ -364,12 +387,16 @@ const SearchBar = () => {
             </div>
             <div className="nav-button-container">
               <button
-                className={`unset ${devision !== "ALL DIVSION" && "clicked"}
+                className={`unset ${
+                  team == initialValues.team &&
+                  division !== "ALL DIVSION" &&
+                  "clicked"
+                }
                 ${disable.division && "greyed-out"}
                 `}
                 title="All Divisions"
               >
-                <a>{devision}</a>
+                <a>{division}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu divisions">
@@ -377,7 +404,10 @@ const SearchBar = () => {
                   return (
                     <li
                       key={division.name}
-                      onClick={() => setDevision(division.name)}
+                      onClick={() => {
+                        setDivision(division.name);
+                        setConference(division.conference);
+                      }}
                     >
                       {division.name}
                     </li>
@@ -388,7 +418,10 @@ const SearchBar = () => {
             <div className="nav-button-container">
               <button
                 className={`unset ${
-                  conference !== "ALL CONFERENCE" && "clicked"
+                  (team == initialValues.team ||
+                    division == initialValues.division) &&
+                  conference !== "ALL CONFERENCE" &&
+                  "clicked"
                 }
                   ${disable.conference && "greyed-out"}
                   `}
