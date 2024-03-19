@@ -48,6 +48,10 @@ const Navbar = () => {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
+            sx={{
+              display:"flex",
+              flexWrap: isMobileView ? "nowrap" : "0"
+            }}
           >
             <Grid item xs={12} sm={4}>
               {isHomepage && (
@@ -55,7 +59,7 @@ const Navbar = () => {
                   variant="body1"
                   color="inherit"
                   sx={{
-                    fontSize: isMobileView ? "0.7rem" : "0.8rem",
+                    fontSize: isMobileView ? "0.4rem" : "0.7rem",
                     textAlign: "left",
                   }}
                 >
@@ -64,7 +68,7 @@ const Navbar = () => {
                     style={{
                       color: "red",
                       textDecoration: "line-through white",
-                      fontSize: isMobileView ? "0.7rem" : "0.8rem",
+                      fontSize: isMobileView ? "0.4rem" : "0.7rem",
                     }}
                   >
                     $250
@@ -89,10 +93,10 @@ const Navbar = () => {
                     color="inherit"
                     sx={{
                       marginLeft: "auto",
-                      fontSize: isMobileView ? "0.6rem" : "0.8rem",
+                      fontSize: isMobileView ? "0.4rem" : "0.6rem",
                     }}
                   >
-                    ALREADY A MEMBER
+                    ALREADY MEMBER
                   </Typography>
                 )}
                 <SignInModal
@@ -112,7 +116,7 @@ const Navbar = () => {
                       borderRadius: "0.375rem",
                       boxShadow:
                         "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                      fontSize: isMobileView ? "0.8rem" : "1rem",
+                      fontSize: isMobileView ? "0.4rem" : "0.6rem",
                     }}
                   >
                     Logout
@@ -131,7 +135,7 @@ const Navbar = () => {
                           borderRadius: "0.375rem",
                           boxShadow:
                             "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                          fontSize: isMobileView ? "0.8rem" : "1rem",
+                          fontSize: isMobileView ? "0.4rem" : "0.6rem",
                           marginLeft: isMobileView ? "10%" : 0,
                         }}
                       >
