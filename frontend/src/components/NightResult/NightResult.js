@@ -531,7 +531,7 @@ const NightResult = () => {
     color: '#F8FA13',
   }}
 >
-  2
+  23
 </td>
         </tr>
       </tbody>
