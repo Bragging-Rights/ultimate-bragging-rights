@@ -10,7 +10,7 @@ export const data = [
     l: "36",
     apg: "2",
     cs: "23",
-    game1: "0",
+    game1: "3",
     game2: "2",
     game3: "2",
     game4: "2",

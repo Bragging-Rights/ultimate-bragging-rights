@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./NightResult.css";
 const { data, headers, headerOption } = require("./dump");
 
 const NightResult = () => {
+  const [showGames, setShowGames] = useState({
+    game1: false,
+    game2: false,
+    game3: false,
+    game4: false
+  });
+
+  useEffect(() => {
+    const delay = 3000; // 3 seconds
+
+    setTimeout(() => setShowGames(prevState => ({ ...prevState, game1: true })), delay);
+    setTimeout(() => setShowGames(prevState => ({ ...prevState, game2: true })), delay * 2);
+    setTimeout(() => setShowGames(prevState => ({ ...prevState, game3: true })), delay * 3);
+    setTimeout(() => setShowGames(prevState => ({ ...prevState, game4: true })), delay * 4);
+  }, []);
+
   const tableCellStyle = {
     fontSize: "0.75rem",
     fontWeight: "500",
     textAlign: "center",
     padding: "0.5rem",
-    border: "1px   #ddd", // Border color
+    border: "1px #ddd" // Border color
   };
 
   const headerCellStyle = {
     ...tableCellStyle,
     backgroundColor: "#181818",
     color: "white",
-    height: "2.5rem",
+    height: "2.5rem"
   };
 
   const SvgIcon = () => (
@@ -61,7 +77,7 @@ const NightResult = () => {
                   WebkitTextFillColor: "transparent",
                   fontSize: "0.75rem",
                   fontWeight: "500",
-                  color: "#FEF098",
+                  color: "#FEF098"
                 }}
               ></th>
             );
@@ -85,7 +101,7 @@ const NightResult = () => {
           <tr
             key={index}
             style={{
-              backgroundColor: item.backgroundColor,
+              backgroundColor: item.backgroundColor
             }}
           >
             <td className="nr-state-rank">{item.city}</td>
@@ -98,17 +114,12 @@ const NightResult = () => {
                 <SvgIcon />
               </span>
             </td>
-            <td className="nr-details-2">{item.w}</td>
-            <td className="nr-details">{item.l}</td>
-            <td className="nr-details-3">{item.apg}</td>
-            <td className="nr-details-1">{item.cs}</td>
-            <td className="nr-details">{item.game1}</td>
-            <td className="nr-details">{item.game2}</td>
-            <td className="nr-details">{item.game3}</td>
-            <td className="nr-details">{item.game4}</td>
+            <td className="nr-details-2" style={{ display: showGames.game1 ? "table-cell" : "none" }}>{item.game1}</td>
+            <td className="nr-details" style={{ display: showGames.game2 ? "table-cell" : "none" }}>{item.game2}</td>
+            <td className="nr-details" style={{ display: showGames.game3 ? "table-cell" : "none" }}>{item.game3}</td>
+            <td className="nr-details" style={{ display: showGames.game4 ? "table-cell" : "none" }}>{item.game4}</td>
           </tr>
         ))}
-
       </tbody>
     </table>
   );
