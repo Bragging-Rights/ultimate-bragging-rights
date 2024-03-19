@@ -14,7 +14,12 @@ const Footer = () => {
     >
       <Grid container alignItems="center" justifyContent="center">
         <Grid item>
-          <img src={logo} alt="logo" width={isMobileView ? 52 : 72} height={isMobileView ? 40 : 55} />
+          <img
+            src={logo}
+            alt="logo"
+            width={isMobileView ? 52 : 72}
+            height={isMobileView ? 40 : 55}
+          />
         </Grid>
         <Grid item>
           <Typography
@@ -31,13 +36,21 @@ const Footer = () => {
           </Typography>
           <Typography
             className="footer-text"
-            style={{ color: "#FFF", fontSize: isMobileView ? "10px" : "12px", opacity: "0.5" }}
+            style={{
+              color: "#FFF",
+              fontSize: isMobileView ? "10px" : "12px",
+              opacity: "0.5",
+            }}
           >
             All Rights Reserved. Terms of Use / New Privacy Policy
           </Typography>
           <Typography
             className="footer-text"
-            style={{ color: "#FFF", fontSize: isMobileView ? "10px" : "12px", opacity: "0.5" }}
+            style={{
+              color: "#FFF",
+              fontSize: isMobileView ? "10px" : "12px",
+              opacity: "0.5",
+            }}
           >
             We never sell your information!
           </Typography>
@@ -55,7 +68,11 @@ const Footer = () => {
           </Typography>
           <Typography
             className="footer-text"
-            style={{ color: "#FFF", fontSize: isMobileView ? "10px" : "12px", opacity: "0.5" }}
+            style={{
+              color: "#FFF",
+              fontSize: isMobileView ? "10px" : "12px",
+              opacity: "0.5",
+            }}
           >
             If you or someone you know has a gambling problem, seek confidential
             support: USA 1-800 GAMBLER, Canada 1-800 463-1554.

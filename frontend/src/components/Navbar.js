@@ -49,8 +49,8 @@ const Navbar = () => {
             justifyContent="space-between"
             alignItems="center"
             sx={{
-              display:"flex",
-              flexWrap: isMobileView ? "nowrap" : "0"
+              display: "flex",
+              flexWrap: isMobileView ? "nowrap" : "0",
             }}
           >
             <Grid item xs={12} sm={4}>
