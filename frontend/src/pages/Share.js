@@ -106,7 +106,6 @@ const Share = () => {
 
   return (
     <div className=" w-full">
-      <MainNavBar />
 
       <div>
         {/* Your existing code */}

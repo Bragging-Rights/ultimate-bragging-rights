@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
-import MainNavBar from "../../components/MainNavBar";
 import EnterGames from "./EnterGames";
 import EnterResults from "./EnterResults";
 import LiveGames from "./LiveGames";
@@ -51,7 +50,6 @@ const FormToggle = () => {
 
   return (
     <div>
-      <MainNavBar />
       <div className="flex justify-center gap-3 mt-4">
         {formButtons.map((button) => (
           <Button
