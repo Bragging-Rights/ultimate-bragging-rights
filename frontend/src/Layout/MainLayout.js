@@ -13,7 +13,8 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <Navbar />
-      {window.location.pathname !== "/games" && <SearchBar />}
+      {window.location.pathname !== "/games" &&
+        window.location.pathname !== "/admin" && <SearchBar />}
 
       <div className="flex justify-content">
         <div className="w-full ml-5 mt-4">

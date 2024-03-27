@@ -75,6 +75,10 @@
     position: relative;
   }
 
+  .nav-button-container:hover .nav-button-submenu {
+    display: block;
+  }
+
   .nav-button-container.hover .nav-button-submenu,
   .nav-button-container.active .nav-button-submenu {
     display: flex !important;
@@ -131,7 +135,7 @@ because some browsers don't support linear gradients */
 
   button.unset {
     background-color: #ffc233;
-    background-image: linear-gradient(#fbd78a, #ffc233 75%, #5b4310);
+    background-image: linear-gradient(#fbd78a, #fbd78a 75%, #5b4310);
   }
 
   button.unset:hover {
@@ -146,13 +150,13 @@ because some browsers don't support linear gradients */
   }
 
   button.clicked {
-    background-color: #18cf40;
-    background-image: linear-gradient(#80fc61, #18cf40 75%, #206727);
+    background-color: #ffc233;
+    background-image: linear-gradient(#fbd78a, #fbd78a 75%, #5b4310);
   }
 
   button.clicked:hover {
-    background-color: #16e93d;
-    background-image: linear-gradient(#7cff5c, #16e93d 75%, #245429);
+    background-color: #ffc233;
+    background-image: linear-gradient(#fbd78a, #fbd78a 75%, #5b4310);
   }
 
   button.reset-button {
