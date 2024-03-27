@@ -3,6 +3,9 @@ import Navbar from "../components/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar/SearchBar";
+import resultHero from "../assets/bgpic.png";
+import HeroSection from "../components/HeroSection";
+import MainNavBar from "../components/MainNavBar";
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
@@ -13,7 +16,11 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <Navbar />
-      {window.location.pathname !== "/games" &&
+      <HeroSection imgUrl={resultHero} alt="img" />
+      <br />
+      <MainNavBar />
+      <br />
+      {location.pathname === "/results" &&
         window.location.pathname !== "/admin" && <SearchBar />}
 
       <div className="flex justify-content">

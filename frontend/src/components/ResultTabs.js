@@ -15,42 +15,43 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
   };
 
   return (
-    <Box style={{ marginRight: "68vh" }}>
+    <Box >
       <List
         sx={{
           display: "flex",
-          height: "12vh",
-          alignItems: "center",
-          borderBottom: "1px solid #393939",
-          marginBottom: "2vh",
+          justifyContent: "space-around",
+          borderColor: "gray", borderWidth: "1px", borderStyle: "solid", width: "80vh"
         }}
       >
-        {tabs.map((tab, index) => (
-          <ListItem
-            key={index}
-            onClick={() => handleTabClick(index)}
-            sx={{
-              cursor: "pointer",
-              flex: "0 0 19vh",
-              textAlign: "center",
-              padding: "8px",
-              color: "white", // Set text color to white
-              backgroundColor:
-                selectedTab === index ? "#FF0000" : "transparent",
-              border: selectedTab === index ? "1px solid #BE8200" : "none",
-              borderRadius: "3px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="body1">{tab.label}</Typography>
-          </ListItem>
-        ))}
+    {tabs.map((tab, index) => (
+ <ListItem
+    key={index}
+    onClick={() => handleTabClick(index)}
+    sx={{
+      cursor: "pointer",
+      flex: "0 0 19vh",
+      textAlign: "center",
+      padding: "8px",
+      color: selectedTab === index ? "#FF0000 !important" : "white", // Set text color to #FF0000 when selected
+      backgroundColor: selectedTab === index ? "transparent" : "transparent",
+      border: selectedTab === index ? "1px solid #BE8200" : "none",
+      borderRadius: "3px",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      transition: "background-color 0.3s ease",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+ >
+    <Typography variant="body1">{tab.label}</Typography>
+ </ListItem>
+))}
+
       </List>
-      <List
+
+
+      
+      {/* <List
         sx={{
           display: "flex",
           height: "12vh",
@@ -86,7 +87,7 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
             <Typography variant="body1">{option}</Typography>
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </Box>
   );
 };

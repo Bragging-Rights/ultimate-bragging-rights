@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
+import { Grid, useMediaQuery, useTheme } from '@mui/material';
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -25,6 +25,8 @@ import imgFootball1 from "../assets/Football-1.png";
 import imgFootball6 from "../assets/Football-6.png";
 import imgHosckey1 from "../assets/Hockey-1.png";
 import imgHosckey4 from "../assets/Hockey-4.png";
+import banner from "../assets/banner.png";
+
 
 const images = [
   imgBasketball1,
@@ -47,6 +49,8 @@ const Games = () => {
     gap: "1rem", // You can adjust the gap value accordingly
   };
   const [heroImg, setHeroImg] = useState(getRandomImage());
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const isAdmin = true; // Set this value based on whether the user is an admin or not
   const { selectedLeague } = useLeagueContext();
@@ -94,17 +98,17 @@ const Games = () => {
     },
   });
 
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  // const options = {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
 
-  const formattedDate = date.toLocaleDateString("en-US", options);
-  const nextFormattedDate = getNextDate(formattedDate, 1).toLocaleDateString(
-    "en-US",
-    options
-  );
+  // const formattedDate = date.toLocaleDateString("en-US", options);
+  // const nextFormattedDate = getNextDate(formattedDate, 1).toLocaleDateString(
+  //   "en-US",
+  //   options
+  // );
 
   useEffect(() => {
     refetchTodayGame();
@@ -117,21 +121,31 @@ const Games = () => {
     setHeroImg(getRandomImage());
   }, []);
   return (
-    <Grid container spacing={2} direction="column">
-      <Grid item>
+    <Grid container spacing={2} direction="column" >
+          <img src={banner} alt="img1" className="w-full" />
+      {/* <Grid item>
         <HeroSection imgUrl={heroImg} />
       </Grid>
       <Grid item>
         <MainNavBar />
-      </Grid>
+      </Grid> */}
       <Grid item>
         <Line />
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <Banner date={formattedDate} label="Upcoming Games" />
-      </Grid>
-      <Grid container item spacing={2} justifyContent="center">
-        {gameData && gameData.length > 0 ? (
+      </Grid> */}
+    <Grid
+      className="game-grid"
+      container
+      item
+      spacing={2}
+      justifyContent="center"
+      sx={{width:  isMobile ? "80%" : "110%",
+      marginLeft:  isMobile ? "20px" : "-60px",
+    }}
+    >
+              {gameData && gameData.length > 0 ? (
           gameData.map((game, index) => (
             <Grid key={game.id} item xs={12} md={6}>
               {index % 2 === 0 ? (
@@ -158,9 +172,9 @@ const Games = () => {
           <img src={img2} alt="img2" className="w-full" />
         </Grid>
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <Banner date={nextFormattedDate} label="Tomorrow's Games" />
-      </Grid>
+      </Grid> */}
       <Grid container item spacing={2} justifyContent="center">
         {tomorrowGameData ? (
           tomorrowGameData.length > 0 ? (
