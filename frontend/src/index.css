@@ -6,9 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #000000;
-    font-size: 16px;
-    width: 80%;
-    margin: auto;
+  font-size: 16px;
+  width: 80%;
+  margin: auto;
 
 }
 
@@ -17,24 +17,26 @@ code {
     monospace;
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
 
-.league-selected{
+.league-selected {
   text-shadow: 0px 0px 40px #1EFF00;
- 
+
 }
-.active-item{
-  background:linear-gradient(180deg, #BE8200 0%, #fea498 47.4%, #EFD261 100%);
-box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.25);
-color: #1B1C21;
-text-shadow: 0px 4px 4px rgba(236, 250, 242, 0.12);
-font-size: 24px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+
+.active-item {
+  background: linear-gradient(180deg, #BE8200 0%, #fea498 47.4%, #EFD261 100%);
+  box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.25);
+  color: #1B1C21;
+  text-shadow: 0px 4px 4px rgba(236, 250, 242, 0.12);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .element-container input {
@@ -45,9 +47,10 @@ line-height: normal;
   color: white;
 }
 
-.zip-code{
+.zip-code {
   height: 59px;
 }
+
 /* .flex {
   display: flex;
   justify-content: center;
@@ -61,6 +64,7 @@ line-height: normal;
     width: 80%;
     margin: auto;
   }
+
   .flex {
     display: flex;
     justify-content: space-between;
@@ -84,10 +88,10 @@ line-height: normal;
     margin: 0;
   }
 
-  @media (prefers-color-scheme: dark){
+  @media (prefers-color-scheme: dark) {
 
     .dark\:bg-gray-800 {
-     margin-left: 43vh;
+      margin-left: 43vh;
     }
   }
 
@@ -96,10 +100,10 @@ line-height: normal;
 }
 
 .bg-yellow-700 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(161 98 7 / var(--tw-bg-opacity));
-    width: 65px;
-    height: 4vh;
+  --tw-bg-opacity: 1;
+  background-color: rgb(161 98 7 / var(--tw-bg-opacity));
+  width: 65px;
+  height: 4vh;
 }
 
 .w-40 {
@@ -127,7 +131,8 @@ line-height: normal;
 /* Styles for desktop devices */
 
 
-.Navbar-Header, #homepage {
+.Navbar-Header,
+#homepage {
   background-image: url("./assets/GreenTopBanner.png");
   height: 5vh;
   display: flex;
@@ -140,30 +145,35 @@ line-height: normal;
   .container {
     direction: column;
   }
-  .css-1lgwsod-MuiTypography-root{
+
+  .css-1lgwsod-MuiTypography-root {
     font-size: 0.6rem;
   }
-  
+
 }
 
 .css-1lgwsod-MuiTypography-root {
   font-size: 0.9rem;
 }
+
 .sign-in-button,
 .register-button {
   /* Styles for the Sign In and Register buttons */
   padding: 10px 20px;
-  border: 2px solid #FFD700; /* Yellow color */
-  color: #FFD700; /* Yellow color */
+  border: 2px solid #FFD700;
+  /* Yellow color */
+  color: #FFD700;
+  /* Yellow color */
   font-weight: bold;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  background-color: #FFF; /* White background */
+  background-color: #FFF;
+  /* White background */
   cursor: pointer;
   margin-right: 10px;
 }
 
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: dark) {
 
   .dark\:bg-gray-900 {
     --tw-bg-opacity: 1;
@@ -172,16 +182,13 @@ line-height: normal;
   }
 }
 
-    
 
-.css-yji0va-MuiButtonBase-root-MuiListItem-root.Mui-selected {
-  background-color: #FF0000;
-  color: white;
-}
+
+
 
 .css-ahj2mt-MuiTypography-root {
   margin: 0;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.5;
@@ -192,46 +199,50 @@ line-height: normal;
 .css-hip9hq-MuiPaper-root-MuiAppBar-root {
 
   background-color: transparent !important;
-  }
-
-  
-
-  .w-full {
-    width: 100%;
 }
+
+
+
+.w-full {
+  width: 100%;
+}
+
 .mt-4 {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
+
 .ml-5 {
-    margin-left: 1.25rem;
+  margin-left: 1.25rem;
 }
 
 .gap-8 {
   gap: 2rem;
 }
+
 .flex {
   display: flex;
 }
+
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
 
-@media only screen and (min-width: 992px){
+@media only screen and (min-width: 992px) {
 
 
-.flex {
+  .flex {
     display: flex;
     justify-content: space-between;
-}
+  }
 }
 
 .items-center {
-    align-items: center;
+  align-items: center;
 }
 
-label{
+label {
   color: white;
 }
 
@@ -239,13 +250,16 @@ label{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+
 .p-2 {
   padding: 0.5rem;
 }
+
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -271,7 +285,8 @@ label{
 }
 
 .li-stats {
-  position: relative; /* Added for positioning the underline */
+  position: relative;
+  /* Added for positioning the underline */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -336,10 +351,12 @@ label{
 .card-header {
   margin-bottom: 20px;
 }
-.card-data{
-background-color: #2D2D2D;
-border-radius: 5px;
+
+.card-data {
+  background-color: #2D2D2D;
+  border-radius: 5px;
 }
+
 .card-title {
   color: #fff;
   font-size: 24px;
@@ -353,7 +370,8 @@ border-radius: 5px;
 }
 
 .player-item {
-  width: 200px; /* Adjust width as needed */
+  width: 200px;
+  /* Adjust width as needed */
   text-align: center;
   margin-bottom: 20px;
 }
@@ -408,6 +426,7 @@ border-radius: 5px;
   justify-content: space-between;
   flex-direction: column;
 }
+
 /* Stats.css */
 
 /* Styles for screens larger than 768px */
@@ -425,28 +444,35 @@ border-radius: 5px;
     width: 100%;
     float: none;
   }
-.card-right{
-  margin-left: -15vh;
-  margin-top: 20px;
-}
-.flag{
-  margin-left: -3vh;
-  width: 10vh ;
-}
-.pf{
-  width: 20vh;
-  margin-left: -19vh;
-}
+
+  .game-grid {
+    width: 100%;
+  }
+
+  .card-right {
+    margin-left: -15vh;
+    margin-top: 20px;
+  }
+
+  .flag {
+    margin-left: -3vh;
+    width: 10vh;
+  }
+
+  .pf {
+    width: 20vh;
+    margin-left: -19vh;
+  }
 }
 
-.flag{
+.flag {
 
   position: absolute;
   width: 25vh;
   height: auto;
 }
 
-.pf{
+.pf {
   border-radius: 50%;
 
   position: absolute;
@@ -456,14 +482,23 @@ border-radius: 5px;
 }
 
 /* Points/Stats/Goals */
-.points-stat{
+.points-stat {
 
-  background-color:#2D2D2D ;
+  background-color: #2D2D2D;
   border-radius: 5px;
-  color:rgb(44, 221, 20);
+  color: rgb(44, 221, 20);
 
 }
 
 .css-1bnhfwg-MuiGrid-root>.MuiGrid-item {
-  padding-top: 0px ;
+  padding-top: 0px;
+}
+
+.css-16jphc-MuiButtonBase-root-MuiListItem-root.Mui-selected {
+  background-color: transparent !important;
+}
+
+.game-grid {
+  width: 110%;
+  margin-left: -50px;
 }

@@ -1,4 +1,5 @@
 .search-bar-container {
+
   button,
   a,
   li {
@@ -8,6 +9,7 @@
   li {
     list-style: none;
   }
+
   .menu-nav button a,
   .menu-nav button img {
     pointer-events: none;
@@ -17,7 +19,7 @@
     top: 0;
     position: sticky;
     width: 100%;
-    background-color: #353535;
+    /* background-color: #353535; */
     min-height: 100px;
     padding: 15px 2vw;
     height: auto;
@@ -37,13 +39,13 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .menu-nav button {
     padding: 7px 10px;
     height: 40px;
-    width: 165px;
+    width: 114px;
     border: none;
     border-radius: 3px;
     display: flex;
@@ -52,13 +54,24 @@
     align-items: center;
   }
 
+  @media (max-width: 920px) {
+
+    .menu-nav-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
   .menu-nav button a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
     display: inline-block;
-    text-transform: uppercase; /* Changed from 'capitalize' */
+    text-transform: uppercase;
+    /* Changed from 'capitalize' */
   }
 
   .menu-nav button:hover {
@@ -173,19 +186,23 @@ because some browsers don't support linear gradients */
   }
 
   @media (max-width: 920px) {
+
     button,
     a,
     li {
       font-size: 14px;
     }
+
     .menu-nav button {
       padding: 2px 10px;
       height: 35px;
       width: 130px;
     }
+
     .nav-button-submenu li {
       padding: 4px 15px;
     }
+
     .menu-nav-buttons {
       gap: 3px;
     }
