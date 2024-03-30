@@ -16,6 +16,7 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <Navbar />
+      <br/>
       <HeroSection imgUrl={resultHero} alt="img" />
       <br />
       <MainNavBar />
