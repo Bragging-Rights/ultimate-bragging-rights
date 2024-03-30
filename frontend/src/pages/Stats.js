@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,10 +13,18 @@ import img1 from "../assets/card.png";
 import img2 from "../assets/card2.png";
 import pf from "../assets/pf.png";
 import flag from "../assets/download.png";
+import { useDispatch } from "react-redux";
+import { statsPageReducer } from "../store/searchBarSlice";
 
 const Stats = () => {
   const [mainNavTab, setMainNavTab] = useState(0);
   const [cardNavTabs, setCardNavTabs] = useState([0, 0]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(statsPageReducer());
+  }, [dispatch]);
 
   const changeMainNavTab = (val, event) => {
     event.preventDefault();
@@ -55,7 +63,6 @@ const Stats = () => {
 
   return (
     <div className="w-full">
-     
       <Line />
       {/* <Banner date={formattedDate} label={"Game Breakdowns"} />
       <Line /> */}

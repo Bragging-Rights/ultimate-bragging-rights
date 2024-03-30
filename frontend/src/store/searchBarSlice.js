@@ -48,8 +48,37 @@ const searchBarSlice = createSlice({
     resetSearchBar: (state, action) => {
       state[action.payload.fieldName] = action.payload.value;
     },
+    standingPageReducer: (state) => {
+      return {
+        ...state,
+        week: "WEEK",
+        day: "Choose Day",
+        date: "Choose Date",
+        month: "Choose Month",
+        year: currentDate.getFullYear(),
+        season: "current season",
+        team: "All Teams",
+        division: "All Divisions",
+        conference: "All Conference",
+      };
+    },
+    statsPageReducer: (state) => {
+      return {
+        ...state,
+        week: "WEEK",
+        day: "Choose Day",
+        date: "Choose Date",
+        month: "Choose Month",
+        year: currentDate.getFullYear(),
+        season: "current season",
+        team: "All Teams",
+        division: "All Divisions",
+        conference: "All Conference",
+      };
+    },
   },
 });
 
-export const { setSearchBar } = searchBarSlice.actions;
+export const { setSearchBar, standingPageReducer, statsPageReducer } =
+  searchBarSlice.actions;
 export default searchBarSlice.reducer;
