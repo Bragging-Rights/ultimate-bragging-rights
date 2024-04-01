@@ -14,6 +14,7 @@ const mlbTeams = require("./routes/leagues/mlb");
 const gamesPlayed = require("./routes/gamesPlayed");
 const mongoose = require("mongoose");
 const moragn = require("morgan");
+const router = require("./routes/restaurants");
 require("dotenv").config();
 
 const app = express();
@@ -49,6 +50,7 @@ app.use("/api/leagues/nba", nbaTeams);
 app.use("/api/leagues/nfl", nflTeams);
 app.use("/api/leagues/mlb", mlbTeams);
 app.use("/api/user/gamesplayed", gamesPlayed);
+app.use("/api/restaurant",router)
 
 app.get("/", async (req, res) => {
   res.send("Server is running...");
