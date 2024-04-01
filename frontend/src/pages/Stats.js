@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import MainNavBar from "../components/MainNavBar";
 import {
   Card,
   CardContent,
@@ -38,13 +37,13 @@ const Stats = () => {
     });
   };
 
-  const date = new Date();
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const formattedDate = date.toLocaleDateString("en-US", options);
+  // const date = new Date();
+  // const options = {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
+  // const formattedDate = date.toLocaleDateString("en-US", options);
 
   const cardContent = [
     {
@@ -64,15 +63,10 @@ const Stats = () => {
     <LeagueProvider>
 
     <div className="w-full">
-      <HeroSection />
-      <MainNavBar
-        currentTab={mainNavTab}
-        changeTab={changeMainNavTab}
-        style={{ marginBottom: "20px" }}
-      />
+     
       <Line />
-      <Banner date={formattedDate} label={"Game Breakdowns"} />
-      <Line />
+      {/* <Banner date={formattedDate} label={"Game Breakdowns"} />
+      <Line /> */}
       <nav className="navbar-stats">
         <ul className="ul-stats">
           {[0, 1, 2].map((index) => (
