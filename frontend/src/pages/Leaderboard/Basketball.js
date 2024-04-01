@@ -148,7 +148,7 @@ export default function Statspage() {
             <thead>
               <tr>
                 <th>Team</th>
-                <th onClick={() => toggleSortOrder('R')} style={{ cursor: 'pointer' }}>RANK</th>
+               
                 <th onClick={() => toggleSortOrder('home')} style={{ cursor: 'pointer' }}>Gp</th>
                 <th onClick={() => toggleSortOrder('final')} style={{ cursor: 'pointer' }}>UBR</th>
                 <th onClick={() => toggleSortOrder('prediction')} style={{ cursor: 'pointer' }}>W</th>
@@ -158,6 +158,7 @@ export default function Statspage() {
                 <th onClick={() => toggleSortOrder('state')} style={{ cursor: 'pointer' }}>APG</th>
                 <th onClick={() => toggleSortOrder('city')} style={{ cursor: 'pointer' }}>APW</th>
                 <th onClick={() => toggleSortOrder('player')} style={{ cursor: 'pointer' }}>WS</th>
+                <th onClick={() => toggleSortOrder('R')} style={{ cursor: 'pointer' }}>RANK</th>
                 <th onClick={() => toggleSortOrder('TP')} style={{ cursor: 'pointer' }}>LS</th>
                 <th onClick={() => toggleSortOrder('Br')} style={{ cursor: 'pointer' }}>PTS/F</th>
                 <th onClick={() => toggleSortOrder('Fu')} style={{ cursor: 'pointer' }}>PTS/A</th>

@@ -147,7 +147,7 @@ export default function Statspage() {
             <thead>
               <tr>
                 <th>Team</th>
-                <th onClick={() => toggleSortOrder('R')} style={{ cursor: 'pointer' }}>RANK</th>
+                
                 <th onClick={() => toggleSortOrder('home')} style={{ cursor: 'pointer' }}>Gp</th>
                 <th onClick={() => toggleSortOrder('final')} style={{ cursor: 'pointer' }}>UBR</th>
                 <th onClick={() => toggleSortOrder('prediction')} style={{ cursor: 'pointer' }}>W</th>
@@ -157,6 +157,7 @@ export default function Statspage() {
                 <th onClick={() => toggleSortOrder('state')} style={{ cursor: 'pointer' }}>APG</th>
                 <th onClick={() => toggleSortOrder('city')} style={{ cursor: 'pointer' }}>APW</th>
                 <th onClick={() => toggleSortOrder('player')} style={{ cursor: 'pointer' }}>WS</th>
+                <th onClick={() => toggleSortOrder('R')} style={{ cursor: 'pointer' }}>RANK</th>
                 <th onClick={() => toggleSortOrder('TP')} style={{ cursor: 'pointer' }}>LS</th>
                 <th onClick={() => toggleSortOrder('Br')} style={{ cursor: 'pointer' }}>PTS/F</th>
                 <th onClick={() => toggleSortOrder('Fu')} style={{ cursor: 'pointer' }}>PTS/A</th>
@@ -167,9 +168,9 @@ export default function Statspage() {
                 <th onClick={() => toggleSortOrder('SW2')} style={{ cursor: 'pointer' }}>1S</th>
                 <th onClick={() => toggleSortOrder('REG')} style={{ cursor: 'pointer' }}>1SW2</th>
                 <th onClick={() => toggleSortOrder('E1')} style={{ cursor: 'pointer' }}>2SW2</th>
-                <th onClick={() => toggleSortOrder('N1')} style={{ cursor: 'pointer' }}>REG</th>
-                <th onClick={() => toggleSortOrder('N2')} style={{ cursor: 'pointer' }}>E1</th>
-                <th onClick={() => toggleSortOrder('N3')} style={{ cursor: 'pointer' }}>1SO</th>
+                <th onClick={() => toggleSortOrder('SO')} style={{ cursor: 'pointer' }}>REG</th>
+                <th onClick={() => toggleSortOrder('N1')} style={{ cursor: 'pointer' }}>E1</th>
+                <th onClick={() => toggleSortOrder('N2')} style={{ cursor: 'pointer' }}>1SO</th>
                 
               </tr>
             </thead>
