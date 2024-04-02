@@ -6,6 +6,7 @@ import EnterGames from "./EnterGames";
 import EnterResults from "./EnterResults";
 import LiveGames from "./LiveGames";
 import UpdateGames from "./UpdateGames";
+import EnterWeek from "./EnterWeek";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -46,6 +47,8 @@ const FormToggle = () => {
     { label: "Edit Games", formName: "edit" },
     { label: "Enter Results", formName: "results" },
     { label: "Live Games", formName: "livegames" },
+    // { label: "Live Games", formName: "livegames" },
+    { label: "Enter Weeks", formName: "enterweeks" },
   ];
 
   return (
@@ -69,6 +72,7 @@ const FormToggle = () => {
         {activeForm === "edit" && <UpdateGames />}
         {activeForm === "results" && <EnterResults />}
         {activeForm === "livegames" && <LiveGames />}
+        {activeForm === "enterweeks" && <EnterWeek />}
       </div>
     </div>
   );
