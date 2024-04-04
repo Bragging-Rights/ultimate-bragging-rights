@@ -29,3 +29,8 @@ export const deleteWeek = async (id) => {
   const response = await api.delete(`api/weeks/${id}`);
   return response;
 };
+
+export const getWeekByLeagueSeasonYear = async (league, season, year) => {
+  const response = await api.get(`api/weeks/${league}/${season}/${year}`);
+  return response;
+};
