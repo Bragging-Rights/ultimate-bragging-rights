@@ -1,8 +1,9 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-import { Container, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Box, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 import "./CSS/Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const isMobileView = useMediaQuery("(max-width:600px)");
@@ -79,6 +80,35 @@ const Footer = () => {
           </Typography>
         </Grid>
       </Grid>
+      <Box
+        sx={{
+          display: "flex",
+          width: "50%",
+          gap: "10px",
+          marginX: "auto",
+          justifyContent: "center",
+          marginTop: "10px",
+          color: "#FFFFFF",
+          "@media screen and (max-width: 1050px)": {
+            width: "100%",
+          },
+          "& a": {
+            textDecoration: "none",
+            color: "#FFFFFF",
+            transition: "color 0.3s",
+            fontSize: "14px",
+            "&:hover": {
+              textDecoration: "underline",
+              color: "#FFD700",
+            },
+          },
+        }}
+      >
+        <Link to={"/privacy-policy"}>Privacy Policy</Link>
+        <Link to={"/terms-of-service"}>Terms of Service</Link>
+        <Link to={"/cookie-policy"}>Cookies Policy</Link>
+        <Link to={"/acceptable-use-policy"}>Acceptable Policy</Link>
+      </Box>
     </Container>
   );
 };

@@ -12,7 +12,8 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import img from "../assets/green.png";
+import img from "../assets/nav.png";
+import redLineImage from "../assets/linebanner.png"
 
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
@@ -36,11 +37,15 @@ const Navbar = () => {
   };
 
   return (
+
+    <>
+    <img src={redLineImage} alt="Red Line" style={{ width: '100%' }} /> {/* Red line image before buttons */}
+
     <AppBar
       position="static"
       className="Navbar-Header"
-      style={{ backgroundColor: "transparent", backgroundImage: `url(${img})` }}
-    >
+      style={{ backgroundColor: "transparent", backgroundImage: `url(${img})`, height:"6vh" }}
+      >
       <Container maxWidth="lg">
         <Toolbar>
           <Grid
@@ -52,16 +57,16 @@ const Navbar = () => {
               display: "flex",
               flexWrap: isMobileView ? "nowrap" : "0",
             }}
-          >
+            >
             <Grid item xs={12} sm={4}>
               {isHomepage && (
                 <Typography
-                  variant="body1"
-                  color="inherit"
-                  sx={{
-                    fontSize: isMobileView ? "0.4rem" : "0.7rem",
-                    textAlign: "left",
-                  }}
+                variant="body1"
+                color="inherit"
+                sx={{
+                  fontSize: isMobileView ? "0.4rem" : "0.7rem",
+                  textAlign: "left",
+                }}
                 >
                   LIMITED FREE LIFETIME MEMBERSHIP AVAILABLE{" "}
                   <span
@@ -70,7 +75,7 @@ const Navbar = () => {
                       textDecoration: "line-through white",
                       fontSize: isMobileView ? "0.4rem" : "0.7rem",
                     }}
-                  >
+                    >
                     $250
                   </span>
                 </Typography>
@@ -86,15 +91,15 @@ const Navbar = () => {
                   alignItems: "center",
                   justifyContent: "flex-end",
                 }}
-              >
+                >
                 {isHomepage && (
                   <Typography
-                    variant="body1"
-                    color="inherit"
-                    sx={{
-                      marginLeft: "auto",
-                      fontSize: isMobileView ? "0.4rem" : "0.6rem",
-                    }}
+                  variant="body1"
+                  color="inherit"
+                  sx={{
+                    marginLeft: "auto",
+                    fontSize: isMobileView ? "0.4rem" : "0.6rem",
+                  }}
                   >
                     ALREADY MEMBER
                   </Typography>
@@ -103,12 +108,12 @@ const Navbar = () => {
                   modalIsOpen={signInModalIsOpen}
                   closeModal={() => setSignInModalIsOpen(false)}
                   onSignIn={handleSignIn}
-                />
+                  />
                 {userEmail ? (
                   <Button
-                    className="logout-button"
-                    onClick={handleLogout}
-                    size="small"
+                  className="logout-button"
+                  onClick={handleLogout}
+                  size="small"
                     sx={{
                       border: "2px solid #f6e05e",
                       color: "#f0e68c",
@@ -116,9 +121,9 @@ const Navbar = () => {
                       borderRadius: "0.375rem",
                       boxShadow:
                         "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                      fontSize: isMobileView ? "0.4rem" : "0.6rem",
-                    }}
-                  >
+                        fontSize: isMobileView ? "0.4rem" : "0.6rem",
+                      }}
+                      >
                     Logout
                   </Button>
                 ) : (
@@ -134,22 +139,23 @@ const Navbar = () => {
                           fontWeight: 800,
                           borderRadius: "0.375rem",
                           boxShadow:
-                            "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
                           fontSize: isMobileView ? "0.4rem" : "0.6rem",
                           marginLeft: isMobileView ? "10%" : 0,
                         }}
-                      >
+                        >
                         SignIn
                       </Button>
                     </React.Fragment>
                   )
-                )}
+                  )}
               </div>
             </Grid>
           </Grid>
         </Toolbar>
       </Container>
     </AppBar>
+                  </>
   );
 };
 

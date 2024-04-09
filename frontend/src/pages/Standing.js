@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { standingPageReducer } from "../store/searchBarSlice";
 
 const Standing = () => {
-  return (
-    <div className=' w-full'>
-  </div>
-  )
-}
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(standingPageReducer());
+  }, [dispatch]);
 
-export default Standing
+  return <div className=" w-full"></div>;
+};
+
+export default Standing;
