@@ -29,7 +29,7 @@
 /* Styles for the active tab */
 .Mui-selected {
 
-    background-color: #FF0000 !important;
+    /* background-color: #FF0000 !important; */
     color: white !important;
 }
 

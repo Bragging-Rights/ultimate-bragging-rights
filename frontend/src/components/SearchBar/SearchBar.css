@@ -1,4 +1,5 @@
 .search-bar-container {
+
   button,
   a,
   li {
@@ -8,6 +9,7 @@
   li {
     list-style: none;
   }
+
   .menu-nav button a,
   .menu-nav button img {
     pointer-events: none;
@@ -17,12 +19,13 @@
     top: 0;
     position: sticky;
     width: 100%;
-    background-color: #353535;
+    /* background-color: #353535; */
     min-height: 100px;
     padding: 15px 2vw;
     height: auto;
     display: flex;
     align-items: center;
+    z-index: 100;
   }
 
   .menu-nav {
@@ -37,13 +40,13 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .menu-nav button {
     padding: 7px 10px;
     height: 40px;
-    width: 165px;
+    width: 114px;
     border: none;
     border-radius: 3px;
     display: flex;
@@ -52,13 +55,24 @@
     align-items: center;
   }
 
+  @media (max-width: 920px) {
+
+    .menu-nav-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
   .menu-nav button a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
     display: inline-block;
-    text-transform: uppercase; /* Changed from 'capitalize' */
+    text-transform: uppercase;
+    /* Changed from 'capitalize' */
   }
 
   .menu-nav button:hover {
@@ -73,6 +87,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
+  }
+
+  .nav-button-container:hover .nav-button-submenu {
+    display: block;
   }
 
   .nav-button-container.hover .nav-button-submenu,
@@ -131,7 +149,7 @@ because some browsers don't support linear gradients */
 
   button.unset {
     background-color: #ffc233;
-    background-image: linear-gradient(#fbd78a, #ffc233 75%, #5b4310);
+    background-image: linear-gradient(#fbd78a, #fbd78a 75%, #5b4310);
   }
 
   button.unset:hover {
@@ -146,13 +164,13 @@ because some browsers don't support linear gradients */
   }
 
   button.clicked {
-    background-color: #18cf40;
-    background-image: linear-gradient(#80fc61, #18cf40 75%, #206727);
+    background-color: #ffc233;
+    background-image: linear-gradient(#fbd78a, #fbd78a 75%, #5b4310);
   }
 
   button.clicked:hover {
-    background-color: #16e93d;
-    background-image: linear-gradient(#7cff5c, #16e93d 75%, #245429);
+    background-color: #ffc233;
+    background-image: linear-gradient(#fbd78a, #fbd78a 75%, #5b4310);
   }
 
   button.reset-button {
@@ -173,19 +191,23 @@ because some browsers don't support linear gradients */
   }
 
   @media (max-width: 920px) {
+
     button,
     a,
     li {
       font-size: 14px;
     }
+
     .menu-nav button {
       padding: 2px 10px;
       height: 35px;
       width: 130px;
     }
+
     .nav-button-submenu li {
       padding: 4px 15px;
     }
+
     .menu-nav-buttons {
       gap: 3px;
     }

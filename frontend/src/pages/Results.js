@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import MainNavBar from "../components/MainNavBar";
-import resultHero from "../assets/resultHero.png";
 import HeroSection from "../components/HeroSection";
 // import GamesPageSelect from "../components/GamesPageSelect";
 import Line from "../components/Line";
@@ -20,18 +19,18 @@ const Results = () => {
     setCurrentTab(val);
   };
 
-  const date = new Date();
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  // const date = new Date();
+  // const options = {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
 
-  const formattedDate = date.toLocaleDateString("en-US", options);
+  // const formattedDate = date.toLocaleDateString("en-US", options);
 
   return (
     <>
-      <div className="flex flex-wrap gap-1 items-center">
+      <div className="flex flex-wrap gap-1 items-center" style={{ display:"flex", justifyContent: "space-around"}}>
         {/* <GamesPageSelect
           options={[
             "Season",
@@ -133,11 +132,11 @@ const Results = () => {
           Reset
         </button> */}
 
-        <HeroSection imgUrl={resultHero} alt="img" />
-        <MainNavBar />
+        {/* <HeroSection imgUrl={resultHero} alt="img" /> */}
         <Line />
-        <Banner date={formattedDate} label={"Game Breakdowns"} />
-        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
+        {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
+
+        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab}   />
         {CurrentTab === 0 ? (
           <TableComponent />
         ) : CurrentTab === 1 ? (
@@ -157,7 +156,7 @@ const Results = () => {
             <img src={img2} alt="img2" className=" w-full" />
           </div>
         </div>
-        <Banner date={formattedDate} label={"Game Breakdowns"} />
+        {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
 
         <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
         {CurrentTab === 0 ? (

@@ -7,7 +7,9 @@ import Navbar from "../../components/Navbar";
 
 const HomePage = () => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768); // Adjust breakpoint for tablet view
-  const [isTabletView, setIsTabletView] = useState(window.innerWidth > 768 && window.innerWidth <= 1024);
+  const [isTabletView, setIsTabletView] = useState(
+    window.innerWidth > 768 && window.innerWidth <= 1024
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -97,7 +99,10 @@ const HomePage = () => {
             <img
               src={image2}
               alt="Image 2"
-              style={{ width: "100%", height: isMobileView ? "15vh" : isTabletView ? "20vh" : "" }} // Adjust height for tablet view
+              style={{
+                width: "100%",
+                height: isMobileView ? "15vh" : isTabletView ? "20vh" : "",
+              }} // Adjust height for tablet view
             />
             <div style={styles.introContainer}>
               <div style={styles.contentContainer}>
@@ -116,77 +121,171 @@ const HomePage = () => {
                 >
                   {/* Your Grid items code */}
                   {/* First Column */}
-                  <Grid item xs={12} sm={6} md={3} style={{ ...styles.column, textAlign: "left" }}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    style={{ ...styles.column, textAlign: "left" }}
+                  >
                     <div style={styles.textContainer}>
                       <Typography
                         variant="body1"
-                        sx={{ fontSize: isMobileView || isTabletView ? "0.3rem" : "1rem", color: "white" }}
+                        sx={{
+                          fontSize:
+                            isMobileView || isTabletView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
                       >
-                        <i className="fa fa-futbol-o mr-2 text-blue-500"></i> Watching Pre-Game Shows
+                        <i className="fa fa-futbol-o mr-2 text-blue-500"></i>{" "}
+                        Watching Pre-Game Shows
                       </Typography>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
-      Watching Post-Game Shows
-    </Typography>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
-      And All The Games They Can
-    </Typography>
-  </div>
-</Grid>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-tv mr-2 text-blue-500"></i> Watching
+                        Post-Game Shows
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-tv mr-2 text-blue-500"></i> And All
+                        The Games They Can
+                      </Typography>
+                    </div>
+                  </Grid>
 
-{/* Second Column */}
-<Grid item xs={12} sm={6} md={3} style={{ ...styles.column, textAlign: 'left' }}>
-  <div style={styles.textContainer}>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
-      Checking Stats
-    </Typography>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-share-alt mr-2 text-blue-500"></i>{" "}
-      Sharing Stats
-    </Typography>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
-      Predicting Stats
-    </Typography>
-  </div>
-</Grid>
+                  {/* Second Column */}
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    style={{ ...styles.column, textAlign: "left" }}
+                  >
+                    <div style={styles.textContainer}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-bar-chart mr-2 text-blue-500"></i>{" "}
+                        Checking Stats
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-share-alt mr-2 text-blue-500"></i>{" "}
+                        Sharing Stats
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
+                        Predicting Stats
+                      </Typography>
+                    </div>
+                  </Grid>
 
-{/* Third Column */}
-<Grid item xs={12} sm={6} md={3} style={{ ...styles.column, textAlign: 'left' }}>
-  <div style={styles.textContainer}>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-trophy mr-2 text-blue-500"></i>{" "}
-      Telling You Whose Gonna Win
-    </Typography>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-headphones mr-2 text-blue-500"></i>{" "}
-      Listening To Friends Predictions
-    </Typography>
-    <Typography variant="body1" sx={{ fontSize: isMobileView ? "0.3rem" : "1rem", color: "white" }}>
-      <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
-      Predicting Who Is Going To Win
-    </Typography>
-  </div>
-</Grid>
+                  {/* Third Column */}
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    style={{ ...styles.column, textAlign: "left" }}
+                  >
+                    <div style={styles.textContainer}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-trophy mr-2 text-blue-500"></i>{" "}
+                        Telling You Whose Gonna Win
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-headphones mr-2 text-blue-500"></i>{" "}
+                        Listening To Friends Predictions
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          color: "white",
+                        }}
+                      >
+                        <i className="fa fa-tv mr-2 text-blue-500"></i>{" "}
+                        Predicting Who Is Going To Win
+                      </Typography>
+                    </div>
+                  </Grid>
 
-{/* Fourth Column */}
-<Grid item xs={12} sm={6} md={3} style={{ ...styles.column, textAlign: 'center' }}>
-  <div style={styles.textContainer}>
-    <Typography variant="body1" style={{ color: "#ffff00", fontSize: isMobileView ? "0.3rem" : "1rem" }}>
-      <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
-      SAYING 'I TOLD YOU SO!!'
-    </Typography>
-    <Typography variant="body1" style={{ color: "#ffff00", fontSize: isMobileView ? "0.3rem" : "1rem" }}>
-      <i className="fa fa-heart mr-2 text-blue-500"></i> AND
-      LOVE HAVING
-    </Typography>
-    <Typography variant="body1" style={{ color: "#ffff00", fontSize: isMobileView ? "0.3rem" : "1rem" }}>
-      <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate
-      Bragging Rights
-    </Typography>
-  
+                  {/* Fourth Column */}
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    style={{ ...styles.column, textAlign: "center" }}
+                  >
+                    <div style={styles.textContainer}>
+                      <Typography
+                        variant="body1"
+                        style={{
+                          color: "#ffff00",
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                        }}
+                      >
+                        <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
+                        SAYING 'I TOLD YOU SO!!'
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        style={{
+                          color: "#ffff00",
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                        }}
+                      >
+                        <i className="fa fa-heart mr-2 text-blue-500"></i> AND
+                        LOVE HAVING
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        style={{
+                          color: "#ffff00",
+                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                        }}
+                      >
+                        <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate
+                        Bragging Rights
+                      </Typography>
                     </div>
                   </Grid>
                 </Grid>

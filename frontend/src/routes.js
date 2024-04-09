@@ -26,6 +26,10 @@ import Test from "./pages/test/test";
 import { useEffect } from "react";
 import { useState } from "react";
 import Share from "./pages/Share";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermOfUse from "./pages/TermOfUse";
+import CookiePolicy from "./pages/CookiePolicy";
+import AcceptableUsePolicy from "./pages/AcceptableUsePolicy";
 
 const Routes = () => {
   const queryClient = new QueryClient();
@@ -37,6 +41,7 @@ const Routes = () => {
   }, []);
 
   return (
+    
     <Provider store={store}>
       <ToastContainer />
       <QueryClientProvider client={queryClient}>
@@ -60,6 +65,13 @@ const Routes = () => {
 
                 <Route path="/test" element={<Test />} />
                 <Route path="/share" element={<Share />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermOfUse />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route
+                  path="/acceptable-use-policy"
+                  element={<AcceptableUsePolicy />}
+                />
               </Route>
             </RoutesContainer>
           </LeagueProvider>
@@ -69,3 +81,5 @@ const Routes = () => {
   );
 };
 export default Routes;
+
+

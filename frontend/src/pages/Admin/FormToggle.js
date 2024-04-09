@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
-import MainNavBar from "../../components/MainNavBar";
 import EnterGames from "./EnterGames";
 import EnterResults from "./EnterResults";
 import LiveGames from "./LiveGames";
 import UpdateGames from "./UpdateGames";
+import EnterWeek from "./EnterWeek";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,11 +47,12 @@ const FormToggle = () => {
     { label: "Edit Games", formName: "edit" },
     { label: "Enter Results", formName: "results" },
     { label: "Live Games", formName: "livegames" },
+    // { label: "Live Games", formName: "livegames" },
+    { label: "Enter Weeks", formName: "enterweeks" },
   ];
 
   return (
     <div>
-      <MainNavBar />
       <div className="flex justify-center gap-3 mt-4">
         {formButtons.map((button) => (
           <Button
@@ -71,6 +72,7 @@ const FormToggle = () => {
         {activeForm === "edit" && <UpdateGames />}
         {activeForm === "results" && <EnterResults />}
         {activeForm === "livegames" && <LiveGames />}
+        {activeForm === "enterweeks" && <EnterWeek />}
       </div>
     </div>
   );
