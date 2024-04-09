@@ -502,3 +502,78 @@ label {
   width: 110%;
   margin-left: -50px;
 }
+
+/* Stats */
+.points-stat{
+
+  background-color:#2D2D2D ;
+
+  color:rgb(44, 221, 20);
+
+}
+.custom-table th, .custom-table td {
+
+  padding: 10px;
+  padding-left: 10px;
+  text-align: left;
+  
+}
+
+.stats-page {
+  background-color: #000; 
+  color: #fff;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.button-group button {
+  background-color: #444; 
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button-group button:hover {
+  background-color: #555; 
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; 
+}
+
+th, td {
+
+  padding: 5px 10px; 
+  text-align: center;
+  
+  
+}
+th{
+  color: rgb(179, 179, 0);
+}
+
+thead {
+  background-color: black;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #121212; 
+  
+}
+
+tbody tr:hover {
+  background-color: #333; 
+}
+thead:hover{
+  background-color: #333; 
+}
+.navbar-brand{
+  color: white;
+}

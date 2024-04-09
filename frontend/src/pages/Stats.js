@@ -13,8 +13,14 @@ import img1 from "../assets/card.png";
 import img2 from "../assets/card2.png";
 import pf from "../assets/pf.png";
 import flag from "../assets/download.png";
+import { LeagueProvider, useLeagueContext } from "../components/LeagueContext";
+import Baseball from "./Leaderboard/Baseball"
+import Basketball from "./Leaderboard/Basketball"
+import Football from './Leaderboard/Football'
+import Hockey from './Leaderboard/Hockey'
 import { useDispatch } from "react-redux";
 import { statsPageReducer } from "../store/searchBarSlice";
+
 
 const Stats = () => {
   const [mainNavTab, setMainNavTab] = useState(0);
@@ -60,8 +66,11 @@ const Stats = () => {
       text: "This is the content for card 2.",
     },
   ];
+  const { selectedLeague } = useLeagueContext();
 
   return (
+    <LeagueProvider>
+
     <div className="w-full">
       <Line />
       {/* <Banner date={formattedDate} label={"Game Breakdowns"} />
@@ -83,6 +92,25 @@ const Stats = () => {
         </ul>
       </nav>
       <br />
+
+
+
+      <div className="w-full">
+     
+     {selectedLeague === "NBA" && <Basketball />}
+     {selectedLeague === "NFL" && <Football />}
+     {selectedLeague === "NHL" && <Hockey />}
+     {selectedLeague === "MLB" && <Baseball />}
+   </div>
+
+
+
+
+
+
+
+
+
       <div className="container py-5 h-100">
         <div className="row">
           {cardContent.map((card, index) => (
@@ -215,6 +243,8 @@ const Stats = () => {
         </div>
       </div>
     </div>
+    </LeagueProvider>
+
   );
 };
 
