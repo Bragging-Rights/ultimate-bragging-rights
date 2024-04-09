@@ -135,7 +135,8 @@ const Results = () => {
         {/* <HeroSection imgUrl={resultHero} alt="img" /> */}
         <Line />
         {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
-        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
+
+        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab}   />
         {CurrentTab === 0 ? (
           <TableComponent />
         ) : CurrentTab === 1 ? (

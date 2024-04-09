@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SearchBar.css";
 import imgDown from "../../assets/angle-down-solid.svg";
+import { useDispatch, useSelector } from "react-redux";
 import {
   populateWeeks,
   monthNums,
@@ -11,214 +12,14 @@ import {
   days,
 } from "./Services";
 import { useLeagueContext } from "../LeagueContext";
+import { setSearchBar } from "../../store/searchBarSlice";
 
 const SearchBar = () => {
-  const initialValues = {
-    week: "WEEK",
-    day: "DAY",
-    monthDate: "DATE",
-    month: "MONTH",
-    year: "SELECT YEAR",
-    season: "SEASON",
-    team: "ALL TEAMS",
-    division: "ALL DIVSION",
-    conference: "ALL CONFERENCE",
-  };
-  const [disable, setDisable] = useState({
-    week: false,
-    day: false,
-    monthDate: false,
-    month: false,
-    year: false,
-    season: false,
-    team: false,
-    division: false,
-    conference: false,
-  });
-  const [weeks, setWeeks] = useState([]);
-  const [week, setWeek] = useState("WEEK");
-  const [day, setDay] = useState("DAY");
-  const [monthDate, setMonthDate] = useState("DATE");
-  const [month, setMonth] = useState("MONTH");
-  const date = new Date();
-  const [year, setYear] = useState("SELECT YEAR");
-  const currentYear = date.getFullYear();
-  const nextYear = date.getFullYear() + 1;
-  const yearsOption = ["All Years", currentYear + "-" + nextYear];
-  const [season, setSeason] = useState("SEASON");
-  const [team, setTeam] = useState("ALL TEAMS");
-  const [division, setDivision] = useState("ALL DIVSION");
-  const [conference, setConference] = useState("ALL CONFERENCE");
+  const searchBarValues = useSelector((state) => state.searchBar);
+  const weeks = populateWeeks();
   const { selectedLeague } = useLeagueContext();
+  const dispatch = useDispatch();
 
-  const restValues = () => {
-    setWeek(initialValues.week);
-    setDay(initialValues.day);
-    setMonthDate(initialValues.monthDate);
-    setMonth(initialValues.month);
-    setYear(initialValues.year);
-    setSeason(initialValues.season);
-    setTeam(initialValues.team);
-    setDivision(initialValues.division);
-    setConference(initialValues.conference);
-    setDisable({
-      week: false,
-      day: false,
-      monthDate: false,
-      month: false,
-      year: false,
-      season: false,
-      team: false,
-      division: false,
-      conference: false,
-    });
-  };
-
-  function updateAllButtons() {
-    if (week !== initialValues.week) {
-      setDisable({
-        week: false,
-        day: true,
-        monthDate: true,
-        month: true,
-        year: true,
-        season: true,
-        team: false,
-        division: false,
-        conference: false,
-      });
-    }
-
-    if (day !== initialValues.day) {
-      setDisable({
-        ...disable,
-        week: true,
-      });
-      setYear(yearsOption[0]);
-    }
-
-    if (monthDate !== initialValues.monthDate) {
-      setDisable({
-        ...disable,
-        week: true,
-      });
-      setYear(yearsOption[0]);
-    }
-
-    if (month !== initialValues.month) {
-      setDisable({
-        ...disable,
-        week: true,
-      });
-      setYear(yearsOption[0]);
-    }
-
-    if (season !== initialValues.season) {
-      setDisable({
-        ...disable,
-        week: true,
-      });
-    }
-
-    if (team !== initialValues.team) {
-      setDisable({
-        ...disable,
-        division: true,
-        conference: true,
-      });
-    }
-
-    if (division !== initialValues.division) {
-      setDisable({
-        ...disable,
-        conference: true,
-      });
-      updateTeamsBasedOnDivision();
-    }
-  }
-
-  useEffect(() => {
-    updateAllButtons();
-  }, [week, day, monthDate, month, year, season, team, division, conference]);
-
-  useEffect(() => {
-    const resp = populateWeeks();
-    setWeeks([...resp]);
-  }, []);
-
-  function updateTeamsBasedOnDivision() {
-    console.log(division, teamsData);
-  }
-  useEffect(() => {
-    // Get all nav buttons
-    const navButtonContainers = document.querySelectorAll(
-      ".menu-nav-buttons > .nav-button-container"
-    );
-    const buttons = document.querySelectorAll("button");
-
-    // Make all list items tabbable
-    const listItems = document.getElementsByTagName("li");
-    for (let i = 0; i < listItems.length; i++) {
-      listItems[i].setAttribute("tabindex", "0");
-    }
-
-    navButtonContainers.forEach((buttonContainer) => {
-      const button = buttonContainer.querySelector("button");
-      const submenu = buttonContainer.querySelector(".nav-button-submenu");
-      submenuEventListener(button, buttonContainer, submenu);
-    });
-
-    function submenuEventListener(button, buttonContainer, submenu) {
-      // Reset button doesn't have a submenu
-      if (submenu == null) {
-        return;
-      }
-      buttonContainer.addEventListener("mouseover", () => {
-        if (!isGreyedOut(button)) {
-          buttonContainer.classList.add("hover");
-          navButtonContainers.forEach((navButton) => {
-            navButton.classList.remove("active");
-          });
-        }
-      });
-      buttonContainer.addEventListener("mouseout", () => {
-        buttonContainer.classList.remove("hover");
-      });
-
-      // Do the same at Enter as is done at Click
-      submenu.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          const focusedElement = document.activeElement;
-          if (focusedElement.tagName.toLowerCase() == "li") {
-            const target = focusedElement;
-            setClicked(button);
-            const value = target.innerHTML;
-
-            updateAllButtons();
-            // Close submenu
-            buttonContainer.classList.remove("active");
-          }
-        }
-      });
-    }
-
-    function isGreyedOut(button) {
-      return button.classList.contains("greyed-out");
-    }
-
-    function setClicked(button) {
-      removeAttributes(button);
-      button.classList.add("clicked");
-    }
-
-    function removeAttributes(button) {
-      button.classList.remove("greyed-out", "clicked");
-      toDefaultValue(button);
-    }
-
-    function toDefaultValue(button) {}
-  }, []);
   return (
     <div className="search-bar-container">
       <div className="menu-container">
@@ -226,35 +27,27 @@ const SearchBar = () => {
           <div className="menu-nav-buttons">
             <div className="nav-button-container">
               <button
-                className={`unset ${week !== "WEEK" && "clicked"}
-                ${disable.week && "greyed-out"}
-                `}
+                className={`unset ${
+                  searchBarValues.week !== "WEEK" && "clicked"
+                }`}
                 title="Week"
               >
-                <a>{week}</a>
+                <a>{searchBarValues.week}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul name="week-submenu" className="nav-button-submenu">
                 {weeks?.map((item) => {
-                  return <li onClick={() => setWeek(item)}>{item}</li>;
-                })}
-              </ul>
-            </div>
-            <div className="nav-button-container">
-              <button
-                className={`unset ${day !== "DAY" && "clicked"}
-                  ${disable.day && "greyed-out"}
-                `}
-                name="weekday"
-                title="Day"
-              >
-                <a>{day}</a>
-                <img src={imgDown} alt="caret" />
-              </button>
-              <ul name="weekday-submenu" className="nav-button-submenu">
-                {days?.map((item) => {
                   return (
-                    <li key={item} onClick={() => setDay(item)}>
+                    <li
+                      onClick={() =>
+                        dispatch(
+                          setSearchBar({
+                            fieldName: "week",
+                            value: item,
+                          })
+                        )
+                      }
+                    >
                       {item}
                     </li>
                   );
@@ -263,19 +56,59 @@ const SearchBar = () => {
             </div>
             <div className="nav-button-container">
               <button
-                className={`unset ${monthDate !== "DATE" && "clicked"}
-                ${disable.monthDate && "greyed-out"}
+                className={`unset ${searchBarValues.week !== "DAY" && "clicked"}
+                
+                `}
+                name="weekday"
+                title="Day"
+              >
+                <a>{searchBarValues?.day}</a>
+                <img src={imgDown} alt="caret" />
+              </button>
+              <ul name="weekday-submenu" className="nav-button-submenu">
+                {days?.map((item) => {
+                  return (
+                    <li
+                      key={item}
+                      onClick={() =>
+                        dispatch(
+                          setSearchBar({
+                            fieldName: "day",
+                            value: item,
+                          })
+                        )
+                      }
+                    >
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="nav-button-container">
+              <button
+                className={`unset ${searchBarValues?.date && "clicked"}
                 `}
                 name="day"
                 title="Date"
               >
-                <a>{monthDate}</a>
+                <a>{searchBarValues?.date}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul name="day-submenu" className="nav-button-submenu">
-                <li onClick={() => setMonthDate("All Dates")}>All Dates</li>
+                <li>All Dates</li>
                 {Array.from({ length: 31 }, (_, index) => (
-                  <li key={index + 1} onClick={() => setMonthDate(index + 1)}>
+                  <li
+                    key={index + 1}
+                    onClick={() =>
+                      dispatch(
+                        setSearchBar({
+                          fieldName: "date",
+                          value: index + 1,
+                        })
+                      )
+                    }
+                  >
                     {index + 1}
                   </li>
                 ))}
@@ -283,19 +116,30 @@ const SearchBar = () => {
             </div>
             <div className="nav-button-container">
               <button
-                className={`unset ${month !== "MONTH" && "clicked"}
-                ${disable.month && "greyed-out"}
+                className={`unset ${
+                  searchBarValues?.month !== "MONTH" && "clicked"
+                }
                 `}
                 name="month"
                 title="Month"
               >
-                <a>{month}</a>
+                <a>{searchBarValues?.month}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu">
                 {months.map((item) => {
                   return (
-                    <li key={item} onClick={() => setMonth(item)}>
+                    <li
+                      key={item}
+                      onClick={() =>
+                        dispatch(
+                          setSearchBar({
+                            fieldName: "month",
+                            value: item,
+                          })
+                        )
+                      }
+                    >
                       {item}
                     </li>
                   );
@@ -305,103 +149,131 @@ const SearchBar = () => {
             <div className="nav-button-container">
               <button
                 title="Year"
-                className={`unset ${year !== "SELECT YEAR" && "clicked"}
-                ${disable.year && "greyed-out"}
-                `}
+                className={`unset ${
+                  searchBarValues?.year !== "SELECT YEAR" && "clicked"
+                } `}
               >
-                <a>{year}</a>
+                <a>{searchBarValues?.year}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu">
-                {yearsOption.map((item) => {
-                  return <li onClick={() => setYear(item)}>{item}</li>;
-                })}
-                {/* <li onClick={() => setYear("2024-2025")}>2024-2025</li> */}
-              </ul>
-            </div>
-            <div className="nav-button-container">
-              <button
-                className={`unset ${season !== "SEASON" && "clicked"}
-                ${disable.season && "greyed-out"}
-                `}
-                title="Season"
-              >
-                <a>{season}</a>
-                <img src={imgDown} alt="caret" />
-              </button>
-              <ul className="nav-button-submenu">
-                <li onClick={() => setSeason("All Season")}>All Season</li>
-                <li onClick={() => setSeason("Preseason")}>Preseason</li>
-                <li onClick={() => setSeason("Regular Season")}>
-                  Regular Season
+                <li
+                  onClick={() =>
+                    dispatch(
+                      setSearchBar({
+                        fieldName: "year",
+                        value: "2024",
+                      })
+                    )
+                  }
+                >
+                  2024
                 </li>
-                <li onClick={() => setSeason("Playoffs")}>Playoffs</li>
-              </ul>
-            </div>
-            <div className="nav-button-container">
-              <button
-                className={`unset ${team !== "ALL TEAMS" && "clicked"}
-                ${disable.team && "greyed-out"}
-                `}
-                title="All Teams"
-              >
-                <a>{team}</a>
-                <img src={imgDown} alt="caret" />
-              </button>
-              <ul className="nav-button-submenu teams">
-                {division !== "ALL DIVSION"
-                  ? teamsData[selectedLeague]
-                      ?.filter((item) => item.division === division)
-                      .map((team) => (
-                        <li
-                          key={team?.name}
-                          onClick={() => {
-                            setTeam(team?.name);
-                            setDivision(team.division);
-                            setConference(team.conference);
-                            setDisable({
-                              ...disable,
-                              division: true,
-                              conference: true,
-                            });
-                          }}
-                        >
-                          {team?.name}
-                        </li>
-                      ))
-                  : teamsData[selectedLeague]?.map((team) => {
-                      return (
-                        <li
-                          key={team?.name}
-                          onClick={() => {
-                            setTeam(team?.name);
-                            setDivision(team.division);
-                            setConference(team.conference);
-                            setDisable({
-                              ...disable,
-                              division: true,
-                              conference: true,
-                            });
-                          }}
-                        >
-                          {team?.name}
-                        </li>
-                      );
-                    })}
               </ul>
             </div>
             <div className="nav-button-container">
               <button
                 className={`unset ${
-                  team == initialValues.team &&
-                  division !== "ALL DIVSION" &&
-                  "clicked"
+                  searchBarValues?.season !== "SEASON" && "clicked"
                 }
-                ${disable.division && "greyed-out"}
+          
+                `}
+                title="Season"
+              >
+                <a>{searchBarValues?.season}</a>
+                <img src={imgDown} alt="caret" />
+              </button>
+              <ul className="nav-button-submenu">
+                <li
+                  onClick={() =>
+                    dispatch(
+                      setSearchBar({
+                        fieldName: "season",
+                        value: "All Season<",
+                      })
+                    )
+                  }
+                >
+                  All Season
+                </li>
+                <li
+                  onClick={() =>
+                    dispatch(
+                      setSearchBar({
+                        fieldName: "season",
+                        value: "Preseason",
+                      })
+                    )
+                  }
+                >
+                  Preseason
+                </li>
+                <li
+                  onClick={() =>
+                    dispatch(
+                      setSearchBar({
+                        fieldName: "season",
+                        value: "Regular Season",
+                      })
+                    )
+                  }
+                >
+                  Regular Season
+                </li>
+                <li
+                  onClick={() =>
+                    dispatch(
+                      setSearchBar({
+                        fieldName: "season",
+                        value: "Playoffs",
+                      })
+                    )
+                  }
+                >
+                  Playoffs
+                </li>
+              </ul>
+            </div>
+            <div className="nav-button-container">
+              <button
+                className={`unset ${
+                  searchBarValues?.team !== "ALL TEAMS" && "clicked"
+                } `}
+                title="All Teams"
+              >
+                <a>{searchBarValues?.team}</a>
+                <img src={imgDown} alt="caret" />
+              </button>
+              <ul className="nav-button-submenu teams">
+                {teamsData[selectedLeague]?.map((team) => {
+                  return (
+                    <li
+                      key={team?.name}
+                      onClick={() =>
+                        dispatch(
+                          setSearchBar({
+                            fieldName: "team",
+                            value: team.name,
+                          })
+                        )
+                      }
+                    >
+                      {team?.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="nav-button-container">
+              <button
+                className={`unset ${
+                  searchBarValues?.division !== "ALL DIVSION" && "clicked"
+                }
+                
                 `}
                 title="All Divisions"
               >
-                <a>{division}</a>
+                <a>{searchBarValues?.division}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu divisions">
@@ -409,10 +281,14 @@ const SearchBar = () => {
                   return (
                     <li
                       key={division.name}
-                      onClick={() => {
-                        setDivision(division.name);
-                        setConference(division.conference);
-                      }}
+                      onClick={() =>
+                        dispatch(
+                          setSearchBar({
+                            fieldName: "division",
+                            value: division.name,
+                          })
+                        )
+                      }
                     >
                       {division.name}
                     </li>
@@ -423,23 +299,30 @@ const SearchBar = () => {
             <div className="nav-button-container">
               <button
                 className={`unset ${
-                  (team == initialValues.team ||
-                    division == initialValues.division) &&
-                  conference !== "ALL CONFERENCE" &&
-                  "clicked"
+                  searchBarValues?.conference !== "ALL CONFERENCE" && "clicked"
                 }
-                  ${disable.conference && "greyed-out"}
+               
                   `}
                 name="all-conferences"
                 title="All Conferences"
               >
-                <a>{conference}</a>
+                <a>{searchBarValues?.conference}</a>
                 <img src={imgDown} alt="caret" />
               </button>
               <ul className="nav-button-submenu conferences">
                 {conferencesData[selectedLeague]?.map((item) => {
                   return (
-                    <li key={item} onClick={() => setConference(item)}>
+                    <li
+                      key={item}
+                      onClick={() =>
+                        dispatch(
+                          setSearchBar({
+                            fieldName: "conference",
+                            value: item,
+                          })
+                        )
+                      }
+                    >
                       {item}
                     </li>
                   );
@@ -450,7 +333,7 @@ const SearchBar = () => {
               <button
                 className="reset-button"
                 title="Reset"
-                onClick={restValues}
+                // onClick={restValues}
               >
                 Reset
               </button>

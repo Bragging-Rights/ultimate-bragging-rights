@@ -29,11 +29,15 @@ const GameForm = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [gameCards, setGameCards] = useState([]);
+
   const [formData, setFormData] = useState({
     week: "",
     league: "",
     season: "",
     date: "",
+    game: "",
+    fromDate: "",
+    toDate: "",
   });
 
   const [teams, setTeams] = useState([]);
@@ -93,7 +97,7 @@ const GameForm = () => {
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     const updatedGameCards = [...gameCards];
-
+    setFormData({ ...formData, [name]: value });
     // Update the field with the entered value
     updatedGameCards[index][name] = value;
 
@@ -200,8 +204,39 @@ const GameForm = () => {
     setFormSubmitted(false); // Reset the formSubmitted state
   };
 
+  const createGameData = () => {
+    return gameCards.map((gameCard) => {
+      return {
+        // Define your game data structure here based on your backend requirements
+        league: gameCard.league,
+        season: gameCard.season,
+        date: gameCard.date,
+        week: gameCard.week,
+        time: gameCard.time,
+        visitorTeam: gameCard.visitorTeam,
+        vML: gameCard.vML,
+        vSprd: gameCard.vSprd,
+        vSprdOdds: gameCard.vSprdOdds,
+        vOU: gameCard.vOU,
+        vOUOdds: gameCard.vOUOdds,
+        homeTeam: gameCard.homeTeam,
+        hML: gameCard.hML,
+        hSprd: gameCard.hSprd,
+        hSprdOdds: gameCard.hSprdOdds,
+        hOU: gameCard.hOU,
+        hOUOdds: gameCard.hOUOdds,
+        sport: gameCard.sport,
+      };
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form submitted");
+    console.log("Game:", formData.game);
+    console.log("From Date:", formData.fromDate);
+    console.log("To Date:", formData.toDate);
+
     if (gameCards?.length === 0) {
       return;
     }
@@ -232,7 +267,9 @@ const GameForm = () => {
         "error"
       );
     } else {
-      mutate([...gameCards]);
+      const gameData = createGameData();
+      console.log("Game data:", gameData); // Check if gameData is correctly formed
+      mutate(gameData);
       setFormSubmitted(true);
     }
   };
@@ -267,6 +304,78 @@ const GameForm = () => {
       <h2 className="text-white text-xl mb-4 align-items-center">
         Enter Game Details
       </h2>
+      <form
+        className="justify-center items-center h-screen text-yellow-500"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex flex-wrap -mx-2 ">
+          <div className="mb-4 px-2">
+            <label htmlFor="game">Game</label>
+            <select
+              id="game"
+              name="game"
+              value={formData.game}
+              onChange={(e) =>
+                setFormData({ ...formData, game: e.target.value })
+              }
+              className="bg-gray-800 text-white p-2 rounded w-full"
+            >
+              <option value="">Select a game</option>
+              <optgroup label="FOOTBALL">
+                <option value="_cfl">CFL</option>
+                <option value="_ncaaf">NCAAF</option>
+                <option value="_nfl">NFL</option>
+                <option value="_ufl">UFL</option>
+              </optgroup>
+              <optgroup label="BASEBALL">
+                <option value="_ncca">NCCA</option>
+              </optgroup>
+              <optgroup label="BASKETBALL">
+                <option value="_wnba">WNBA</option>
+                <option value="_ncaab">NCAAB</option>
+              </optgroup>
+            </select>
+          </div>
+          <div className="mb-4 px-2">
+            <label htmlFor="fromDate">From Date</label>
+            <input
+              type="date"
+              id="fromDate"
+              name="fromDate"
+              value={formData.fromDate}
+              onChange={(e) =>
+                setFormData({ ...formData, fromDate: e.target.value })
+              }
+              className="bg-gray-800 text-white p-2 rounded w-full"
+            />
+          </div>
+          <div className="mb-4 px-2">
+            <label htmlFor="toDate">To Date</label>
+            <input
+              type="date"
+              id="toDate"
+              name="toDate"
+              value={formData.toDate}
+              onChange={(e) =>
+                setFormData({ ...formData, toDate: e.target.value })
+              }
+              className="bg-gray-800 text-white p-2 rounded w-full"
+            />
+          </div>
+        </div>
+        <Button
+          type="submit"
+          variant="contained"
+          style={{
+            backgroundColor: "#FFD700", // Yellow color
+            color: "rgba(0, 0, 0, 1)", // Black color
+          }}
+          onClick={handleSubmit}
+        >
+          Submit ✔
+        </Button>
+      </form>
+
       <form
         onSubmit={handleSubmit}
         className="justify-center items-center h-screen text-yellow-500"

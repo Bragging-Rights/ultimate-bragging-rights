@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,10 +18,19 @@ import Baseball from "./Leaderboard/Baseball"
 import Basketball from "./Leaderboard/Basketball"
 import Football from './Leaderboard/Football'
 import Hockey from './Leaderboard/Hockey'
+import { useDispatch } from "react-redux";
+import { statsPageReducer } from "../store/searchBarSlice";
+
 
 const Stats = () => {
   const [mainNavTab, setMainNavTab] = useState(0);
   const [cardNavTabs, setCardNavTabs] = useState([0, 0]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(statsPageReducer());
+  }, [dispatch]);
 
   const changeMainNavTab = (val, event) => {
     event.preventDefault();
@@ -63,7 +72,6 @@ const Stats = () => {
     <LeagueProvider>
 
     <div className="w-full">
-     
       <Line />
       {/* <Banner date={formattedDate} label={"Game Breakdowns"} />
       <Line /> */}
