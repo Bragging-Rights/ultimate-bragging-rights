@@ -1,3 +1,95 @@
+/* NightResult.css */
+
+.night-result-container {
+  position: relative;
+}
+
+.animation-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.animation-controls .toggle-container {
+  position: relative;
+  margin-right: 16px;
+  margin-left: 5px;
+  margin-top: 8px;
+}
+
+.animation-controls .toggle-container input[type="checkbox"] {
+  display: none;
+}
+
+.animation-controls .toggle-container .slider {
+  position: relative;
+  cursor: pointer;
+  height: 20px; /* Adjusted height */
+  width: 40px; /* Adjusted width */
+  background-color: #ccc;
+  border-radius: 20px; /* Adjusted border-radius */
+}
+
+.animation-controls .toggle-container .slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; /* Adjusted height */
+  width: 16px; /* Adjusted width */
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.animation-controls .toggle-container input:checked + .slider {
+  background-color: #62c555; /* Green color */
+}
+
+.animation-controls .toggle-container input:checked + .slider:before {
+  transform: translateX(20px); /* Adjusted translation */
+}
+
+.animation-controls button {
+  padding: 6px 12px; /* Adjusted padding */
+  background-color: #e74c3c; /* Red color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.animation-controls button:hover {
+  background-color: #c0392b; /* Darker red color */
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.table th {
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #fef098;
+}
+
 .nr-state-rank {
   font-size: 0.75rem;
   font-weight: bold;
@@ -12,7 +104,10 @@
   color: white;
 }
 
-.nr-details {
+.nr-details,
+.nr-details-2,
+.nr-details-3,
+.nr-details-4 {
   background-color: #62c555;
   font-size: 1rem;
   font-weight: bold;
@@ -20,37 +115,13 @@
   text-align: center;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #f8fa13;
-}
-
-.nr-details-1 {
-  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
-  font-size: 1rem;
-  font-weight: bold;
-  width: 2.5rem;
-  text-align: center;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  color: black;
-  filter: blur(2px);
+  opacity: 0; /* Initially hide the elements */
+  transition: opacity 0.5s ease; /* Smooth transition effect */
 }
 
 .nr-details-2 {
   background-color: #62c555;
-  font-size: 1rem;
-  font-weight: bold;
-  width: 2.5rem;
-  text-align: center;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: black;
-}
-
-.nr-details-3 {
-  background-color: #e61c1c;
-  font-size: 1rem;
-  font-weight: bold;
-  width: 2.5rem;
-  text-align: center;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  color: #f8fa13;
 }
 
 .nr-svg-span {
@@ -62,3 +133,35 @@
 .nr-bg {
   background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
 }
+
+/* Animation for sorting rows */
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.night-result-container tbody tr {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+.night-result-container tbody tr.move-up {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+.night-result-container tbody tr.move-down {
+  animation: slideDown 0.5s ease-in-out;
+}
+
