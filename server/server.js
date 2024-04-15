@@ -54,9 +54,7 @@ app.use("/api/leagues/nfl", nflTeams);
 app.use("/api/leagues/mlb", mlbTeams);
 app.use("/api/user/gamesplayed", gamesPlayed);
 
-
 app.use("/api/restaurant",router)
-
 
 
 app.use("/api/weeks", weekRoutes);
