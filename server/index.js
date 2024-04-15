@@ -70,7 +70,7 @@ app.use("/api/restaurant",router)
 
 
 app.get("/", async (req, res) => {
-  res.send("Server is running...");
+  res.json("Server is running...");
 });
 
 // Start the server
