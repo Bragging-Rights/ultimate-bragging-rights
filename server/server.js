@@ -39,7 +39,13 @@ mongoose
 // };
 
 app.use(moragn("dev"));
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: "*",
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
