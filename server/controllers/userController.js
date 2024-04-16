@@ -14,12 +14,12 @@ exports.signUpController = async (req, res) => {
     lastName: data.lastName, //
     email: data.email, //
     password: data.password, //
-    gender: data.gender, //
-    city: data.city, //
-    state: data.province, //
-    country: data.country, //
-    zipCode: data.postalCode,
-    phone: data.phoneNumber,
+    // gender: data.gender, //
+    // city: data.city, //
+    // state: data.province, //
+    // country: data.country, //
+    // zipCode: data.postalCode,
+    // phone: data.phoneNumber,
     league: data.leagues[0]?.league || null,
     username: data.leagues[0]?.username || null,
     team: data.leagues[0]?.team || null,
