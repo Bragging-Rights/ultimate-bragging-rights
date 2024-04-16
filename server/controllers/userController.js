@@ -14,72 +14,73 @@ exports.signUpController = async (req, res) => {
     lastName: data.lastName, //
     email: data.email, //
     password: data.password, //
-    gender: data.gender, //
-    city: data.city, //
-    state: data.province, //
-    country: data.country, //
-    zipCode: data.postalCode,
-    phone: data.phoneNumber,
-    league: data.leagues[0]?.league || null,
-    username: data.leagues[0]?.username || null,
-    team: data.leagues[0]?.team || null,
-    league1: data.leagues[1]?.league || null,
-    username1: data.leagues[1]?.username || null,
-    team1: data.leagues[1]?.team || null,
-    league2: data.leagues[2]?.league || null,
-    username2: data.leagues[2]?.username || null,
-    team2: data.leagues[2]?.team || null,
-    league3: data.leagues[3]?.league || null,
-    username3: data.leagues[3]?.username || null,
-    team3: data.leagues[3]?.team || null,
-    referralName: data.referralName,
+    username: data.username,
+    // gender: data.gender, //
+    // city: data.city, //
+    // state: data.province, //
+    // country: data.country, //
+    // zipCode: data.postalCode,
+    // phone: data.phoneNumber,
+    // league: data.leagues[0]?.league || null,
+    // username: data.leagues[0]?.username || null,
+    // team: data.leagues[0]?.team || null,
+    // league1: data.leagues[1]?.league || null,
+    // username1: data.leagues[1]?.username || null,
+    // team1: data.leagues[1]?.team || null,
+    // league2: data.leagues[2]?.league || null,
+    // username2: data.leagues[2]?.username || null,
+    // team2: data.leagues[2]?.team || null,
+    // league3: data.leagues[3]?.league || null,
+    // username3: data.leagues[3]?.username || null,
+    // team3: data.leagues[3]?.team || null,
+    // referralName: data.referralName,
   };
 
   // Check if the username is unique for each league
-  const leagues = [
-    data.leagues[0]?.league || null,
-    data.leagues[1]?.league || null,
-    data.leagues[2]?.league || null,
-    data.leagues[3]?.league || null,
-  ];
-  const usernames = [
-    data.leagues[0]?.team || null,
-    data.leagues[1]?.team || null,
-    data.leagues[2]?.team || null,
-    data.leagues[3]?.team || null,
-  ];
+  // const leagues = [
+  //   data.leagues[0]?.league || null,
+  //   data.leagues[1]?.league || null,
+  //   data.leagues[2]?.league || null,
+  //   data.leagues[3]?.league || null,
+  // ];
+  // const usernames = [
+  //   data.leagues[0]?.team || null,
+  //   data.leagues[1]?.team || null,
+  //   data.leagues[2]?.team || null,
+  //   data.leagues[3]?.team || null,
+  // ];
 
-  for (let i = 0; i < leagues.length; i++) {
-    if (
-      usernames != null &&
-      usernames[i] != null &&
-      leagues != null &&
-      leagues[i] != null
-    ) {
-      try {
-        const existingUser = await User.findOne({
-          username: usernames[i],
-          league: leagues[i],
-        });
-        if (existingUser) {
-          return res
-            .status(409)
-            .json(
-              responseObject(
-                {},
-                `Username ${usernames[i]} already exists in league ${leagues[i]}. Please try another one`,
-                false
-              )
-            );
-        }
-      } catch (error) {
-        console.error("Error finding user:", error);
-        return res
-          .status(500)
-          .json(responseObject({}, "Error registering user.", true));
-      }
-    }
-  }
+  // for (let i = 0; i < leagues.length; i++) {
+  //   if (
+  //     usernames != null &&
+  //     usernames[i] != null &&
+  //     leagues != null &&
+  //     leagues[i] != null
+  //   ) {
+  //     try {
+  //       const existingUser = await User.findOne({
+  //         username: usernames[i],
+  //         league: leagues[i],
+  //       });
+  //       if (existingUser) {
+  //         return res
+  //           .status(409)
+  //           .json(
+  //             responseObject(
+  //               {},
+  //               `Username ${usernames[i]} already exists in league ${leagues[i]}. Please try another one`,
+  //               false
+  //             )
+  //           );
+  //       }
+  //     } catch (error) {
+  //       console.error("Error finding user:", error);
+  //       return res
+  //         .status(500)
+  //         .json(responseObject({}, "Error registering user.", true));
+  //     }
+  //   }
+  // }
 
   // Check if the email is unique
   const email = user.email;
@@ -97,38 +98,39 @@ exports.signUpController = async (req, res) => {
         );
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(user.password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hash = await bcrypt.hash(user.password, salt);
 
     //otp
-    const otp = generateOTP();
-    user.otp = otp;
-    user.isVerified = false;
-    user.password = hash;
+    // const otp = generateOTP();
+    // user.otp = otp;
+    // user.isVerified = false;
+    // user.password = hash;
 
     const newUser = new User(user);
     const savedUser = await newUser.save();
-    const userId = savedUser._id;
+    res.status(200).json(savedUser);
+    // const userId = savedUser._id;
 
-    const foundUser = await User.findById(userId);
-    if (foundUser) {
-      const user = foundUser.toObject();
-      delete user.password;
+    // const foundUser = await User.findById(userId);
+    // if (foundUser) {
+    //   const user = foundUser.toObject();
+    //   delete user.password;
 
-      delete user.otp;
-      delete user.isVerified;
-      res
-        .status(200)
-        .json(responseObject(user, "User registered successfully.", false));
+    //   delete user.otp;
+    //   delete user.isVerified;
+    //   res
+    //     .status(200)
+    //     .json(responseObject(user, "User registered successfully.", false));
 
-      sendEmail(
-        email,
-        "OTP",
-        `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
-      );
-    } else {
-      console.log("User not found after insertion.");
-    }
+    //   sendEmail(
+    //     email,
+    //     "OTP",
+    //     `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
+    //   );
+    // } else {
+    //   console.log("User not found after insertion.");
+    // }
   } catch (err) {
     console.error("Error inserting user:", err);
     return res

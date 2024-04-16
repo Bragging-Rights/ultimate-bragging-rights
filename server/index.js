@@ -68,7 +68,7 @@ app.use("/api/weeks", weekRoutes);
 app.use("/api/odds", oddsRoutes);
 
 app.get("/", async (req, res) => {
-  res.send("Server is running...");
+  res.json("Server is running...");
 });
 
 // Start the server

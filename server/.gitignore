@@ -2,5 +2,5 @@
 
 /.git
 .git
-.env
+/.env
 
