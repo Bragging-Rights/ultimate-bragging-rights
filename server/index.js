@@ -39,7 +39,15 @@ mongoose
 // };
 
 app.use(moragn("dev"));
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: "*",
+    credentials: true,
+  })
+);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -53,20 +61,14 @@ app.use("/api/leagues/nba", nbaTeams);
 app.use("/api/leagues/nfl", nflTeams);
 app.use("/api/leagues/mlb", mlbTeams);
 app.use("/api/user/gamesplayed", gamesPlayed);
-
-
-app.use("/api/restaurant",router)
-
-
+app.use("/api/restaurant", router);
 
 app.use("/api/weeks", weekRoutes);
 
 app.use("/api/odds", oddsRoutes);
 
-
-
 app.get("/", async (req, res) => {
-  res.send("Server is running...");
+  res.json("Server is running...");
 });
 
 // Start the server

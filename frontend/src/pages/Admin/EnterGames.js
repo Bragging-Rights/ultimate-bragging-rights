@@ -4,8 +4,7 @@ import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import displayToast from "../../components/Alert/Alert";
 import { getTeasmByLeage } from "../../Apis/Teams";
-// import Footer from "../../components/Footer";
-// import handleTimeConversionToLocal from "../../services/ConvertTime";
+import { getOdds } from "../../Apis/odds";
 import Button from "@mui/material/Button";
 
 const GameForm = () => {
@@ -29,17 +28,11 @@ const GameForm = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [gameCards, setGameCards] = useState([]);
-
   const [formData, setFormData] = useState({
-    week: "",
-    league: "",
-    season: "",
-    date: "",
     game: "",
     fromDate: "",
     toDate: "",
   });
-
   const [teams, setTeams] = useState([]);
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
@@ -51,26 +44,10 @@ const GameForm = () => {
       },
       onSuccess: (rec) => {
         displayToast("Game added successfully.", "success");
-
         reset();
       },
     }
   );
-
-  const {
-    isLoading: loadingTeams,
-    isError: teamError,
-    data: teamsData,
-  } = useQuery(["teams", formData.league], getTeasmByLeage, {
-    enabled: !!formData.league, // Fetch only if formData.league is truthy
-    onError: (err) => {
-      displayToast("An error occurred while getting the game.", "error");
-    },
-    onSuccess: (rec) => {
-      setTeams(rec.data);
-    },
-  });
-
   const generateSeasonOptions = () => {
     return (
       <>
@@ -94,34 +71,65 @@ const GameForm = () => {
     );
   };
 
+  const {
+    isLoading: loadingTeams,
+    isError: teamError,
+    data: teamsData,
+  } = useQuery(["teams", formData.league], getTeasmByLeage, {
+    enabled: !!formData.league,
+    onError: (err) => {
+      displayToast("An error occurred while getting the game.", "error");
+    },
+    onSuccess: (rec) => {
+      setTeams(rec.data);
+      console.log("Teams Data:", rec.data); // Logging fetched teams data
+    },
+  });
+  const {
+    isLoading: loadingAdditionalData,
+    isError: additionalDataError,
+    data: additionalData,
+  } = useQuery("additionalData", () => {
+    // Replace 'fetchAdditionalData' with your actual function to fetch additional data
+    return fetchAdditionalData();
+  });
+
+  useEffect(() => {
+    if (additionalData) {
+      console.log("Additional Data:", additionalData);
+    }
+  }, [additionalData]);
+
+  const fetchAdditionalData = async () => {
+    try {
+      // Make API call to fetch additional data
+      const response = await fetch("<API_ENDPOINT>");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching additional data:", error);
+      // You can handle errors here
+    }
+  };
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     const updatedGameCards = [...gameCards];
     setFormData({ ...formData, [name]: value });
-    // Update the field with the entered value
     updatedGameCards[index][name] = value;
-
-    // Mirror the Spread values for home team if it's the visitor's Spread
-
-    // Mirror the Over/Under values for home team if it's the visitor's Over/Under
-
     setGameCards(updatedGameCards);
-  };
-
-  const getFilteredTeams = (selectedTeam) => {
-    return teams.filter((team) => team.displayName !== selectedTeam);
   };
 
   const handleAddGameCard = () => {
     const { league, season, date, week } = formData;
 
-    // Check if any of the required values is undefined or empty
     if (!league || !season || !date || !week) {
       displayToast("Incomplete form data. Unable to add game card.");
       return;
     }
 
-    // Determine the sport based on the selected league
     let sport = "";
     if (league === "NFL") {
       sport = "football";
@@ -133,7 +141,6 @@ const GameForm = () => {
       sport = "baseball";
     }
 
-    // Use the extracted values to construct new game card
     const newGameCard = {
       league,
       season,
@@ -155,10 +162,7 @@ const GameForm = () => {
       sport: "",
     };
 
-    // Create a new copy of the formData object for each game card
     setGameCards((prevGameCards) => [...prevGameCards, newGameCard]);
-
-    // Clear only the other fields, not season, league, and date
     setFormData((prevFormData) => ({
       ...prevFormData,
       time: "",
@@ -176,14 +180,12 @@ const GameForm = () => {
       hOUOdds: "",
     }));
 
-    // if (!newGameCard.time) {
-    //   displayToast("Please enter a time for the game.", "error");
-    //   return;
-    // }
-
-    // Filter out the selected teams from the opposite dropdown
     const filteredTeams = getFilteredTeams(newGameCard.visitorTeam);
     setTeams(filteredTeams);
+  };
+
+  const getFilteredTeams = (selectedTeam) => {
+    return teams.filter((team) => team.displayName !== selectedTeam);
   };
 
   const handleRemoveGameCard = (index) => {
@@ -196,18 +198,13 @@ const GameForm = () => {
     setGameCards([]);
     setFormData({
       ...initialFormData,
-      week: "",
-      league: "",
-      season: "",
-      date: "",
     });
-    setFormSubmitted(false); // Reset the formSubmitted state
+    setFormSubmitted(false);
   };
 
   const createGameData = () => {
     return gameCards.map((gameCard) => {
       return {
-        // Define your game data structure here based on your backend requirements
         league: gameCard.league,
         season: gameCard.season,
         date: gameCard.date,
@@ -232,16 +229,10 @@ const GameForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
-    console.log("Game:", formData.game);
-    console.log("From Date:", formData.fromDate);
-    console.log("To Date:", formData.toDate);
 
     if (gameCards?.length === 0) {
       return;
     }
-
-    // console.log(gameCards);
 
     if (formSubmitted) {
       displayToast("Form already submitted.", "warning");
@@ -250,7 +241,6 @@ const GameForm = () => {
 
     const missingFields = [];
 
-    // Check each game card for missing fields
     gameCards.forEach((gameCard, index) => {
       if (!gameCard.time) {
         missingFields.push(`Time for game ${index + 1}`);
@@ -268,17 +258,22 @@ const GameForm = () => {
       );
     } else {
       const gameData = createGameData();
-      console.log("Game data:", gameData); // Check if gameData is correctly formed
+      console.log("Game data:", gameData);
       mutate(gameData);
       setFormSubmitted(true);
     }
   };
 
+  const handleOdds = (e) => {
+    console.log("Form data:", formData);
+    getOdds(formData.game).then((response) => {
+      console.log("Odds data:", response.data);
+    });
+  };
+
   const handlePaste = (e, index) => {
     const data = e.clipboardData.getData("text");
-
     const values = data.split("\n");
-    // console.log(values);
 
     let cleanedData = values.map((item) => item.replace(/[\r|o|u]/g, ""));
 
@@ -295,10 +290,12 @@ const GameForm = () => {
     updatedGameCards[index].hOU = cleanedData[8];
     updatedGameCards[index].hOUOdds = cleanedData[9];
 
-    // Assuming you have a state setter for gameCards
     setGameCards(updatedGameCards);
   };
 
+  useEffect(() => {
+    // console.log("Form data:", formData);
+  }, [formData]);
   return (
     <div className="p-4">
       <h2 className="text-white text-xl mb-4 align-items-center">
@@ -322,17 +319,17 @@ const GameForm = () => {
             >
               <option value="">Select a game</option>
               <optgroup label="FOOTBALL">
-                <option value="_cfl">CFL</option>
-                <option value="_ncaaf">NCAAF</option>
-                <option value="_nfl">NFL</option>
-                <option value="_ufl">UFL</option>
+                <option value="americanfootball_cfl">CFL</option>
+                <option value="americanfootball_ncaaf">NCAAF</option>
+                <option value="americanfootball_nfl">NFL</option>
+                <option value="americanfootball_ufl">UFL</option>
               </optgroup>
               <optgroup label="BASEBALL">
-                <option value="_ncca">NCCA</option>
+                <option value="baseball_ncaa">NCCA</option>
               </optgroup>
               <optgroup label="BASKETBALL">
-                <option value="_wnba">WNBA</option>
-                <option value="_ncaab">NCAAB</option>
+                <option value="basketball_wnba">WNBA</option>
+                <option value="basketball_ncaab">NCAAB</option>
               </optgroup>
             </select>
           </div>
@@ -367,15 +364,14 @@ const GameForm = () => {
           type="submit"
           variant="contained"
           style={{
-            backgroundColor: "#FFD700", // Yellow color
-            color: "rgba(0, 0, 0, 1)", // Black color
+            backgroundColor: "#FFD700",
+            color: "rgba(0, 0, 0, 1)",
           }}
-          onClick={handleSubmit}
+          onClick={handleOdds}
         >
           Submit ✔
         </Button>
       </form>
-
       <form
         onSubmit={handleSubmit}
         className="justify-center items-center h-screen text-yellow-500"
