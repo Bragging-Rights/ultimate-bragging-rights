@@ -12,7 +12,7 @@ exports.signUpController = async (req, res) => {
   const user = {
     firstName: data.firstName, //
     lastName: data.lastName, //
-    email: data.email, //
+    email: data.email.value, //
     password: data.password, //
     username: data.username,
     // gender: data.gender, //
