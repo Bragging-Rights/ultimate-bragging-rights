@@ -10,7 +10,7 @@ exports.getOdds = async (req, res) => {
   try {
     // const { data } = await axios.get(`${API}/odds`, {
     const { data } = await axios.get(
-      `${process.env.ODDS_API_URL}/${sport}/odds/?apiKey=${process.env.ODDS_API_KEY}&bookmakers=betmgm&markets=h2h,spreads&oddsFormat=american`
+      `${process.env.ODDS_API_URL}/${sport}/odds/?apiKey=${process.env.ODDS_API_KEY}&bookmakers=betmgm&markets=h2h,spreads,totals&oddsFormat=american`
     );
     res.status(200).json(data);
   } catch (error) {
