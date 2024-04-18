@@ -30,6 +30,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermOfUse from "./pages/TermOfUse";
 import CookiePolicy from "./pages/CookiePolicy";
 import AcceptableUsePolicy from "./pages/AcceptableUsePolicy";
+import Fullleaderboard from "./pages/NEW/Fullleaderboard";
 
 const Routes = () => {
   const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ const Routes = () => {
                 <Route path="/pools" element={<Pools />} />
                 <Route path="/record" element={<Records />} />
                 <Route path="/stats" element={<Stats />} />
+                <Route path="/testleader" element={<Fullleaderboard />} />
                 <Route path="/standings" element={<Standing />} />
                 <Route path="/teams" element={<Teams />} />
                 <Route path="/fb-challanges" element={<FbChallanges />} />
