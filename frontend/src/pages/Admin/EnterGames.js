@@ -8,6 +8,7 @@ import { getOdds } from "../../Apis/odds";
 import Button from "@mui/material/Button";
 
 const GameForm = () => {
+  const [odds, setOdds] = useState(null);
   const dispatch = useDispatch();
   const initialFormData = {
     time: "",
@@ -94,38 +95,39 @@ const GameForm = () => {
   //   setFormSubmitted(true);
   // };
 
-  const handleOdds = async (e) => {
+  const handleOdds = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
 
-    try {
-      const oddsData = await getOdds(formData.game);
-      console.log("Odds data:", oddsData);
-
-      const { data } = oddsData;
-      if (data) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          vSprd: data.vSprd,
-          vSprdOdds: data.vSprdOdds,
-          vML: data.vML,
-          vOU: data.vOU,
-          vOUOdds: data.vOUOdds,
-          homeTeam: data.homeTeam,
-          hML: data.hML,
-          hSprd: data.hSprd,
-          hSprdOdds: data.hSprdOdds,
-          hOU: data.hOU,
-          hOUOdds: data.hOUOdds,
-          sport: data.sport,
-        }));
-      } else {
-        displayToast("No odds data found for selected game.", "error");
-      }
-    } catch (error) {
-      console.error("Error fetching odds:", error);
-      displayToast("An error occurred while fetching odds.", "error");
-    }
+    getOdds(formData.game)
+      .then((oddsData) => {
+        console.log("Odds data:", oddsData);
+        setOdds(oddsData.data);
+        // const { data } = oddsData;
+        // if (data) {
+        //   setFormData((prevFormData) => ({
+        //     ...prevFormData,
+        //     vSprd: data.vSprd,
+        //     vSprdOdds: data.vSprdOdds,
+        //     vML: data.vML,
+        //     vOU: data.vOU,
+        //     vOUOdds: data.vOUOdds,
+        //     homeTeam: data.homeTeam,
+        //     hML: data.hML,
+        //     hSprd: data.hSprd,
+        //     hSprdOdds: data.hSprdOdds,
+        //     hOU: data.hOU,
+        //     hOUOdds: data.hOUOdds,
+        //     sport: data.sport,
+        //   }));
+        // } else {
+        //   displayToast("No odds data found for selected game.", "error");
+        // }
+      })
+      .catch((error) => {
+        console.error("Error fetching odds:", error);
+        displayToast("An error occurred while fetching odds.", "error");
+      });
   };
 
   const createGameData = () => {
@@ -155,10 +157,7 @@ const GameForm = () => {
       <h2 className="text-white text-xl mb-4 align-items-center">
         Enter Game Details
       </h2>
-      <form
-        className="justify-center items-center h-screen text-yellow-500"
-        onSubmit={handleSubmit}
-      >
+      <form className="justify-center items-center h-screen text-yellow-500">
         <div className="flex flex-wrap -mx-2 ">
           <div className="mb-4 px-2">
             <label htmlFor="game">Game</label>
@@ -190,32 +189,6 @@ const GameForm = () => {
               </optgroup>
             </select>
           </div>
-          <div className="mb-4 px-2">
-            <label htmlFor="fromDate">From Date</label>
-            <input
-              type="date"
-              id="fromDate"
-              name="fromDate"
-              value={formData.fromDate}
-              onChange={(e) =>
-                setFormData({ ...formData, fromDate: e.target.value })
-              }
-              className="bg-gray-800 text-white p-2 rounded w-full"
-            />
-          </div>
-          <div className="mb-4 px-2">
-            <label htmlFor="toDate">To Date</label>
-            <input
-              type="date"
-              id="toDate"
-              name="toDate"
-              value={formData.toDate}
-              onChange={(e) =>
-                setFormData({ ...formData, toDate: e.target.value })
-              }
-              className="bg-gray-800 text-white p-2 rounded w-full"
-            />
-          </div>
         </div>
         <Button
           type="submit"
@@ -234,149 +207,161 @@ const GameForm = () => {
         onSubmit={handleSubmit}
         className="justify-center items-center h-screen text-yellow-500"
       >
-        <div className="game-card" style={{ backgroundColor: "" }}>
-          <div className="flex flex-row">
-            <div
-              className="w-1/2 px-2 box box h-18 w-40"
-              style={{ marginRight: "20px", marginBottom: "8px" }}
-            >
-              <label>Game Time</label>
-              <input
-                type="time"
-                name={`time`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
+        {odds &&
+          odds.map((odd) => (
+            <div className="game-card" style={{ backgroundColor: "" }}>
+              <div className="flex flex-row">
+                <div
+                  className="w-1/2 px-2 box box h-18 w-40"
+                  style={{ marginRight: "20px", marginBottom: "8px" }}
+                >
+                  <label>{odd.commence_time}</label>
+                  <input
+                    type="time"
+                    name={`time`}
+                    className="bg-gray-800 text-white p-2 rounded w-full"
+                    disabled={true}
+                  />
+                </div>
+              </div>
+              {odd.bookmakers &&
+                odd.bookmakers.map((market) => (
+                  <div key={market.index} className="flex gap-2">
+                    <div
+                      className="box box h-18 w-60"
+                      style={{ marginLeft: "40px" }}
+                    >
+                      <label>Visitor Team</label>
+                      <input
+                        name={`visitorTeam`}
+                        value={odd.away_team}
+                        className="bg-gray-800 text-white p-2 rounded w-full"
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="px-2 box box h-18">
+                      <label>V Sprd</label>
+                      <input
+                        type="number"
+                        name={`vSprd`}
+                        value={market[1]?.outcomes[1].point}
+                        className="bg-gray-800 text-white p-2 rounded w-full"
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="px-2 box box h-18">
+                      <label>V Sprd Odds</label>
+                      <input
+                        type="number"
+                        value={market[1]?.outcomes[1].price}
+                        name={`vSprdOdds`}
+                        className="bg-gray-800 text-white p-2 rounded w-full"
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="px-2 box box h-18">
+                      <label>Visitor M/L</label>
+                      <input
+                        type="number"
+                        name={`vML`}
+                        value={market[0]?.outcomes[1].price}
+                        className="bg-gray-800 text-white p-2 rounded w-full"
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="px-2 box box h-18">
+                      <label>V O/U</label>
+                      <input
+                        type="number"
+                        name={`vOU`}
+                        value={market[2]?.outcomes[1].point + 0.5}
+                        className="bg-gray-800 text-white p-2 rounded w-full"
+                        disabled={true}
+                      />
+                    </div>
+                    <div className="px-2 box box h-18">
+                      <label>V O/U Odds</label>
+                      <input
+                        type="number"
+                        value={market[2]?.outcomes[1].price}
+                        name={`vOUOdds`}
+                        className="bg-gray-800 text-white p-2 rounded w-full"
+                        disabled={true}
+                      />
+                    </div>
+                  </div>
+                ))}
+              <div className="flex gap-2 mt-5 ">
+                <div
+                  className="box box h-18 w-60"
+                  style={{ marginLeft: "40px" }}
+                >
+                  <label>Home Team</label>
+                  <input
+                    name={`homeTeam`}
+                    value={odd.home_team}
+                    className="bg-gray-800 text-white p-2 rounded w-full"
+                    disabled={true}
+                  />
+                </div>
+                {odd.bookmakers &&
+                  odd.bookmakers.map((market) => (
+                    <div key={market.index} className="flex gap-2">
+                      <div className="px-2 box box h-18">
+                        <label>H Sprd</label>
+                        <input
+                          type="number"
+                          name={`hSprd`}
+                          value={market[1]?.outcomes[0].point}
+                          className="bg-gray-800 text-white p-2 rounded w-full"
+                          disabled={true}
+                        />
+                      </div>
+                      <div className="px-2 box box h-18">
+                        <label>H Sprd Odds</label>
+                        <input
+                          type="number"
+                          name={`hSprdOdds`}
+                          value={market[1]?.outcomes[0].price}
+                          className="bg-gray-800 text-white p-2 rounded w-full"
+                          disabled={true}
+                        />
+                      </div>
+                      <div className="px-2 box box h-18">
+                        <label>Home M/L</label>
+                        <input
+                          type="number"
+                          name={`hML`}
+                          value={market[0]?.outcomes[0].price}
+                          className="bg-gray-800 text-white p-2 rounded w-full"
+                          disabled={true}
+                        />
+                      </div>
+                      <div className="px-2 box box h-18">
+                        <label>H O/U</label>
+                        <input
+                          type="number"
+                          name={`hOU`}
+                          value={market[2]?.outcomes[0].point + 0.5}
+                          className="bg-gray-800 text-white p-2 rounded w-full"
+                          disabled={true}
+                        />
+                      </div>
+                      <div className="px-2 box box h-18">
+                        <label>H O/U Odds</label>
+                        <input
+                          type="number"
+                          value={market[2]?.outcomes[0].price}
+                          name={`hOUOdds`}
+                          className="bg-gray-800 text-white p-2 rounded w-full"
+                          disabled={true}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
-            <div
-              className="px-2 box box h-18 w-40"
-              style={{ marginBottom: "8px" }}
-            >
-              <label>Data Paste</label>
-              <input
-                type="text"
-                name={`data`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <div className="box box h-18 w-60" style={{ marginLeft: "40px" }}>
-              <label>Visitor Team</label>
-              <input
-                name={`visitorTeam`}
-                value={"New York Islanders"}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>V Sprd</label>
-              <input
-                type="number"
-                name={`vSprd`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>V Sprd Odds</label>
-              <input
-                type="number"
-                name={`vSprdOdds`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>Visitor M/L</label>
-              <input
-                type="number"
-                name={`vML`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>V O/U</label>
-              <input
-                type="number"
-                name={`vOU`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>V O/U Odds</label>
-              <input
-                type="number"
-                name={`vOUOdds`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-          </div>
-
-          <div className="flex gap-2 mt-5 ">
-            <div className="box box h-18 w-60" style={{ marginLeft: "40px" }}>
-              <label>Home Team</label>
-              <input
-                name={`homeTeam`}
-                value={"Home Team Name"}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>H Sprd</label>
-              <input
-                type="number"
-                name={`hSprd`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>H Sprd Odds</label>
-              <input
-                type="number"
-                name={`hSprdOdds`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>Home M/L</label>
-              <input
-                type="number"
-                name={`hML`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>H O/U</label>
-              <input
-                type="number"
-                name={`hOU`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-            <div className="px-2 box box h-18">
-              <label>H O/U Odds</label>
-              <input
-                type="number"
-                name={`hOUOdds`}
-                className="bg-gray-800 text-white p-2 rounded w-full"
-                disabled={true}
-              />
-            </div>
-          </div>
-        </div>
-
+          ))}
         <br />
         <Button
           type="submit"
