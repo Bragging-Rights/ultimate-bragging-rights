@@ -69,18 +69,42 @@ const GameForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+    const gameData = createGameData();
+    console.log("Game data:", gameData);
+    mutate(gameData);
+    setFormSubmitted(true);
 
-    getOdds(formData.game, formData.fromDate, formData.toDate)
-      .then((response) => {
-        setGameData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching odds:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // getOdds(
+    //   formData.game,
+    //   formData.fromDate,
+    //   formData.toDate,
+    //   formData.time,
+    //   formData.visitorTeam,
+    //   formData.vML,
+    //   formData.vSprd,
+    //   formData.vSprdOdds,
+    //   formData.vOU,
+    //   formData.vOUOdds,
+    //   formData.homeTeam,
+    //   formData.hML,
+    //   formData.hSprd,
+    //   formData.hSprdOdds,
+    //   formData.hOU,
+    //   formData.hOUOdds,
+    //   formData.sport
+    // )
+    //   .then((response) => {
+    //     setGameData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching odds:", error);
+    //     displayToast("An error occurred while fetching odds.", "error");
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
+
   // const handleSubmit = (e) => {
   //   e.preventDefault();
 
@@ -131,25 +155,47 @@ const GameForm = () => {
   };
 
   const createGameData = () => {
-    return {
-      game: formData.game,
-      fromDate: formData.fromDate,
-      toDate: formData.toDate,
-      time: formData.time,
-      visitorTeam: formData.visitorTeam,
-      vML: formData.vML,
-      vSprd: formData.vSprd,
-      vSprdOdds: formData.vSprdOdds,
-      vOU: formData.vOU,
-      vOUOdds: formData.vOUOdds,
-      homeTeam: formData.homeTeam,
-      hML: formData.hML,
-      hSprd: formData.hSprd,
-      hSprdOdds: formData.hSprdOdds,
-      hOU: formData.hOU,
-      hOUOdds: formData.hOUOdds,
-      sport: formData.sport,
-    };
+    return odds.map((odd) => {
+      return {
+        game: formData.game,
+        fromDate: formData.fromDate,
+        toDate: formData.toDate,
+        time: odd.commence_time,
+        visitorTeam: odd.away_team,
+        vML: odd.bookmakers[0].markets[0].outcomes[1].price,
+        vSprd: odd.bookmakers[0].markets[1].outcomes[1].point,
+        vSprdOdds: odd.bookmakers[0].markets[1].outcomes[1].price,
+        vOU: odd.bookmakers[0].markets[2].outcomes[1].point + 0.5,
+        vOUOdds: odd.bookmakers[0].markets[2].outcomes[1].price,
+        homeTeam: odd.home_team,
+        hML: odd.bookmakers[0].markets[0].outcomes[0].price,
+        hSprd: odd.bookmakers[0].markets[1].outcomes[0].point,
+        hSprdOdds: odd.bookmakers[0].markets[1].outcomes[0].price,
+        hOU: odd.bookmakers[0].markets[2].outcomes[0].point + 0.5,
+        hOUOdds: odd.bookmakers[0].markets[2].outcomes[0].price,
+        sport: formData.sport,
+      };
+    });
+
+    // return {
+    //   game: formData.game,
+    //   fromDate: formData.fromDate,
+    //   toDate: formData.toDate,
+    //   time: formData.time,
+    //   visitorTeam: formData.visitorTeam,
+    //   vML: formData.vML,
+    //   vSprd: formData.vSprd,
+    //   vSprdOdds: formData.vSprdOdds,
+    //   vOU: formData.vOU,
+    //   vOUOdds: formData.vOUOdds,
+    //   homeTeam: formData.homeTeam,
+    //   hML: formData.hML,
+    //   hSprd: formData.hSprd,
+    //   hSprdOdds: formData.hSprdOdds,
+    //   hOU: formData.hOU,
+    //   hOUOdds: formData.hOUOdds,
+    //   sport: formData.sport,
+    // };
   };
 
   return (
@@ -203,21 +249,26 @@ const GameForm = () => {
         </Button>
       </form>
       <br />
+
       <form
         onSubmit={handleSubmit}
         className="justify-center items-center h-screen text-yellow-500"
       >
         {odds &&
           odds.map((odd) => (
-            <div className="game-card" style={{ backgroundColor: "" }}>
+            <div
+              className="game-card"
+              style={{ backgroundColor: "" }}
+              key={odd.id}
+            >
               <div className="flex flex-row">
                 <div
                   className="w-1/2 px-2 box box h-18 w-40"
                   style={{ marginRight: "20px", marginBottom: "8px" }}
                 >
-                  <label>{odd.commence_time}</label>
+                  <label>Time</label>
                   <input
-                    type="time"
+                    value={odd.commence_time}
                     name={`time`}
                     className="bg-gray-800 text-white p-2 rounded w-full"
                     disabled={true}
@@ -225,8 +276,8 @@ const GameForm = () => {
                 </div>
               </div>
               {odd.bookmakers &&
-                odd.bookmakers.map((market) => (
-                  <div key={market.index} className="flex gap-2">
+                odd.bookmakers.map((bookmaker, index) => (
+                  <div key={index} className="flex gap-2">
                     <div
                       className="box box h-18 w-60"
                       style={{ marginLeft: "40px" }}
@@ -244,7 +295,7 @@ const GameForm = () => {
                       <input
                         type="number"
                         name={`vSprd`}
-                        value={market[1]?.outcomes[1].point}
+                        value={bookmaker.markets[1]?.outcomes[1]?.point}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
                       />
@@ -253,7 +304,7 @@ const GameForm = () => {
                       <label>V Sprd Odds</label>
                       <input
                         type="number"
-                        value={market[1]?.outcomes[1].price}
+                        value={bookmaker.markets[1]?.outcomes[1]?.price}
                         name={`vSprdOdds`}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
@@ -264,7 +315,7 @@ const GameForm = () => {
                       <input
                         type="number"
                         name={`vML`}
-                        value={market[0]?.outcomes[1].price}
+                        value={bookmaker.markets[0]?.outcomes[1]?.price}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
                       />
@@ -274,7 +325,7 @@ const GameForm = () => {
                       <input
                         type="number"
                         name={`vOU`}
-                        value={market[2]?.outcomes[1].point + 0.5}
+                        value={bookmaker.markets[2]?.outcomes[1]?.point + 0.5}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
                       />
@@ -283,7 +334,7 @@ const GameForm = () => {
                       <label>V O/U Odds</label>
                       <input
                         type="number"
-                        value={market[2]?.outcomes[1].price}
+                        value={bookmaker.markets[2]?.outcomes[1]?.price}
                         name={`vOUOdds`}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
@@ -305,14 +356,14 @@ const GameForm = () => {
                   />
                 </div>
                 {odd.bookmakers &&
-                  odd.bookmakers.map((market) => (
-                    <div key={market.index} className="flex gap-2">
+                  odd.bookmakers.map((bookmaker, index) => (
+                    <div key={index} className="flex gap-2">
                       <div className="px-2 box box h-18">
                         <label>H Sprd</label>
                         <input
                           type="number"
                           name={`hSprd`}
-                          value={market[1]?.outcomes[0].point}
+                          value={bookmaker.markets[1]?.outcomes[0]?.point}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />
@@ -322,7 +373,7 @@ const GameForm = () => {
                         <input
                           type="number"
                           name={`hSprdOdds`}
-                          value={market[1]?.outcomes[0].price}
+                          value={bookmaker.markets[1]?.outcomes[0]?.price}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />
@@ -332,7 +383,7 @@ const GameForm = () => {
                         <input
                           type="number"
                           name={`hML`}
-                          value={market[0]?.outcomes[0].price}
+                          value={bookmaker.markets[0]?.outcomes[0]?.price}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />
@@ -342,7 +393,7 @@ const GameForm = () => {
                         <input
                           type="number"
                           name={`hOU`}
-                          value={market[2]?.outcomes[0].point + 0.5}
+                          value={bookmaker.markets[2]?.outcomes[0]?.point + 0.5}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />
@@ -351,7 +402,7 @@ const GameForm = () => {
                         <label>H O/U Odds</label>
                         <input
                           type="number"
-                          value={market[2]?.outcomes[0].price}
+                          value={bookmaker.markets[2]?.outcomes[0]?.price}
                           name={`hOUOdds`}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
@@ -362,6 +413,7 @@ const GameForm = () => {
               </div>
             </div>
           ))}
+
         <br />
         <Button
           type="submit"
