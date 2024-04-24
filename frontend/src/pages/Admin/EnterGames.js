@@ -268,7 +268,11 @@ const GameForm = () => {
                 >
                   <label>Time</label>
                   <input
-                    value={odd.commence_time}
+                    value={(() => {
+                      const date = new Date(odd.commence_time);
+                      date.setHours(date.getHours() - 3);
+                      return date.toISOString();
+                    })()}
                     name={`time`}
                     className="bg-gray-800 text-white p-2 rounded w-full"
                     disabled={true}
