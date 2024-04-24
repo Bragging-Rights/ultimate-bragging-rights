@@ -10,28 +10,14 @@ import Button from "@mui/material/Button";
 const GameForm = () => {
   const [odds, setOdds] = useState(null);
   const dispatch = useDispatch();
-  const initialFormData = {
-    time: "",
-    visitorTeam: "",
-    vML: "",
-    vSprd: "",
-    vSprdOdds: "",
-    vOU: "",
-    vOUOdds: "",
-    homeTeam: "",
-    hML: "",
-    hSprd: "",
-    hSprdOdds: "",
-    hOU: "",
-    hOUOdds: "",
-    sport: "",
-  };
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     game: "",
     fromDate: "",
+    gamedate: "",
     toDate: "",
+    league: "",
     time: "",
     visitorTeam: "",
     vML: "",
@@ -73,51 +59,7 @@ const GameForm = () => {
     console.log("Game data:", gameData);
     mutate(gameData);
     setFormSubmitted(true);
-
-    // getOdds(
-    //   formData.game,
-    //   formData.fromDate,
-    //   formData.toDate,
-    //   formData.time,
-    //   formData.visitorTeam,
-    //   formData.vML,
-    //   formData.vSprd,
-    //   formData.vSprdOdds,
-    //   formData.vOU,
-    //   formData.vOUOdds,
-    //   formData.homeTeam,
-    //   formData.hML,
-    //   formData.hSprd,
-    //   formData.hSprdOdds,
-    //   formData.hOU,
-    //   formData.hOUOdds,
-    //   formData.sport
-    // )
-    //   .then((response) => {
-    //     setGameData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching odds:", error);
-    //     displayToast("An error occurred while fetching odds.", "error");
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   if (formSubmitted) {
-  //     displayToast("Form already submitted.", "warning");
-  //     return;
-  //   }
-
-  //   const gameData = createGameData();
-  //   console.log("Game data:", gameData);
-  //   mutate(gameData);
-  //   setFormSubmitted(true);
-  // };
 
   const handleOdds = (e) => {
     e.preventDefault();
@@ -127,26 +69,6 @@ const GameForm = () => {
       .then((oddsData) => {
         console.log("Odds data:", oddsData);
         setOdds(oddsData.data);
-        // const { data } = oddsData;
-        // if (data) {
-        //   setFormData((prevFormData) => ({
-        //     ...prevFormData,
-        //     vSprd: data.vSprd,
-        //     vSprdOdds: data.vSprdOdds,
-        //     vML: data.vML,
-        //     vOU: data.vOU,
-        //     vOUOdds: data.vOUOdds,
-        //     homeTeam: data.homeTeam,
-        //     hML: data.hML,
-        //     hSprd: data.hSprd,
-        //     hSprdOdds: data.hSprdOdds,
-        //     hOU: data.hOU,
-        //     hOUOdds: data.hOUOdds,
-        //     sport: data.sport,
-        //   }));
-        // } else {
-        //   displayToast("No odds data found for selected game.", "error");
-        // }
       })
       .catch((error) => {
         console.error("Error fetching odds:", error);
@@ -156,11 +78,12 @@ const GameForm = () => {
 
   const createGameData = () => {
     return odds.map((odd) => {
+      const [gamedate, time] = odd.commence_time.split("T");
       return {
         game: formData.game,
-        fromDate: formData.fromDate,
-        toDate: formData.toDate,
-        time: odd.commence_time,
+        league: formData.league,
+        date: gamedate,
+        time: time,
         visitorTeam: odd.away_team,
         vML: odd.bookmakers[0].markets[0].outcomes[1].price,
         vSprd: odd.bookmakers[0].markets[1].outcomes[1].point,
@@ -176,26 +99,6 @@ const GameForm = () => {
         sport: formData.sport,
       };
     });
-
-    // return {
-    //   game: formData.game,
-    //   fromDate: formData.fromDate,
-    //   toDate: formData.toDate,
-    //   time: formData.time,
-    //   visitorTeam: formData.visitorTeam,
-    //   vML: formData.vML,
-    //   vSprd: formData.vSprd,
-    //   vSprdOdds: formData.vSprdOdds,
-    //   vOU: formData.vOU,
-    //   vOUOdds: formData.vOUOdds,
-    //   homeTeam: formData.homeTeam,
-    //   hML: formData.hML,
-    //   hSprd: formData.hSprd,
-    //   hSprdOdds: formData.hSprdOdds,
-    //   hOU: formData.hOU,
-    //   hOUOdds: formData.hOUOdds,
-    //   sport: formData.sport,
-    // };
   };
 
   return (
@@ -211,27 +114,54 @@ const GameForm = () => {
               id="game"
               name="game"
               value={formData.game}
-              onChange={(e) =>
-                setFormData({ ...formData, game: e.target.value })
-              }
+              onChange={(e) => {
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                setFormData({
+                  ...formData,
+                  game: e.target.value,
+                  league: selectedOption.getAttribute("name"),
+                });
+              }}
               className="bg-gray-800 text-white p-2 rounded w-full"
             >
               <option value="">Select a game</option>
               <optgroup label="Hockey">
-                <option value="icehockey_nhl">NHL</option>
+                <option name="NHL" value="icehockey_nhl">
+                  NHL
+                </option>
               </optgroup>
               <optgroup label="FOOTBALL">
-                <option value="americanfootball_cfl">CFL</option>
-                <option value="americanfootball_ncaaf">NCAAF</option>
-                <option value="americanfootball_nfl">NFL</option>
-                <option value="americanfootball_ufl">UFL</option>
+                <option name="CFL" value="americanfootball_cfl">
+                  CFL
+                </option>
+                <option name="NCAAF" value="americanfootball_ncaaf">
+                  NCAAF
+                </option>
+                <option name="NFL" value="americanfootball_nfl">
+                  NFL
+                </option>
+                <option name="UFL" value="americanfootball_ufl">
+                  UFL
+                </option>
               </optgroup>
               <optgroup label="BASEBALL">
-                <option value="baseball_ncaa">NCCA</option>
+                <option name="NCCA" value="baseball_ncaa">
+                  NCCA
+                </option>
+                <option name="MLB" value="baseball_mlb">
+                  MLB
+                </option>
               </optgroup>
               <optgroup label="BASKETBALL">
-                <option value="basketball_wnba">WNBA</option>
-                <option value="basketball_ncaab">NCAAB</option>
+                <option name="NBA" value="basketball_nba">
+                  NBA
+                </option>
+                <option name="WNBA" value="basketball_wnba">
+                  WNBA
+                </option>
+                <option name="NCAAB" value="basketball_ncaab">
+                  NCAAB
+                </option>
               </optgroup>
             </select>
           </div>
