@@ -11,11 +11,11 @@ import { ChevronLeft, ChevronRight } from "@material-ui/icons";
 import arrowImage from "../assets/arrow.png";
 import logoImage from "../assets/logonav.png";
 
-const totLeagues = ["NHL", "NBA", "MLB", "NFL", "WNBA", "CFL"];
+const totLeagues = ["NHL", "NBA", "MLB", "NFL", "WNBA", "CFL", "NCAAF", "UFL", "NCCA","NCAAB"];
 
 const LeagueSelect = () => {
   const { selectedLeague, setSelectedLeague } = useLeagueContext();
-  const buttonsPerPage = 4;
+  const buttonsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -47,9 +47,8 @@ const LeagueSelect = () => {
         />
       </Grid>
 
-      <Grid item xs={10} container justify="center" spacing={1} wrap="nowrap">
+      <Grid item xs={10} container justify="center" spacing={0} wrap="nowrap" >
         {totLeagues
-          .slice(currentPage * buttonsPerPage, (currentPage + 1) * buttonsPerPage)
           .map((item) => (
             <Grid item key={item}>
   <Button
