@@ -82,19 +82,41 @@ const GameForm = () => {
       return {
         game: formData.game,
         league: formData.league,
-        date: gamedate,
-        time: time,
+        date: (() => {
+          const date = new Date(odd.commence_time);
+          const options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            timeZone: "America/Halifax",
+          };
+          return date.toLocaleDateString("en-US", options).replace(/\//g, "-");
+        })(),
+        time: (() => {
+          const date = new Date(odd.commence_time);
+          const options = {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "America/Halifax",
+          };
+          return date.toLocaleTimeString("en-US", options);
+        })(),
         visitorTeam: odd.away_team,
         vML: odd.bookmakers[0].markets[0].outcomes[1].price,
         vSprd: odd.bookmakers[0].markets[1].outcomes[1].point,
         vSprdOdds: odd.bookmakers[0].markets[1].outcomes[1].price,
-        vOU: odd.bookmakers[0].markets[2].outcomes[1].point + 0.5,
+        vOU: Number.isInteger(odd.bookmakers[0].markets[2].outcomes[1].point)
+          ? odd.bookmakers[0].markets[2].outcomes[1].point + 0.5
+          : odd.bookmakers[0].markets[2].outcomes[1].point,
         vOUOdds: odd.bookmakers[0].markets[2].outcomes[1].price,
         homeTeam: odd.home_team,
         hML: odd.bookmakers[0].markets[0].outcomes[0].price,
         hSprd: odd.bookmakers[0].markets[1].outcomes[0].point,
         hSprdOdds: odd.bookmakers[0].markets[1].outcomes[0].price,
-        hOU: odd.bookmakers[0].markets[2].outcomes[0].point + 0.5,
+        hOU: Number.isInteger(odd.bookmakers[0].markets[2].outcomes[0].point)
+          ? odd.bookmakers[0].markets[2].outcomes[0].point + 0.5
+          : odd.bookmakers[0].markets[2].outcomes[0].point,
         hOUOdds: odd.bookmakers[0].markets[2].outcomes[0].price,
         sport: formData.sport,
       };
@@ -200,8 +222,27 @@ const GameForm = () => {
                   <input
                     value={(() => {
                       const date = new Date(odd.commence_time);
-                      date.setHours(date.getHours() - 3);
-                      return date.toISOString();
+                      const options = {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        timeZone: "America/Halifax",
+                      };
+                      const dateString = date
+                        .toLocaleDateString("en-US", options)
+                        .split("/")
+                        .join("-");
+                      const timeOptions = {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                        timeZone: "America/Halifax",
+                      };
+                      const timeString = date.toLocaleTimeString(
+                        "en-US",
+                        timeOptions
+                      );
+                      return `${dateString} ${timeString}`;
                     })()}
                     name={`time`}
                     className="bg-gray-800 text-white p-2 rounded w-full"
@@ -259,7 +300,11 @@ const GameForm = () => {
                       <input
                         type="number"
                         name={`vOU`}
-                        value={bookmaker.markets[2]?.outcomes[1]?.point + 0.5}
+                        value={(() => {
+                          const point =
+                            bookmaker.markets[2]?.outcomes[1]?.point;
+                          return Number.isInteger(point) ? point + 0.5 : point;
+                        })()}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
                       />
@@ -327,7 +372,13 @@ const GameForm = () => {
                         <input
                           type="number"
                           name={`hOU`}
-                          value={bookmaker.markets[2]?.outcomes[0]?.point + 0.5}
+                          value={(() => {
+                            const point =
+                              bookmaker.markets[2]?.outcomes[0]?.point;
+                            return Number.isInteger(point)
+                              ? point + 0.5
+                              : point;
+                          })()}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />

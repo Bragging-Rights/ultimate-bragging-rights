@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -27,7 +27,6 @@ import imgHosckey1 from "../assets/Hockey-1.png";
 import imgHosckey4 from "../assets/Hockey-4.png";
 import banner from "../assets/banner.png";
 
-
 const images = [
   imgBasketball1,
   imgBasketball5,
@@ -50,7 +49,7 @@ const Games = () => {
   };
   const [heroImg, setHeroImg] = useState(getRandomImage());
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isAdmin = true; // Set this value based on whether the user is an admin or not
   const { selectedLeague } = useLeagueContext();
@@ -59,7 +58,7 @@ const Games = () => {
 
   const date = new Date();
 
-  const formattedDateForAPI = format(date, "yyyy-MM-dd");
+  const formattedDateForAPI = format(date, "MM-dd-yyyy");
 
   const getNextDate = (dateString, daysToAdd) => {
     const currentDate = new Date(dateString);
@@ -82,7 +81,7 @@ const Games = () => {
   });
 
   const tomorrow = add(date, { days: 1 });
-  const formattedDateForTomorrow = format(tomorrow, "yyyy-MM-dd");
+  const formattedDateForTomorrow = format(tomorrow, "MM-dd-yyyy");
 
   const {
     isLoading: loadingTomorrowGames,
@@ -121,8 +120,8 @@ const Games = () => {
     setHeroImg(getRandomImage());
   }, []);
   return (
-    <Grid container spacing={2} direction="column" >
-          <img src={banner} alt="img1" className="w-full" />
+    <Grid container spacing={2} direction="column">
+      <img src={banner} alt="img1" className="w-full" />
       {/* <Grid item>
         <HeroSection imgUrl={heroImg} />
       </Grid>
@@ -135,17 +134,18 @@ const Games = () => {
       {/* <Grid item>
         <Banner date={formattedDate} label="Upcoming Games" />
       </Grid> */}
-    <Grid
-      className="game-grid"
-      container
-      item
-      spacing={2}
-      justifyContent="center"
-      sx={{width:  isMobile ? "80%" : "110%",
-      marginLeft:  isMobile ? "20px" : "-60px",
-    }}
-    >
-              {gameData && gameData.length > 0 ? (
+      <Grid
+        className="game-grid"
+        container
+        item
+        spacing={2}
+        justifyContent="center"
+        sx={{
+          width: isMobile ? "80%" : "110%",
+          marginLeft: isMobile ? "20px" : "-60px",
+        }}
+      >
+        {gameData && gameData.length > 0 ? (
           gameData.map((game, index) => (
             <Grid key={game.id} item xs={12} md={6}>
               {index % 2 === 0 ? (

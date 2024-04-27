@@ -135,6 +135,7 @@ const GameCard = ({ gameData }) => {
           </div>
 
           <div className=" flex flex-col justify-start ">
+            <span className=" game-date">{gameData.gamedate}</span> &nbsp;
             <span className=" game-date">Team</span>
             <div className=" box  px-7 h-12">
               <label>{gameData?.visitor}</label>
