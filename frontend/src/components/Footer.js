@@ -11,23 +11,31 @@ const Footer = () => {
   return (
     <Container
       className="footer-container"
-      style={{ background: "#1B1C21", padding: "20px" }}
+      style={{
+        background: "#1B1C21",
+        padding: "10px",
+      }}
     >
-      <Grid container alignItems="center" justifyContent="center">
-        <Grid item>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        sx={{ display: "flex", flexDirection: "column" }}
+      >
+        <Grid item xs={12} sm="auto" style={{ textAlign: "center" }}>
           <img
             src={logo}
             alt="logo"
-            width={isMobileView ? 52 : 72}
-            height={isMobileView ? 40 : 55}
+            width={isMobileView ? 48 : 72}
+            height={isMobileView ? 35 : 55}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={12} sm="auto" sx={{ textAlign: "center" }}>
           <Typography
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "10px" : "12px",
+              fontSize: isMobileView ? "0.29rem" : "12px",
               opacity: "0.5",
               marginTop: "10px",
             }}
@@ -39,7 +47,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "10px" : "12px",
+              fontSize: isMobileView ? "0.30rem" : "12px",
               opacity: "0.5",
             }}
           >
@@ -49,7 +57,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "10px" : "12px",
+              fontSize: isMobileView ? "0.30rem" : "12px",
               opacity: "0.5",
             }}
           >
@@ -59,7 +67,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "10px" : "12px",
+              fontSize: isMobileView ? "0.30rem" : "12px",
               opacity: "0.5",
               marginTop: "20px",
             }}
@@ -71,7 +79,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "10px" : "12px",
+              fontSize: isMobileView ? "0.30rem" : "12px",
               opacity: "0.5",
             }}
           >
@@ -96,7 +104,7 @@ const Footer = () => {
             textDecoration: "none",
             color: "#FFFFFF",
             transition: "color 0.3s",
-            fontSize: "14px",
+            fontSize: isMobileView ? "0.30rem" : "14px", // Adjusted font size for links
             "&:hover": {
               textDecoration: "underline",
               color: "#FFD700",
@@ -104,10 +112,18 @@ const Footer = () => {
           },
         }}
       >
-        <Link to={"/privacy-policy"}>Privacy Policy</Link>
-        <Link to={"/terms-of-service"}>Terms of Service</Link>
-        <Link to={"/cookie-policy"}>Cookies Policy</Link>
-        <Link to={"/acceptable-use-policy"}>Acceptable Policy</Link>
+        <Typography>
+          <Link to={"/privacy-policy"}>Privacy Policy</Link>
+        </Typography>
+        <Typography>
+          <Link to={"/terms-of-service"}>Terms of Service</Link>
+        </Typography>
+        <Typography>
+          <Link to={"/cookie-policy"}>Cookies Policy</Link>
+        </Typography>
+        <Typography>
+          <Link to={"/acceptable-use-policy"}>Acceptable Policy</Link>
+        </Typography>
       </Box>
     </Container>
   );
