@@ -40,18 +40,19 @@ const HomePage = () => {
     },
     header: {
       fontWeight: "normal",
-      marginBottom: "-40px",
+      marginBottom: isMobileView || isTabletView ? "-0px" : "-10px",
       color: "#FFFF00",
       fontSize: isMobileView ? "0.7rem" : "1.4rem",
       fontStyle: "italic",
     },
     column: {
-      marginBottom: "20px",
+      marginBottom: isMobileView || isTabletView ? "10px" : "20px",
+      marginLeft: isMobileView || isTabletView ? "5%" : "0",
     },
-    textContainer: {
-      padding: "10px",
-      borderRadius: "5px",
-    },
+    // textContainer: {
+    //   padding: "10px",
+    //   borderRadius: "5px",
+    // },
   };
 
   const iframeHTML = `
@@ -110,13 +111,16 @@ const HomePage = () => {
                   THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
                 </Typography>
                 <br />
-                <br />
                 <Grid
                   container
                   spacing={1}
                   sx={{
                     display: isMobileView || isTabletView ? "flex" : "0",
                     flexWrap: isMobileView || isTabletView ? "nowrap" : "0",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: isMobileView || isTabletView ? "2rem" : "0",
+                    columnGap: isMobileView || isTabletView ? "-5px" : "10px",
                   }}
                 >
                   {/* Your Grid items code */}
@@ -133,7 +137,7 @@ const HomePage = () => {
                         variant="body1"
                         sx={{
                           fontSize:
-                            isMobileView || isTabletView ? "0.3rem" : "1rem",
+                            isMobileView || isTabletView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -143,7 +147,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -153,7 +157,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -168,14 +172,14 @@ const HomePage = () => {
                     item
                     xs={12}
                     sm={6}
-                    md={3}
+                    md={2}
                     style={{ ...styles.column, textAlign: "left" }}
                   >
                     <div style={styles.textContainer}>
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -185,17 +189,17 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
-                        <i className="fa fa-share-alt mr-2 text-blue-500"></i>{" "}
+                        <i className="fa fa-share-alt mr-2 text-blue-500"></i>
                         Sharing Stats
                       </Typography>
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -217,7 +221,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -227,7 +231,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -237,7 +241,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -253,14 +257,14 @@ const HomePage = () => {
                     xs={12}
                     sm={6}
                     md={3}
-                    style={{ ...styles.column, textAlign: "center" }}
+                    style={{ ...styles.column, textAlign: "left" }}
                   >
                     <div style={styles.textContainer}>
                       <Typography
                         variant="body1"
                         style={{
                           color: "#ffff00",
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                         }}
                       >
                         <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
@@ -270,7 +274,7 @@ const HomePage = () => {
                         variant="body1"
                         style={{
                           color: "#ffff00",
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                         }}
                       >
                         <i className="fa fa-heart mr-2 text-blue-500"></i> AND
@@ -280,7 +284,7 @@ const HomePage = () => {
                         variant="body1"
                         style={{
                           color: "#ffff00",
-                          fontSize: isMobileView ? "0.3rem" : "1rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                         }}
                       >
                         <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate

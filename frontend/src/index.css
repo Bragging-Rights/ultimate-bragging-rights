@@ -504,23 +504,25 @@ label {
 }
 
 /* Stats */
-.points-stat{
+.points-stat {
 
-  background-color:#2D2D2D ;
+  background-color: #2D2D2D;
 
-  color:rgb(44, 221, 20);
+  color: rgb(44, 221, 20);
 
 }
-.custom-table th, .custom-table td {
+
+.custom-table th,
+.custom-table td {
 
   padding: 10px;
   padding-left: 10px;
   text-align: left;
-  
+
 }
 
 .stats-page {
-  background-color: #000; 
+  background-color: #000;
   color: #fff;
 }
 
@@ -532,7 +534,7 @@ label {
 }
 
 .button-group button {
-  background-color: #444; 
+  background-color: #444;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -540,22 +542,24 @@ label {
 }
 
 .button-group button:hover {
-  background-color: #555; 
+  background-color: #555;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse; 
+  border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
 
-  padding: 5px 10px; 
+  padding: 5px 10px;
   text-align: center;
-  
-  
+
+
 }
-th{
+
+th {
   color: rgb(179, 179, 0);
 }
 
@@ -564,19 +568,30 @@ thead {
 }
 
 tbody tr:nth-child(even) {
-  background-color: #121212; 
-  
+  background-color: #121212;
+
 }
 
 tbody tr:hover {
-  background-color: #333; 
+  background-color: #333;
 }
-thead:hover{
-  background-color: #333; 
+
+thead:hover {
+  background-color: #333;
 }
-.navbar-brand{
+
+.navbar-brand {
   color: white;
 }
 
 
 
+
+
+
+
+@media (min-width: 600px) {
+  .css-hyum1k-MuiToolbar-root {
+    min-height: 4px;
+  }
+}

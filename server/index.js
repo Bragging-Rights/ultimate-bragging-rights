@@ -18,6 +18,7 @@ const oddsRoutes = require("./routes/odds");
 const mongoose = require("mongoose");
 const moragn = require("morgan");
 const router = require("./routes/restaurants");
+const User = require("./models/user");
 require("dotenv").config();
 
 const app = express();
@@ -68,7 +69,9 @@ app.use("/api/weeks", weekRoutes);
 app.use("/api/odds", oddsRoutes);
 
 app.get("/", async (req, res) => {
-  res.json("Server is running...");
+  const users = await User.find();
+  console.log(users);
+  res.send(users);
 });
 
 // Start the server
