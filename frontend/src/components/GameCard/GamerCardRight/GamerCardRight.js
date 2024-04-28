@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal"; // Import the modal library
+import "../GameCard.css";
 import displayToast from "../../Alert/Alert";
 import { addPrediction } from "../../../Apis/predictions";
 import TimeFormat from "../../../services/TimeFormat.js";
@@ -114,16 +115,18 @@ const GamerCardRight = ({ gameData }) => {
       <div className="game-card grid col-span-2 xl:col-span-1">
         <div className="flex justify-between">
           <div className=" flex flex-col ">
-            <span
+            <div
               className="game-time font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
+                textStroke: "0.3px black",
                 textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
                 fontSize: "14px",
               }}
             >
               {TimeFormat(gameData?.time)}
-            </span>
+            </div>
+            <div className=" game-date">{gameData.gamedate}</div> &nbsp;
             <input
               type="text"
               className="card-input mb-3"
@@ -132,30 +135,52 @@ const GamerCardRight = ({ gameData }) => {
             />
           </div>
 
-          <div className=" flex flex-col justify-start ">
-            <span className=" game-date">{gameData.gamedate}</span> &nbsp;
-            <span className=" game-date">Team</span>
+          <div className=" flex flex-col  ">
+            <div
+              className=" game-time font-inter mb-3"
+              style={{
+                WebkitTextStroke: "0.3px black",
+                textStroke: "0.3px black",
+                textShadow: "0px 1px 4px 0px #2CDD14",
+                fontSize: "16px",
+              }}
+            >
+              Team
+            </div>
             <div className=" box  px-7 h-12">
-              <label>{gameData?.visitor}</label>
+              <label className="upside-down ">{gameData?.visitor}</label>
             </div>
           </div>
-          <div
-            className=" flex flex-col justify-start "
-            style={{
-              WebkitTextStroke: "0.3px black",
-              textShadow: "0px 1px 4px 0px #2CDD14",
-              fontSize: "16px",
-            }}
-          >
-            <span className=" game-time font-inter mb-3">Money Line</span>
+          <div className=" flex flex-col  ">
+            <div
+              className=" game-time font-inter mb-3"
+              style={{
+                WebkitTextStroke: "0.3px black",
+                textStroke: "0.3px black",
+                textShadow: "0px 1px 4px 0px #2CDD14",
+                fontSize: "16px",
+              }}
+            >
+              Money Line
+            </div>
             <div className=" box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ml"]}</label>
 
               <label>{gameData?.["v-ml-points"]} Pts</label>
             </div>
           </div>
-          <div className=" flex flex-col justify-start ">
-            <span className=" game-time">Spread</span>
+          <div className=" flex flex-col  ">
+            <div
+              className=" game-time"
+              style={{
+                WebkitTextStroke: "0.3px black",
+                textStroke: "0.3px black",
+                textShadow: "0px 1px 4px 0px #2CDD14",
+                fontSize: "16px",
+              }}
+            >
+              Spread
+            </div>
             <div className=" box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
 
@@ -164,8 +189,18 @@ const GamerCardRight = ({ gameData }) => {
               </label>
             </div>
           </div>
-          <div className=" flex flex-col justify-start ">
-            <span className=" game-time">Over/Under</span>
+          <div className=" flex flex-col  ">
+            <div
+              className=" game-time"
+              style={{
+                WebkitTextStroke: "0.3px black",
+                textStroke: "0.3px black",
+                textShadow: "0px 1px 4px 0px #2CDD14",
+                fontSize: "16px",
+              }}
+            >
+              Over/Under
+            </div>
 
             <div className=" box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ou"]}</label>
@@ -189,11 +224,8 @@ const GamerCardRight = ({ gameData }) => {
           ></div>
         </div>
 
-        <div
-          className=" w-full flex justify-between mt-3 "
-          style={{ columnGap: "10px" }}
-        >
-          <div className=" flex flex-col ">
+        <div className=" flex justify-between ">
+          <div className=" flex flex-col " style={{ paddingRight: "4.54%" }}>
             <input
               type="text"
               id="pick-home"
@@ -203,29 +235,48 @@ const GamerCardRight = ({ gameData }) => {
             />
           </div>
 
-          <div className="flex flex-col">
-            <div
-              className=" box px-7 h-12"
-              style={{
-                marginLeft: "40px",
-              }}
-            >
-              <label>{gameData?.home}</label>
+          <div className="flex flex-col justify-start">
+            <div className=" box px-7 h-12">
+              <label className="upside-down">{gameData?.home}</label>
             </div>
           </div>
-          <div className=" flex flex-col ">
+          <div
+            className=" flex flex-col justify-start "
+            style={{
+              WebkitTextStroke: "0.3px black",
+              textStroke: "0.3px black",
+              textShadow: "0px 1px 4px 0px #2CDD14",
+              fontSize: "16px",
+            }}
+          >
             <div className=" box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ml"]}</label>
               <label>{gameData?.["h-ml-points"]} Pts</label>
             </div>
           </div>
-          <div className=" flex flex-col ">
+          <div
+            className=" flex flex-col justify-start "
+            style={{
+              WebkitTextStroke: "0.3px black",
+              textStroke: "0.3px black",
+              textShadow: "0px 1px 4px 0px #2CDD14",
+              fontSize: "16px",
+            }}
+          >
             <div className=" box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
               <label>{gameData?.["h-sprd-points"]} Pts</label>
             </div>
           </div>
-          <div className=" flex flex-col">
+          <div
+            className=" flex flex-col justify-start"
+            style={{
+              WebkitTextStroke: "0.3px black",
+              textStroke: "0.3px black",
+              textShadow: "0px 1px 4px 0px #2CDD14",
+              fontSize: "16px",
+            }}
+          >
             <div className=" box  px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ou"]}</label>
               <label>{gameData?.["h-ou-points"]} Pts</label>
@@ -248,12 +299,17 @@ const GamerCardRight = ({ gameData }) => {
               EDIT
             </button>
           )} */}
-          <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
-            ENTER PICK
-          </button>{" "}
-          <button className="card-btn mt-4" onClick={handleLockIn}>
-            LOCK IT IN
-          </button>{" "}
+          <div
+            className="button-pick"
+            style={{ display: "flex", columnGap: "3vh" }}
+          >
+            <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
+              ENTER PICK
+            </button>{" "}
+            <button className="card-btn mt-4" onClick={handleLockIn}>
+              LOCK IT IN
+            </button>{" "}
+          </div>
         </div>
       </div>
     </>

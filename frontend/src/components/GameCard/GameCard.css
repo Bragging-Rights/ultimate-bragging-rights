@@ -126,7 +126,10 @@
 }
 
 .h-12 {
-  height: 3rem;
+  height: 3.7rem;
+  width:auto;
+  font-size: 14px;
+ 
 }
 
 .box label {
@@ -190,4 +193,9 @@
   .h-12 {
     height: 3rem;
   }
+}
+
+.upside-down {
+  transform: rotate(270deg);
+  writing-mode: vertical-rl; /* This ensures the text is oriented correctly */
 }
