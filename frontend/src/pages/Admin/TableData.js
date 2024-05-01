@@ -38,13 +38,14 @@ const ScoreEntry = () => {
   };
 
   const handleDateChange = (date) => {
-    const month = Number(date.$M) + 1;
-    console.log(month);
-    const data = date.$y + "-" + month + "-" + date.$D;
+    const month = (Number(date.$M) + 1).toString().padStart(2, "0");
+    const day = date.$D.toString().padStart(2, "0");
+    const year = date.$y;
+    const data = month + "-" + day + "-" + year;
     console.log(data);
     getGamesByDate(data)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

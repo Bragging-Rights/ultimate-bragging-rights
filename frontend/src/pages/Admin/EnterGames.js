@@ -103,21 +103,41 @@ const GameForm = () => {
           return date.toLocaleTimeString("en-US", options);
         })(),
         visitorTeam: odd.away_team,
-        vML: odd.bookmakers[0].markets[0].outcomes[1].price,
+        vML: Number.isInteger(odd.bookmakers[0].markets[0].outcomes[1].price)
+          ? odd.bookmakers[0].markets[0].outcomes[1].price / 100
+          : odd.bookmakers[0].markets[0].outcomes[1].price,
         vSprd: odd.bookmakers[0].markets[1].outcomes[1].point,
-        vSprdOdds: odd.bookmakers[0].markets[1].outcomes[1].price,
+        vSprdOdds: Number.isInteger(
+          odd.bookmakers[0].markets[1].outcomes[1].price
+        )
+          ? odd.bookmakers[0].markets[1].outcomes[1].price / 100
+          : odd.bookmakers[0].markets[1].outcomes[1].price,
         vOU: Number.isInteger(odd.bookmakers[0].markets[2].outcomes[1].point)
           ? odd.bookmakers[0].markets[2].outcomes[1].point + 0.5
           : odd.bookmakers[0].markets[2].outcomes[1].point,
-        vOUOdds: odd.bookmakers[0].markets[2].outcomes[1].price,
+        vOUOdds: Number.isInteger(
+          odd.bookmakers[0].markets[2].outcomes[1].price
+        )
+          ? odd.bookmakers[0].markets[2].outcomes[1].price / 100
+          : odd.bookmakers[0].markets[2].outcomes[1].price,
         homeTeam: odd.home_team,
-        hML: odd.bookmakers[0].markets[0].outcomes[0].price,
+        hML: Number.isInteger(odd.bookmakers[0].markets[0].outcomes[0].price)
+          ? odd.bookmakers[0].markets[0].outcomes[0].price / 100
+          : odd.bookmakers[0].markets[0].outcomes[0].price,
         hSprd: odd.bookmakers[0].markets[1].outcomes[0].point,
-        hSprdOdds: odd.bookmakers[0].markets[1].outcomes[0].price,
+        hSprdOdds: Number.isInteger(
+          odd.bookmakers[0].markets[1].outcomes[0].price
+        )
+          ? odd.bookmakers[0].markets[1].outcomes[0].price / 100
+          : odd.bookmakers[0].markets[1].outcomes[0].price,
         hOU: Number.isInteger(odd.bookmakers[0].markets[2].outcomes[0].point)
           ? odd.bookmakers[0].markets[2].outcomes[0].point + 0.5
           : odd.bookmakers[0].markets[2].outcomes[0].point,
-        hOUOdds: odd.bookmakers[0].markets[2].outcomes[0].price,
+        hOUOdds: Number.isInteger(
+          odd.bookmakers[0].markets[2].outcomes[0].price
+        )
+          ? odd.bookmakers[0].markets[2].outcomes[0].price / 100
+          : odd.bookmakers[0].markets[2].outcomes[0].price,
         sport: formData.sport,
       };
     });
@@ -279,7 +299,11 @@ const GameForm = () => {
                       <label>V Sprd Odds</label>
                       <input
                         type="number"
-                        value={bookmaker.markets[1]?.outcomes[1]?.price}
+                        value={(() => {
+                          const price =
+                            bookmaker.markets[1]?.outcomes[1]?.price;
+                          return Number.isInteger(price) ? price / 100 : price;
+                        })()}
                         name={`vSprdOdds`}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
@@ -290,7 +314,11 @@ const GameForm = () => {
                       <input
                         type="number"
                         name={`vML`}
-                        value={bookmaker.markets[0]?.outcomes[1]?.price}
+                        value={(() => {
+                          const price =
+                            bookmaker.markets[0]?.outcomes[1]?.price;
+                          return Number.isInteger(price) ? price / 100 : price;
+                        })()}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
                       />
@@ -313,7 +341,11 @@ const GameForm = () => {
                       <label>V O/U Odds</label>
                       <input
                         type="number"
-                        value={bookmaker.markets[2]?.outcomes[1]?.price}
+                        value={(() => {
+                          const price =
+                            bookmaker.markets[2]?.outcomes[1]?.price;
+                          return Number.isInteger(price) ? price / 100 : price;
+                        })()}
                         name={`vOUOdds`}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
@@ -352,7 +384,13 @@ const GameForm = () => {
                         <input
                           type="number"
                           name={`hSprdOdds`}
-                          value={bookmaker.markets[1]?.outcomes[0]?.price}
+                          value={(() => {
+                            const price =
+                              bookmaker.markets[1]?.outcomes[0]?.price;
+                            return Number.isInteger(price)
+                              ? price / 100
+                              : price;
+                          })()}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />
@@ -362,7 +400,13 @@ const GameForm = () => {
                         <input
                           type="number"
                           name={`hML`}
-                          value={bookmaker.markets[0]?.outcomes[0]?.price}
+                          value={(() => {
+                            const price =
+                              bookmaker.markets[0]?.outcomes[0]?.price;
+                            return Number.isInteger(price)
+                              ? price / 100
+                              : price;
+                          })()}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
                         />
@@ -387,7 +431,13 @@ const GameForm = () => {
                         <label>H O/U Odds</label>
                         <input
                           type="number"
-                          value={bookmaker.markets[2]?.outcomes[0]?.price}
+                          value={(() => {
+                            const price =
+                              bookmaker.markets[2]?.outcomes[0]?.price;
+                            return Number.isInteger(price)
+                              ? price / 100
+                              : price;
+                          })()}
                           name={`hOUOdds`}
                           className="bg-gray-800 text-white p-2 rounded w-full"
                           disabled={true}
