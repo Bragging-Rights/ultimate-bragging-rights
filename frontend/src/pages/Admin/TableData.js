@@ -28,6 +28,8 @@ import "./TableData.css";
 const ScoreEntry = () => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [selectedValue, setSelectedValue] = useState("");
+  const [selectedLeague, setSelectedLeague] = useState("");
+  const [gameData, setGameData] = useState([]);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -41,16 +43,24 @@ const ScoreEntry = () => {
     const month = (Number(date.$M) + 1).toString().padStart(2, "0");
     const day = date.$D.toString().padStart(2, "0");
     const year = date.$y;
-    const data = month + "-" + day + "-" + year;
-    console.log(data);
-    getGamesByDate(data)
+    const formattedDate = `${month}-${day}-${year}`;
+
+    getGamesByDate(formattedDate)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
+        setGameData(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const isReasonButtonDisabled = !selectedValue; // Disable if no radio button is selected
+
+  const filteredGameData = gameData.filter((game) =>
+    selectedLeague ? game.league === selectedLeague : true
+  );
+
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -64,10 +74,56 @@ const ScoreEntry = () => {
       <br />
       <Paper className="score-entry-container" elevation={3}>
         <Tabs value={activeTab} onChange={handleTabChange} centered>
-          <Tab label="NHL" />
-          <Tab label="NBA" />
-          <Tab label="NFL" />
-          <Tab label="MLB" />
+          <Tab
+            className="league-select"
+            label="NHL"
+            onClick={() => setSelectedLeague("NHL")} // Set selected league on tab click
+          />
+          <Tab
+            className="league-select"
+            label="NBA"
+            onClick={() => setSelectedLeague("NBA")}
+          />
+          <Tab
+            className="league-select"
+            label="NFL"
+            onClick={() => setSelectedLeague("NFL")}
+          />
+          <Tab
+            className="league-select"
+            label="MLB"
+            onClick={() => setSelectedLeague("MLB")}
+          />
+          <Tab
+            className="league-select"
+            label="WWBA"
+            onClick={() => setSelectedLeague("WWBA")}
+          />
+          <Tab
+            className="league-select"
+            label="CFL"
+            onClick={() => setSelectedLeague("CFL")}
+          />
+          <Tab
+            className="league-select"
+            label="NCAAF"
+            onClick={() => setSelectedLeague("NCAAF")}
+          />
+          <Tab
+            className="league-select"
+            label="UFL"
+            onClick={() => setSelectedLeague("UFL")}
+          />
+          <Tab
+            className="league-select"
+            label="NCCA"
+            onClick={() => setSelectedLeague("NCCA")}
+          />
+          <Tab
+            className="league-select"
+            label="NCAAB"
+            onClick={() => setSelectedLeague("NCAAB")}
+          />
         </Tabs>
 
         <TableContainer>
@@ -87,60 +143,94 @@ const ScoreEntry = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="table-row">
-                <TableCell>VISITING TEAM</TableCell>
-                <TableCell>HOME TEAM</TableCell>
-                <TableCell>
-                  <TextField variant="outlined" size="small" />
-                </TableCell>
-                <TableCell>
-                  <TextField variant="outlined" size="small" />
-                </TableCell>
+              {filteredGameData.map((game) => (
+                <TableRow key={game._id} className="table-row">
+                  <TableCell>{game.visitor}</TableCell>
+                  <TableCell>{game.home}</TableCell>
 
-                <TableCell>
-                  <RadioGroup>
-                    <FormControlLabel
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup>
-                    <FormControlLabel
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup>
-                    <FormControlLabel
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup>
-                    <FormControlLabel
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup>
-                    <FormControlLabel
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <Button variant="contained">ADD REASON</Button>
-                </TableCell>
-              </TableRow>
+                  {/* <TableCell>{game.vScore}</TableCell>
+                  <TableCell>{game.hScore}</TableCell>
+                  <TableCell>{game.regulation}</TableCell>
+                  <TableCell>{game.overtime}</TableCell>
+                  <TableCell>{game.shootout}</TableCell>
+                  <TableCell>{game.extraInfo}</TableCell>
+                  <TableCell>{game.notCompleted}</TableCell>
+                  <TableCell>{game.reason}</TableCell> */}
+
+                  <TableCell>
+                    <TextField variant="outlined" size="small" />
+                  </TableCell>
+                  <TableCell>
+                    <TextField variant="outlined" size="small" />
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup value={selectedValue}>
+                      <FormControlLabel
+                        value="option1"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option2"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option4"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option5"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option6"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      disabled={isReasonButtonDisabled}
+                    >
+                      ADD REASON
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
           <Button
@@ -150,7 +240,7 @@ const ScoreEntry = () => {
               display: "flex",
               backgroundColor: "red",
             }}
-            className="centered-button" // Apply the centered-button class
+            className="centered-button"
           >
             ENTER SCORES
           </Button>
@@ -174,10 +264,16 @@ const ScoreEntry = () => {
       <br />
       <Paper className="score-entry-container" elevation={3}>
         <Tabs value={activeTab} onChange={handleTabChange} centered>
-          <Tab label="NHL" />
-          <Tab label="NBA" />
-          <Tab label="NFL" />
-          <Tab label="MLB" />
+          <Tab className="league-select" label="NHL" />
+          <Tab className="league-select" label="NBA" />
+          <Tab className="league-select" label="NFL" />
+          <Tab className="league-select" label="MLB" />
+          <Tab className="league-select" label="WNBA" />
+          <Tab className="league-select" label="CFL" />
+          <Tab className="league-select" label="NCAAF" />
+          <Tab className="league-select" label="UFL" />
+          <Tab className="league-select" label="NCCA" />
+          <Tab className="league-select" label="NCAAB" />
         </Tabs>
 
         <TableContainer>
@@ -197,80 +293,85 @@ const ScoreEntry = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="table-row">
-                <TableCell>VISITING TEAM</TableCell>
-                <TableCell>HOME TEAM</TableCell>
-                <TableCell>
-                  <TextField variant="outlined" size="small" />
-                </TableCell>
-                <TableCell>
-                  <TextField variant="outlined" size="small" />
-                </TableCell>
-                <TableCell>
-                  <RadioGroup
-                    value={selectedValue}
-                    onChange={handleRadioChange}
-                  >
-                    <FormControlLabel
-                      value="option1"
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup
-                    value={selectedValue}
-                    onChange={handleRadioChange}
-                  >
-                    <FormControlLabel
-                      value="option2"
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
+              {gameData.map((game) => (
+                <TableRow key={game._id} className="table-row">
+                  <TableCell>{game.visitor}</TableCell>
+                  <TableCell>{game.home}</TableCell>
+                  {/* <TableCell>{game.vScore}</TableCell>
+                  <TableCell>{game.hScore}</TableCell>
+                  <TableCell>{game.regulation}</TableCell>
+                  <TableCell>{game.overtime}</TableCell>
+                  <TableCell>{game.shootout}</TableCell>
+                  <TableCell>{game.extraInfo}</TableCell>
+                  <TableCell>{game.notCompleted}</TableCell>
+                  <TableCell>{game.reason}</TableCell> */}
 
-                <TableCell>
-                  <RadioGroup
-                    value={selectedValue}
-                    onChange={handleRadioChange}
-                  >
-                    <FormControlLabel
-                      value="option4"
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup
-                    value={selectedValue}
-                    onChange={handleRadioChange}
-                  >
-                    <FormControlLabel
-                      value="option5"
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <RadioGroup
-                    value={selectedValue}
-                    onChange={handleRadioChange}
-                  >
-                    <FormControlLabel
-                      value="option6"
-                      control={<Radio size="small" />}
-                      label=""
-                    />
-                  </RadioGroup>
-                </TableCell>
-                <TableCell>
-                  <Button variant="contained">ADD REASON</Button>
-                </TableCell>
-              </TableRow>
+                  <TableCell>
+                    <TextField variant="outlined" size="small" />
+                  </TableCell>
+                  <TableCell>
+                    <TextField variant="outlined" size="small" />
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup value={selectedValue}>
+                      <FormControlLabel
+                        value="option1"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup value={selectedValue}>
+                      <FormControlLabel
+                        value="option2"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option4"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option5"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValue}
+                      onChange={handleRadioChange}
+                    >
+                      <FormControlLabel
+                        value="option6"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="contained">ADD REASON</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
           <Button

@@ -1,7 +1,7 @@
 /* ScoreEntry.css */
 
 .score-entry-container {
-    background-color: #020121 !important;
+    background-color: #212121 !important;
     color: rgba(190, 130, 0, 1) !important;
 }
 
@@ -58,4 +58,41 @@
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked,
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root {
     color: white !important;
+}
+
+.league-select{
+    background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: 1px solid #be8200 !important;
+    border-radius: 4px !important;
+
+ 
+
+}
+
+.Tab{
+    background: linear-gradient(185deg, #45423a 15.54%, #202126 114.57%);
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    flex-direction: column;
+
+}
+.date-picker{
+    background-color: #212121 !important;
+    -webkit-text-fill-color: white;
+    border: 1px solid #be8200 !important;
+    border-radius: 4px !important;
+}
+
+.Textfield{
+    background-color: #212121 !important;
+    -webkit-text-fill-color: white;
+    border: 1px solid #be8200 !important;
+    border-radius: 4px !important;
 }
