@@ -262,7 +262,7 @@ const ScoreEntry = () => {
                     >
                       ADD REASON
                     </Button>
-                    <div className="popup" style={{ width: "10%" }}>
+                    <div className="popup" style={{ width: "100%" }}>
                       <Dialog
                         open={reasonPopupOpen}
                         onClose={handleReasonCancel}
@@ -361,14 +361,6 @@ const ScoreEntry = () => {
                 <TableRow key={game._id} className="table-row">
                   <TableCell>{game.visitor}</TableCell>
                   <TableCell>{game.home}</TableCell>
-                 <TableCell>{game.vScore}</TableCell>
-                  <TableCell>{game.hScore}</TableCell>
-                  <TableCell>{game.regulation}</TableCell>
-                  <TableCell>{game.overtime}</TableCell>
-                  <TableCell>{game.shootout}</TableCell>
-                  <TableCell>{game.extraInfo}</TableCell>
-                  <TableCell>{game.notCompleted}</TableCell>
-                  <TableCell>{game.reason}</TableCell> 
                   <TableCell>
                     <TextField variant="outlined" size="small" />
                   </TableCell>
