@@ -22,6 +22,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { getGamesByDate } from "../../Apis/games";
+import { cloneDeep } from "lodash";
 
 import "./TableData.css";
 
@@ -48,7 +49,13 @@ const ScoreEntry = () => {
     getGamesByDate(formattedDate)
       .then((response) => {
         console.log(response);
-        setGameData(response.data);
+        const updatedData = response.data.map((game) => ({
+          ...game,
+          vScore: "",
+          hScore: "",
+          selectedValue: "",
+        }));
+        setGameData(updatedData);
       })
       .catch((error) => {
         console.log(error);
@@ -60,6 +67,19 @@ const ScoreEntry = () => {
   const filteredGameData = gameData.filter((game) =>
     selectedLeague ? game.league === selectedLeague : true
   );
+
+  const handleInputChange = (id, field, value) => {
+    const updatedGameData = cloneDeep(gameData);
+    const gameIndex = updatedGameData.findIndex((game) => game._id === id);
+    if (gameIndex !== -1) {
+      updatedGameData[gameIndex][field] = value;
+      setGameData(updatedGameData);
+    }
+  };
+
+  const handleButtonClick = () => {
+    console.log(gameData);
+  };
 
   return (
     <>
@@ -147,24 +167,37 @@ const ScoreEntry = () => {
                 <TableRow key={game._id} className="table-row">
                   <TableCell>{game.visitor}</TableCell>
                   <TableCell>{game.home}</TableCell>
-
-                  {/* <TableCell>{game.vScore}</TableCell>
-                  <TableCell>{game.hScore}</TableCell>
-                  <TableCell>{game.regulation}</TableCell>
-                  <TableCell>{game.overtime}</TableCell>
-                  <TableCell>{game.shootout}</TableCell>
-                  <TableCell>{game.extraInfo}</TableCell>
-                  <TableCell>{game.notCompleted}</TableCell>
-                  <TableCell>{game.reason}</TableCell> */}
-
                   <TableCell>
-                    <TextField variant="outlined" size="small" />
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={game.vScore}
+                      onChange={(e) =>
+                        handleInputChange(game._id, "vScore", e.target.value)
+                      }
+                    />
                   </TableCell>
                   <TableCell>
-                    <TextField variant="outlined" size="small" />
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={game.hScore}
+                      onChange={(e) =>
+                        handleInputChange(game._id, "hScore", e.target.value)
+                      }
+                    />
                   </TableCell>
                   <TableCell>
-                    <RadioGroup value={selectedValue}>
+                    <RadioGroup
+                      value={game.selectedValue}
+                      onChange={(e) =>
+                        handleInputChange(
+                          game._id,
+                          "selectedValue",
+                          e.target.value
+                        )
+                      }
+                    >
                       <FormControlLabel
                         value="option1"
                         control={<Radio size="small" />}
@@ -241,6 +274,7 @@ const ScoreEntry = () => {
               backgroundColor: "red",
             }}
             className="centered-button"
+            onClick={handleButtonClick}
           >
             ENTER SCORES
           </Button>
