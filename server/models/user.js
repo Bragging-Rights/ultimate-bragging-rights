@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  affiliateCode: {
+    type: String,
+    unique: true,
+  },
   referredBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -46,12 +50,20 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  balance: {
+    type: Number,
+    default: 0,
+  },
 });
 
 userSchema.pre("save", async function (next) {
   if (!this.referralCode) {
     // Generate referral code from last 3 characters of MongoDB ID
     this.referralCode = this._id.toString().slice(-5);
+  }
+  if (!this.affiliateCode) {
+    // Generate affiliate code from last 5 characters of MongoDB ID
+    this.affiliateCode = this._id.toString().slice(-7);
   }
   next();
 });

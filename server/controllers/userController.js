@@ -64,6 +64,59 @@ exports.signUpController = async (req, res) => {
   }
 };
 
+exports.useAffiliateController = async (req, res) => {
+  try {
+    const { affiliateCode } = req.body;
+
+    // Find the current user based on a unique identifier (e.g., user ID)
+    const userId = req.userId; // Assuming you have a way to identify the current user
+    if (!userId) {
+      return res.status(401).json({
+        message: "User not authenticated.",
+        success: false,
+      });
+    }
+
+    // Check if the current user has already used an affiliate code
+    const currentUser = await User.findById(userId);
+    if (currentUser.affiliateCode) {
+      return res.status(400).json({
+        message: "You have already used an affiliate code.",
+        success: false,
+      });
+    }
+
+    // Find the user associated with the provided affiliate code
+    const affiliateUser = await User.findOne({ affiliateCode });
+
+    if (!affiliateUser) {
+      return res.status(404).json({
+        message: "Invalid affiliate code.",
+        success: false,
+      });
+    }
+
+    // Update the affiliate user's balance
+    affiliateUser.balance += 100;
+    await affiliateUser.save();
+
+    // Assign the affiliate code to the current user
+    currentUser.affiliateCode = affiliateCode;
+    await currentUser.save();
+
+    res.status(200).json({
+      message: "Affiliate code used successfully.",
+      success: true,
+    });
+  } catch (err) {
+    console.error("Error using affiliate code:", err);
+    return res.status(500).json({
+      message: "Error using affiliate code.",
+      success: false,
+    });
+  }
+};
+
 
 
 
