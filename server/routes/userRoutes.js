@@ -6,7 +6,7 @@ const { signUpController, signInController, verifyOTP, useAffiliateController } 
 router.post("/signup", signUpController);
 router.post("/signin", signInController);
 router.post("/verify-otp", verifyOTP);
-router.post("/useAffiliate",useAffiliateController)
+router.post("/useAffiliate",useAffiliateController);
 // API endpoint for user registration
 // router.post('/signup', (req, res) => {
 //   const { firstName, lastName, email, password, /* ...other fields */ } = req.body;
