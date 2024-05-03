@@ -1,5 +1,3 @@
-// ScoreEntry.js
-
 import React, { useState } from "react";
 import {
   Table,
@@ -16,6 +14,10 @@ import {
   Paper,
   Tabs,
   Tab,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -26,17 +28,15 @@ import { getGamesByDate } from "../../Apis/games";
 import "./TableData.css";
 
 const ScoreEntry = () => {
-  const [activeTab, setActiveTab] = React.useState(0);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [activeTab, setActiveTab] = useState(0);
   const [selectedLeague, setSelectedLeague] = useState("");
   const [gameData, setGameData] = useState([]);
+  const [selectedValues, setSelectedValues] = useState({});
+  const [reasonPopupOpen, setReasonPopupOpen] = useState(false);
+  const [reason, setReason] = useState("");
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
-  };
-
-  const handleRadioChange = (event) => {
-    setSelectedValue(event.target.value);
   };
 
   const handleDateChange = (date) => {
@@ -47,7 +47,11 @@ const ScoreEntry = () => {
 
     getGamesByDate(formattedDate)
       .then((response) => {
-        console.log(response);
+        const initialSelectedValues = {};
+        response.data.forEach((game) => {
+          initialSelectedValues[game._id] = "";
+        });
+        setSelectedValues(initialSelectedValues);
         setGameData(response.data);
       })
       .catch((error) => {
@@ -55,7 +59,35 @@ const ScoreEntry = () => {
       });
   };
 
-  const isReasonButtonDisabled = !selectedValue; // Disable if no radio button is selected
+  const handleRadioChange = (event, gameId) => {
+    setSelectedValues((prevSelectedValues) => ({
+      ...prevSelectedValues,
+      [gameId]: event.target.value,
+    }));
+  };
+
+  const isReasonButtonDisabled = (gameId) => !selectedValues[gameId];
+
+  const handleReasonButtonClick = () => {
+    setReasonPopupOpen(true);
+  };
+
+  const handleReasonSubmit = () => {
+    if (reason.trim() !== "") {
+      // Log the reason to the console
+      console.log("Reason submitted:", reason);
+    }
+    setReasonPopupOpen(false);
+    setReason("");
+    // Show a message indicating data saved
+    alert("Data saved");
+  };
+
+  const handleReasonCancel = () => {
+    // Handle reason cancellation
+    setReasonPopupOpen(false);
+    setReason("");
+  };
 
   const filteredGameData = gameData.filter((game) =>
     selectedLeague ? game.league === selectedLeague : true
@@ -77,7 +109,7 @@ const ScoreEntry = () => {
           <Tab
             className="league-select"
             label="NHL"
-            onClick={() => setSelectedLeague("NHL")} // Set selected league on tab click
+            onClick={() => setSelectedLeague("NHL")}
           />
           <Tab
             className="league-select"
@@ -147,7 +179,6 @@ const ScoreEntry = () => {
                 <TableRow key={game._id} className="table-row">
                   <TableCell>{game.visitor}</TableCell>
                   <TableCell>{game.home}</TableCell>
-
                   {/* <TableCell>{game.vScore}</TableCell>
                   <TableCell>{game.hScore}</TableCell>
                   <TableCell>{game.regulation}</TableCell>
@@ -156,7 +187,6 @@ const ScoreEntry = () => {
                   <TableCell>{game.extraInfo}</TableCell>
                   <TableCell>{game.notCompleted}</TableCell>
                   <TableCell>{game.reason}</TableCell> */}
-
                   <TableCell>
                     <TextField variant="outlined" size="small" />
                   </TableCell>
@@ -164,7 +194,10 @@ const ScoreEntry = () => {
                     <TextField variant="outlined" size="small" />
                   </TableCell>
                   <TableCell>
-                    <RadioGroup value={selectedValue}>
+                    <RadioGroup
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
+                    >
                       <FormControlLabel
                         value="option1"
                         control={<Radio size="small" />}
@@ -174,8 +207,8 @@ const ScoreEntry = () => {
                   </TableCell>
                   <TableCell>
                     <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
                         value="option2"
@@ -184,11 +217,22 @@ const ScoreEntry = () => {
                       />
                     </RadioGroup>
                   </TableCell>
-
                   <TableCell>
                     <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
+                    >
+                      <FormControlLabel
+                        value="option3"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
                         value="option4"
@@ -199,8 +243,8 @@ const ScoreEntry = () => {
                   </TableCell>
                   <TableCell>
                     <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
                         value="option5"
@@ -209,25 +253,46 @@ const ScoreEntry = () => {
                       />
                     </RadioGroup>
                   </TableCell>
-                  <TableCell>
-                    <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
-                    >
-                      <FormControlLabel
-                        value="option6"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
-                  </TableCell>
+
                   <TableCell>
                     <Button
                       variant="contained"
-                      disabled={isReasonButtonDisabled}
+                      disabled={isReasonButtonDisabled(game._id)}
+                      onClick={handleReasonButtonClick}
                     >
                       ADD REASON
                     </Button>
+                    <div className="popup" style={{ width: "100%" }}>
+                      <Dialog
+                        open={reasonPopupOpen}
+                        onClose={handleReasonCancel}
+                        fullWidth
+                        maxWidth="lg"
+                      >
+                        <DialogTitle>Enter Reason</DialogTitle>
+                        <br />
+                        <DialogContent>
+                          <TextField
+                            multiline
+                            rows={8} // Adjust the number of rows as needed
+                            fullWidth
+                            value={reason}
+                            onChange={(e) => setReason(e.target.value)}
+                            variant="outlined"
+                            label="Reason"
+                            sx={{ width: "100%", resize: "both" }} // Adjust the width and enable custom resizing
+                          />
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleReasonCancel} color="primary">
+                            Cancel
+                          </Button>
+                          <Button onClick={handleReasonSubmit} color="primary">
+                            Submit
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -248,7 +313,6 @@ const ScoreEntry = () => {
       </Paper>
       <br />
       <br />
-      {/* Card 2 */}
       <h1
         style={{
           backgroundColor: "#E3D3D4",
@@ -262,7 +326,7 @@ const ScoreEntry = () => {
       </h1>
       <br />
       <br />
-      <Paper className="score-entry-container" elevation={3}>
+      {/* <Paper className="score-entry-container" elevation={3}>
         <Tabs value={activeTab} onChange={handleTabChange} centered>
           <Tab className="league-select" label="NHL" />
           <Tab className="league-select" label="NBA" />
@@ -297,15 +361,6 @@ const ScoreEntry = () => {
                 <TableRow key={game._id} className="table-row">
                   <TableCell>{game.visitor}</TableCell>
                   <TableCell>{game.home}</TableCell>
-                  {/* <TableCell>{game.vScore}</TableCell>
-                  <TableCell>{game.hScore}</TableCell>
-                  <TableCell>{game.regulation}</TableCell>
-                  <TableCell>{game.overtime}</TableCell>
-                  <TableCell>{game.shootout}</TableCell>
-                  <TableCell>{game.extraInfo}</TableCell>
-                  <TableCell>{game.notCompleted}</TableCell>
-                  <TableCell>{game.reason}</TableCell> */}
-
                   <TableCell>
                     <TextField variant="outlined" size="small" />
                   </TableCell>
@@ -313,7 +368,10 @@ const ScoreEntry = () => {
                     <TextField variant="outlined" size="small" />
                   </TableCell>
                   <TableCell>
-                    <RadioGroup value={selectedValue}>
+                    <RadioGroup
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
+                    >
                       <FormControlLabel
                         value="option1"
                         control={<Radio size="small" />}
@@ -322,19 +380,9 @@ const ScoreEntry = () => {
                     </RadioGroup>
                   </TableCell>
                   <TableCell>
-                    <RadioGroup value={selectedValue}>
-                      <FormControlLabel
-                        value="option2"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
-                  </TableCell>
-
-                  <TableCell>
                     <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
                         value="option4"
@@ -345,8 +393,32 @@ const ScoreEntry = () => {
                   </TableCell>
                   <TableCell>
                     <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
+                    >
+                      <FormControlLabel
+                        value="option3"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
+                    >
+                      <FormControlLabel
+                        value="option4"
+                        control={<Radio size="small" />}
+                        label=""
+                      />
+                    </RadioGroup>
+                  </TableCell>
+                  <TableCell>
+                    <RadioGroup
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
                         value="option5"
@@ -357,8 +429,8 @@ const ScoreEntry = () => {
                   </TableCell>
                   <TableCell>
                     <RadioGroup
-                      value={selectedValue}
-                      onChange={handleRadioChange}
+                      value={selectedValues[game._id]}
+                      onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
                         value="option6"
@@ -368,25 +440,19 @@ const ScoreEntry = () => {
                     </RadioGroup>
                   </TableCell>
                   <TableCell>
-                    <Button variant="contained">ADD REASON</Button>
+                    <Button
+                      variant="contained"
+                      disabled={isReasonButtonDisabled(game._id)}
+                    >
+                      ADD REASON
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          <Button
-            variant="contained"
-            style={{
-              marginTop: "20px",
-              display: "flex",
-              backgroundColor: "red",
-            }}
-            className="centered-button" // Apply the centered-button class
-          >
-            ENTER SCORES
-          </Button>
         </TableContainer>
-      </Paper>
+      </Paper> */}
     </>
   );
 };
