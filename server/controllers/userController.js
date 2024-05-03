@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config/keys");
 const { responseObject } = require("../utils/responseObject");
+const stripe= require("stripe")(process.env.STRIPE_SECRET);
 
 
 exports.signUpController = async (req, res) => {
@@ -114,6 +115,35 @@ exports.useAffiliateController = async (req, res) => {
       message: "Error using affiliate code.",
       success: false,
     });
+  }
+};
+
+exports.createCheckout = async (req, res) => {
+  const { subscriptions } = req.body;
+
+  try {
+
+    const lineItems = subscriptions.map((subscription) => {
+      return {
+        price: subscription.priceId, 
+        quantity: subscription.quantity || 1,
+      };
+    });
+
+    // Create a Stripe Checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      mode: 'subscription',
+      success_url: 'https://ultimate-bragging-rights.vercel.app/success', 
+      cancel_url: 'https://ultimate-bragging-rights.vercel.app/cancel', 
+    });
+
+    // session ID
+    res.status(200).json({ sessionId: session.id });
+  } catch (error) {
+    console.error('Error creating Checkout session:', error);
+    res.status(500).json({ error: 'Failed to create Checkout session' });
   }
 };
 

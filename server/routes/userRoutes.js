@@ -1,12 +1,13 @@
 // server/routes/users.js
 const express = require('express');
 const router = express.Router();
-const { signUpController, signInController, verifyOTP, useAffiliateController } = require('../controllers/userController');
+const { signUpController, signInController, verifyOTP, useAffiliateController, createCheckout } = require('../controllers/userController');
 
 router.post("/signup", signUpController);
 router.post("/signin", signInController);
 router.post("/verify-otp", verifyOTP);
 router.post("/useAffiliate",useAffiliateController);
+router.post("/create-checkout",createCheckout);
 // API endpoint for user registration
 // router.post('/signup', (req, res) => {
 //   const { firstName, lastName, email, password, /* ...other fields */ } = req.body;
