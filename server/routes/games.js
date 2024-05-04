@@ -8,6 +8,7 @@ const {
   deleteGame,
   getTeamsOfLeaguesController,
   getGamesByDate,
+  updateGameFields,
 } = require("../controllers/games");
 const { authenticateUser, checkAdmin } = require("../middlewares/auth");
 // const { authenticateUser, checkAdmin } = require("../middlewares/auth");
@@ -31,5 +32,7 @@ router.patch("/updateGame/:id", updateGame);
 router.delete("/deleteGame/:id", deleteGame);
 
 router.get("/getGameBydate/:gamedate", getGamesByDate);
+
+router.patch("/updateGameFields/:id", updateGameFields);
 
 module.exports = router;

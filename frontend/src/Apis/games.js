@@ -48,3 +48,12 @@ export const getGamesByDate = async (date) => {
 
   return response;
 };
+
+export const updateGameFields = async (data) => {
+  const response = await api.patch(
+    `api/admin/games/updateGameFields/${data._id}`,
+    JSON.stringify(data)
+  );
+
+  return response;
+};

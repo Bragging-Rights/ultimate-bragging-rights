@@ -154,7 +154,7 @@ const EnterResults = () => {
     sport: "",
   };
 
-  console.log("Initial Form Data:", initialFormData);
+  // console.log("Initial Form Data:", initialFormData);
 
   const { refetch } = useQuery(
     ["matches", formattedDateForAPI, selectedLeague],
@@ -171,11 +171,11 @@ const EnterResults = () => {
     }
   );
 
-  useEffect(() => {
-    if (selectedLeague) {
-      refetch();
-    }
-  }, [selectedLeague]);
+  // useEffect(() => {
+  //   if (selectedLeague) {
+  //     // refetch();
+  //   }
+  // }, [selectedLeague]);
 
   const updateGameData = (gameId, updatedData) => {
     setGameData((prevGameData) => {

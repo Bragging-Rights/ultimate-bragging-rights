@@ -25,7 +25,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { getGamesByDate } from "../../Apis/games";
 import { cloneDeep } from "lodash";
-
+import updateGameFields from "../../Apis/games";
 import "./TableData.css";
 
 const ScoreEntry = () => {
@@ -53,6 +53,7 @@ const ScoreEntry = () => {
           initialSelectedValues[game._id] = "";
         });
         setSelectedValues(initialSelectedValues);
+        console.log(response.data);
         setGameData(response.data);
       })
       .catch((error) => {
@@ -104,6 +105,7 @@ const ScoreEntry = () => {
   };
   const handleButtonClick = () => {
     console.log(gameData);
+    // updateGameFields(gameData)
   };
 
   return (

@@ -149,6 +149,27 @@ const getGamesByDate = async (req, res) => {
   }
 };
 
+// Update specific fields of a game
+const updateGameFields = async (req, res) => {
+  try {
+    const { vFinalScore, hFinalScore, gameEnd, suspended, suspendedReason } =
+      req.body;
+    const game = await Game.findById(req.params.id);
+    if (!game) {
+      return res.status(404).json({ message: "Game not found" });
+    }
+    if (vFinalScore !== undefined) game.vFinalScore = vFinalScore;
+    if (hFinalScore !== undefined) game.hFinalScore = hFinalScore;
+    if (gameEnd !== undefined) game.gameEnd = gameEnd;
+    if (suspended !== undefined) game.suspended = suspended;
+    if (suspendedReason !== undefined) game.suspendedReason = suspendedReason;
+    await game.save();
+    res.json(game);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createGame,
   getGames,
@@ -156,5 +177,6 @@ module.exports = {
   updateGame,
   deleteGame,
   getTeamsOfLeaguesController,
-  getGamesByDate, // new method
+  getGamesByDate,
+  updateGameFields, // new method
 };
