@@ -44,7 +44,7 @@ const FormToggle = () => {
 
   const formButtons = [
     { label: "Enter Games", formName: "games" },
-    { label: "Edit Games", formName: "edit" },
+    // { label: "Edit Games", formName: "edit" },
     { label: "Enter Results", formName: "results" },
     { label: "Live Games", formName: "livegames" },
     // { label: "Live Games", formName: "livegames" },
