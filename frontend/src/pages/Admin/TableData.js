@@ -25,7 +25,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { getGamesByDate } from "../../Apis/games";
 import { cloneDeep } from "lodash";
-import updateGameFields from "../../Apis/games";
+
 import "./TableData.css";
 
 const ScoreEntry = () => {
@@ -35,6 +35,7 @@ const ScoreEntry = () => {
   const [selectedValues, setSelectedValues] = useState({});
   const [reasonPopupOpen, setReasonPopupOpen] = useState(false);
   const [reason, setReason] = useState("");
+  const [reasonData, setReasonData] = useState({});
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -53,7 +54,6 @@ const ScoreEntry = () => {
           initialSelectedValues[game._id] = "";
         });
         setSelectedValues(initialSelectedValues);
-        console.log(response.data);
         setGameData(response.data);
       })
       .catch((error) => {
@@ -70,25 +70,26 @@ const ScoreEntry = () => {
 
   const isReasonButtonDisabled = (gameId) => !selectedValues[gameId];
 
-  const handleReasonButtonClick = () => {
+  const handleReasonButtonClick = (gameId) => {
     setReasonPopupOpen(true);
+    setReasonData((prevReasonData) => ({
+      ...prevReasonData,
+      [gameId]: "", // Initialize reason data for this game
+    }));
   };
 
-  const handleReasonSubmit = () => {
+  const handleReasonSubmit = (gameId) => {
     if (reason.trim() !== "") {
-      // Log the reason to the console
-      console.log("Reason submitted:", reason);
+      // Save the reason text to reasonData object with game ID as key
+      setReasonData((prevReasonData) => ({
+        ...prevReasonData,
+        [gameId]: reason,
+      }));
     }
     setReasonPopupOpen(false);
     setReason("");
     // Show a message indicating data saved
     alert("Data saved");
-  };
-
-  const handleReasonCancel = () => {
-    // Handle reason cancellation
-    setReasonPopupOpen(false);
-    setReason("");
   };
 
   const filteredGameData = gameData.filter((game) =>
@@ -103,9 +104,56 @@ const ScoreEntry = () => {
       setGameData(updatedGameData);
     }
   };
+
   const handleButtonClick = () => {
-    console.log(gameData);
-    // updateGameFields(gameData)
+    const updatedGameData = gameData.map((game) => {
+      const selectedOption = selectedValues[game._id];
+      let optionId;
+      switch (selectedOption) {
+        case "REG":
+          optionId = "REG";
+          break;
+        case "OT":
+          optionId = "OT";
+          break;
+        case "S/O":
+          optionId = "S/O";
+          break;
+        case "EI":
+          optionId = "EI";
+          break;
+        case "Suspended":
+          optionId = "Suspended";
+          break;
+        default:
+          optionId = null;
+      }
+      if (optionId !== null) {
+        return {
+          ...game,
+          table: selectedLeague,
+          optionId: optionId,
+          selectedOption: selectedOption,
+          reason: reasonData[game._id] || "", // Include reason for this game
+        };
+      } else {
+        return game;
+      }
+    });
+
+    console.log("GameData with Selected Radio Button and Reason:");
+    console.log(updatedGameData);
+
+    // Log the reason for each game
+    updatedGameData.forEach((game) => {
+      console.log(`Reason for Game ${game._id}:`, game.reason);
+    });
+  };
+
+  const handleReasonCancel = () => {
+    // Handle reason cancellation
+    setReasonPopupOpen(false);
+    setReason("");
   };
 
   return (
@@ -221,7 +269,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option1"
+                        value="REG"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -233,7 +281,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option2"
+                        value="OT"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -245,7 +293,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option3"
+                        value="S/O"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -257,7 +305,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option4"
+                        value="EI"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -269,7 +317,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option5"
+                        value="Suspended"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -280,10 +328,11 @@ const ScoreEntry = () => {
                     <Button
                       variant="contained"
                       disabled={isReasonButtonDisabled(game._id)}
-                      onClick={handleReasonButtonClick}
+                      onClick={() => handleReasonButtonClick(game._id)}
                     >
                       ADD REASON
                     </Button>
+
                     <div className="popup" style={{ width: "100%" }}>
                       <Dialog
                         open={reasonPopupOpen}
@@ -296,13 +345,18 @@ const ScoreEntry = () => {
                         <DialogContent>
                           <TextField
                             multiline
-                            rows={8} // Adjust the number of rows as needed
+                            rows={8}
                             fullWidth
-                            value={reason}
-                            onChange={(e) => setReason(e.target.value)}
+                            value={reasonData[game._id] || ""} // Use specific reason for this game
+                            onChange={(e) =>
+                              setReasonData((prevReasonData) => ({
+                                ...prevReasonData,
+                                [game._id]: e.target.value,
+                              }))
+                            }
                             variant="outlined"
                             label="Reason"
-                            sx={{ width: "100%", resize: "both" }} // Adjust the width and enable custom resizing
+                            sx={{ width: "100%", resize: "both" }}
                           />
                         </DialogContent>
                         <DialogActions>
@@ -396,7 +450,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option1"
+                        value="REG"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -408,7 +462,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option4"
+                        value="EI"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -420,7 +474,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option3"
+                        value="S/O"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -432,7 +486,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option4"
+                        value="EI"
                         control={<Radio size="small" />}
                         label=""
                       />
@@ -444,7 +498,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="option5"
+                        value="Suspended"
                         control={<Radio size="small" />}
                         label=""
                       />
