@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLeagueContext } from "./LeagueContext";
+import { useLeagueContext } from "./LeagueContext"; // Import LeagueContext
 import {
   Grid,
   Button,
@@ -11,7 +11,18 @@ import { ChevronLeft, ChevronRight } from "@material-ui/icons";
 import arrowImage from "../assets/arrow.png";
 import logoImage from "../assets/logonav.png";
 
-const totLeagues = ["NHL", "NBA", "MLB", "NFL", "WNBA", "CFL", "NCAAF", "UFL", "NCCA","NCAAB"];
+const totLeagues = [
+  "NHL",
+  "NBA",
+  "MLB",
+  "NFL",
+  "WNBA",
+  "CFL",
+  "NCAAF",
+  "UFL",
+  "NCCA",
+  "NCAAB",
+];
 
 const LeagueSelect = () => {
   const { selectedLeague, setSelectedLeague } = useLeagueContext();
@@ -23,7 +34,6 @@ const LeagueSelect = () => {
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
   };
-
   const nextPage = () => {
     if (currentPage < totLeagues.length / buttonsPerPage - 1) {
       setCurrentPage(currentPage + 1);
@@ -35,7 +45,6 @@ const LeagueSelect = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-
   return (
     <Grid container direction="row" alignItems="center" spacing={1}>
       {/* Logo on the left corner */}
@@ -43,50 +52,48 @@ const LeagueSelect = () => {
         <img
           src={logoImage}
           alt="Logo"
-          style={{ width: "100%", height: "auto", marginLeft:"-1300%" }} // Adjust width and height as needed
+          style={{ width: "100%", height: "auto", marginLeft: "-1300%" }} // Adjust width and height as needed
         />
       </Grid>
 
-      <Grid item xs={10} container justify="center" spacing={0} wrap="nowrap" >
-        {totLeagues
-          .map((item) => (
-            <Grid item key={item}>
-  <Button
-    variant={item === selectedLeague ? "contained" : "outlined"}
-    color={item === selectedLeague ? "primary" : "default"}
-    onClick={() => handleLeagueSelect(item)}
-    style={{
-      color: item === selectedLeague ? "red" : "white", // Set text color to red for selected league
-      backgroundColor: item === selectedLeague ? "transparent" : "",
-      padding: 0,
-      width: isSmallScreen ? "10px" : "0px",
-      fontSize: isSmallScreen ? "0.6rem" : "1rem",
-      marginLeft: isSmallScreen ? "-20px" : "0",
-      border: 0,
-      backgroundSize: "cover",
-      position: "relative", // Added for arrow positioning
-    }}
-  >
-    {item}
-    {item === selectedLeague && ( // Render arrow only for selected league
-      <img
-        src={arrowImage}
-        alt="Selected League Arrow"
-        style={{
-          position: "absolute",
-          top: "-15px", // Adjust positioning as needed
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "20px",
-          height: "20px",
-        }}
-      />
-    )}
-  </Button>
-</Grid>
-          ))}
+      <Grid item xs={10} container justify="center" spacing={0} wrap="nowrap">
+        {totLeagues.map((item) => (
+          <Grid item key={item}>
+            <Button
+              variant={item === selectedLeague ? "contained" : "outlined"}
+              color={item === selectedLeague ? "primary" : "default"}
+              onClick={() => handleLeagueSelect(item)}
+              style={{
+                color: item === selectedLeague ? "red" : "white", // Set text color to red for selected league
+                backgroundColor: item === selectedLeague ? "transparent" : "",
+                padding: 0,
+                width: isSmallScreen ? "10px" : "0px",
+                fontSize: isSmallScreen ? "0.6rem" : "1rem",
+                marginLeft: isSmallScreen ? "-20px" : "0",
+                border: 0,
+                backgroundSize: "cover",
+                position: "relative", // Added for arrow positioning
+              }}
+            >
+              {item}
+              {item === selectedLeague && ( // Render arrow only for selected league
+                <img
+                  src={arrowImage}
+                  alt="Selected League Arrow"
+                  style={{
+                    position: "absolute",
+                    top: "-15px", // Adjust positioning as needed
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "20px",
+                    height: "20px",
+                  }}
+                />
+              )}
+            </Button>
+          </Grid>
+        ))}
       </Grid>
-      
     </Grid>
   );
 };

@@ -1,45 +1,131 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from "react";
 import "./tableComponent.css";
+import { useLeagueContext } from "../LeagueContext"; // Import LeagueContext
 
-const headerOption = [
-  "Visitor",
-  "Home",
-  "Final",
-  "Prediction",
-  "Time",
-  "CO",
-  "CITY PROV/STATE",
-  "PLAYER",
-  "Rank",
-  "TP",
-  "BR",
-  "Fav",
-  "UD",
-  "Sprd",
-  "O/U",
-  "1S",
-  "1SW2",
-  "2SW2",
-  "1SW3",
-  "2SW3",
-  "1SW7",
-  "2SW7",
-  "1SHO",
-  "2SHO",
-  "Reg",
-  "SO",
-  "OT/EI",
-  "UD",
-];
+const headerOptions = {
+  NHL: [
+    "Visitor",
+    "Home",
+    "Final",
+    "Prediction",
+    "Time",
+    "CO",
+    "CITY PROV/STATE",
+    "PLAYER",
+    "Rank",
+    "TP",
+    "BR",
+    "Fav",
+    "UD",
+    "Sprd",
+    "O/U",
+    "1S",
+    "1S 0", // Added for Hockey
+    "Reg",
+    "SO",
+    "OT/EI",
+    "UD",
+  ],
+  NBA: [
+    "Visitor",
+    "Home",
+    "Final",
+    "Prediction",
+    "Time",
+    "CO",
+    "CITY PROV/STATE",
+    "PLAYER",
+    "Rank",
+    "TP",
+    "BR",
+    "Fav",
+    "UD",
+    "Sprd",
+    "O/U",
+    "1S",
+    "Reg",
+    "SO",
+    "OT", // Remove EI (Keep OT)
+    "UD",
+  ],
+  MLB: [
+    "Visitor",
+    "Home",
+    "Final",
+    "Prediction",
+    "Time",
+    "CO",
+    "CITY PROV/STATE",
+    "PLAYER",
+    "Rank",
+    "TP",
+    "BR",
+    "Fav",
+    "UD",
+    "Sprd",
+    "O/U",
+    "1S",
+    "Reg",
+    "SO",
+    "OT ", // Remove OT - Keep EI
+  ],
+  NFL: [
+    "Visitor",
+    "Home",
+    "Final",
+    "Prediction",
+    "Time",
+    "CO",
+    "CITY PROV/STATE",
+    "PLAYER",
+    "Rank",
+    "TP",
+    "BR",
+    "Fav",
+    "UD",
+    "Sprd",
+    "O/U",
+    "1S",
+    "Reg",
+    "SO",
+    "EI",
+    "UD",
+  ],
+  WNBA: [
+    // WNBA header options
+  ],
+  CFL: [
+    // CFL header options
+  ],
+  NCAAF: [
+    // NCAAF header options
+  ],
+  UFL: [
+    // UFL header options
+  ],
+  NCCA: [
+    // NCCA header options
+  ],
+  NCAAB: [
+    // NCAAB header options
+  ],
+};
 
 const TableComponent = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+  const { selectedLeague } = useLeagueContext();
+  const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
+
+  useEffect(() => {
+    if (selectedLeague && headerOptions[selectedLeague]) {
+      setFilteredHeaderOptions(headerOptions[selectedLeague]);
+    } else {
+      setFilteredHeaderOptions([]); // Set empty array for consistency
+    }
+  }, [selectedLeague]);
 
   const handleDrag = (e, ui) => {
     // Handle drag logic if needed
   };
-
   const tdStyle = () => {
     return {
       backgroundColor: "rgb(98 197 85 / 100%)",
@@ -79,18 +165,8 @@ const TableComponent = () => {
                 />
               </svg>
             </td> */}
-            {headerOption?.map((item, ind) => (
-              <th
-                key={ind}
-                className="text-xs font-medium"
-                style={{
-                  background:
-                    "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
+            {filteredHeaderOptions.map((item, ind) => (
+              <th key={ind} className="text-xs font-medium">
                 {item}
               </th>
             ))}
