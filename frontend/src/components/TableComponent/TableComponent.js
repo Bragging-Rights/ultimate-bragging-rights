@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./tableComponent.css";
-import { useLeagueContext } from "../LeagueContext"; // Import LeagueContext
+import { useLeagueContext } from "../LeagueContext";
 
 const headerOptions = {
   NHL: [

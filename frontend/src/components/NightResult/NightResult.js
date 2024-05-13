@@ -1,6 +1,148 @@
 import React, { useState, useEffect } from "react";
 import "./NightResult.css";
 const { data, headers, headerOption } = require("./dump");
+import { useLeagueContext } from "../LeagueContext";
+
+const headerOptions = {
+  NHL: [
+    //REGULAR SEASON
+    "CO",
+    "CITY PROV/STATE",
+    "REP",
+    "PLAYER",
+    "R",
+    "NPT",
+    "GP",
+    "W",
+    "L",
+    "APG",
+    "W%",
+    "BR",
+    "ML",
+    "SPRD",
+    "1S",
+    "1S 0",
+    "Reg",
+    "OT",
+    "SO",
+    "L1I",
+    "CT",
+    //PLAYOFFS
+    // "CO",
+    // "CITY PROV/STATE",
+    // "REP",
+    // "PLAYER",
+    // "R",
+    // "NPT",
+    // "GP",
+    // "W",
+    // "L",
+    // "APG",
+    // "W%",
+    // "BR",
+    // "ML",
+    // "SPRD",
+    // "1S",
+    // "1S 0",
+    // "Reg",
+    // "OT",
+    // "L1I",
+    // "CT"
+  ],
+  NBA: [
+    "CO",
+    "CITY PROV/STATE",
+    "REP",
+    "PLAYER",
+    "R",
+    "NPT",
+    "GP",
+    "W",
+    "L",
+    "APG",
+    "W%",
+    "BR",
+    "ML",
+    "SPRD",
+    "1S",
+    "1SW3",
+    "2SW3",
+    "1SW7",
+    "2SW7",
+    "Reg",
+    "OT",
+    "L10",
+    "CT",
+  ],
+  MLB: [
+    "CO",
+    "CITY PROV/STATE",
+    "REP",
+    "PLAYER",
+    "R",
+    "NPT",
+    "GP",
+    "W",
+    "L",
+    "APG",
+    "W%",
+    "BR",
+    "ML",
+    "SPRD",
+    "1S",
+    "1S0",
+
+    "Reg",
+    "EI",
+    "L10",
+    "CT",
+  ],
+  NFL: [
+    "CO",
+    "CITY PROV/STATE",
+    "REP",
+    "PLAYER",
+    "R",
+    "NPT",
+    "GP",
+    "W",
+    "L",
+    "APG",
+    "W%",
+    "BR",
+    "ML",
+    "SPRD",
+    "1S",
+    "1S0",
+    "2S0",
+    "1SW3",
+    "2SW3",
+    "1SW7",
+    "2SW7",
+    "Reg",
+    "OT",
+    "L10",
+    "CT",
+  ],
+  WNBA: [
+    // WNBA header options
+  ],
+  CFL: [
+    // CFL header options
+  ],
+  NCAAF: [
+    // NCAAF header options
+  ],
+  UFL: [
+    // UFL header options
+  ],
+  NCCA: [
+    // NCCA header options
+  ],
+  NCAAB: [
+    // NCAAB header options
+  ],
+};
 
 const NightResult = () => {
   const [showGames, setShowGames] = useState({
@@ -9,8 +151,19 @@ const NightResult = () => {
     game3: false,
     game4: false,
   });
+  const { selectedLeague } = useLeagueContext();
+
   const [animationPaused, setAnimationPaused] = useState(false);
   const [sortedData, setSortedData] = useState([]);
+  const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
+
+  useEffect(() => {
+    if (selectedLeague && headerOptions[selectedLeague]) {
+      setFilteredHeaderOptions(headerOptions[selectedLeague]);
+    } else {
+      setFilteredHeaderOptions([]); // Set empty array for consistency
+    }
+  }, [selectedLeague]);
 
   useEffect(() => {
     if (!animationPaused) {
@@ -57,7 +210,11 @@ const NightResult = () => {
     if (!animationPaused) {
       const newData = data.map((item) => ({
         ...item,
-        br: (showGames.game1 ? item.game1 : 0) + (showGames.game2 ? item.game2 : 0) + (showGames.game3 ? item.game3 : 0) + (showGames.game4 ? item.game4 : 0)
+        br:
+          (showGames.game1 ? item.game1 : 0) +
+          (showGames.game2 ? item.game2 : 0) +
+          (showGames.game3 ? item.game3 : 0) +
+          (showGames.game4 ? item.game4 : 0),
       }));
       const sortedData = [...newData].sort((a, b) => b.br - a.br);
 
@@ -87,10 +244,13 @@ const NightResult = () => {
         </div>
         <button onClick={handleSkipAnimation}>Skip Animation</button>
       </div>
-      <table className="mt-5 w-full table-auto border-separate">
-        <thead>
+      <br />
+      <br />
+
+      <table style={{ borderCollapse: "separate", width: "100%" }}>
+        <thead style={{ fontSize: "0.8rem" }}>
           <tr>
-            {headerOption?.map((item, ind) => (
+            {/* {headerOption?.map((item, ind) => (
               <th
                 key={ind}
                 style={{
@@ -103,13 +263,17 @@ const NightResult = () => {
                   fontWeight: "500",
                   color: "#FEF098",
                 }}
-              ></th>
+              ></th> */}
+            {filteredHeaderOptions.map((item, ind) => (
+              <th key={ind} className="text-xs font-medium">
+                {item}
+              </th>
             ))}
           </tr>
         </thead>
-        <tbody>
-          <tr className="header-row">
-            {headers.map((header, index) => (
+        <tbody style={{ fontSize: "0.8rem" }}>
+          <tr className="  bg-[#181818] text-white  separator">
+            {/* {headers.map((header, index) => (
               <td key={index} className="header-cell">
                 {header.split("\n").map((text, i) => (
                   <React.Fragment key={i}>
@@ -118,7 +282,7 @@ const NightResult = () => {
                   </React.Fragment>
                 ))}
               </td>
-            ))}
+            ))} */}
           </tr>
           {sortedData.map((item, index) => (
             <tr
