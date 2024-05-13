@@ -25,6 +25,8 @@ const totLeagues = [
 ];
 
 const LeagueSelect = () => {
+  const disabledLeagues = ["WNBA", "CFL", "NCAAF", "UFL", "NCCA", "NCAAB"];
+
   const { selectedLeague, setSelectedLeague } = useLeagueContext();
   const buttonsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -62,7 +64,10 @@ const LeagueSelect = () => {
             <Button
               variant={item === selectedLeague ? "contained" : "outlined"}
               color={item === selectedLeague ? "primary" : "default"}
-              onClick={() => handleLeagueSelect(item)}
+              onClick={() =>
+                !disabledLeagues.includes(item) && handleLeagueSelect(item)
+              }
+              disabled={disabledLeagues.includes(item)}
               style={{
                 color: item === selectedLeague ? "red" : "white", // Set text color to red for selected league
                 backgroundColor: item === selectedLeague ? "transparent" : "",
@@ -73,6 +78,11 @@ const LeagueSelect = () => {
                 border: 0,
                 backgroundSize: "cover",
                 position: "relative", // Added for arrow positioning
+                color: disabledLeagues.includes(item)
+                  ? "gray"
+                  : item === selectedLeague
+                  ? "red"
+                  : "white",
               }}
             >
               {item}

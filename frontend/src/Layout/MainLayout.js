@@ -28,16 +28,22 @@ const MainLayout = ({ children }) => {
       <br />
       <MainNavBar />
       <br />
-      <Box sx={{ border: "2px solid red", height: "50px" }}>
+      <Box sx={{ border: "2px solid red", height: "50px", overflow: "hidden" }}>
         <Typography
           sx={{
             fontSize: "2rem",
             color: "white",
             whiteSpace: "nowrap",
-            overflow: "hidden",
+            position: "relative",
+            animation: "marquee 20s linear infinite",
           }}
         >
-          <marquee className="marq" direction="left" loop="">
+          <marquee
+            className="marq"
+            direction="left"
+            loop=""
+            style={{ width: "100%", position: "absolute", left: "0" }}
+          >
             Results are updated hourly until we find a better solution
           </marquee>
         </Typography>
