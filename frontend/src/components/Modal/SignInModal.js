@@ -29,6 +29,22 @@ const customStyles = {
   },
 };
 
+const registrationModalStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    border: "1px solid #BE8200",
+    boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
+    background: "#212227",
+    padding: "30px",
+  },
+  overlay: {
+    background: "rgba(33, 34, 39, 0.90)",
+  },
+};
+
 export const SignInModal = (props) => {
   const { modalIsOpen, closeModal } = props;
   const navigate = useNavigate();
@@ -73,6 +89,7 @@ export const SignInModal = (props) => {
     e.preventDefault();
     mutate(formData);
   };
+  const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
 
   const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] =
     useState(false);
@@ -105,7 +122,10 @@ export const SignInModal = (props) => {
       </div>
       <div
         className="modal-form-container"
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
       >
         <ModalInput
           label={"Email"}
@@ -124,6 +144,7 @@ export const SignInModal = (props) => {
           onChange={inputChangeHandler}
         />
       </div>
+      <br />
       <div className="password-reset-container text-white">
         <button
           className="reset-password-btn text-yellow-300"
@@ -138,10 +159,23 @@ export const SignInModal = (props) => {
       </button>
       <p className="text-white mt-2">
         Don't have an account?
-        <a href={Registration} className="text-yellow-300">
+        <a
+          className="reset-password-btn text-yellow-300"
+          style={{
+            color: "#ff0000",
+            fontSize: "16px",
+          }}
+          onClick={() => setRegistrationModalOpen(true)}
+        >
           Sign Up
         </a>
       </p>
+
+      <Registration
+        modalIsOpen={isRegistrationModalOpen}
+        closeModal={() => setRegistrationModalOpen(false)}
+      />
+
       <ForgotPasswordModal
         modalIsOpen={isForgotPasswordModalOpen}
         closeModal={() => setForgotPasswordModalOpen(false)}
