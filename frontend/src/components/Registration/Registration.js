@@ -18,7 +18,7 @@ import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
 
 const Registration = (props) => {
-  const { isOpen, onRequestClose } = props;
+  const { modalIsOpen, closeModal } = props;
   const [selectedCountry, setSelectedCountry] = useState("");
   const [captchaState, setCaptchaState] = useState(false);
 
@@ -347,24 +347,31 @@ const Registration = (props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} className="custom-modal">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={24}
-        height={25}
-        viewBox="0 0 24 25"
-        fill="none"
-        className="cross-btn cursor-pointer absolute right-2 top-1"
-        onClick={onRequestClose}
-      >
-        <path
-          d="M7 7.5L17 17.5M7 17.5L17 7.5"
-          stroke="#E61C1C"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+    <Modal
+      isOpen={modalIsOpen}
+      className="custom-modal"
+      onRequestClose={closeModal}
+    >
+      <div className="r-modal-header">
+        <h2 className="title">SIGN IN</h2>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={24}
+          height={25}
+          viewBox="0 0 24 25"
+          fill="none"
+          className="cross-btn"
+          onClick={closeModal}
+        >
+          <path
+            d="M7 7.5L17 17.5M7 17.5L17 7.5"
+            stroke="#E61C1C"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
       <form id="msform">
         <ul id="progressbar">
           <li

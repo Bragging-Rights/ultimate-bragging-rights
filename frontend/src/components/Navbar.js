@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import img from "../assets/nav.png";
 import redLineImage from "../assets/linebanner.png";
+import Registration from "./Registration/Registration";
 
 const Navbar = () => {
   const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
@@ -107,7 +108,7 @@ const Navbar = () => {
                       <span> A Member</span>
                     </Typography>
                   )}
-                  <SignInModal
+                  <Registration
                     modalIsOpen={signInModalIsOpen}
                     closeModal={() => setSignInModalIsOpen(false)}
                     onSignIn={handleSignIn}
