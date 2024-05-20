@@ -1,60 +1,72 @@
+.table-container {
+  margin-top: 1.25rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
 table {
-  border-collapse: separate;
-  border-spacing: 0 15px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  font-size: 0.8rem;
+  color: #ffc800;
+  background-color: #444;
+}
+
+tbody {
+  font-size: 0.8rem;
 }
 
 th,
 td {
-  width: 150px;
   text-align: center;
-  padding: 5px;
+  padding: 0.5rem;
 }
 
-/* Add styles for mobile view and set initial position for draggable table */
-.table-container {
-  overflow-x: auto;
-  position: relative;
-  max-width: 100%;
+th {
+  font-weight: bold;
 }
 
-/* Media query for mobile view */
-@media only screen and (min-width: 400px) and (max-width: 800px) {
-  .table-container {
-    overflow-x: hidden;
-  }
+td {
+  color: #fff;
 }
 
-
-.border-separate {
-  border-collapse: separate;
-}
-.table-auto {
-  table-layout: auto;
-}
-.w-full {
-  width: 100%;
-}
-.mt-5 {
-  margin-top: 1.25rem;
-}
-table {
-  text-indent: 0;
-  border-color: inherit;
-  border-collapse: collapse;
-}
-table {
-  border-collapse: separate;
-  border-spacing: 0 15px;
+.border-t {
+  border-top: 1px solid #444;
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.bg-\[\#181818\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 24 24 / var(--tw-bg-opacity));
-}
 .h-14 {
   height: 3.5rem;
+}
+
+
+
+.text-white {
+  color: white;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+[style*="background:"] {
+  border-radius: 4px;
 }

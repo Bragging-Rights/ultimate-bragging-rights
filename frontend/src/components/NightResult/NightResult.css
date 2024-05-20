@@ -27,17 +27,22 @@
 .animation-controls .toggle-container .slider {
   position: relative;
   cursor: pointer;
-  height: 20px; /* Adjusted height */
-  width: 40px; /* Adjusted width */
+  height: 20px;
+  /* Adjusted height */
+  width: 40px;
+  /* Adjusted width */
   background-color: #ccc;
-  border-radius: 20px; /* Adjusted border-radius */
+  border-radius: 20px;
+  /* Adjusted border-radius */
 }
 
 .animation-controls .toggle-container .slider:before {
   position: absolute;
   content: "";
-  height: 16px; /* Adjusted height */
-  width: 16px; /* Adjusted width */
+  height: 16px;
+  /* Adjusted height */
+  width: 16px;
+  /* Adjusted width */
   left: 2px;
   bottom: 2px;
   background-color: white;
@@ -45,17 +50,21 @@
   border-radius: 50%;
 }
 
-.animation-controls .toggle-container input:checked + .slider {
-  background-color: #62c555; /* Green color */
+.animation-controls .toggle-container input:checked+.slider {
+  background-color: #62c555;
+  /* Green color */
 }
 
-.animation-controls .toggle-container input:checked + .slider:before {
-  transform: translateX(20px); /* Adjusted translation */
+.animation-controls .toggle-container input:checked+.slider:before {
+  transform: translateX(20px);
+  /* Adjusted translation */
 }
 
 .animation-controls button {
-  padding: 6px 12px; /* Adjusted padding */
-  background-color: #e74c3c; /* Red color */
+  padding: 6px 12px;
+  /* Adjusted padding */
+  background-color: #e74c3c;
+  /* Red color */
   color: white;
   border: none;
   border-radius: 4px;
@@ -64,13 +73,14 @@
 }
 
 .animation-controls button:hover {
-  background-color: #c0392b; /* Darker red color */
+  background-color: #c0392b;
+  /* Darker red color */
 }
 
 .table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  /* border-collapse: separate; */
+  /* border-spacing: 0; */
 }
 
 .table th,
@@ -94,7 +104,7 @@
   font-size: 0.75rem;
   font-weight: bold;
   text-align: center;
-  color: #ffb800;
+  /* color: #ffb800; */
 }
 
 .nr-player-tp-rank {
@@ -115,8 +125,10 @@
   text-align: center;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #f8fa13;
-  opacity: 0; /* Initially hide the elements */
-  transition: opacity 0.5s ease; /* Smooth transition effect */
+  opacity: 0;
+  /* Initially hide the elements */
+  transition: opacity 0.5s ease;
+  /* Smooth transition effect */
 }
 
 .nr-details-2 {
@@ -139,6 +151,7 @@
   0% {
     transform: translateY(100%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -148,6 +161,7 @@
   0% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -164,4 +178,3 @@
 .night-result-container tbody tr.move-down {
   animation: slideDown 0.5s ease-in-out;
 }
-

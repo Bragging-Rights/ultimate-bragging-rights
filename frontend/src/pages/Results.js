@@ -11,6 +11,7 @@ import NightlyStatsTable from "../components/NightlyStatsTable/NightlyStatsTable
 import img1 from "../assets/card.png";
 import img2 from "../assets/card2.png";
 import NightResult from "../components/NightResult/NightResult";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 
 const Results = () => {
   const [CurrentTab, setCurrentTab] = useState(0);
@@ -29,8 +30,8 @@ const Results = () => {
   // const formattedDate = date.toLocaleDateString("en-US", options);
 
   return (
-    <>
-      <div className="flex flex-wrap gap-1 items-center" style={{ display:"flex", justifyContent: "space-around"}}>
+    <Container>
+      <Grid container spacing={2} justifyContent="space-between">
         {/* <GamesPageSelect
           options={[
             "Season",
@@ -133,41 +134,48 @@ const Results = () => {
         </button> */}
 
         {/* <HeroSection imgUrl={resultHero} alt="img" /> */}
-        <Line />
+        <Grid item xs={12}>
+          <Line />
+        </Grid>
         {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
-
-        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab}   />
-        {CurrentTab === 0 ? (
-          <TableComponent />
-        ) : CurrentTab === 1 ? (
-          <NightResult />
-        ) : CurrentTab === 2 ? (
-          <NightlyStatsTable />
-        ) : (
-          ""
-        )}
-        <Line />
-
-        <div className=" flex gap-8 my-4">
-          <div>
-            <img src={img1} alt="img1" className=" w-full" />
-          </div>
-          <div>
-            <img src={img2} alt="img2" className=" w-full" />
-          </div>
-        </div>
+        <Grid item xs={12} display="flex" justifyContent="center">
+          <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
+        </Grid>
+        <Grid item xs={12}>
+          {CurrentTab === 0 ? (
+            <TableComponent />
+          ) : CurrentTab === 1 ? (
+            <NightResult />
+          ) : CurrentTab === 2 ? (
+            <NightlyStatsTable />
+          ) : (
+            ""
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <Line />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <img src={img1} alt="img1" className=" w-full" />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <img src={img2} alt="img2" className=" w-full" />
+        </Grid>
         {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
-
-        <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
-        {CurrentTab === 0 ? (
-          <TableComponent />
-        ) : CurrentTab === 1 ? (
-          <NightResult />
-        ) : (
-          ""
-        )}
-      </div>
-    </>
+        <Grid item xs={12} display="flex" justifyContent="center">
+          <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
+        </Grid>
+        <Grid item xs={12}>
+          {CurrentTab === 0 ? (
+            <TableComponent />
+          ) : CurrentTab === 1 ? (
+            <NightResult />
+          ) : (
+            ""
+          )}
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

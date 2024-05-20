@@ -357,30 +357,51 @@ const TableComponent = () => {
     }
   }, [selectedLeague]);
 
-  const handleDrag = (e, ui) => {
-    // Handle drag logic if needed
-  };
-  const tdStyle = () => {
-    return {
-      backgroundColor: "rgb(98 197 85 / 100%)",
-      fontSize: "1rem",
-      fontWeight: 800,
-      lineHeight: "1.5rem",
-      textAlign: "center",
-      width: "3.5rem",
-      textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-      padding: "5px",
-    };
-  };
-
+  const dataRows = [
+    {
+      visitor: "Toronto",
+      home: "Detroit",
+      final: "1 - 5",
+      prediction: "0-5",
+      time: "8:12:15 AM",
+      co: "CA",
+      prov: "NL",
+      state: "NL",
+      city: "St. John's",
+      player: "Topdog",
+      r: "45 Pts",
+      tp: "24 Pts",
+      br: true,
+      odds: "43",
+      accuracy: "43",
+      shutOut: "Regulation",
+      endings: "Regulation",
+    },
+    {
+      visitor: "Minnesota",
+      home: "Saint. Catherines",
+      final: "1 - 5",
+      prediction: "0-5",
+      time: "8:12:15 AM",
+      co: "CA",
+      prov: "NL",
+      state: "NL",
+      city: "St. John's",
+      player: "Topdog",
+      r: "45 Pts",
+      tp: "24 Pts",
+      br: false,
+      odds: "43",
+      accuracy: "43",
+      shutOut: "Regulation",
+      endings: "Regulation",
+    },
+    // Add more rows here up to 580 lines...
+  ];
   return (
-    <div
-      className="table-container"
-      style={{ marginTop: "1.25rem", width: "100%" }}
-    >
-      <table style={{ borderCollapse: "separate", width: "100%" }}>
-        {/* header */}
-        <thead style={{ fontSize: "0.8rem" }}>
+    <div className="table-container">
+      <table>
+        <thead>
           <tr>
             {/* <td>
               <svg
@@ -406,10 +427,10 @@ const TableComponent = () => {
             ))}
           </tr>
         </thead>
-        {/* header */}
-        <tbody style={{ fontSize: "0.8rem" }}>
-          <tr className=" h-14 bg-[#181818] text-white  separator">
-            {/* <td>
+        <tbody>
+          {dataRows.map((row, index) => (
+            <tr key={index} className="h-14 bg-[#181818] text-white separator">
+              {/* <td>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={20}
@@ -426,150 +447,114 @@ const TableComponent = () => {
                 />
               </svg>
             </td> */}
-            <td
-              className=" text-xs font-medium text-center"
-              style={{ color: "#ffb800" }}
-            >
-              Minnesota
-            </td>
-            <td
-              className=" text-xs font-medium text-center"
-              style={{ color: "#ffb800" }}
-            >
-              Detroit
-            </td>
-            <td
-              className=" text-xs font-medium text-center"
-              style={{ color: "#ffff00" }}
-            >
-              1 - 5
-            </td>
-            <td className=" text-xs font-medium text-center">0-5</td>
-            <td className=" text-xs font-medium text-center">8:12:15 AM </td>
-            <td className=" text-xs font-medium text-center">CA</td>
-            <td className=" text-xs font-medium text-center">NL</td>
-            <td className=" text-xs font-medium text-center"></td>
-            <td className=" text-xs font-medium text-center">St. John’s</td>
-            <td
-              className=" text-xs font-medium text-center"
-              style={{ color: "#ffb800" }}
-            >
-              Topdog
-            </td>
-            <td className=" text-xs font-medium text-center">1</td>
-            <td className=" text-xs font-medium text-center">97 PTS</td>
-            <td
-              className=""
-              style={{
-                background:
-                  "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)",
-              }}
-            >
-              <span className=" flex justify-center items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={39}
-                  height={39}
-                  viewBox="0 0 39 39"
-                  fill="none"
-                >
-                  <circle
-                    cx="19.1313"
-                    cy="19.1875"
-                    r="14.2617"
-                    stroke="black"
-                    strokeWidth={4}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M23.8853 16.0181L17.5467 22.3566L14.3774 19.1873"
-                    stroke="black"
-                    strokeWidth={4}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </td>
-            <td style={tdStyle()}>36</td>
-            <td
-              style={{
-                backgroundColor: "rgb(98 197 85 / 100%)",
-                fontSize: "1rem",
-                fontWeight: 800,
-                lineHeight: "1.5rem",
-                textAlign: "center",
-                width: "3.5rem",
-                textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                padding: "5px",
-                color: "rgb(248 250 19 / 100%)",
-              }}
-            >
-              36
-            </td>
-            <td
-              style={{
-                backgroundColor: "rgb(230 28 28 / 100%)",
-                fontSize: "1rem",
-                fontWeight: 800,
-                lineHeight: "1.5rem",
-                textAlign: "center",
-                width: "3.5rem",
-                textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                padding: "5px",
-                color: "rgb(248 250 19 / 100%)",
-              }}
-            >
-              2
-            </td>
-            <td
-              style={{
-                background:
-                  "linear-gradient(rgb(190, 130, 0) 0%, rgb(254, 240, 152) 47.4%, rgb(239, 210, 97) 100%)",
-                filter: "blur(2px)",
-                fontSize: "1rem",
-                fontWeight: 800,
-                lineHeight: "1.5rem",
-                textAlign: "center",
-                width: "3.5rem",
-                color: "rgb(0 0 0 / 100%)",
-                padding: "5px",
-              }}
-            >
-              23
-            </td>
-            <td
-              style={{
-                backgroundColor: "rgb(98 197 85 / 100%)",
-                fontSize: "1rem",
-                fontWeight: 800,
-                lineHeight: "1.5rem",
-                textAlign: "center",
-                width: "3.5rem",
-                textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                padding: "5px",
-                color: "rgb(248 250 19 / 100%)",
-              }}
-            >
-              0
-            </td>
-            <td
-              style={{
-                backgroundColor: "rgb(98 197 85 / 100%)",
-                fontSize: "1rem",
-                fontWeight: 800,
-                lineHeight: "1.5rem",
-                textAlign: "center",
-                width: "3.5rem",
-                textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                padding: "5px",
-                color: "rgb(248 250 19 / 100%)",
-              }}
-            >
-              2
-            </td>
-          </tr>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{ color: "#ffb800" }}
+              >
+                {row.visitor}
+              </td>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{ color: "#ffb800" }}
+              >
+                {row.home}
+              </td>
+              <td
+                className="text-xs font-medium text-center"
+                style={{ color: "#ffff00" }}
+              >
+                {row.final}
+              </td>
+              <td className="text-xs font-medium text-center">
+                {row.prediction}
+              </td>
+              <td className="text-xs font-medium text-center">{row.time}</td>
+              <td className="text-xs font-medium text-center">{row.co}</td>
+              <td className="text-xs font-medium text-center">{row.prov}</td>
+              <td className="text-xs font-medium text-center">{row.state}</td>
+              <td className="text-xs font-medium text-center">{row.city}</td>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{ color: "#ffb800" }}
+              >
+                {row.player}
+              </td>
+              <td className="text-xs font-medium text-center">{row.r}</td>
+              <td className="text-xs font-medium text-center">{row.tp}</td>
+              <td
+              // style={{
+              //   background: row.br
+              //     ? "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)"
+              //     : "transparent",
+              // }}
+              >
+                {row.br && (
+                  <span className="flex justify-center items-center">
+                    {/* <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={39}
+                      height={39}
+                      viewBox="0 0 39 39"
+                      fill="none"
+                    >
+                      <circle
+                        cx="19.1313"
+                        cy="19.1875"
+                        r="14.2617"
+                        stroke="black"
+                        strokeWidth={4}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M23.8853 16.0181L17.5467 22.3566L14.3774 19.1873"
+                        stroke="black"
+                        strokeWidth={4}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg> */}
+                  </span>
+                )}
+              </td>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{
+                //   backgroundColor: "rgb(98 197 85 / 100%)",
+                //   color: "rgb(248 250 19 / 100%)",
+                // }}
+              >
+                {row.odds}
+              </td>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{
+                //   backgroundColor: "rgb(98 197 85 / 100%)",
+                //   color: "rgb(248 250 19 / 100%)",
+                // }}
+              >
+                {row.accuracy}
+              </td>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{
+                //   backgroundColor: "rgb(230 28 28 / 100%)",
+                //   color: "rgb(248 250 19 / 100%)",
+                // }}
+              >
+                {row.shutOut}
+              </td>
+              <td
+                className="text-xs font-medium text-center"
+                // style={{
+                //   backgroundColor: "rgb(98 197 85 / 100%)",
+                //   color: "rgb(248 250 19 / 100%)",
+                // }}
+              >
+                {row.endings}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

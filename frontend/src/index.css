@@ -547,7 +547,7 @@ label {
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
 }
 
 th,

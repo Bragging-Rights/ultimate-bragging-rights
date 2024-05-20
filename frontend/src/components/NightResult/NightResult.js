@@ -228,29 +228,30 @@ const NightResult = () => {
   }, [showGames, animationPaused]);
 
   return (
-    <div className="night-result-container">
-      <div className="animation-controls">
-        <label htmlFor="animation-toggle" className="pause-label">
-          Pause Animation :
-        </label>
-        <div className="toggle-container">
-          <input
-            type="checkbox"
-            checked={animationPaused}
-            onChange={handleToggleAnimation}
-            id="animation-toggle"
-          />
-          <label htmlFor="animation-toggle" className="slider"></label>
+    <div className="table-container">
+      <div className="night-result-container">
+        <div className="animation-controls">
+          <label htmlFor="animation-toggle" className="pause-label">
+            Pause Animation :
+          </label>
+          <div className="toggle-container">
+            <input
+              type="checkbox"
+              checked={animationPaused}
+              onChange={handleToggleAnimation}
+              id="animation-toggle"
+            />
+            <label htmlFor="animation-toggle" className="slider"></label>
+          </div>
+          <button onClick={handleSkipAnimation}>Skip Animation</button>
         </div>
-        <button onClick={handleSkipAnimation}>Skip Animation</button>
-      </div>
-      <br />
-      <br />
+        <br />
+        <br />
 
-      <table style={{ borderCollapse: "separate", width: "100%" }}>
-        <thead style={{ fontSize: "0.8rem" }}>
-          <tr>
-            {/* {headerOption?.map((item, ind) => (
+        <table style={{ width: "100%" }}>
+          <thead style={{ fontSize: "0.8rem" }}>
+            <tr>
+              {/* {headerOption?.map((item, ind) => (
               <th
                 key={ind}
                 style={{
@@ -264,16 +265,16 @@ const NightResult = () => {
                   color: "#FEF098",
                 }}
               ></th> */}
-            {filteredHeaderOptions.map((item, ind) => (
-              <th key={ind} className="text-xs font-medium">
-                {item}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody style={{ fontSize: "0.8rem" }}>
-          <tr className="  bg-[#181818] text-white  separator">
-            {/* {headers.map((header, index) => (
+              {filteredHeaderOptions.map((item, ind) => (
+                <th key={ind} className="text-xs font-medium">
+                  {item}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody style={{ fontSize: "0.8rem" }}>
+            <tr className="  bg-[#181818] text-white  separator">
+              {/* {headers.map((header, index) => (
               <td key={index} className="header-cell">
                 {header.split("\n").map((text, i) => (
                   <React.Fragment key={i}>
@@ -283,81 +284,82 @@ const NightResult = () => {
                 ))}
               </td>
             ))} */}
-          </tr>
-          {sortedData.map((item, index) => (
-            <tr
-              key={index}
-              style={{ backgroundColor: item.backgroundColor }}
-              className={`position-${item.position}`}
-            >
-              <td className="nr-state-rank">{item.city}</td>
-              <td className="nr-player-tp-rank">{item.player}</td>
-              <td className="nr-state-rank">{item.rank}</td>
-              <td className="nr-player-tp-rank">{item.tp}</td>
-              <td className="nr-player-tp-rank">{item.br}</td>
-              <td className="nr-bg">
-                <span className="nr-svg-span">
-                  <SvgIcon />
-                </span>
-              </td>
-              <td style={{ color: "white", padding: "4px", margin: "4px" }}>
-                {item.w}
-              </td>
-              <td style={{ color: "white", padding: "4px", margin: "4px" }}>
-                {item.l}
-              </td>
-              <td style={{ color: "white", padding: "4px", margin: "4px" }}>
-                {item.apg}
-              </td>
-              <td style={{ color: "white", padding: "4px", margin: "4px" }}>
-                {item.cs}
-              </td>
-
-              <td
-                className="nr-details"
-                style={{
-                  opacity: showGames.game1 ? 1 : 0,
-                  border: "2px solid white",
-                  margin: "4px",
-                }}
-              >
-                {showGames.game1 ? item.game1 : ""}
-              </td>
-              <td
-                className="nr-details-2"
-                style={{
-                  opacity: showGames.game2 ? 1 : 0,
-                  border: "2px solid #C1931B",
-                  margin: "4px",
-                }}
-              >
-                {showGames.game2 ? item.game2 : ""}
-              </td>
-              <td
-                className="nr-details-3"
-                style={{
-                  opacity: showGames.game3 ? 1 : 0,
-                  border: "2px solid white",
-                  margin: "4px",
-                  background: "red",
-                }}
-              >
-                {showGames.game3 ? item.game3 : ""}
-              </td>
-              <td
-                className="nr-details-4"
-                style={{
-                  opacity: showGames.game4 ? 1 : 0,
-                  border: "2px solid white",
-                  margin: "4px",
-                }}
-              >
-                {showGames.game4 ? item.game4 : ""}
-              </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            {sortedData.map((item, index) => (
+              <tr
+                key={index}
+                style={{ backgroundColor: item.backgroundColor }}
+                className={`position-${item.position}`}
+              >
+                <td className="nr-state-rank">{item.city}</td>
+                <td className="nr-player-tp-rank">{item.player}</td>
+                <td className="nr-state-rank">{item.rank}</td>
+                <td className="nr-player-tp-rank">{item.tp}</td>
+                <td className="nr-player-tp-rank">{item.br}</td>
+                <td className="nr-bg">
+                  <span className="nr-svg-span">
+                    <SvgIcon />
+                  </span>
+                </td>
+                <td style={{ color: "white", padding: "4px", margin: "4px" }}>
+                  {item.w}
+                </td>
+                <td style={{ color: "white", padding: "4px", margin: "4px" }}>
+                  {item.l}
+                </td>
+                <td style={{ color: "white", padding: "4px", margin: "4px" }}>
+                  {item.apg}
+                </td>
+                <td style={{ color: "white", padding: "4px", margin: "4px" }}>
+                  {item.cs}
+                </td>
+
+                <td
+                  className="nr-details"
+                  style={{
+                    opacity: showGames.game1 ? 1 : 0,
+                    border: "2px solid white",
+                    margin: "4px",
+                  }}
+                >
+                  {showGames.game1 ? item.game1 : ""}
+                </td>
+                <td
+                  className="nr-details-2"
+                  style={{
+                    opacity: showGames.game2 ? 1 : 0,
+                    border: "2px solid #C1931B",
+                    margin: "4px",
+                  }}
+                >
+                  {showGames.game2 ? item.game2 : ""}
+                </td>
+                <td
+                  className="nr-details-3"
+                  style={{
+                    opacity: showGames.game3 ? 1 : 0,
+                    border: "2px solid white",
+                    margin: "4px",
+                    background: "red",
+                  }}
+                >
+                  {showGames.game3 ? item.game3 : ""}
+                </td>
+                <td
+                  className="nr-details-4"
+                  style={{
+                    opacity: showGames.game4 ? 1 : 0,
+                    border: "2px solid white",
+                    margin: "4px",
+                  }}
+                >
+                  {showGames.game4 ? item.game4 : ""}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
