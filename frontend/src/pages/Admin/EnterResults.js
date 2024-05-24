@@ -32,12 +32,14 @@ function GameForm({ game, onUpdateGameData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateGameData(game._id, formData);
-    setResultEntered(true);
-    mutate({
-      ...formData,
-      game_id: game._id,
+    formData.forEach((data, index) => {
+      onUpdateGameData(game[index]._id, data);
+      mutate({
+        ...data,
+        game_id: game[index]._id,
+      });
     });
+    setResultEntered(true);
   };
 
   const handleChange = (e) => {

@@ -35,7 +35,7 @@ const gameSchema = new mongoose.Schema({
   id: String,
   gameEnd: {
     type: String,
-    enum: ["reg", "ot", "ei", "so"], //reg=regular,ot=overtime,ei=extra innings,so=shootout
+    enum: ["reg", "ot", "ei", "so", "nc"], //reg=regular,ot=overtime,ei=extra innings,so=shootout
   },
   extraInnings: {
     type: Number,

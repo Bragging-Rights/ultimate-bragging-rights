@@ -106,6 +106,7 @@ exports.picking2Score3Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  //only for football & basketball
   let points = 0;
   let closeScores = pickedScores.filter(
     (score, index) => Math.abs(score - actualScores[index]) <= 3
@@ -125,6 +126,7 @@ exports.picking1Score7Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  //only for football & basketball
   let points = 0;
   if (Math.abs(pickedScore - actualScore) <= 7) {
     points = pickedWinner
@@ -141,6 +143,7 @@ exports.picking2Score7Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  //only for football & basketball
   let points = 0;
   let closeScores = pickedScores.filter(
     (score, index) => Math.abs(score - actualScores[index]) <= 7

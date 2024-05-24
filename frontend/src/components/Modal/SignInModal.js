@@ -87,6 +87,7 @@ export const SignInModal = (props) => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+    console.log(formData);
     mutate(formData);
   };
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);

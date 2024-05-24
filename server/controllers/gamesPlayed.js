@@ -1,5 +1,5 @@
 const GamesPlayed = require("../models/gamesPlayed");
-const { calculatePoints } = require("../calculations/calculations");
+// const { calculatePoints } = require("../calculations/calculations");
 const Game = require("../models/games");
 
 // Create a new game played record
@@ -123,6 +123,33 @@ exports.deleteGamePlayedById = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error deleting game played record.",
+      error: err.message,
+    });
+  }
+};
+
+// Get a game played record by gameData
+exports.getGamePlayedByGameData = async (req, res) => {
+  try {
+    const gamePlayed = await GamesPlayed.findOne({
+      gameData: req.params.gameData,
+    });
+    if (!gamePlayed) {
+      return res.status(404).json({
+        success: false,
+        message: "Game played record not found.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Game played record retrieved successfully.",
+      data: gamePlayed,
+    });
+  } catch (err) {
+    console.error("Error retrieving game played record:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error retrieving game played record.",
       error: err.message,
     });
   }

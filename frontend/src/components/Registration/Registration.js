@@ -262,7 +262,8 @@ const Registration = (props) => {
       ...rest,
       leagues: [...userLeagues],
     };
-
+    console.log("mutation is called");
+    console.log(data);
     mutate(data);
   };
 
@@ -858,12 +859,12 @@ const Registration = (props) => {
             {index + 1 === 4 && (
               <>
                 <button
-                  className={`submit action-button ${
-                    !captchaState && "cursor-not-allowed"
-                  }`}
+                  className={`submit action-button 
+                  // ${!captchaState && "cursor-not-allowed"}      
+                              `}
                   onClick={handleRegistration}
                   type="button"
-                  disabled={!captchaState}
+                  // disabled={!captchaState}
                 >
                   Create Account {isLoading && <Loader />}
                 </button>

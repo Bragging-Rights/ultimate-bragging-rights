@@ -1,8 +1,12 @@
 const Game = require("../models/games");
 const mongoose = require("mongoose");
 const { responseObject } = require("../utils/responseObject");
-const { calculatePoints } = require("../calculations/point");
-const { formatPoints } = require("../calculations/pointsFormatter");
+const { calculatePoints } = require("../calculations/gamePoints/point");
+const { formatPoints } = require("../calculations/gamePoints/pointsFormatter");
+
+const {
+  calculateUserPoints,
+} = require("../calculations/userPoints/calculateUserPoints");
 
 // Create a new game
 const createGame = async (req, res) => {
@@ -151,9 +155,22 @@ const getGamesByDate = async (req, res) => {
 
 // Update specific fields of a game
 const updateGameFields = async (req, res) => {
+  console.log(req.body);
+  console.log(
+    req.body.vScore,
+    req.body.hScore,
+    req.body.selectedOption,
+    req.body.reason
+  );
   try {
-    const { vFinalScore, hFinalScore, gameEnd, suspended, suspendedReason } =
-      req.body;
+    const vFinalScore = req.body.vScore;
+    const hFinalScore = req.body.hScore;
+    const gameEnd = req.body.selectedOption;
+    if (gameEnd === "nc") {
+      const suspended = true;
+      const suspendedReason = req.body.reason;
+    }
+
     const game = await Game.findById(req.params.id);
     if (!game) {
       return res.status(404).json({ message: "Game not found" });
@@ -161,9 +178,13 @@ const updateGameFields = async (req, res) => {
     if (vFinalScore !== undefined) game.vFinalScore = vFinalScore;
     if (hFinalScore !== undefined) game.hFinalScore = hFinalScore;
     if (gameEnd !== undefined) game.gameEnd = gameEnd;
-    if (suspended !== undefined) game.suspended = suspended;
-    if (suspendedReason !== undefined) game.suspendedReason = suspendedReason;
+    if (gameEnd === "nc") {
+      if (suspended !== undefined) game.suspended = suspended;
+      if (suspendedReason !== undefined) game.suspendedReason = suspendedReason;
+    }
+
     await game.save();
+    calculateUserPoints(req.body);
     res.json(game);
   } catch (error) {
     res.status(400).json({ message: error.message });

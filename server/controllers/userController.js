@@ -3,12 +3,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config/keys");
 const { responseObject } = require("../utils/responseObject");
-const stripe= require("stripe")(process.env.STRIPE_SECRET);
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.signUpController = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, username, referralCode } = req.body;
+    const { firstName, lastName, email, password, username, referralCode } =
+      req.body;
 
     // Check if the email is unique
     const existingUser = await User.findOne({ email });
@@ -19,11 +19,14 @@ exports.signUpController = async (req, res) => {
       });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword, // Save the hashed password
       username,
     });
 
@@ -122,39 +125,32 @@ exports.createCheckout = async (req, res) => {
   const { subscriptions } = req.body;
 
   try {
-
     const lineItems = subscriptions.map((subscription) => {
       return {
-        price: subscription.priceId, 
+        price: subscription.priceId,
         quantity: subscription.quantity || 1,
       };
     });
 
     // Create a Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       line_items: lineItems,
-      mode: 'subscription',
-      success_url: 'https://ultimate-bragging-rights.vercel.app/success', 
-      cancel_url: 'https://ultimate-bragging-rights.vercel.app/cancel', 
+      mode: "subscription",
+      success_url: "https://ultimate-bragging-rights.vercel.app/success",
+      cancel_url: "https://ultimate-bragging-rights.vercel.app/cancel",
     });
 
     // session ID
     res.status(200).json({ sessionId: session.id });
   } catch (error) {
-    console.error('Error creating Checkout session:', error);
-    res.status(500).json({ error: 'Failed to create Checkout session' });
+    console.error("Error creating Checkout session:", error);
+    res.status(500).json({ error: "Failed to create Checkout session" });
   }
 };
 
-
-
-
 exports.signInController = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
-
-  console.log(email, password);
 
   try {
     const foundUser = await User.findOne({ email });
@@ -166,7 +162,7 @@ exports.signInController = async (req, res) => {
     }
 
     const checkPassword = await bcrypt.compare(password, foundUser.password);
-    console.log(checkPassword);
+    console.log("checked password", checkPassword);
     if (!checkPassword) {
       return res
         .status(201)
@@ -223,102 +219,98 @@ exports.verifyOTP = async (req, res) => {
   }
 };
 
+// gender: data.gender, //
+// city: data.city, //
+// state: data.province, //
+// country: data.country, //
+// zipCode: data.postalCode,
+// phone: data.phoneNumber,
+// league: data.leagues[0]?.league || null,
+// username: data.leagues[0]?.username || null,
+// team: data.leagues[0]?.team || null,
+// league1: data.leagues[1]?.league || null,
+// username1: data.leagues[1]?.username || null,
+// team1: data.leagues[1]?.team || null,
+// league2: data.leagues[2]?.league || null,
+// username2: data.leagues[2]?.username || null,
+// team2: data.leagues[2]?.team || null,
+// league3: data.leagues[3]?.league || null,
+// username3: data.leagues[3]?.username || null,
+// team3: data.leagues[3]?.team || null,
+// referralName: data.referralName,
 
-  // gender: data.gender, //
-    // city: data.city, //
-    // state: data.province, //
-    // country: data.country, //
-    // zipCode: data.postalCode,
-    // phone: data.phoneNumber,
-    // league: data.leagues[0]?.league || null,
-    // username: data.leagues[0]?.username || null,
-    // team: data.leagues[0]?.team || null,
-    // league1: data.leagues[1]?.league || null,
-    // username1: data.leagues[1]?.username || null,
-    // team1: data.leagues[1]?.team || null,
-    // league2: data.leagues[2]?.league || null,
-    // username2: data.leagues[2]?.username || null,
-    // team2: data.leagues[2]?.team || null,
-    // league3: data.leagues[3]?.league || null,
-    // username3: data.leagues[3]?.username || null,
-    // team3: data.leagues[3]?.team || null,
-    // referralName: data.referralName,
+// Check if the username is unique for each league
+// const leagues = [
+//   data.leagues[0]?.league || null,
+//   data.leagues[1]?.league || null,
+//   data.leagues[2]?.league || null,
+//   data.leagues[3]?.league || null,
+// ];
+// const usernames = [
+//   data.leagues[0]?.team || null,
+//   data.leagues[1]?.team || null,
+//   data.leagues[2]?.team || null,
+//   data.leagues[3]?.team || null,
+// ];
 
+// for (let i = 0; i < leagues.length; i++) {
+//   if (
+//     usernames != null &&
+//     usernames[i] != null &&
+//     leagues != null &&
+//     leagues[i] != null
+//   ) {
+//     try {
+//       const existingUser = await User.findOne({
+//         username: usernames[i],
+//         league: leagues[i],
+//       });
+//       if (existingUser) {
+//         return res
+//           .status(409)
+//           .json(
+//             responseObject(
+//               {},
+//               `Username ${usernames[i]} already exists in league ${leagues[i]}. Please try another one`,
+//               false
+//             )
+//           );
+//       }
+//     } catch (error) {
+//       console.error("Error finding user:", error);
+//       return res
+//         .status(500)
+//         .json(responseObject({}, "Error registering user.", true));
+//     }
+//   }
+// }
 
+// const userId = savedUser._id;
 
-    // Check if the username is unique for each league
-  // const leagues = [
-  //   data.leagues[0]?.league || null,
-  //   data.leagues[1]?.league || null,
-  //   data.leagues[2]?.league || null,
-  //   data.leagues[3]?.league || null,
-  // ];
-  // const usernames = [
-  //   data.leagues[0]?.team || null,
-  //   data.leagues[1]?.team || null,
-  //   data.leagues[2]?.team || null,
-  //   data.leagues[3]?.team || null,
-  // ];
+// const foundUser = await User.findById(userId);
+// if (foundUser) {
+//   const user = foundUser.toObject();
+//   delete user.password;
 
-  // for (let i = 0; i < leagues.length; i++) {
-  //   if (
-  //     usernames != null &&
-  //     usernames[i] != null &&
-  //     leagues != null &&
-  //     leagues[i] != null
-  //   ) {
-  //     try {
-  //       const existingUser = await User.findOne({
-  //         username: usernames[i],
-  //         league: leagues[i],
-  //       });
-  //       if (existingUser) {
-  //         return res
-  //           .status(409)
-  //           .json(
-  //             responseObject(
-  //               {},
-  //               `Username ${usernames[i]} already exists in league ${leagues[i]}. Please try another one`,
-  //               false
-  //             )
-  //           );
-  //       }
-  //     } catch (error) {
-  //       console.error("Error finding user:", error);
-  //       return res
-  //         .status(500)
-  //         .json(responseObject({}, "Error registering user.", true));
-  //     }
-  //   }
-  // }
+//   delete user.otp;
+//   delete user.isVerified;
+//   res
+//     .status(200)
+//     .json(responseObject(user, "User registered successfully.", false));
 
+//   sendEmail(
+//     email,
+//     "OTP",
+//     `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
+//   );
+// } else {
+//   console.log("User not found after insertion.");
+// }
+// const salt = await bcrypt.genSalt(10);
+// const hash = await bcrypt.hash(user.password, salt);
 
-   // const userId = savedUser._id;
-
-    // const foundUser = await User.findById(userId);
-    // if (foundUser) {
-    //   const user = foundUser.toObject();
-    //   delete user.password;
-
-    //   delete user.otp;
-    //   delete user.isVerified;
-    //   res
-    //     .status(200)
-    //     .json(responseObject(user, "User registered successfully.", false));
-
-    //   sendEmail(
-    //     email,
-    //     "OTP",
-    //     `<div><p>Your OTP is: <b>${otp}</b></p><p style = "margin-top: 100px">Bragging Rights</p></div>`
-    //   );
-    // } else {
-    //   console.log("User not found after insertion.");
-    // }
-        // const salt = await bcrypt.genSalt(10);
-    // const hash = await bcrypt.hash(user.password, salt);
-
-    //otp
-    // const otp = generateOTP();
-    // user.otp = otp;
-    // user.isVerified = false;
-    // user.password = hash;
+//otp
+// const otp = generateOTP();
+// user.otp = otp;
+// user.isVerified = false;
+// user.password = hash;

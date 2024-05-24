@@ -1,3 +1,4 @@
+// This file will contain the functions that will be used to calculate the points for the user based on the accuracy of their picks
 const {
   picking1Score,
   picking1Score2Points,
@@ -7,18 +8,14 @@ const {
   picking1Score7Points,
   picking2Score7Points,
 } = require("./accuracyPoints");
-
 const {
   pickRegulation,
   pickOvertime,
   pickExtraInnings,
   pickShootout,
 } = require("./gameEndingPoints");
-
 const perfectScore = require("./perfectScore");
-
 const { oneTeamShutout, twoTeamShutout } = require("./shutoutPoints");
-
 const {
   pickingFavorite,
   pickingUnderdog,
@@ -26,17 +23,22 @@ const {
   pickingOver,
   pickingUnder,
 } = require("./vegasOdds");
+//imports for the functions that we are going to use in the calculateResultPoints function
 
-exports.calculatePoints = (
+// Assuming that all the functions called in the code are defined somewhere else in your codebase and they return a number
+
+exports.calculateResultPoints = (
   sport,
   moneyline,
   visitorSpreadOdds,
   homeSpreadOdds,
   visitorOverUnderOdds,
-  HomeOverUnderOdds
+  HomeOverUnderOdds,
+  pickedScore,
+  actualScore,
+  pickedWinner,
+  moneylineTotalPoints
 ) => {
-  // create skeleton for calculating points
-
   const ap = accuracyPoints(
     sport,
     pickedScore,
@@ -44,22 +46,28 @@ exports.calculatePoints = (
     pickedWinner,
     moneylineTotalPoints
   );
-  
+
   const ep = endingsPoints(sport);
 
+  const ps = perfectScore(sport);
+  const vp = vegasOdds(
+    sport,
+    moneyline,
+    visitorSpreadOdds,
+    homeSpreadOdds,
+    visitorOverUnderOdds,
+    HomeOverUnderOdds
+  );
 
-  // const ps = perfectScore(sport);
-  // const vp = vegasOdds(
-  //   sport,
-  //   moneyline,
-  //   visitorSpreadOdds,
-  //   homeSpreadOdds,
-  //   visitorOverUnderOdds,
-  //   HomeOverUnderOdds
-  // );
-  
-  const sp = shoutoutPoints(sport);
-  return vp + ep + ap + sp;
+  const sp = shutoutPoints(sport);
+  // return vp + ep + ap + sp + ps;
+  return {
+    vegasOdds: vp,
+    endingsPoints: ep,
+    accuracyPoints: ap,
+    shutoutPoints: sp,
+    perfectScore: ps,
+  };
 };
 
 const accuracyPoints = (
@@ -91,8 +99,8 @@ const accuracyPoints = (
       pickedWinner,
       moneylineTotalPoints
     );
-    return p1s2p + p2s2p;
-  } else if (sport != "baseball" || sport != "hockey") {
+    return p1s + p1s2p + p2s2p;
+  } else if (sport != "baseball" && sport != "hockey") {
     const p1s3p = picking1Score3Points(
       sport,
       pickedScore,
@@ -121,55 +129,40 @@ const accuracyPoints = (
       pickedWinner,
       moneylineTotalPoints
     );
-    return p1s3p + p2s3p + p1s7p + p2s7p;
+    return p1s + p1s3p + p2s3p + p1s7p + p2s7p;
+  } else {
+    return p1s;
   }
 };
 
 const endingsPoints = (sport) => {
   const pr = pickRegulation(sport);
-  if (sport != "baseball") {
-    const po = pickOvertime(sport);
-  } else {
-    const po = 0;
-  }
-  if (sport == "baseball") {
-    const pi = pickExtraInnings(sport);
-  } else {
-    const pi = 0;
-  }
-  if (sport == "hockey") {
-    const ps = pickShootout(sport);
-  } else {
-    const ps = 0;
-  }
+  const po = sport != "baseball" ? pickOvertime(sport) : 0;
+  const pi = sport == "baseball" ? pickExtraInnings(sport) : 0;
+  const ps = sport == "hockey" ? pickShootout(sport) : 0;
   return pr + po + pi + ps;
 };
 
-// const vegasOdds = (
-//   sport,
-//   moneyline,
-//   visitorSpreadOdds,
-//   homeSpreadOdds,
-//   visitorOverUnderOdds,
-//   HomeOverUnderOdds
-// ) => {
-//   const pf = pickingFavorite(sport, moneyline);
-//   const pu = pickingUnderdog(sport);
-//   const ps = pickingSpread(sport);
-//   const po = pickingOver(sport);
-//   return pf + pu + ps + po;
-// };
-
-
+const vegasOdds = (
+  sport,
+  moneyline,
+  visitorSpreadOdds,
+  homeSpreadOdds,
+  visitorOverUnderOdds,
+  HomeOverUnderOdds
+) => {
+  const pf = pickingFavorite(sport, moneyline);
+  const pu = pickingUnderdog(sport, moneyline);
+  const ps = pickingSpread(sport, visitorSpreadOdds, homeSpreadOdds);
+  const po = pickingOver(sport, visitorOverUnderOdds, HomeOverUnderOdds);
+  return pf + pu + ps + po;
+};
 
 const shutoutPoints = (sport) => {
   if (sport == "basketball") {
     const oneTS = oneTeamShutout(sport);
-    if ((sport == "football", season == "reg")) {
-      const twoTS = twoTeamShutout(sport);
-    } else {
-      const twoTS = 0;
-    }
+    const twoTS = sport == "football" ? twoTeamShutout(sport) : 0;
     return oneTS + twoTS;
   }
+  return 0;
 };

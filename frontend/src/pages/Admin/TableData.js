@@ -23,7 +23,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { getGamesByDate } from "../../Apis/games";
+import { getGamesByDate, updateGameFields } from "../../Apis/games";
 import { cloneDeep } from "lodash";
 
 import "./TableData.css";
@@ -143,6 +143,13 @@ const ScoreEntry = () => {
 
     console.log("GameData with Selected Radio Button and Reason:");
     console.log(updatedGameData);
+    updateGameFields(updatedGameData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     // Log the reason for each game
     updatedGameData.forEach((game) => {

@@ -37,12 +37,14 @@ const Routes = () => {
   const [isUserAdmin, setIsuserAdmin] = useState(false);
   useEffect(() => {
     const isAdmin = localStorage.getItem("isAdmin");
-
-    setIsuserAdmin(JSON.parse(isAdmin));
+    try {
+      setIsuserAdmin(JSON.parse(isAdmin));
+    } catch (error) {
+      console.error("Error parsing isAdmin:", error);
+    }
   }, []);
 
   return (
-    
     <Provider store={store}>
       <ToastContainer />
       <QueryClientProvider client={queryClient}>
@@ -83,6 +85,3 @@ const Routes = () => {
   );
 };
 export default Routes;
-
-
-
