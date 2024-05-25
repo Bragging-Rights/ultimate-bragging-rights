@@ -19,11 +19,9 @@
 }
 
 .MuiTabs-root {
-    padding: 10px;
-    border-bottom: 2px solid rgba(190, 130, 0, 1);
-    /* Add a bottom border to the tabs */
+    /* padding: 10px; */
+    /* border-bottom: 2px solid rgba(190, 130, 0, 1); */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    /* Add a box shadow to the tabs */
 }
 
 /* Styles for the active tab */
@@ -60,7 +58,7 @@
     color: white !important;
 }
 
-.league-select{
+.league-select {
     background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -68,11 +66,11 @@
     border: 1px solid #be8200 !important;
     border-radius: 4px !important;
 
- 
+
 
 }
 
-.Tab{
+.Tab {
     background: linear-gradient(185deg, #45423a 15.54%, #202126 114.57%);
     font-weight: 800;
     display: flex;
@@ -83,14 +81,15 @@
     flex-direction: column;
 
 }
-.date-picker{
+
+.date-picker {
     background-color: #212121 !important;
     -webkit-text-fill-color: white;
     border: 1px solid #be8200 !important;
     border-radius: 4px !important;
 }
 
-.Textfield{
+.Textfield {
     background-color: #212121 !important;
     -webkit-text-fill-color: white;
     border: 1px solid #be8200 !important;

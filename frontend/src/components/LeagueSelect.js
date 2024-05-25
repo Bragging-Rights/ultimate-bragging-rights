@@ -1,14 +1,20 @@
 import React, { useState } from "react";
-import { useLeagueContext } from "./LeagueContext"; // Import LeagueContext
+import { useLeagueContext } from "./LeagueContext";
 import {
-  Grid,
+  AppBar,
+  Toolbar,
   Button,
   IconButton,
+  Tabs,
+  Tab,
+  Box,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import { ChevronLeft, ChevronRight } from "@material-ui/icons";
-import arrowImage from "../assets/arrow.png";
+  Grid,
+  Slide,
+} from "@mui/material";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import arrowImage from "../assets/arr.png";
 import logoImage from "../assets/logonav.png";
 
 const totLeagues = [
@@ -23,88 +29,190 @@ const totLeagues = [
   "NCCA",
   "NCAAB",
 ];
+const disabledLeagues = ["WNBA", "CFL", "NCAAF", "UFL", "NCCA", "NCAAB"];
+const glowingLeagues = ["NHL", "NFL", "MLB"];
 
 const LeagueSelect = () => {
-  const disabledLeagues = ["WNBA", "CFL", "NCAAF", "UFL", "NCCA", "NCAAB"];
-
   const { selectedLeague, setSelectedLeague } = useLeagueContext();
-  const buttonsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(0);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState("left");
 
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
   };
+
   const nextPage = () => {
-    if (currentPage < totLeagues.length / buttonsPerPage - 1) {
+    if (currentPage < Math.ceil(totLeagues.length / 5) - 1) {
+      setDirection("left");
       setCurrentPage(currentPage + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 0) {
+      setDirection("right");
       setCurrentPage(currentPage - 1);
     }
   };
-  return (
-    <Grid container direction="row" alignItems="center" spacing={1}>
-      {/* Logo on the left corner */}
-      <Grid item xs={2}>
-        <img
-          src={logoImage}
-          alt="Logo"
-          style={{ width: "100%", height: "auto", marginLeft: "-1300%" }} // Adjust width and height as needed
-        />
-      </Grid>
 
-      <Grid item xs={10} container justify="center" spacing={0} wrap="nowrap">
-        {totLeagues.map((item) => (
-          <Grid item key={item}>
-            <Button
-              variant={item === selectedLeague ? "contained" : "outlined"}
-              color={item === selectedLeague ? "primary" : "default"}
-              onClick={() =>
-                !disabledLeagues.includes(item) && handleLeagueSelect(item)
-              }
-              disabled={disabledLeagues.includes(item)}
-              style={{
-                color: item === selectedLeague ? "red" : "white", // Set text color to red for selected league
-                backgroundColor: item === selectedLeague ? "transparent" : "",
-                padding: 0,
-                width: isSmallScreen ? "10px" : "0px",
-                fontSize: isSmallScreen ? "0.6rem" : "1rem",
-                marginLeft: isSmallScreen ? "-20px" : "0",
-                border: 0,
-                backgroundSize: "cover",
-                position: "relative", // Added for arrow positioning
-                color: disabledLeagues.includes(item)
-                  ? "gray"
-                  : item === selectedLeague
-                  ? "red"
-                  : "white",
-              }}
-            >
-              {item}
-              {item === selectedLeague && ( // Render arrow only for selected league
-                <img
-                  src={arrowImage}
-                  alt="Selected League Arrow"
-                  style={{
-                    position: "absolute",
-                    top: "-15px", // Adjust positioning as needed
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "20px",
-                    height: "20px",
+  const leaguesToShow = totLeagues.slice(currentPage * 5, currentPage * 5 + 5);
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "#1B1C21", height: "6%" }}
+      >
+        <Toolbar>
+          <Grid container alignItems="center" justifyContent="space-between">
+            {/* Logo Grid */}
+            <Grid item xs={2}>
+              <img
+                src={logoImage}
+                alt="Logo"
+                style={{
+                  marginRight: 16,
+                  width: isSmallScreen ? "30px" : "50px",
+                  height: "auto",
+                }}
+              />
+            </Grid>
+
+            {/* League Grid */}
+            <Grid item xs>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ height: "60px" }} // Fixed height
+              >
+                <IconButton sx={{ color: "white" }} onClick={prevPage}>
+                  <ArrowBackIos />
+                </IconButton>
+                <Slide
+                  direction={direction}
+                  in={true}
+                  mountOnEnter
+                  unmountOnExit
+                >
+                  <Tabs
+                    value={false}
+                    aria-label="sports tabs"
+                    textColor="inherit"
+                    TabIndicatorProps={{
+                      style: { backgroundColor: "#FFC107" },
+                    }}
+                    sx={{
+                      margin: "0 20px",
+
+                      "& .MuiTab-root": {
+                        minWidth: "auto",
+                        padding: isSmallScreen ? "0 10px" : "0 20px",
+                        transition: "transform 0.5s ease-in-out",
+                        "&.Mui-selected": {
+                          color: "#FFC107",
+                          fontWeight: "bold",
+                          backgroundColor: "rgba(255, 193, 7, 0.2)",
+                          boxShadow: "0px 0px 12px #FFC107",
+                          transform: "scale(1)",
+                        },
+                      },
+                    }}
+                    variant="scrollable"
+                    scrollButtons={false}
+                  >
+                    {leaguesToShow.map((item) => (
+                      <Tab
+                        key={item}
+                        label={item}
+                        onClick={() => handleLeagueSelect(item)}
+                        disabled={disabledLeagues.includes(item)}
+                        sx={{
+                          filter: selectedLeague.includes(item)
+                            ? "drop-shadow(0px 10px 10px yellow)"
+                            : "inherit",
+
+                          borderBottom: selectedLeague.includes(item)
+                            ? "2px solid yellow"
+                            : "inherit",
+
+                          color: selectedLeague.includes(item)
+                            ? "yellow"
+                            : "white",
+                          position: "relative",
+                          ...(glowingLeagues.includes(item) && {
+                            "&.Mui-selected": {
+                              textShadow: "0 0 8px #ffd700",
+                              backgroundColor: "rgba(255, 215, 0, 0.2)",
+                              borderBottom: "2px solid #ffd700",
+                            },
+                          }),
+                          "&.Mui-selected": item === selectedLeague && {
+                            filter: "drop-shadow(0 0 10px yellow)",
+                          },
+                        }}
+                        icon={
+                          item === selectedLeague && (
+                            <Box
+                              component="img"
+                              src={arrowImage}
+                              alt="Selected League Arrow"
+                              sx={{
+                                position: "absolute",
+                                top: "10px",
+                                left: "35%",
+                                transform: "translateX(-50%)",
+                                width: "30px",
+                                height: "10px",
+                                // filter: "drop-shadow(0 0 5px yellow)",
+                              }}
+                            />
+                          )
+                        }
+                        iconPosition="end"
+                      />
+                    ))}
+                  </Tabs>
+                </Slide>
+                <IconButton sx={{ color: "white" }} onClick={nextPage}>
+                  <ArrowForwardIos />
+                </IconButton>
+              </Box>
+            </Grid>
+
+            {/* Buttons Grid */}
+            <Grid item>
+              <Box display="flex" alignItems="center">
+                {/* <Button
+                  color="inherit"
+                  variant="outlined"
+                  sx={{
+                    borderColor: "#FFC107",
+                    color: "#FFC107",
+                    marginRight: 2,
                   }}
-                />
-              )}
-            </Button>
+                >
+                  Add League
+                </Button> */}
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  sx={{
+                    borderColor: "#FFC107",
+                    color: "#FFC107",
+                    marginRight: 2,
+                  }}
+                >
+                  Register
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
-        ))}
-      </Grid>
-    </Grid>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 

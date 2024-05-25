@@ -6,7 +6,8 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import resultHero from "../assets/bgpic.png";
 import HeroSection from "../components/HeroSection";
 import MainNavBar from "../components/MainNavBar";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, colors } from "@mui/material";
+import LeagueSelect from "../components/LeagueSelect";
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
@@ -22,7 +23,8 @@ const MainLayout = ({ children }) => {
 
   return (
     <>
-      <Navbar />
+      <br />
+      <LeagueSelect />
       <br />
       <HeroSection imgUrl={resultHero} alt="img" />
       <br />
@@ -45,7 +47,12 @@ const MainLayout = ({ children }) => {
               className="marq"
               direction="left"
               loop=""
-              style={{ width: "100%", position: "absolute", left: "0" }}
+              style={{
+                width: "100%",
+                position: "absolute",
+                left: "0",
+                color: "#FEF098",
+              }}
             >
               Results are updated hourly until we find a better solution
             </marquee>
