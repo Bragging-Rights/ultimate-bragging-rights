@@ -30,7 +30,6 @@
 // };
 
 exports.picking1Score = (
-  sport,
   pickedScore,
   actualScore,
   pickedWinner,
@@ -46,7 +45,6 @@ exports.picking1Score = (
 };
 
 exports.picking1Score2Points = (
-  sport,
   pickedScore,
   actualScore,
   pickedWinner,
@@ -63,7 +61,6 @@ exports.picking1Score2Points = (
 };
 
 exports.picking2Score2Points = (
-  sport,
   pickedScores,
   actualScores,
   pickedWinner,
@@ -83,7 +80,6 @@ exports.picking2Score2Points = (
 };
 
 exports.picking1Score3Points = (
-  sport,
   pickedScore,
   actualScore,
   pickedWinner,
@@ -100,7 +96,6 @@ exports.picking1Score3Points = (
 };
 
 exports.picking2Score3Points = (
-  sport,
   pickedScores,
   actualScores,
   pickedWinner,
@@ -120,7 +115,6 @@ exports.picking2Score3Points = (
 };
 
 exports.picking1Score7Points = (
-  sport,
   pickedScore,
   actualScore,
   pickedWinner,
@@ -137,7 +131,6 @@ exports.picking1Score7Points = (
 };
 
 exports.picking2Score7Points = (
-  sport,
   pickedScores,
   actualScores,
   pickedWinner,

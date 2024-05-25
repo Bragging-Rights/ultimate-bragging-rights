@@ -164,7 +164,7 @@ const EnterResults = () => {
     {
       onSuccess: (data) => {
         setGameData(data.data);
-        console.log("Game Data:", data.data);
+        // console.log("Game Data:", data.data);
       },
       onError: (error) => {
         console.error("An error occurred:", error);

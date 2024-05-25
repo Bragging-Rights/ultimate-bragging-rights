@@ -165,7 +165,10 @@ const updateGameFields = async (req, res) => {
   try {
     const vFinalScore = req.body.vScore;
     const hFinalScore = req.body.hScore;
-    const gameEnd = req.body.selectedOption;
+    const gameEnd =
+      typeof req.body.selectedOption === "string"
+        ? req.body.selectedOption.toLowerCase()
+        : req.body.selectedOption;
     if (gameEnd === "nc") {
       const suspended = true;
       const suspendedReason = req.body.reason;

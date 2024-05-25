@@ -1,4 +1,9 @@
-exports.pickRegulation = (sport, userpick, gameEnd, userWinner, gameWinner) => {
+exports.pickRegulation = (userpick, gameEnd, pickedScore, actualScore) => {
+  const userWinner =
+    pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
+  const gameWinner =
+    actualScore.vScore > actualScore.hScore ? "visitor" : "home";
+
   if (userpick === gameEnd) {
     if (userWinner === gameWinner) {
       return 2; // Correct ending and winner
@@ -9,7 +14,11 @@ exports.pickRegulation = (sport, userpick, gameEnd, userWinner, gameWinner) => {
   return 0; // Incorrect ending
 };
 
-exports.pickOvertime = (sport, userpick, gameEnd, userWinner, gameWinner) => {
+exports.pickOvertime = (userpick, gameEnd, pickedScore, actualScore) => {
+  const userWinner =
+    pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
+  const gameWinner =
+    actualScore.vScore > actualScore.hScore ? "visitor" : "home";
   if (userpick === gameEnd) {
     if (userWinner === gameWinner) {
       return 5; // Correct ending and winner
@@ -21,14 +30,17 @@ exports.pickOvertime = (sport, userpick, gameEnd, userWinner, gameWinner) => {
 };
 
 exports.pickExtraInnings = (
-  sport,
   userpick,
   gameEnd,
-  userWinner,
-  gameWinner,
+  pickedScore,
+  actualScore,
   userInnings,
   extraInnings
 ) => {
+  const userWinner =
+    pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
+  const gameWinner =
+    actualScore.vScore > actualScore.hScore ? "visitor" : "home";
   let points = 0;
   if (userpick === gameEnd) {
     points += userWinner === gameWinner ? 5 : 2.5; // Add points for correct ending
@@ -40,14 +52,18 @@ exports.pickExtraInnings = (
 };
 
 exports.pickShootout = (
-  sport,
   userpick,
   gameEnd,
-  userWinner,
-  gameWinner,
+  pickedScore,
+  actualScore,
   userInnings,
   extraInnings
 ) => {
+  const userWinner =
+    pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
+  const gameWinner =
+    actualScore.vScore > actualScore.hScore ? "visitor" : "home";
+
   let points = 0;
   if (userpick === gameEnd) {
     points += userWinner === gameWinner ? 5 : 2.5; // Add points for correct ending

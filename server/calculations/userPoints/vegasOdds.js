@@ -2,69 +2,85 @@
 //1 for ud
 
 exports.pickingFavorite = (
-  sport,
-  v_moneyline_odds,
-  h_moneyline_odds,
+  vml,
+  hml,
   finalscorevisitor,
-  finalscorehome
+  finalscorehome,
+  pick_visitor,
+  pick_home
 ) => {
   let v = 1,
     h = 1; // Initialize as underdogs
 
-  if (v_moneyline_odds < 0) v = 0; // Favorite
-  if (h_moneyline_odds < 0) h = 0; // Favorite
+  if (vml < 0) v = 0; // Favorite
+  if (hml < 0) h = 0; // Favorite
 
-  if (finalscorevisitor > finalscorehome && v === 0) {
+  if (
+    finalscorevisitor > finalscorehome &&
+    v === 0 &&
+    pick_visitor > pick_home
+  ) {
     console.log("Visitor has a greater score");
-    return Math.abs(v_moneyline_odds); // Award points
+    return Math.abs(vml); // Award points
   } else if (finalscorevisitor < finalscorehome && h === 0) {
     console.log("Home has a greater score");
-    return Math.abs(h_moneyline_odds); // Award points
+    return Math.abs(hml); // Award points
   }
 };
 exports.pickingUnderdog = (
-  sport,
-  v_moneyline_odds,
-  h_moneyline_odds,
+  vml,
+  hml,
   finalscorevisitor,
-  finalscorehome
+  finalscorehome,
+  pick_visitor,
+  pick_home
 ) => {
   let v = 0,
     h = 0; // Initialize as favorites
 
-  if (v_moneyline_odds > 0) v = 1; // Underdog
-  if (h_moneyline_odds > 0) h = 1; // Underdog
+  if (vml > 0) v = 1; // Underdog
+  if (hml > 0) h = 1; // Underdog
 
-  if (finalscorevisitor > finalscorehome && v === 1) {
+  if (
+    finalscorevisitor > finalscorehome &&
+    v === 1 &&
+    pick_visitor < pick_home
+  ) {
     console.log("Visitor has a greater score");
-    return Math.abs(v_moneyline_odds); // Award points
+    return Math.abs(vml); // Award points
   } else if (finalscorevisitor < finalscorehome && h === 1) {
     console.log("Home has a greater score");
-    return Math.abs(h_moneyline_odds); // Award points
+    return Math.abs(hml); // Award points
   }
 };
 exports.pickingSpread = (
-  sport,
-  vml_point,
-  hml_point,
-  vagainstspreadpoints,
-  hagainstspreadpoints
+  vSpread,
+  hSpread,
+
+  finalscorevisitor,
+  finalscorehome,
+  pick_visitor,
+  pick_home,
+  vSpreadPoints,
+  hSpreadPoints
 ) => {
   let value;
-  if (vml_point > hml_point) {
+  if (
+    vSpread + finalscorevisitor > hSpread + finalscorehome &&
+    vSpread + pick_visitor > hSpread + pick_home
+  ) {
     //visitor would be the underdog
     //add the abs value of spread to the underdog
-    value = vml_point + Math.abs(vagainstspreadpoints);
+    value = { vSpreadPoints: vSpreadPoints };
   } else {
     //home would be the underdog
     //add the abs value of spread to the underdog
-    value = hml_point + Math.abs(hagainstspreadpoints);
+    value = { hSpreadPoints: hSpreadPoints };
   }
   return value;
 };
 
 exports.pickingOver = (
-  sport,
   finalscorevisitor,
   finalscorehome,
   vPredicted,
@@ -83,7 +99,6 @@ exports.pickingOver = (
 };
 
 exports.pickingUnder = (
-  sport,
   finalscorevisitor,
   finalscorehome,
   vPredicted,

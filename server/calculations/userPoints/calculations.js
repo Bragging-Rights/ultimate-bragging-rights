@@ -37,19 +37,51 @@ exports.calculateResultPoints = (
   pickedScore,
   actualScore,
   pickedWinner,
-  moneylineTotalPoints
+  moneylineTotalPoints,
+  userpick, //the type of ending user picked
+  gameEnd, //actual game ending
+  userInnings,
+  extraInnings,
+  spread,
+  spreadPoints,
+  vOU,
+  vOUpoints,
+  hOU,
+  hOUpoints
 ) => {
-  const ap = accuracyPoints(
+  const vistor_ap = accuracyPoints(
     sport,
-    pickedScore,
-    actualScore,
+    pickedScore.pickVistor,
+    actualScore.vScore,
+    pickedWinner,
+    moneylineTotalPoints
+  );
+  const home_ap = accuracyPoints(
+    sport,
+    pickedScore.pickHome,
+    actualScore.hScore,
     pickedWinner,
     moneylineTotalPoints
   );
 
-  const ep = endingsPoints(sport);
+  // const ap = accuracyPoints(
+  //   sport,
+  //   pickedScore,
+  //   actualScore,
+  //   pickedWinner,
+  //   moneylineTotalPoints
+  // );
 
-  const ps = perfectScore(sport);
+  const ep = endingsPoints(sport, userpick, gameEnd, pickedScore, actualScore);
+  // console.log(pickedScore, actualScore, pickedWinner, moneyline);
+  const ps = perfectScore(
+    actualScore.vSore,
+    actualScore.hScore,
+    pickedScore.pickVistor,
+    pickedScore.pickHome,
+    moneyline.vml,
+    moneyline.hml
+  );
   const vp = vegasOdds(
     sport,
     moneyline,
@@ -59,12 +91,12 @@ exports.calculateResultPoints = (
     HomeOverUnderOdds
   );
 
-  const sp = shutoutPoints(sport);
+  const sp = shutoutPoints(sport, pickedScore, actualScore);
   // return vp + ep + ap + sp + ps;
   return {
     vegasOdds: vp,
     endingsPoints: ep,
-    accuracyPoints: ap,
+    accuracyPoints: { vistor: vistor_ap, home: home_ap },
     shutoutPoints: sp,
     perfectScore: ps,
   };
@@ -129,40 +161,137 @@ const accuracyPoints = (
       pickedWinner,
       moneylineTotalPoints
     );
-    return p1s + p1s3p + p2s3p + p1s7p + p2s7p;
+    return { p1s: p1s, p1s3p: p1s3p, p2s3p: p2s3p, p1s7p: p1s7p, p2s7p: p2s7p };
   } else {
     return p1s;
   }
 };
 
-const endingsPoints = (sport) => {
-  const pr = pickRegulation(sport);
-  const po = sport != "baseball" ? pickOvertime(sport) : 0;
-  const pi = sport == "baseball" ? pickExtraInnings(sport) : 0;
-  const ps = sport == "hockey" ? pickShootout(sport) : 0;
-  return pr + po + pi + ps;
+const endingsPoints = (
+  sport,
+  userpick,
+  gameEnd,
+  pickedScore,
+  actualScore,
+  userInnings,
+  extraInnings
+) => {
+  const pr = pickRegulation(userpick, gameEnd, pickedScore, actualScore);
+  const po =
+    sport != "baseball"
+      ? pickOvertime(userpick, gameEnd, pickedScore, actualScore)
+      : 0;
+  const pi =
+    sport == "baseball"
+      ? pickExtraInnings(
+          userpick,
+          gameEnd,
+          pickedScore,
+          actualScore,
+          userInnings,
+          extraInnings
+        )
+      : 0;
+  const ps =
+    sport == "hockey"
+      ? pickShootout(
+          userpick,
+          gameEnd,
+          pickedScore,
+          actualScore,
+          userInnings,
+          extraInnings
+        )
+      : 0;
+  return {
+    pickRegulation: pr,
+    pickOverTime: po,
+    pickExtraInnings: pi,
+    pickShootout: ps,
+  };
 };
 
 const vegasOdds = (
-  sport,
   moneyline,
-  visitorSpreadOdds,
-  homeSpreadOdds,
-  visitorOverUnderOdds,
-  HomeOverUnderOdds
+  actualScore,
+  pickedScore,
+  spread,
+  spreadPoints,
+  vOU,
+  vOUpoints,
+  hOU,
+  hOUpoints
 ) => {
-  const pf = pickingFavorite(sport, moneyline);
-  const pu = pickingUnderdog(sport, moneyline);
-  const ps = pickingSpread(sport, visitorSpreadOdds, homeSpreadOdds);
-  const po = pickingOver(sport, visitorOverUnderOdds, HomeOverUnderOdds);
-  return pf + pu + ps + po;
+  const pf = pickingFavorite(
+    moneyline.vml,
+    moneyline.hml,
+    actualScore.vScore,
+    actualScore.hScore,
+    pickedScore.pickVistor,
+    pickedScore.pickHome
+  );
+  const pu = pickingUnderdog(
+    moneyline.vml,
+    moneyline.hml,
+    actualScore.vScore,
+    actualScore.hScore,
+    pickedScore.pickVistor,
+    pickedScore.pickHome
+  );
+  const ps = pickingSpread(
+    spread.vSpread,
+    spread.hSpread,
+    actualScore.vScore,
+    actualScore.hScore,
+    pickedScore.pickVistor,
+    pickedScore.pickHome,
+    spreadPoints.vSpreadPoints,
+    spreadPoints.hSpreadPoints
+  );
+  const po = pickingOver(
+    actualScore.vScore,
+    actualScore.hScore,
+    pickedScore.pickVistor,
+    pickedScore.pickHome,
+    vOU,
+    vOUpoints
+  );
+
+  const pUnder = pickingUnder(
+    actualScore.vScore,
+    actualScore.hScore,
+    pickedScore.pickVistor,
+    pickedScore.pickHome,
+    hOU,
+    hOUpoints
+  );
+  return {
+    pickingFavorite: pf,
+    pickingUnderdog: pu,
+    pickingSpread: ps,
+    pickingOver: po,
+    pickingUnder: pUnder,
+  };
 };
 
-const shutoutPoints = (sport) => {
+const shutoutPoints = (sport, pickedScore, actualScore) => {
   if (sport == "basketball") {
-    const oneTS = oneTeamShutout(sport);
-    const twoTS = sport == "football" ? twoTeamShutout(sport) : 0;
-    return oneTS + twoTS;
+    const oneTS = oneTeamShutout(
+      pickedScore.pickVistor,
+      pickedScore.pickHome,
+      actualScore.vScore,
+      actualScore.hScore
+    );
+    const twoTS =
+      sport == "football"
+        ? twoTeamShutout(
+            pickedScore.pickVistor,
+            pickedScore.pickHome,
+            actualScore.vScore,
+            actualScore.hScore
+          )
+        : 0;
+    return { oneTeamShutout: oneTS, twoTeamShutout: twoTS };
   }
   return 0;
 };

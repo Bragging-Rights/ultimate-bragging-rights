@@ -70,4 +70,3 @@ exports.calculatePoints = (v_ml, h_ml, v_sprd, h_sprd, v_ou, h_ou) => {
     hou_point,
   };
 };
-
