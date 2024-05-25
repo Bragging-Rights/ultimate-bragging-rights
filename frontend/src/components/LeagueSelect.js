@@ -66,7 +66,7 @@ const LeagueSelect = () => {
         position="static"
         sx={{
           backgroundColor: "#1B1C21",
-          height: isMobile ? "10%" : "6%",
+          height: isMobile ? "15%" : "10%", // Adjusted height
           marginLeft: isMobile ? "0" : "-13%",
           width: isMobile ? "100%" : "125%",
         }}
@@ -74,7 +74,7 @@ const LeagueSelect = () => {
         <Toolbar>
           <Grid container alignItems="center" justifyContent="space-between">
             {/* Logo Grid */}
-            <Grid item xs={2}>
+            <Grid item xs={1}>
               <img
                 src={logoImage}
                 alt="Logo"

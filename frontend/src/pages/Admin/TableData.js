@@ -18,6 +18,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -28,14 +30,24 @@ import { cloneDeep } from "lodash";
 
 import "./TableData.css";
 
+const reasonsOptions = [
+  "Weather",
+  "Field/Stadium Issues",
+  "Schedule/Travel Issue",
+  "Health/Safety",
+  "Lockout",
+  "Other",
+];
 const ScoreEntry = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedLeague, setSelectedLeague] = useState("");
   const [gameData, setGameData] = useState([]);
   const [selectedValues, setSelectedValues] = useState({});
+  const [dropdownValues, setDropdownValues] = useState({});
   const [reasonPopupOpen, setReasonPopupOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [reasonData, setReasonData] = useState({});
+  const [selectedReason, setSelectedReason] = useState({});
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -50,10 +62,13 @@ const ScoreEntry = () => {
     getGamesByDate(formattedDate)
       .then((response) => {
         const initialSelectedValues = {};
+        const initialDropdownValues = {};
         response.data.forEach((game) => {
           initialSelectedValues[game._id] = "";
+          initialDropdownValues[game._id] = "";
         });
         setSelectedValues(initialSelectedValues);
+        setDropdownValues(initialDropdownValues);
         setGameData(response.data);
       })
       .catch((error) => {
@@ -68,19 +83,26 @@ const ScoreEntry = () => {
     }));
   };
 
-  const isReasonButtonDisabled = (gameId) => !selectedValues[gameId];
+  const handleDropdownChange = (event, gameId) => {
+    setDropdownValues((prevDropdownValues) => ({
+      ...prevDropdownValues,
+      [gameId]: event.target.value,
+    }));
+  };
+
+  const isReasonButtonDisabled = (gameId) =>
+    !selectedValues[gameId] && !dropdownValues[gameId];
 
   const handleReasonButtonClick = (gameId) => {
     setReasonPopupOpen(true);
     setReasonData((prevReasonData) => ({
       ...prevReasonData,
-      [gameId]: "", // Initialize reason data for this game
+      [gameId]: "",
     }));
   };
 
   const handleReasonSubmit = (gameId) => {
     if (reason.trim() !== "") {
-      // Save the reason text to reasonData object with game ID as key
       setReasonData((prevReasonData) => ({
         ...prevReasonData,
         [gameId]: reason,
@@ -88,7 +110,6 @@ const ScoreEntry = () => {
     }
     setReasonPopupOpen(false);
     setReason("");
-    // Show a message indicating data saved
     alert("Data saved");
   };
 
@@ -108,6 +129,7 @@ const ScoreEntry = () => {
   const handleButtonClick = () => {
     const updatedGameData = gameData.map((game) => {
       const selectedOption = selectedValues[game._id];
+      const selectedDropdown = dropdownValues[game._id];
       let optionId;
       switch (selectedOption) {
         case "REG":
@@ -134,7 +156,7 @@ const ScoreEntry = () => {
           table: selectedLeague,
           optionId: optionId,
           selectedOption: selectedOption,
-          reason: reasonData[game._id] || "", // Include reason for this game
+          reason: reasonData[game._id] || "",
         };
       } else {
         return game;
@@ -151,18 +173,15 @@ const ScoreEntry = () => {
         console.log(error);
       });
 
-    // Log the reason for each game
     updatedGameData.forEach((game) => {
       console.log(`Reason for Game ${game._id}:`, game.reason);
     });
   };
 
   const handleReasonCancel = () => {
-    // Handle reason cancellation
     setReasonPopupOpen(false);
     setReason("");
   };
-
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -188,24 +207,25 @@ const ScoreEntry = () => {
           />
           <Tab
             className="league-select"
+            label="WNBA" // WWBA
+            onClick={() => setSelectedLeague("WNBA")}
+          />
+          <Tab
+            className="league-select"
+            label="NCAAB"
+            onClick={() => setSelectedLeague("NCAAB")}
+          />
+          <Tab
+            className="league-select"
             label="NFL"
             onClick={() => setSelectedLeague("NFL")}
-          />
-          <Tab
-            className="league-select"
-            label="MLB"
-            onClick={() => setSelectedLeague("MLB")}
-          />
-          <Tab
-            className="league-select"
-            label="WWBA"
-            onClick={() => setSelectedLeague("WWBA")}
           />
           <Tab
             className="league-select"
             label="CFL"
             onClick={() => setSelectedLeague("CFL")}
           />
+
           <Tab
             className="league-select"
             label="NCAAF"
@@ -216,15 +236,16 @@ const ScoreEntry = () => {
             label="UFL"
             onClick={() => setSelectedLeague("UFL")}
           />
+
           <Tab
             className="league-select"
-            label="NCCA"
-            onClick={() => setSelectedLeague("NCCA")}
+            label="MLB"
+            onClick={() => setSelectedLeague("MLB")}
           />
           <Tab
             className="league-select"
-            label="NCAAB"
-            onClick={() => setSelectedLeague("NCAAB")}
+            label="NCAA" // NCCA
+            onClick={() => setSelectedLeague("NCAA")}
           />
         </Tabs>
 
@@ -237,9 +258,25 @@ const ScoreEntry = () => {
                 <TableCell>V-SCORE</TableCell>
                 <TableCell>H-SCORE</TableCell>
                 <TableCell>REG</TableCell>
-                <TableCell>OT</TableCell>
-                <TableCell>S/O</TableCell>
-                <TableCell>EI</TableCell>
+                <TableCell>
+                  {selectedLeague === "MLB" || selectedLeague === "NCAA"
+                    ? "EI"
+                    : "OT"}
+                </TableCell>
+
+                {selectedLeague !== "NBA" &&
+                  selectedLeague !== "WNBA" &&
+                  selectedLeague !== "NCAAB" &&
+                  selectedLeague !== "CFL" &&
+                  selectedLeague !== "NCAAF" &&
+                  selectedLeague !== "MLB" &&
+                  selectedLeague !== "NCAA" &&
+                  selectedLeague !== "UFL" &&
+                  selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
+                {selectedLeague !== "NFL" &&
+                  selectedLeague !== "CFL" &&
+                  selectedLeague !== "NCAAF" &&
+                  selectedLeague !== "UFL" && <TableCell>#</TableCell>}
                 <TableCell>Not Completed</TableCell>
                 <TableCell>Reason</TableCell>
               </TableRow>
@@ -307,16 +344,47 @@ const ScoreEntry = () => {
                     </RadioGroup>
                   </TableCell>
                   <TableCell>
-                    <RadioGroup
-                      value={selectedValues[game._id]}
-                      onChange={(event) => handleRadioChange(event, game._id)}
+                    <Select
+                      value={dropdownValues[game._id]}
+                      onChange={(event) =>
+                        handleDropdownChange(event, game._id)
+                      }
+                      sx={{
+                        backgroundColor: "white",
+                        color: "black",
+                        marginLeft: "-30%",
+                      }}
+                      displayEmpty
+                      size="small"
+                      disabled={
+                        selectedValues[game._id] !== "OT" &&
+                        selectedValues[game._id] !== "S/O"
+                      }
                     >
-                      <FormControlLabel
-                        value="EI"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
+                      <MenuItem value="">
+                        <em>0</em>
+                      </MenuItem>
+                      <MenuItem value="Option1">1</MenuItem>
+                      <MenuItem value="Option2">2</MenuItem>
+                      <MenuItem value="Option3">3</MenuItem>
+                      <MenuItem value="Option4">4</MenuItem>
+                      <MenuItem value="Option5">5</MenuItem>
+                      <MenuItem value="Option6">6</MenuItem>
+                      <MenuItem value="Option7">7</MenuItem>
+                      <MenuItem value="Option8">8</MenuItem>
+                      <MenuItem value="Option9">9</MenuItem>
+                      <MenuItem value="Option10">10</MenuItem>
+                      <MenuItem value="Option11">11</MenuItem>
+                      <MenuItem value="Option12">12</MenuItem>
+                      <MenuItem value="Option13">13</MenuItem>
+                      <MenuItem value="Option14">14</MenuItem>
+                      <MenuItem value="Option15">15</MenuItem>
+                      <MenuItem value="Option16">16</MenuItem>
+                      <MenuItem value="Option17">17</MenuItem>
+                      <MenuItem value="Option18">18</MenuItem>
+                      <MenuItem value="Option19">19</MenuItem>
+                      <MenuItem value="Option20">20</MenuItem>
+                    </Select>
                   </TableCell>
                   <TableCell>
                     <RadioGroup
@@ -334,7 +402,7 @@ const ScoreEntry = () => {
                   <TableCell>
                     <Button
                       variant="contained"
-                      disabled={isReasonButtonDisabled(game._id)}
+                      disabled={selectedValues[game._id] !== "Suspended"} // Enable button when "Suspended" is selected
                       onClick={() => handleReasonButtonClick(game._id)}
                     >
                       ADD REASON
@@ -350,11 +418,33 @@ const ScoreEntry = () => {
                         <DialogTitle>Enter Reason</DialogTitle>
                         <br />
                         <DialogContent>
+                          {/* Dropdown menu for selecting reason */}
+                          <TextField
+                            select
+                            fullWidth
+                            value={selectedReason[game._id] || ""}
+                            onChange={(e) =>
+                              setSelectedReason((prevSelectedReason) => ({
+                                ...prevSelectedReason,
+                                [game._id]: e.target.value,
+                              }))
+                            }
+                            label="Reason"
+                            variant="outlined"
+                          >
+                            {reasonsOptions.map((reason) => (
+                              <MenuItem key={reason} value={reason}>
+                                {reason}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                          <br /> <br />
+                          {/* Text field for entering reason */}
                           <TextField
                             multiline
                             rows={8}
                             fullWidth
-                            value={reasonData[game._id] || ""} // Use specific reason for this game
+                            value={reasonData[game._id] || ""}
                             onChange={(e) =>
                               setReasonData((prevReasonData) => ({
                                 ...prevReasonData,
@@ -364,13 +454,17 @@ const ScoreEntry = () => {
                             variant="outlined"
                             label="Reason"
                             sx={{ width: "100%", resize: "both" }}
+                            disabled={!selectedReason[game._id]} // Disable text field when no reason is selected
                           />
                         </DialogContent>
                         <DialogActions>
                           <Button onClick={handleReasonCancel} color="primary">
                             Cancel
                           </Button>
-                          <Button onClick={handleReasonSubmit} color="primary">
+                          <Button
+                            onClick={() => handleReasonSubmit(game._id)}
+                            color="primary"
+                          >
                             Submit
                           </Button>
                         </DialogActions>
