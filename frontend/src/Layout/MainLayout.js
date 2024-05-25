@@ -23,7 +23,6 @@ const MainLayout = ({ children }) => {
 
   return (
     <>
-      <br />
       <LeagueSelect />
       <br />
       <HeroSection imgUrl={resultHero} alt="img" />

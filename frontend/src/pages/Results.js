@@ -156,11 +156,12 @@ const Results = () => {
           <Line />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <img src={img1} alt="img1" className=" w-full" />
+          <img src={img1} alt="img1" className="img-same-size" />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <img src={img2} alt="img2" className=" w-full" />
+          <img src={img2} alt="img2" className="img-same-size" />
         </Grid>
+
         {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
         <Grid item xs={12} display="flex" justifyContent="center">
           <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />

@@ -38,6 +38,7 @@ const LeagueSelect = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState("left");
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
@@ -63,7 +64,12 @@ const LeagueSelect = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "#1B1C21", height: "6%" }}
+        sx={{
+          backgroundColor: "#1B1C21",
+          height: isMobile ? "10%" : "6%",
+          marginLeft: isMobile ? "0" : "-13%",
+          width: isMobile ? "100%" : "125%",
+        }}
       >
         <Toolbar>
           <Grid container alignItems="center" justifyContent="space-between">

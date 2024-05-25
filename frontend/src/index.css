@@ -595,3 +595,9 @@ thead:hover {
     min-height: 4px;
   }
 }
+
+.img-same-size {
+  width: 100%;
+  height: 300px; /* Adjust the height as needed */
+  object-fit: cover; /* Ensures the images cover the specified height and width */
+}
