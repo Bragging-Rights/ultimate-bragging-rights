@@ -61,17 +61,15 @@ exports.picking1Score2Points = (
 };
 
 exports.picking2Score2Points = (
-  pickedScores,
-  actualScores,
+  pickedScore,
+  actualScore,
   pickedWinner,
   moneylineTotalPoints
 ) => {
   //only for baseball
   let points = 0;
-  let closeScores = pickedScores.filter(
-    (score, index) => Math.abs(score - actualScores[index]) <= 2
-  );
-  if (closeScores.length === 2) {
+  let closeScore = Math.abs(pickedScore - actualScore) <= 2;
+  if (closeScore) {
     points = pickedWinner
       ? moneylineTotalPoints * 0.4
       : moneylineTotalPoints * 0.2;
@@ -96,17 +94,18 @@ exports.picking1Score3Points = (
 };
 
 exports.picking2Score3Points = (
-  pickedScores,
-  actualScores,
+  pickedScore1,
+  actualScore1,
+  pickedScore2,
+  actualScore2,
   pickedWinner,
   moneylineTotalPoints
 ) => {
   //only for football & basketball
   let points = 0;
-  let closeScores = pickedScores.filter(
-    (score, index) => Math.abs(score - actualScores[index]) <= 3
-  );
-  if (closeScores.length === 2) {
+  let closeScore1 = Math.abs(pickedScore1 - actualScore1) <= 3;
+  let closeScore2 = Math.abs(pickedScore2 - actualScore2) <= 3;
+  if (closeScore1 && closeScore2) {
     points = pickedWinner
       ? moneylineTotalPoints * 0.7
       : moneylineTotalPoints * 0.4;
@@ -131,17 +130,18 @@ exports.picking1Score7Points = (
 };
 
 exports.picking2Score7Points = (
-  pickedScores,
-  actualScores,
+  pickedScore1,
+  actualScore1,
+  pickedScore2,
+  actualScore2,
   pickedWinner,
   moneylineTotalPoints
 ) => {
   //only for football & basketball
   let points = 0;
-  let closeScores = pickedScores.filter(
-    (score, index) => Math.abs(score - actualScores[index]) <= 7
-  );
-  if (closeScores.length === 2) {
+  let closeScore1 = Math.abs(pickedScore1 - actualScore1) <= 7;
+  let closeScore2 = Math.abs(pickedScore2 - actualScore2) <= 7;
+  if (closeScore1 && closeScore2) {
     points = pickedWinner
       ? moneylineTotalPoints * 0.4
       : moneylineTotalPoints * 0.2;
