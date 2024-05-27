@@ -30,7 +30,7 @@ const Results = () => {
   // const formattedDate = date.toLocaleDateString("en-US", options);
 
   return (
-    <Container>
+    <>
       <Grid container spacing={2} justifyContent="space-between">
         {/* <GamesPageSelect
           options={[
@@ -176,7 +176,7 @@ const Results = () => {
           )}
         </Grid>
       </Grid>
-    </Container>
+    </>
   );
 };
 

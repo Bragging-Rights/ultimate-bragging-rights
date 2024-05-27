@@ -8,13 +8,14 @@ import {
   ListItem,
   ListItemText,
   Drawer,
-  Box, // Import Box for layout control
+  Box,
 } from "@mui/material";
 import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 import GreenTopBanner from "../assets/GreenTopBanner.png";
-import LeftImage from "../assets/pngwing.com.png"; // Import your left image
-import RightImage from "../assets/pngwing.com.png"; // Import your right image
-import navbg from "../assets/navbg.png"; // Import your right image
+
+// import LeftImage from "../assets/pngwing.com.png"; // Import your left image
+// import RightImage from "../assets/pngwing.com.png"; // Import your right image
+// import navbg from "../assets/navbg.png"; // Import your right image
 
 const navItem = [
   { label: "Games", path: "/games" },
@@ -28,16 +29,15 @@ const navItem = [
   // { label: "FB Challenge", path: "/fb-challenges" },
   // { label: "Records", path: "/records" },
 ];
-
 const MainNavBar = () => {
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isUserAdmin, setIsuserAdmin] = useState(false);
+  const [isUserAdmin, setIsUserAdmin] = useState(false);
 
   useEffect(() => {
     const isAdmin = localStorage.getItem("isAdmin");
     try {
-      setIsuserAdmin(JSON.parse(isAdmin));
+      setIsUserAdmin(JSON.parse(isAdmin));
     } catch (error) {
       console.error("Error parsing isAdmin:", error);
     }
@@ -60,12 +60,15 @@ const MainNavBar = () => {
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: "space-between", // Adjust layout to space items evenly
-            alignItems: "center", // Align items vertically
+            justifyContent: "space-between",
+            alignItems: "center",
+            backgroundColor: "#1B1C21",
+            padding: "2%",
           }}
         >
           <Box sx={{ width: "60vh" }}>
-            <img src={LeftImage} alt="Left Image" /> {/* Display left image */}
+            {" "}
+            {/* <img src={LeftImage} alt="Left Image" /> */}
           </Box>
           <IconButton
             edge="start"
@@ -81,11 +84,13 @@ const MainNavBar = () => {
             aria-labelledby="main navigation"
             sx={{
               display: { xs: "none", md: "flex" },
-              borderColor: "gray",
-              borderWidth: "1px",
-              borderStyle: "solid",
+              // borderColor: "gray",
+              // borderWidth: "1px",
+              // borderStyle: "solid",
+              backgroundColor: "black",
+              borderRadius: "4vh",
               width: "150vh",
-              backgroundImage: `url(${navbg})`,
+              // backgroundImage: `url(${navbg})`,
             }}
           >
             {navItem.map((item, index) => {
@@ -100,8 +105,16 @@ const MainNavBar = () => {
                   to={item.path}
                   selected={location.pathname === item.path}
                   sx={{
+                    transition:
+                      "transform 0.3s ease, background-color 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                      backgroundColor: "#333333", // Unique hover effect
+                    },
                     "&.Mui-selected": {
                       color: "#FF0000 !important",
+                      transform: "scale(1.05)", // Slightly smaller zoom for selected
+                      backgroundColor: "transparent !important", // Override unwanted background
                     },
                   }}
                 >
@@ -111,8 +124,8 @@ const MainNavBar = () => {
             })}
           </List>
           <Box sx={{ width: "60vh" }}>
-            <img src={RightImage} alt="Right Image" />{" "}
-            {/* Display right image */}
+            {" "}
+            {/* <img src={RightImage} alt="Right Image" />{" "} */}
           </Box>
         </Toolbar>
       </AppBar>
@@ -137,8 +150,15 @@ const MainNavBar = () => {
                 onClick={toggleNav}
                 selected={location.pathname === item.path}
                 sx={{
+                  transition: "transform 0.3s ease, background-color 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                    backgroundColor: "#333333", // Unique hover effect
+                  },
                   "&.Mui-selected": {
-                    color: "white ",
+                    color: "white",
+                    transform: "scale(1.05)", // Slightly smaller zoom for selected
+                    backgroundColor: "transparent !important", // Override unwanted background
                   },
                 }}
               >

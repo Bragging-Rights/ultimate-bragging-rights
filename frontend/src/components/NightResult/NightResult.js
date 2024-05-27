@@ -230,7 +230,7 @@ const NightResult = () => {
   return (
     <div className="table-container">
       <div className="night-result-container">
-        <div className="animation-controls">
+        {/* <div className="animation-controls">
           <label htmlFor="animation-toggle" className="pause-label">
             Pause Animation :
           </label>
@@ -246,7 +246,7 @@ const NightResult = () => {
           <button onClick={handleSkipAnimation}>Skip Animation</button>
         </div>
         <br />
-        <br />
+        <br /> */}
 
         <table style={{ width: "100%" }}>
           <thead style={{ fontSize: "0.8rem" }}>

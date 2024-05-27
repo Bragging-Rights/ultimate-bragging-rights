@@ -28,15 +28,20 @@ const MainLayout = ({ children }) => {
       <HeroSection imgUrl={resultHero} alt="img" />
       <br />
       <MainNavBar />
-      <br />
       {location.pathname !== "/admin" && (
         <Box
-          sx={{ border: "2px solid red", height: "50px", overflow: "hidden" }}
+          sx={{
+            border: "2px solid red",
+            height: "50px",
+            overflow: "hidden",
+            backgroundColor: "#1B1C21",
+          }}
         >
           <Typography
             sx={{
               fontSize: "2rem",
-              color: "white",
+
+              // color: "white",
               whiteSpace: "nowrap",
               position: "relative",
               animation: "marquee 20s linear infinite",

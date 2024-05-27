@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, List, ListItem } from "@mui/material";
-import navbg from "../assets/navbg.png"; // Import your right image
 
 const ResultTabs = ({ changeTab, CurrentTab }) => {
   const tabs = [
@@ -8,19 +7,19 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
     { label: "NIGHTLY LEADERBOARD", options: ["MINE2", "FRIENDS", "TEAM"] },
   ];
 
-  const [selectedTab, setSelectedTab] = useState(CurrentTab || 0); // Use CurrentTab if provided, otherwise default to 0
+  const [selectedTab, setSelectedTab] = useState(CurrentTab || 0);
   const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth < 600); // Adjust the threshold according to your design
+      setIsMobileView(window.innerWidth < 600);
     };
 
-    handleResize(); // Call it initially
-    window.addEventListener("resize", handleResize); // Add event listener for resize
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize); // Clean up on unmount
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -35,12 +34,12 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
         sx={{
           display: "flex",
           justifyContent: "space-around",
-          borderColor: "gray",
-          borderWidth: "1px",
-          borderStyle: "solid",
           width: isMobileView ? "50vh" : "100vh",
-          height:isMobileView ? "10vh" : "10vh",
-          backgroundImage: `url(${navbg})`,
+          height: isMobileView ? "10vh" : "10vh",
+          backgroundColor: "black",
+          borderRadius: "5vh",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         {tabs.map((tab, index) => (
@@ -52,22 +51,39 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
               textAlign: "center",
               padding: "8px",
               borderRadius: "3px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease",
+              transition: "transform 0.3s ease, background-color 0.3s ease",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: isMobileView && selectedTab === index ? "rgba(255, 0, 0, 0.1)" : "transparent", // Change the background color if it's mobile view and selected
+              backgroundColor:
+                selectedTab === index ? "transparent" : "transparent",
+              transform: selectedTab === index ? "scale(1.1)" : "scale(1)",
+              position: "relative",
             }}
           >
             <Typography
               variant="body1"
               sx={{
                 color: selectedTab === index ? "#FF0000" : "white",
+                fontWeight: selectedTab === index ? "bold" : "normal",
+                transition: "color 0.3s ease",
               }}
             >
               {tab.label}
             </Typography>
+            {selectedTab === index && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "2px",
+                  background: "#FF0000",
+                  transition: "width 0.3s ease",
+                }}
+              />
+            )}
           </ListItem>
         ))}
       </List>
