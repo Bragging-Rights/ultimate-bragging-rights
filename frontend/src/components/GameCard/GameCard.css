@@ -4,8 +4,14 @@
   background: #212121;
   padding: 24px;
   margin-bottom: 20px;
-  /* Add margin to separate cards */
-  font-family: Inter;
+  font-family: Inter, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .game-time,
@@ -94,56 +100,58 @@
   color: #000;
 }
 
-/* Media queries for different screen sizes */
-
-/* For screens smaller than 768px wide (e.g., smartphones) */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .game-card {
-    padding: 16px;
+    padding: 20px;
   }
 
-  .game-card {
-    width: 100%;
-    /* Ensure cards take up full width */
-    margin-right: 0;
-    /* Remove right margin to prevent horizontal overflow */
+  .game-time,
+  .game-date,
+  .box,
+  .card-input,
+  .line,
+  .card-id,
+  .card-label,
+  .card-btn-outline,
+  .card-btn {
+    font-size: 13px;
   }
-}
 
-.game-card span {
-  height: 40px !important;
-  margin-bottom: 0.4rem;
-}
+  .box {
+    padding: 8px;
+  }
 
-.flex-col {
-  flex-direction: column;
-}
+  .card-input {
+    width: 48px;
+    height: 38px;
+  }
 
+  .line {
+    height: 6px;
+  }
 
-.px-7 {
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-}
+  .flex {
+    display: block;
+  }
 
-.h-12 {
-  height: 3.7rem;
-  width:auto;
-  font-size: 14px;
- 
-}
+  .flex-col {
+    flex-direction: column;
+  }
 
-.box label {
-  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  .px-7 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .h-12 {
+    height: 3.5rem;
+  }
 }
 
 @media (max-width: 768px) {
   .game-card {
     padding: 16px;
     gap: 10px;
-    /* Add row gap for smaller screens */
   }
 
   .game-time,
@@ -156,27 +164,21 @@
   .card-btn-outline,
   .card-btn {
     font-size: 12px;
-    /* Adjust font size for smaller screens */
   }
 
   .box {
     padding: 8px;
-    /* Adjust padding for smaller screens */
   }
 
   .card-input {
     width: 100%;
-    /* Make the input full width on mobile */
     height: 36px;
-    /* Adjust height for smaller screens */
   }
 
   .line {
     height: 4px;
-    /* Adjust height for smaller screens */
   }
 
-  /* Additional adjustments for mobile views */
   .flex {
     display: block;
   }
@@ -195,7 +197,74 @@
   }
 }
 
+@media (max-width: 480px) {
+  .game-card {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .game-time,
+  .game-date,
+  .box,
+  .card-input,
+  .line,
+  .card-id,
+  .card-label,
+  .card-btn-outline,
+  .card-btn {
+    font-size: 11px;
+  }
+
+  .box {
+    padding: 6px;
+  }
+
+  .card-input {
+    height: 32px;
+  }
+
+  .line {
+    height: 3px;
+  }
+
+  .px-7 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .h-12 {
+    height: 2.75rem;
+  }
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+.h-12 {
+  height: 3.7rem;
+  width: auto;
+  font-size: 14px;
+}
+
+.box label {
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-card span {
+  height: 40px !important;
+  margin-bottom: 0.4rem;
+}
+
 .upside-down {
   transform: rotate(270deg);
-  writing-mode: vertical-rl; /* This ensures the text is oriented correctly */
+  writing-mode: vertical-rl;
 }

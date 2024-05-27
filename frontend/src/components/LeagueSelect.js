@@ -137,15 +137,15 @@ const LeagueSelect = () => {
                         disabled={disabledLeagues.includes(item)}
                         sx={{
                           filter: selectedLeague.includes(item)
-                            ? "drop-shadow(0px 10px 10px yellow)"
+                            ? "drop-shadow(0px 20px 10px #ff0000)"
                             : "inherit",
 
                           borderBottom: selectedLeague.includes(item)
-                            ? "2px solid yellow"
+                            ? "2px solid #ff0000"
                             : "inherit",
 
                           color: selectedLeague.includes(item)
-                            ? "yellow"
+                            ? "#ff0000"
                             : "white",
                           position: "relative",
                           ...(glowingLeagues.includes(item) && {

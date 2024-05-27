@@ -1,6 +1,4 @@
 .search-bar-container {
-
-
   button,
   a,
   li {
@@ -20,7 +18,6 @@
     top: 0;
     position: sticky;
     width: 100%;
-    /* background-color: #353535; */
     min-height: 100px;
     padding: 15px 2vw;
     height: auto;
@@ -41,29 +38,19 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* Ensure buttons wrap to the next line */
   }
 
   .menu-nav button {
     padding: 7px 10px;
     height: 40px;
-    width: 114px;
+    max-width: 114px; /* Prevent buttons from being too wide */
     border: none;
     border-radius: 3px;
     display: flex;
     justify-content: center;
     gap: 6px;
     align-items: center;
-  }
-
-  @media (max-width: 920px) {
-
-    .menu-nav-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
   }
 
   .menu-nav button a {
@@ -73,7 +60,6 @@
     max-width: 100%;
     display: inline-block;
     text-transform: uppercase;
-    /* Changed from 'capitalize' */
   }
 
   .menu-nav button:hover {
@@ -102,16 +88,17 @@
   .nav-button-submenu {
     display: none;
     flex-direction: column;
-    background-color: white;
+    background-color: white; /* Set background color for visibility */
     position: absolute;
     top: 100%;
-    width: 100%;
+    width: auto; /* Adjust width for better visibility */
+    min-width: 100px; /* Ensure minimum width */
     max-height: 300px;
     padding: 10px 0;
     border-radius: 3px;
     overflow: hidden;
     overflow-y: auto;
-    z-index: 999;
+    z-index: 9999; /* High z-index to ensure it appears above other elements */
   }
 
   .nav-button-container button:hover .nav-button-submenu {
@@ -135,18 +122,10 @@
     display: block;
   }
 
-  /* .nav-button-submenu li.hide {
-    display: none;
-  } */
-
   button.greyed-out img,
   button.clicked img {
     display: none;
   }
-
-  /* --------------BUTTON COLORS-------------- */
-  /* Give every button a default background color, 
-because some browsers don't support linear gradients */
 
   button.unset {
     background-color: #ffc233;
@@ -192,7 +171,6 @@ because some browsers don't support linear gradients */
   }
 
   @media (max-width: 920px) {
-
     button,
     a,
     li {
@@ -202,7 +180,7 @@ because some browsers don't support linear gradients */
     .menu-nav button {
       padding: 2px 10px;
       height: 35px;
-      width: 130px;
+      max-width: 130px; /* Adjusted for smaller screens */
     }
 
     .nav-button-submenu li {

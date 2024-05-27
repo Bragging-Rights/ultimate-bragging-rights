@@ -139,7 +139,7 @@ const Games = () => {
         container
         item
         spacing={2}
-        justifyContent="center"
+        justifyContent="flex-start"
         sx={{
           width: isMobile ? "80%" : "110%",
           marginLeft: isMobile ? "20px" : "-60px",
@@ -161,10 +161,11 @@ const Games = () => {
           </Typography>
         )}
       </Grid>
+
       <Grid item>
         <Line />
       </Grid>
-      <Grid container item spacing={2} justifyContent="center">
+      <Grid container item spacing={2} justifyContent="flex-start">
         <Grid item xs={12} md={6}>
           <img src={img1} alt="img1" className="w-full" />
         </Grid>
@@ -175,7 +176,18 @@ const Games = () => {
       {/* <Grid item>
         <Banner date={nextFormattedDate} label="Tomorrow's Games" />
       </Grid> */}
-      <Grid container item spacing={2} justifyContent="center">
+      <Grid
+        className="game-grid"
+        container
+        item
+        spacing={2}
+        justifyContent="flex-start"
+        sx={{
+          width: isMobile ? "80%" : "110%",
+          marginLeft: isMobile ? "20px" : "-60px",
+        }}
+      >
+        {" "}
         {tomorrowGameData ? (
           tomorrowGameData.length > 0 ? (
             tomorrowGameData.map((game, index) => (
