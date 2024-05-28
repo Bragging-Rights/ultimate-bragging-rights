@@ -31,20 +31,21 @@ const MainLayout = ({ children }) => {
       {location.pathname !== "/admin" && (
         <Box
           sx={{
-            border: "2px solid red",
-            height: "50px",
+            border: "2px solid black",
+            height: "30px",
             overflow: "hidden",
-            backgroundColor: "#1B1C21",
+
+            backgroundColor: "#A3A4A6",
           }}
         >
           <Typography
             sx={{
-              fontSize: "2rem",
+              fontSize: "1.2rem",
 
               // color: "white",
               whiteSpace: "nowrap",
               position: "relative",
-              animation: "marquee 20s linear infinite",
+              animation: "marquee 10s linear infinite",
             }}
           >
             <marquee
@@ -55,7 +56,7 @@ const MainLayout = ({ children }) => {
                 width: "100%",
                 position: "absolute",
                 left: "0",
-                color: "#FEF098",
+                color: "#000",
               }}
             >
               Results are updated hourly until we find a better solution

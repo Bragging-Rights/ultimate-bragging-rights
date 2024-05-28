@@ -109,12 +109,22 @@ const MainNavBar = () => {
                       "transform 0.3s ease, background-color 0.3s ease",
                     "&:hover": {
                       transform: "scale(1.1)",
-                      backgroundColor: "#333333", // Unique hover effect
+                      // backgroundColor: "#333333", // Unique hover effect
                     },
                     "&.Mui-selected": {
                       color: "#FF0000 !important",
                       transform: "scale(1.05)", // Slightly smaller zoom for selected
                       backgroundColor: "transparent !important", // Override unwanted background
+                      position: "relative",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        marginleft: "3%",
+                        marginTop: "20%",
+                        width: "50%",
+                        height: "2px",
+                        backgroundColor: "#FF0000", // Color of the line
+                      },
                     },
                   }}
                 >
@@ -123,6 +133,7 @@ const MainNavBar = () => {
               );
             })}
           </List>
+
           <Box sx={{ width: "60vh" }}>
             {" "}
             {/* <img src={RightImage} alt="Right Image" />{" "} */}
