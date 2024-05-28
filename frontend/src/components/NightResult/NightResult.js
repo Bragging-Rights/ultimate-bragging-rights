@@ -7,7 +7,9 @@ const headerOptions = {
   NHL: [
     //REGULAR SEASON
     "CO",
-    "CITY PROV/STATE",
+    "CITY",
+    "PROV",
+    "STATE",
     "REP",
     "PLAYER",
     "R",
@@ -29,8 +31,9 @@ const headerOptions = {
     "CT",
     //PLAYOFFS
     // "CO",
-    // "CITY PROV/STATE",
-    // "REP",
+    // "CITY",
+    // "PROV",
+    // "STATE",    // "REP",
     // "PLAYER",
     // "R",
     // "NPT",
@@ -51,7 +54,7 @@ const headerOptions = {
   ],
   NBA: [
     "CO",
-    "CITY PROV/STATE",
+    "CITY",
     "REP",
     "PLAYER",
     "R",
@@ -76,7 +79,7 @@ const headerOptions = {
   ],
   MLB: [
     "CO",
-    "CITY PROV/STATE",
+    "PROV",
     "REP",
     "PLAYER",
     "R",
@@ -99,7 +102,7 @@ const headerOptions = {
   ],
   NFL: [
     "CO",
-    "CITY PROV/STATE",
+    "STATE",
     "REP",
     "PLAYER",
     "R",

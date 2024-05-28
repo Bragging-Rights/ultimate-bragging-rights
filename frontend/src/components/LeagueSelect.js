@@ -16,6 +16,7 @@ import {
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import arrowImage from "../assets/arr.png";
 import logoImage from "../assets/logonav.png";
+import { useNavigate } from "react-router-dom";
 
 const totLeagues = [
   "NHL",
@@ -39,6 +40,7 @@ const LeagueSelect = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState("left");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
@@ -59,6 +61,13 @@ const LeagueSelect = () => {
   };
 
   const leaguesToShow = totLeagues.slice(currentPage * 5, currentPage * 5 + 5);
+
+  const userEmail = localStorage.getItem("email");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -121,7 +130,7 @@ const LeagueSelect = () => {
                           color: "#FFC107",
                           fontWeight: "bold",
                           backgroundColor: "rgba(255, 193, 7, 0.2)",
-                          boxShadow: "0px 0px 12px #FFC107",
+                          boxShadow: "0px 0px 12px #fff",
                           transform: "scale(1)",
                         },
                       },
@@ -137,7 +146,7 @@ const LeagueSelect = () => {
                         disabled={disabledLeagues.includes(item)}
                         sx={{
                           filter: selectedLeague.includes(item)
-                            ? "drop-shadow(0px 20px 10px #ff0000)"
+                            ? "drop-shadow(0px 20px 10px #fff)"
                             : "inherit",
 
                           borderBottom: selectedLeague.includes(item)
@@ -156,7 +165,7 @@ const LeagueSelect = () => {
                             },
                           }),
                           "&.Mui-selected": item === selectedLeague && {
-                            filter: "drop-shadow(0 0 10px yellow)",
+                            filter: "drop-shadow(0 0 10px #fff)",
                           },
                         }}
                         icon={
@@ -191,28 +200,20 @@ const LeagueSelect = () => {
             {/* Buttons Grid */}
             <Grid item>
               <Box display="flex" alignItems="center">
-                {/* <Button
-                  color="inherit"
-                  variant="outlined"
-                  sx={{
-                    borderColor: "#FFC107",
-                    color: "#FFC107",
-                    marginRight: 2,
-                  }}
-                >
-                  Add League
-                </Button> */}
-                <Button
-                  color="inherit"
-                  variant="outlined"
-                  sx={{
-                    borderColor: "#FFC107",
-                    color: "#FFC107",
-                    marginRight: 2,
-                  }}
-                >
-                  Register
-                </Button>
+                {userEmail ? (
+                  <Button
+                    color="inherit"
+                    variant="outlined"
+                    onClick={handleLogout}
+                    sx={{
+                      borderColor: "#FFC107",
+                      color: "#FFC107",
+                      marginRight: 2,
+                    }}
+                  >
+                    Logout
+                  </Button>
+                ) : null}
               </Box>
             </Grid>
           </Grid>

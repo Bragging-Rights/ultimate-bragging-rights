@@ -56,7 +56,7 @@ const MainLayout = ({ children }) => {
                 width: "100%",
                 position: "absolute",
                 left: "0",
-                color: "#000",
+                color: "#fff",
               }}
             >
               Results are updated hourly until we find a better solution
