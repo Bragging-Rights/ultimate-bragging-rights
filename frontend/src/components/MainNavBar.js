@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 import GreenTopBanner from "../assets/GreenTopBanner.png";
-
 // import LeftImage from "../assets/pngwing.com.png"; // Import your left image
 // import RightImage from "../assets/pngwing.com.png"; // Import your right image
 // import navbg from "../assets/navbg.png"; // Import your right image
@@ -29,6 +28,7 @@ const navItem = [
   // { label: "FB Challenge", path: "/fb-challenges" },
   // { label: "Records", path: "/records" },
 ];
+
 const MainNavBar = () => {
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -90,7 +90,6 @@ const MainNavBar = () => {
               backgroundColor: "black",
               borderRadius: "4vh",
               width: "150vh",
-              // backgroundImage: `url(${navbg})`,
             }}
           >
             {navItem.map((item, index) => {
@@ -113,8 +112,8 @@ const MainNavBar = () => {
                     },
                     "&.Mui-selected": {
                       color: "#FF0000 !important",
-                      transform: "scale(1.05)", // Slightly smaller zoom for selected
-                      backgroundColor: "transparent !important", // Override unwanted background
+                      transform: "scale(1.05)",
+                      backgroundColor: "transparent !important",
                       position: "relative",
                       "&::after": {
                         content: '""',
@@ -123,7 +122,7 @@ const MainNavBar = () => {
                         marginTop: "20%",
                         width: "50%",
                         height: "2px",
-                        backgroundColor: "#FF0000", // Color of the line
+                        backgroundColor: "#FF0000",
                       },
                     },
                   }}
@@ -133,14 +132,12 @@ const MainNavBar = () => {
               );
             })}
           </List>
-
           <Box sx={{ width: "60vh" }}>
             {" "}
             {/* <img src={RightImage} alt="Right Image" />{" "} */}
-          </Box>
+          </Box>{" "}
         </Toolbar>
       </AppBar>
-
       <Drawer
         anchor="left"
         open={isNavOpen}
@@ -164,12 +161,12 @@ const MainNavBar = () => {
                   transition: "transform 0.3s ease, background-color 0.3s ease",
                   "&:hover": {
                     transform: "scale(1.1)",
-                    backgroundColor: "#333333", // Unique hover effect
+                    backgroundColor: "#333333",
                   },
                   "&.Mui-selected": {
                     color: "white",
-                    transform: "scale(1.05)", // Slightly smaller zoom for selected
-                    backgroundColor: "transparent !important", // Override unwanted background
+                    transform: "scale(1.05)",
+                    backgroundColor: "transparent !important",
                   },
                 }}
               >

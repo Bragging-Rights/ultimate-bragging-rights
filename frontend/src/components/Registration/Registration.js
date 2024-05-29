@@ -123,6 +123,8 @@ const Registration = (props) => {
     password: "",
     confirmPassword: "",
     referralName: "",
+    username: "",
+
     termsAccepted: false,
   });
   const [countryCode, setCountryCode] = useState("");
@@ -226,8 +228,8 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
+      // "username", // Add username to required fields
     ];
-
     // leagues
 
     const invalidFields = requiredFields.filter((field) => !formData[field]);
@@ -241,7 +243,7 @@ const Registration = (props) => {
 
     if (!validateLeagues(userLeagues)) {
       displayToast(
-        `Please fill in all required fields in the leages,`,
+        `Please fill in all required fields in the leagues.`,
         "error"
       );
       return;
@@ -266,7 +268,6 @@ const Registration = (props) => {
     console.log(data);
     mutate(data);
   };
-
   const nextStep = () => {
     if (validateStep()) {
       setCurrentStep(currentStep + 1);
