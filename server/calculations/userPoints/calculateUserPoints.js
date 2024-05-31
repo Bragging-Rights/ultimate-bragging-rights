@@ -1,5 +1,5 @@
 const { calculateResultPoints } = require("./calculations");
-const { getGamePlayedByGameData } = require("../../controllers/gamesPlayed");
+const { allotUserPoints } = require("./userPointsAllocator");
 const GamesPlayed = require("../../models/gamesPlayed");
 exports.calculateUserPoints = async (data) => {
   console.log("in calculateUserPoints");
@@ -85,17 +85,5 @@ exports.calculateUserPoints = async (data) => {
     );
   });
   console.log("resultPoints", resultPoints);
-  //   const resultPoints = calculateResultPoints(
-  //     sport,
-  //     moneyline,
-  //     data.v - sprd - odds,
-  //     data.h - sprd - odds,
-  //     data.v - ou - odds,
-  //     data.h - ou - odds,
-  //     pickedScore,
-  //     actualScore,
-  //     pickedWinner,
-  //     moneylineTotalPoints
-  //   );
-  // return resultPoints;
+  allotUserPoints(resultPoints);
 };

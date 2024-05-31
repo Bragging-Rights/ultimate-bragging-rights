@@ -11,21 +11,21 @@ exports.pickingFavorite = (
 ) => {
   let v = 1,
     h = 1; // Initialize as underdogs
-
   if (vml < 0) v = 0; // Favorite
   if (hml < 0) h = 0; // Favorite
-
+  let value;
   if (
     finalscorevisitor > finalscorehome &&
     v === 0 &&
     pick_visitor > pick_home
   ) {
     console.log("Visitor has a greater score");
-    return Math.abs(vml); // Award points
+    value = Math.abs(vml); // Award points
   } else if (finalscorevisitor < finalscorehome && h === 0) {
     console.log("Home has a greater score");
-    return Math.abs(hml); // Award points
+    value = Math.abs(hml); // Award points
   }
+  return value;
 };
 exports.pickingUnderdog = (
   vml,
@@ -37,7 +37,7 @@ exports.pickingUnderdog = (
 ) => {
   let v = 0,
     h = 0; // Initialize as favorites
-
+  let value;
   if (vml > 0) v = 1; // Underdog
   if (hml > 0) h = 1; // Underdog
 
@@ -47,11 +47,12 @@ exports.pickingUnderdog = (
     pick_visitor < pick_home
   ) {
     console.log("Visitor has a greater score");
-    return Math.abs(vml); // Award points
+    value = Math.abs(vml); // Award points
   } else if (finalscorevisitor < finalscorehome && h === 1) {
     console.log("Home has a greater score");
-    return Math.abs(hml); // Award points
+    value = Math.abs(hml); // Award points
   }
+  return value;
 };
 exports.pickingSpread = (
   vSpread,
@@ -90,12 +91,13 @@ exports.pickingOver = (
 ) => {
   let actual_ou_total = finalscorevisitor + finalscorehome;
   let predicted_ou_total = vPredicted + hPredicted;
-
+  let value;
   if (actual_ou_total > v_ou) {
     if (predicted_ou_total > v_ou) {
-      return v_ou_points;
+      value = v_ou_points;
     }
   }
+  return value;
 };
 
 exports.pickingUnder = (
@@ -108,10 +110,11 @@ exports.pickingUnder = (
 ) => {
   let actual_ou_total = finalscorevisitor + finalscorehome;
   let predicted_ou_total = vPredicted + hPredicted;
-
+  let value;
   if (actual_ou_total < h_ou) {
     if (predicted_ou_total < h_ou) {
       return h_ou_points;
     }
   }
+  return value;
 };

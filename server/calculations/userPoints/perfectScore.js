@@ -10,7 +10,9 @@ exports.perfectScore = (
   v_ml_points,
   h_ml_points
 ) => {
+  let points = 0;
   if (v_score === predicted_v_score && h_score === predicted_h_score) {
-    return v_ml_points + h_ml_points;
+    points = v_ml_points + h_ml_points;
   }
+  return points;
 };

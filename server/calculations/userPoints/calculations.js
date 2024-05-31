@@ -14,7 +14,7 @@ const {
   pickExtraInnings,
   pickShootout,
 } = require("./gameEndingPoints");
-const perfectScore = require("./perfectScore");
+const { perfectScore } = require("./perfectScore");
 const { oneTeamShutout, twoTeamShutout } = require("./shutoutPoints");
 const {
   pickingFavorite,
@@ -110,7 +110,6 @@ const accuracyPoints = (
   moneylineTotalPoints
 ) => {
   const p1s = picking1Score(
-    sport,
     pickedScore,
     actualScore,
     pickedWinner,
@@ -118,44 +117,38 @@ const accuracyPoints = (
   );
   if (sport == "baseball") {
     const p1s2p = picking1Score2Points(
-      sport,
       pickedScore,
       actualScore,
       pickedWinner,
       moneylineTotalPoints
     );
     const p2s2p = picking2Score2Points(
-      sport,
       pickedScore,
       actualScore,
       pickedWinner,
       moneylineTotalPoints
     );
-    return p1s + p1s2p + p2s2p;
+    return { p1s: p1s, p1s2p: p1s2p, p2s2p: p2s2p };
   } else if (sport != "baseball" && sport != "hockey") {
     const p1s3p = picking1Score3Points(
-      sport,
       pickedScore,
       actualScore,
       pickedWinner,
       moneylineTotalPoints
     );
     const p2s3p = picking2Score3Points(
-      sport,
       pickedScore,
       actualScore,
       pickedWinner,
       moneylineTotalPoints
     );
     const p1s7p = picking1Score7Points(
-      sport,
       pickedScore,
       actualScore,
       pickedWinner,
       moneylineTotalPoints
     );
     const p2s7p = picking2Score7Points(
-      sport,
       pickedScore,
       actualScore,
       pickedWinner,
