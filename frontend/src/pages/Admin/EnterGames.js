@@ -103,41 +103,57 @@ const GameForm = () => {
           return date.toLocaleTimeString("en-US", options);
         })(),
         visitorTeam: odd.away_team,
-        vML: Number.isInteger(odd.bookmakers[0].markets[0].outcomes[1].price)
-          ? odd.bookmakers[0].markets[0].outcomes[1].price / 100
-          : odd.bookmakers[0].markets[0].outcomes[1].price,
-        vSprd: odd.bookmakers[0].markets[1].outcomes[1].point,
-        vSprdOdds: Number.isInteger(
-          odd.bookmakers[0].markets[1].outcomes[1].price
-        )
-          ? odd.bookmakers[0].markets[1].outcomes[1].price / 100
-          : odd.bookmakers[0].markets[1].outcomes[1].price,
-        vOU: Number.isInteger(odd.bookmakers[0].markets[2].outcomes[1].point)
-          ? odd.bookmakers[0].markets[2].outcomes[1].point + 0.5
-          : odd.bookmakers[0].markets[2].outcomes[1].point,
-        vOUOdds: Number.isInteger(
-          odd.bookmakers[0].markets[2].outcomes[1].price
-        )
-          ? odd.bookmakers[0].markets[2].outcomes[1].price / 100
-          : odd.bookmakers[0].markets[2].outcomes[1].price,
+        vML: odd.bookmakers[0]?.markets[0]?.outcomes?.[1]
+          ? Number.isInteger(
+              odd.bookmakers[0]?.markets[0]?.outcomes?.[1]?.price
+            )
+            ? odd.bookmakers[0]?.markets[0]?.outcomes?.[1]?.price / 100
+            : odd.bookmakers[0]?.markets[0]?.outcomes?.[1]?.price
+          : undefined,
+        vSprd: odd.bookmakers[0]?.markets[1]?.outcomes?.[1]?.point,
+        vSprdOdds: odd.bookmakers[0]?.markets[1]?.outcomes?.[1]
+          ? Number.isInteger(
+              odd.bookmakers[0]?.markets[1]?.outcomes?.[1]?.price
+            )
+            ? odd.bookmakers[0]?.markets[1]?.outcomes?.[1]?.price / 100
+            : odd.bookmakers[0]?.markets[1]?.outcomes?.[1]?.price
+          : undefined,
+        vOU: odd.bookmakers[0]?.markets[2]?.outcomes?.[1]
+          ? Number.isInteger(
+              odd.bookmakers[0]?.markets[2]?.outcomes?.[1]?.point
+            )
+            ? odd.bookmakers[0]?.markets[2]?.outcomes?.[1]?.point + 0.5
+            : odd.bookmakers[0]?.markets[2]?.outcomes?.[1]?.point
+          : undefined,
+        vOUOdds: odd.bookmakers[0]?.markets[2]?.outcomes?.[1]
+          ? Number.isInteger(
+              odd.bookmakers[0]?.markets[2]?.outcomes?.[1]?.price
+            )
+            ? odd.bookmakers[0]?.markets[2]?.outcomes?.[1]?.price / 100
+            : odd.bookmakers[0]?.markets[2]?.outcomes?.[1]?.price
+          : undefined,
         homeTeam: odd.home_team,
-        hML: Number.isInteger(odd.bookmakers[0].markets[0].outcomes[0].price)
-          ? odd.bookmakers[0].markets[0].outcomes[0].price / 100
-          : odd.bookmakers[0].markets[0].outcomes[0].price,
-        hSprd: odd.bookmakers[0].markets[1].outcomes[0].point,
+        hML: Number.isInteger(
+          odd.bookmakers[0]?.markets[0]?.outcomes?.[0]?.price
+        )
+          ? odd.bookmakers[0]?.markets[0]?.outcomes?.[0]?.price / 100
+          : odd.bookmakers[0]?.markets[0]?.outcomes?.[0]?.price,
+        hSprd: odd.bookmakers[0]?.markets[1]?.outcomes?.[0]?.point,
         hSprdOdds: Number.isInteger(
-          odd.bookmakers[0].markets[1].outcomes[0].price
+          odd.bookmakers[0]?.markets[1]?.outcomes?.[0]?.price
         )
-          ? odd.bookmakers[0].markets[1].outcomes[0].price / 100
-          : odd.bookmakers[0].markets[1].outcomes[0].price,
-        hOU: Number.isInteger(odd.bookmakers[0].markets[2].outcomes[0].point)
-          ? odd.bookmakers[0].markets[2].outcomes[0].point + 0.5
-          : odd.bookmakers[0].markets[2].outcomes[0].point,
+          ? odd.bookmakers[0]?.markets[1]?.outcomes?.[0]?.price / 100
+          : odd.bookmakers[0]?.markets[1]?.outcomes?.[0]?.price,
+        hOU: Number.isInteger(
+          odd.bookmakers[0]?.markets[2]?.outcomes?.[0]?.point
+        )
+          ? odd.bookmakers[0]?.markets[2]?.outcomes?.[0]?.point + 0.5
+          : odd.bookmakers[0]?.markets[2]?.outcomes?.[0]?.point,
         hOUOdds: Number.isInteger(
-          odd.bookmakers[0].markets[2].outcomes[0].price
+          odd.bookmakers[0]?.markets[2]?.outcomes?.[0]?.price
         )
-          ? odd.bookmakers[0].markets[2].outcomes[0].price / 100
-          : odd.bookmakers[0].markets[2].outcomes[0].price,
+          ? odd.bookmakers[0]?.markets[2]?.outcomes?.[0]?.price / 100
+          : odd.bookmakers[0]?.markets[2]?.outcomes?.[0]?.price,
         sport: formData.sport,
       };
     });
