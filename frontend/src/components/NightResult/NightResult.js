@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "../LeagueContext";
 import "./NightResult.css";
 const { data, headers, headerOption } = require("./dump");
-
 const headerOptions = {
   NHL: [
     //REGULAR SEASON
