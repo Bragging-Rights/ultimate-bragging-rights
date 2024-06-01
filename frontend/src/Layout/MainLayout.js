@@ -30,13 +30,7 @@ const MainLayout = ({ children }) => {
       <MainNavBar />
       {location.pathname !== "/admin" && (
         <Box
-          sx={{
-            border: "2px solid black",
-            height: "30px",
-            overflow: "hidden",
-
-            backgroundColor: "#A3A4A6",
-          }}
+          sx={{ border: "2px solid red", height: "50px", overflow: "hidden", borderRadius: "25px", }}
         >
           <Typography
             sx={{
