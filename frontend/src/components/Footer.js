@@ -26,16 +26,17 @@ const Footer = () => {
           <img
             src={logo}
             alt="logo"
-            width={isMobileView ? 48 : 72}
-            height={isMobileView ? 35 : 55}
+            width={isMobileView ? 40 : 60}
+            height={isMobileView ? 30 : 45}
           />
         </Grid>
+
         <Grid item xs={12} sm="auto" sx={{ textAlign: "center" }}>
           <Typography
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "0.29rem" : "12px",
+              fontSize: isMobileView ? "0.25rem" : "10px",
               opacity: "0.5",
               marginTop: "10px",
             }}
@@ -47,7 +48,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "0.30rem" : "12px",
+              fontSize: isMobileView ? "0.25rem" : "10px",
               opacity: "0.5",
             }}
           >
@@ -57,7 +58,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "0.30rem" : "12px",
+              fontSize: isMobileView ? "0.25rem" : "10px",
               opacity: "0.5",
             }}
           >
@@ -67,7 +68,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "0.30rem" : "12px",
+              fontSize: isMobileView ? "0.25rem" : "10px",
               opacity: "0.5",
               marginTop: "20px",
             }}
@@ -79,7 +80,7 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "0.30rem" : "12px",
+              fontSize: isMobileView ? "0.25rem" : "10px",
               opacity: "0.5",
             }}
           >
@@ -88,13 +89,13 @@ const Footer = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
-          width: "50%",
+          width: "70%",
           gap: "10px",
           marginX: "auto",
-          justifyContent: "center",
+          justifyContent: "space-between", // Change this line
           marginTop: "10px",
           color: "#FFFFFF",
           "@media screen and (max-width: 1050px)": {
@@ -104,7 +105,7 @@ const Footer = () => {
             textDecoration: "none",
             color: "#FFFFFF",
             transition: "color 0.3s",
-            fontSize: isMobileView ? "0.30rem" : "14px", // Adjusted font size for links
+            fontSize: isMobileView ? "0.30rem" : "12px",
             "&:hover": {
               textDecoration: "underline",
               color: "#FFD700",
@@ -113,18 +114,45 @@ const Footer = () => {
         }}
       >
         <Typography>
-          <Link to={"/privacy-policy"}>Privacy Policy</Link>
+          <Link to={"/privacy-policy"}>Campaigns</Link>
         </Typography>
         <Typography>
-          <Link to={"/terms-of-service"}>Terms of Service</Link>
+          <Link to={"/terms-of-service"}>Email Marketing</Link>
         </Typography>
         <Typography>
-          <Link to={"/cookie-policy"}>Cookies Policy</Link>
+          <Link to={"/cookie-policy"}>Branding</Link>
         </Typography>
         <Typography>
-          <Link to={"/acceptable-use-policy"}>Acceptable Policy</Link>
+          <Link to={"/acceptable-use-policy"}>Offline</Link>
         </Typography>
-      </Box>
+        <Typography>
+          <Link to={"/acceptable-use-policy"}>Contact</Link>
+        </Typography>
+        <Typography>
+          <Link to={"/acceptable-use-policy"}>FAQs</Link>
+        </Typography>
+      </Box> */}
+
+      {/* <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "30px",
+          marginBottom: "20px",
+          gap: "40px",
+        }}
+      >
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFF" }}>
+          <FaFacebookF size={24} />
+        </a>
+        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFF" }}>
+          <FaTwitter size={24} />
+        </a>
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFF" }}>
+          <FaInstagram size={24} />
+        </a>
+      </Box> */}
     </Container>
   );
 };
