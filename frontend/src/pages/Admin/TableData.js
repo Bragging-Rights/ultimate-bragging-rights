@@ -38,8 +38,9 @@ const reasonsOptions = [
   "Lockout",
   "Other",
 ];
+
 const ScoreEntry = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(null);
   const [selectedLeague, setSelectedLeague] = useState("");
   const [gameData, setGameData] = useState([]);
   const [selectedValues, setSelectedValues] = useState({});
@@ -51,6 +52,10 @@ const ScoreEntry = () => {
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
+  };
+
+  const handleTabClick = (league) => {
+    setSelectedLeague(league);
   };
 
   const handleDateChange = (date) => {
@@ -113,9 +118,9 @@ const ScoreEntry = () => {
     alert("Data saved");
   };
 
-  const filteredGameData = gameData.filter((game) =>
-    selectedLeague ? game.league === selectedLeague : true
-  );
+  const filteredGameData = selectedLeague
+    ? gameData.filter((game) => game.league === selectedLeague)
+    : [];
 
   const handleInputChange = (id, field, value) => {
     const updatedGameData = cloneDeep(gameData);
@@ -182,6 +187,7 @@ const ScoreEntry = () => {
     setReasonPopupOpen(false);
     setReason("");
   };
+
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -198,296 +204,299 @@ const ScoreEntry = () => {
           <Tab
             className="league-select"
             label="NHL"
-            onClick={() => setSelectedLeague("NHL")}
+            onClick={() => handleTabClick("NHL")}
           />
           <Tab
             className="league-select"
             label="NBA"
-            onClick={() => setSelectedLeague("NBA")}
+            onClick={() => handleTabClick("NBA")}
           />
           <Tab
             className="league-select"
-            label="WNBA" // WWBA
-            onClick={() => setSelectedLeague("WNBA")}
+            label="WNBA"
+            onClick={() => handleTabClick("WNBA")}
           />
           <Tab
             className="league-select"
             label="NCAAB"
-            onClick={() => setSelectedLeague("NCAAB")}
+            onClick={() => handleTabClick("NCAAB")}
           />
           <Tab
             className="league-select"
             label="NFL"
-            onClick={() => setSelectedLeague("NFL")}
+            onClick={() => handleTabClick("NFL")}
           />
           <Tab
             className="league-select"
             label="CFL"
-            onClick={() => setSelectedLeague("CFL")}
+            onClick={() => handleTabClick("CFL")}
           />
-
           <Tab
             className="league-select"
             label="NCAAF"
-            onClick={() => setSelectedLeague("NCAAF")}
+            onClick={() => handleTabClick("NCAAF")}
           />
           <Tab
             className="league-select"
             label="UFL"
-            onClick={() => setSelectedLeague("UFL")}
+            onClick={() => handleTabClick("UFL")}
           />
-
           <Tab
             className="league-select"
             label="MLB"
-            onClick={() => setSelectedLeague("MLB")}
+            onClick={() => handleTabClick("MLB")}
           />
           <Tab
             className="league-select"
-            label="NCAA" // NCCA
-            onClick={() => setSelectedLeague("NCAA")}
+            label="NCAA"
+            onClick={() => handleTabClick("NCAA")}
           />
         </Tabs>
 
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow className="table-header-row">
-                <TableCell>VISITING TEAM</TableCell>
-                <TableCell>HOME TEAM</TableCell>
-                <TableCell>V-SCORE</TableCell>
-                <TableCell>H-SCORE</TableCell>
-                <TableCell>REG</TableCell>
-                <TableCell>
-                  {selectedLeague === "MLB" || selectedLeague === "NCAA"
-                    ? "EI"
-                    : "OT"}
-                </TableCell>
-
-                {selectedLeague !== "NBA" &&
-                  selectedLeague !== "WNBA" &&
-                  selectedLeague !== "NCAAB" &&
-                  selectedLeague !== "CFL" &&
-                  selectedLeague !== "NCAAF" &&
-                  selectedLeague !== "MLB" &&
-                  selectedLeague !== "NCAA" &&
-                  selectedLeague !== "UFL" &&
-                  selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
-                {selectedLeague !== "NFL" &&
-                  selectedLeague !== "CFL" &&
-                  selectedLeague !== "NCAAF" &&
-                  selectedLeague !== "UFL" && <TableCell>#</TableCell>}
-                <TableCell>Not Completed</TableCell>
-                <TableCell>Reason</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredGameData.map((game) => (
-                <TableRow key={game._id} className="table-row">
-                  <TableCell>{game.visitor}</TableCell>
-                  <TableCell>{game.home}</TableCell>
-
+        {selectedLeague && (
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow className="table-header-row">
+                  <TableCell>VISITING TEAM</TableCell>
+                  <TableCell>HOME TEAM</TableCell>
+                  <TableCell>V-SCORE</TableCell>
+                  <TableCell>H-SCORE</TableCell>
+                  <TableCell>REG</TableCell>
                   <TableCell>
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      value={game.vScore}
-                      onChange={(e) =>
-                        handleInputChange(game._id, "vScore", e.target.value)
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      value={game.hScore}
-                      onChange={(e) =>
-                        handleInputChange(game._id, "hScore", e.target.value)
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <RadioGroup
-                      value={selectedValues[game._id]}
-                      onChange={(event) => handleRadioChange(event, game._id)}
-                    >
-                      <FormControlLabel
-                        value="REG"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
-                  </TableCell>
-                  <TableCell>
-                    <RadioGroup
-                      value={selectedValues[game._id]}
-                      onChange={(event) => handleRadioChange(event, game._id)}
-                    >
-                      <FormControlLabel
-                        value="OT"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
-                  </TableCell>
-                  <TableCell>
-                    <RadioGroup
-                      value={selectedValues[game._id]}
-                      onChange={(event) => handleRadioChange(event, game._id)}
-                    >
-                      <FormControlLabel
-                        value="S/O"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
-                  </TableCell>
-                  <TableCell>
-                    <Select
-                      value={dropdownValues[game._id]}
-                      onChange={(event) =>
-                        handleDropdownChange(event, game._id)
-                      }
-                      sx={{
-                        backgroundColor: "white",
-                        color: "black",
-                        marginLeft: "-30%",
-                      }}
-                      displayEmpty
-                      size="small"
-                      disabled={
-                        selectedValues[game._id] !== "OT" &&
-                        selectedValues[game._id] !== "S/O"
-                      }
-                    >
-                      <MenuItem value="">
-                        <em>0</em>
-                      </MenuItem>
-                      <MenuItem value="Option1">1</MenuItem>
-                      <MenuItem value="Option2">2</MenuItem>
-                      <MenuItem value="Option3">3</MenuItem>
-                      <MenuItem value="Option4">4</MenuItem>
-                      <MenuItem value="Option5">5</MenuItem>
-                      <MenuItem value="Option6">6</MenuItem>
-                      <MenuItem value="Option7">7</MenuItem>
-                      <MenuItem value="Option8">8</MenuItem>
-                      <MenuItem value="Option9">9</MenuItem>
-                      <MenuItem value="Option10">10</MenuItem>
-                      <MenuItem value="Option11">11</MenuItem>
-                      <MenuItem value="Option12">12</MenuItem>
-                      <MenuItem value="Option13">13</MenuItem>
-                      <MenuItem value="Option14">14</MenuItem>
-                      <MenuItem value="Option15">15</MenuItem>
-                      <MenuItem value="Option16">16</MenuItem>
-                      <MenuItem value="Option17">17</MenuItem>
-                      <MenuItem value="Option18">18</MenuItem>
-                      <MenuItem value="Option19">19</MenuItem>
-                      <MenuItem value="Option20">20</MenuItem>
-                    </Select>
-                  </TableCell>
-                  <TableCell>
-                    <RadioGroup
-                      value={selectedValues[game._id]}
-                      onChange={(event) => handleRadioChange(event, game._id)}
-                    >
-                      <FormControlLabel
-                        value="Suspended"
-                        control={<Radio size="small" />}
-                        label=""
-                      />
-                    </RadioGroup>
+                    {selectedLeague === "MLB" || selectedLeague === "NCAA"
+                      ? "EI"
+                      : "OT"}
                   </TableCell>
 
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      disabled={selectedValues[game._id] !== "Suspended"} // Enable button when "Suspended" is selected
-                      onClick={() => handleReasonButtonClick(game._id)}
-                    >
-                      ADD REASON
-                    </Button>
-
-                    <div className="popup" style={{ width: "100%" }}>
-                      <Dialog
-                        open={reasonPopupOpen}
-                        onClose={handleReasonCancel}
-                        fullWidth
-                        maxWidth="lg"
-                      >
-                        <DialogTitle>Enter Reason</DialogTitle>
-                        <br />
-                        <DialogContent>
-                          {/* Dropdown menu for selecting reason */}
-                          <TextField
-                            select
-                            fullWidth
-                            value={selectedReason[game._id] || ""}
-                            onChange={(e) =>
-                              setSelectedReason((prevSelectedReason) => ({
-                                ...prevSelectedReason,
-                                [game._id]: e.target.value,
-                              }))
-                            }
-                            label="Reason"
-                            variant="outlined"
-                          >
-                            {reasonsOptions.map((reason) => (
-                              <MenuItem key={reason} value={reason}>
-                                {reason}
-                              </MenuItem>
-                            ))}
-                          </TextField>
-                          <br /> <br />
-                          {/* Text field for entering reason */}
-                          <TextField
-                            multiline
-                            rows={8}
-                            fullWidth
-                            value={reasonData[game._id] || ""}
-                            onChange={(e) =>
-                              setReasonData((prevReasonData) => ({
-                                ...prevReasonData,
-                                [game._id]: e.target.value,
-                              }))
-                            }
-                            variant="outlined"
-                            label="Reason"
-                            sx={{ width: "100%", resize: "both" }}
-                            disabled={!selectedReason[game._id]} // Disable text field when no reason is selected
-                          />
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={handleReasonCancel} color="primary">
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() => handleReasonSubmit(game._id)}
-                            color="primary"
-                          >
-                            Submit
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </div>
-                  </TableCell>
+                  {selectedLeague !== "NBA" &&
+                    selectedLeague !== "WNBA" &&
+                    selectedLeague !== "NCAAB" &&
+                    selectedLeague !== "CFL" &&
+                    selectedLeague !== "NCAAF" &&
+                    selectedLeague !== "MLB" &&
+                    selectedLeague !== "NCAA" &&
+                    selectedLeague !== "UFL" &&
+                    selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
+                  {selectedLeague !== "NFL" &&
+                    selectedLeague !== "CFL" &&
+                    selectedLeague !== "NCAAF" &&
+                    selectedLeague !== "UFL" && <TableCell>#</TableCell>}
+                  <TableCell>Not Completed</TableCell>
+                  <TableCell>Reason</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <Button
-            variant="contained"
-            style={{
-              marginTop: "20px",
-              display: "flex",
-              backgroundColor: "red",
-            }}
-            className="centered-button"
-            onClick={handleButtonClick}
-          >
-            ENTER SCORES
-          </Button>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {filteredGameData.map((game) => (
+                  <TableRow key={game._id} className="table-row">
+                    <TableCell>{game.visitor}</TableCell>
+                    <TableCell>{game.home}</TableCell>
+
+                    <TableCell>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        value={game.vScore}
+                        onChange={(e) =>
+                          handleInputChange(game._id, "vScore", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        value={game.hScore}
+                        onChange={(e) =>
+                          handleInputChange(game._id, "hScore", e.target.value)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <RadioGroup
+                        value={selectedValues[game._id]}
+                        onChange={(event) => handleRadioChange(event, game._id)}
+                      >
+                        <FormControlLabel
+                          value="REG"
+                          control={<Radio size="small" />}
+                          label=""
+                        />
+                      </RadioGroup>
+                    </TableCell>
+                    <TableCell>
+                      <RadioGroup
+                        value={selectedValues[game._id]}
+                        onChange={(event) => handleRadioChange(event, game._id)}
+                      >
+                        <FormControlLabel
+                          value="OT"
+                          control={<Radio size="small" />}
+                          label=""
+                        />
+                      </RadioGroup>
+                    </TableCell>
+                    <TableCell>
+                      <RadioGroup
+                        value={selectedValues[game._id]}
+                        onChange={(event) => handleRadioChange(event, game._id)}
+                      >
+                        <FormControlLabel
+                          value="S/O"
+                          control={<Radio size="small" />}
+                          label=""
+                        />
+                      </RadioGroup>
+                    </TableCell>
+                    <TableCell>
+                      <Select
+                        value={dropdownValues[game._id]}
+                        onChange={(event) =>
+                          handleDropdownChange(event, game._id)
+                        }
+                        sx={{
+                          backgroundColor: "white",
+                          color: "black",
+                          marginLeft: "-30%",
+                        }}
+                        displayEmpty
+                        size="small"
+                        disabled={
+                          selectedValues[game._id] !== "OT" &&
+                          selectedValues[game._id] !== "S/O"
+                        }
+                      >
+                        <MenuItem value="">
+                          <em>0</em>
+                        </MenuItem>
+                        <MenuItem value="Option1">1</MenuItem>
+                        <MenuItem value="Option2">2</MenuItem>
+                        <MenuItem value="Option3">3</MenuItem>
+                        <MenuItem value="Option4">4</MenuItem>
+                        <MenuItem value="Option5">5</MenuItem>
+                        <MenuItem value="Option6">6</MenuItem>
+                        <MenuItem value="Option7">7</MenuItem>
+                        <MenuItem value="Option8">8</MenuItem>
+                        <MenuItem value="Option9">9</MenuItem>
+                        <MenuItem value="Option10">10</MenuItem>
+                        <MenuItem value="Option11">11</MenuItem>
+                        <MenuItem value="Option12">12</MenuItem>
+                        <MenuItem value="Option13">13</MenuItem>
+                        <MenuItem value="Option14">14</MenuItem>
+                        <MenuItem value="Option15">15</MenuItem>
+                        <MenuItem value="Option16">16</MenuItem>
+                        <MenuItem value="Option17">17</MenuItem>
+                        <MenuItem value="Option18">18</MenuItem>
+                        <MenuItem value="Option19">19</MenuItem>
+                        <MenuItem value="Option20">20</MenuItem>
+                      </Select>
+                    </TableCell>
+                    <TableCell>
+                      <RadioGroup
+                        value={selectedValues[game._id]}
+                        onChange={(event) => handleRadioChange(event, game._id)}
+                      >
+                        <FormControlLabel
+                          value="Suspended"
+                          control={<Radio size="small" />}
+                          label=""
+                        />
+                      </RadioGroup>
+                    </TableCell>
+
+                    <TableCell>
+                      <Button
+                        variant="contained"
+                        disabled={selectedValues[game._id] !== "Suspended"} // Enable button when "Suspended" is selected
+                        onClick={() => handleReasonButtonClick(game._id)}
+                      >
+                        ADD REASON
+                      </Button>
+
+                      <div className="popup" style={{ width: "100%" }}>
+                        <Dialog
+                          open={reasonPopupOpen}
+                          onClose={handleReasonCancel}
+                          fullWidth
+                          maxWidth="lg"
+                        >
+                          <DialogTitle>Enter Reason</DialogTitle>
+                          <br />
+                          <DialogContent>
+                            {/* Dropdown menu for selecting reason */}
+                            <TextField
+                              select
+                              fullWidth
+                              value={selectedReason[game._id] || ""}
+                              onChange={(e) =>
+                                setSelectedReason((prevSelectedReason) => ({
+                                  ...prevSelectedReason,
+                                  [game._id]: e.target.value,
+                                }))
+                              }
+                              label="Reason"
+                              variant="outlined"
+                            >
+                              {reasonsOptions.map((reason) => (
+                                <MenuItem key={reason} value={reason}>
+                                  {reason}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                            <br /> <br />
+                            {/* Text field for entering reason */}
+                            <TextField
+                              multiline
+                              rows={8}
+                              fullWidth
+                              value={reasonData[game._id] || ""}
+                              onChange={(e) =>
+                                setReasonData((prevReasonData) => ({
+                                  ...prevReasonData,
+                                  [game._id]: e.target.value,
+                                }))
+                              }
+                              variant="outlined"
+                              label="Reason"
+                              sx={{ width: "100%", resize: "both" }}
+                              disabled={!selectedReason[game._id]} // Disable text field when no reason is selected
+                            />
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              onClick={handleReasonCancel}
+                              color="primary"
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              onClick={() => handleReasonSubmit(game._id)}
+                              color="primary"
+                            >
+                              Submit
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <Button
+              variant="contained"
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                backgroundColor: "red",
+              }}
+              className="centered-button"
+              onClick={handleButtonClick}
+            >
+              ENTER SCORES
+            </Button>
+          </TableContainer>
+        )}
       </Paper>
       <br />
       <br />

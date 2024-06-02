@@ -137,8 +137,8 @@ const TableComponent = () => {
               </td>
               <td className="text-xs font-medium text-center">{row.time}</td>
               <td className="text-xs font-medium text-center">{row.co}</td>
-              <td className="text-xs font-medium text-center">{row.prov}</td>
               <td className="text-xs font-medium text-center">{row.state}</td>
+              <td className="text-xs font-medium text-center">{row.prov}</td>
               <td className="text-xs font-medium text-center">{row.city}</td>
               <td className="text-xs font-medium text-center">{row.prov}</td>
 

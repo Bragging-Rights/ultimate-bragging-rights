@@ -112,7 +112,6 @@ const Registration = (props) => {
   const [formData, setFormData] = useState({
     firstName: "",
     couponcode: "",
-
     lastName: "",
     email: "",
     city: "",
@@ -124,7 +123,6 @@ const Registration = (props) => {
     confirmPassword: "",
     referralName: "",
     username: "",
-
     termsAccepted: false,
   });
   const [countryCode, setCountryCode] = useState("");
@@ -266,6 +264,7 @@ const Registration = (props) => {
     };
     console.log("mutation is called");
     console.log(data);
+    console.log("Leagues:", userLeagues);
     mutate(data);
   };
   const nextStep = () => {
@@ -653,7 +652,7 @@ const Registration = (props) => {
                     <label className="info-require">
                       * You Must Join At least One League{" "}
                     </label>
-                    <div className=" line"></div>
+                    <div className="line"></div>
                   </div>
                   <br />
                   <div className="row">
@@ -672,20 +671,82 @@ const Registration = (props) => {
                           });
 
                         return (
-                          <LeagueHandler
+                          <div
+                            className="modal-bottom relative mb-2"
                             key={innerIndex}
-                            options={unselectedLeagues}
-                            handleRemoveLeague={() =>
-                              handleRemoveLeague(innerIndex)
-                            }
-                            handleLeagueChange={(e) =>
-                              handleLeagueChange(e, innerIndex)
-                            }
-                            availableTeams={availableTeams}
-                            info={info}
-                            index={innerIndex}
-                            isDisabled={true} // set input fields to be disabled
-                          />
+                          >
+                            {/* <button
+                              onClick={() => handleRemoveLeague(innerIndex)}
+                              className="bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center transition-colors hover:bg-red-600 absolute right-0"
+                              aria-label="Remove League"
+                              type="button"
+                            >
+                              <ImCancelCircle />
+                            </button> */}
+                            <ModalSelect
+                              label={
+                                <h2
+                                  id="heading"
+                                  className="signup-heading"
+                                  style={{ fontSize: "14px", color: "#FFAE00" }}
+                                >
+                                  *
+                                </h2>
+                              }
+                              options={unselectedLeagues}
+                              name="league"
+                              value={formData.league}
+                              onChange={inputChangeHandler}
+                            />
+                            <ModalInput
+                              label={
+                                <h2
+                                  id="heading"
+                                  className="signup-heading"
+                                  style={{ fontSize: "14px", color: "#FFAE00" }}
+                                >
+                                  * CREATE USERNAME
+                                </h2>
+                              }
+                              placeholder="Username"
+                              type="text"
+                              name="username"
+                              value={formData.username}
+                              onChange={inputChangeHandler}
+                              aria-label="Create Username"
+                            />
+                            <ModalSelect
+                              label={
+                                <h2
+                                  id="heading"
+                                  className="signup-heading"
+                                  style={{ fontSize: "14px", color: "#FFAE00" }}
+                                >
+                                  * SELECT YOUR FAVOURITE TEAM
+                                </h2>
+                              }
+                              name="username"
+                              value={formData.username}
+                              options={[
+                                {
+                                  label: "Select Team",
+                                  value: "",
+                                },
+                                ...(availableTeams[info.league]?.map(
+                                  (team) => ({
+                                    label: team?.displayName,
+                                    value: team?.fullName,
+                                  })
+                                ) || [
+                                  {
+                                    label: "No team available",
+                                    value: "",
+                                  },
+                                ]),
+                              ]}
+                              onChange={inputChangeHandler}
+                            />
+                          </div>
                         );
                       })}
                     </div>

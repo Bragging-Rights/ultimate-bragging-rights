@@ -95,3 +95,35 @@
     border: 1px solid #be8200 !important;
     border-radius: 4px !important;
 }
+/* TableData.css */
+
+/* Default tab styling */
+.league-select {
+    position: relative;
+}
+
+/* Styling for selected tab */
+.MuiTab-root.Mui-selected {
+    color: #f39c12; /* Color for glowing text */
+    text-shadow: 0 0 5px rgba(243, 156, 18, 0.8); /* Glowing effect for text */
+}
+
+/* Ensure the blue line is only shown when the tab is selected */
+.MuiTabs-indicator {
+    background-color: #1e90ff; /* Color of the blue line */
+    height: 4px;
+}
+
+/* Add a glowing line below the selected tab text */
+.MuiTab-root.Mui-selected::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; /* Adjust to position the line correctly */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 4px;
+    background-color: #1e90ff; /* Color of the glowing line */
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.8); /* Glowing effect for the line */
+}
+  

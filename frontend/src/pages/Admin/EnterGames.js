@@ -68,7 +68,16 @@ const GameForm = () => {
     getOdds(formData.game)
       .then((oddsData) => {
         console.log("Odds data:", oddsData);
-        setOdds(oddsData.data);
+        // Filter out empty games
+        const filteredOdds = oddsData.data.filter((odd) => {
+          return (
+            odd.away_team &&
+            odd.home_team &&
+            odd.bookmakers &&
+            odd.bookmakers.length > 0
+          );
+        });
+        setOdds(filteredOdds);
       })
       .catch((error) => {
         console.error("Error fetching odds:", error);
