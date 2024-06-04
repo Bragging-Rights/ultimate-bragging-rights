@@ -68,15 +68,38 @@ const GameForm = () => {
     getOdds(formData.game)
       .then((oddsData) => {
         console.log("Odds data:", oddsData);
-        // Filter out empty games
+        const today = new Date().toISOString().split("T")[0];
         const filteredOdds = oddsData.data.filter((odd) => {
+          const gameDate = odd.commence_time.split("T")[0];
           return (
+            gameDate === today &&
             odd.away_team &&
             odd.home_team &&
             odd.bookmakers &&
             odd.bookmakers.length > 0
           );
         });
+
+        if (filteredOdds.length === 0) {
+          const futureGames = oddsData.data.filter(
+            (odd) => new Date(odd.commence_time) > new Date()
+          );
+          if (futureGames.length > 0) {
+            const nextGameDate = new Date(
+              futureGames[0].commence_time
+            ).toLocaleDateString();
+            displayToast(
+              `No games today. Next game is on ${nextGameDate}.`,
+              "info"
+            );
+          } else {
+            displayToast(
+              "No games available today or in upcoming days.",
+              "info"
+            );
+          }
+        }
+
         setOdds(filteredOdds);
       })
       .catch((error) => {
