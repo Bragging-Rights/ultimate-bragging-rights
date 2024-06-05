@@ -2,7 +2,7 @@ const { calculateResultPoints } = require("./calculations");
 const { allotUserPoints } = require("./userPointsAllocator");
 const GamesPlayed = require("../../models/gamesPlayed");
 exports.calculateUserPoints = async (data) => {
-  console.log("in calculateUserPoints");
+  // console.log("in calculateUserPoints");
   let sport = "";
   if (data.league === "NBA") {
     sport = "basketball";
@@ -45,7 +45,7 @@ exports.calculateUserPoints = async (data) => {
   try {
     gamePlayed = await GamesPlayed.find({ gameData: data._id });
 
-    console.log("gamePlayed", gamePlayed);
+    // console.log("gamePlayed", gamePlayed);
     // rest of your code
   } catch (error) {
     console.error(error);
@@ -61,29 +61,32 @@ exports.calculateUserPoints = async (data) => {
       game.pick_visitor > game.pick_home ? game.pick_visitor : game.pick_home;
     const userInnings = game.innings;
     const userpick = game.gameEnding;
-    return calculateResultPoints(
-      sport,
-      moneyline,
-      data["v-sprd-odds"],
-      data["h-sprd-odds"],
-      data["v-ou-odds"],
-      data["h-ou-odds"],
-      pickedScore,
-      actualScore,
-      pickedWinner,
-      moneylineTotalPoints,
-      userpick,
-      gameEnd,
-      userInnings,
-      extraInnings,
-      spread,
-      spreadPoints,
-      vOU,
-      vOUpoints,
-      hOU,
-      hOUpoints
-    );
+    return {
+      playedGame: game,
+      result: calculateResultPoints(
+        sport,
+        moneyline,
+        data["v-sprd-odds"],
+        data["h-sprd-odds"],
+        data["v-ou-odds"],
+        data["h-ou-odds"],
+        pickedScore,
+        actualScore,
+        pickedWinner,
+        moneylineTotalPoints,
+        userpick,
+        gameEnd,
+        userInnings,
+        extraInnings,
+        spread,
+        spreadPoints,
+        vOU,
+        vOUpoints,
+        hOU,
+        hOUpoints
+      ),
+    };
   });
-  console.log("resultPoints", resultPoints);
+  // console.log("resultPoints", resultPoints);
   allotUserPoints(resultPoints);
 };

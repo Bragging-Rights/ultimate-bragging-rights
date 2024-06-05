@@ -3,6 +3,7 @@ import "./tableComponent.css";
 import { useLeagueContext } from "../LeagueContext"; // Import LeagueContext
 import { headerOptions } from "./data"; // Import headerOptions
 import { getUserById } from "../../Apis/auth";
+import { getGamePlayedByUserId } from "../../Apis/predictions";
 
 const TableComponent = () => {
   const { selectedLeague } = useLeagueContext();
@@ -15,6 +16,12 @@ const TableComponent = () => {
     });
   };
 
+  const getResult = () => {
+    getGamePlayedByUserId(id).then((res) => {
+      console.log(res);
+    });
+  };
+
   useEffect(() => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       setFilteredHeaderOptions(headerOptions[selectedLeague]);
@@ -22,6 +29,7 @@ const TableComponent = () => {
       setFilteredHeaderOptions([]); // Set empty array for consistency
     }
     getUser();
+    getResult();
   }, [selectedLeague]);
 
   const dataRows = [
@@ -65,6 +73,7 @@ const TableComponent = () => {
     },
     // Add more rows here up to 580 lines...
   ];
+
   return (
     <div className="table-container">
       <table>

@@ -170,13 +170,18 @@ const ScoreEntry = () => {
 
     console.log("GameData with Selected Radio Button and Reason:");
     console.log(updatedGameData);
-    Promise.all(updatedGameData.map((game) => updateGameFields(game)))
+    Promise.all(
+      updatedGameData
+        .filter((game) => game.vScore != null && game.hScore != null)
+        .map((game) => updateGameFields(game))
+    )
       .then((responses) => {
         console.log(responses);
       })
       .catch((error) => {
         console.log(error);
       });
+
     // Log the reason for each game
     updatedGameData.forEach((game) => {
       console.log(`Reason for Game ${game._id}:`, game.reason);

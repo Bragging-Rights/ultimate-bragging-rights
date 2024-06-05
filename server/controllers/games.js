@@ -155,13 +155,13 @@ const getGamesByDate = async (req, res) => {
 
 // Update specific fields of a game
 const updateGameFields = async (req, res) => {
-  console.log(req.body);
-  console.log(
-    req.body.vScore,
-    req.body.hScore,
-    req.body.selectedOption,
-    req.body.reason
-  );
+  // console.log(req.body);
+  // console.log(
+  //   req.body.vScore,
+  //   req.body.hScore,
+  //   req.body.selectedOption,
+  //   req.body.reason
+  // );
   try {
     const vFinalScore = req.body.vScore;
     const hFinalScore = req.body.hScore;

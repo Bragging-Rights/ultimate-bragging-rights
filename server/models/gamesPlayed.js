@@ -15,14 +15,8 @@ const gamesPlayedSchema = new mongoose.Schema(
     innings: String,
 
     ///league data
-    V: String,
-    H: String,
-    Co: String,
-    Prov: String,
-    St: String,
-    Cty: String,
-    Player: String,
-    R: String,
+
+    R: String, //rank from front
     W: String,
     L: String,
     T: String,
@@ -34,6 +28,7 @@ const gamesPlayedSchema = new mongoose.Schema(
     UD: String,
     UBR: String,
     "1S": String,
+    "1S0": String, //needs to be implemented
     "1SW2": String,
     "2SW2": String,
     "1SW3": String,
