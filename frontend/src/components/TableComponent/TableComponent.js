@@ -1,25 +1,55 @@
 import React, { useEffect, useState } from "react";
 import "./tableComponent.css";
-import { useLeagueContext } from "../LeagueContext"; // Import LeagueContext
-import { headerOptions } from "./data"; // Import headerOptions
+import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
 import { getGamePlayedByUserId } from "../../Apis/predictions";
+import { headerOptions } from "./data"; // Import headerOptions
 
 const TableComponent = () => {
   const { selectedLeague } = useLeagueContext();
   const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
+  const [dataRows, setDataRows] = useState([]);
+  const [gameDataMap, setGameDataMap] = useState({}); // To store gameData
   const id = localStorage.getItem("_id");
 
   const getUser = () => {
     getUserById(id).then((res) => {
-      console.log(res);
+      console.log("User data:", res);
     });
   };
 
   const getResult = () => {
-    getGamePlayedByUserId(id).then((res) => {
-      console.log(res);
-    });
+    getGamePlayedByUserId(id)
+      .then((res) => {
+        console.log("Game data:", res);
+        if (
+          res.data &&
+          res.data.data &&
+          Array.isArray(res.data.data.gamesPlayed)
+        ) {
+          // Filter data based on the selected league
+          const filteredData = res.data.data.gamesPlayed.filter(
+            (game) => game.league === selectedLeague
+          );
+          setDataRows(filteredData);
+
+          // Create a map of gameData for easy lookup
+          const gameDataArray = res.data.data.gameData || [];
+          const gameDataLookup = {};
+          gameDataArray.forEach((game) => {
+            gameDataLookup[game._id] = game;
+          });
+          setGameDataMap(gameDataLookup);
+
+          console.log("Filtered data:", filteredData);
+          console.log("Game Data Map:", gameDataLookup);
+        } else {
+          console.error("Expected array but got:", res);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching game data:", error);
+      });
   };
 
   useEffect(() => {
@@ -32,70 +62,11 @@ const TableComponent = () => {
     getResult();
   }, [selectedLeague]);
 
-  const dataRows = [
-    {
-      visitor: "Toronto",
-      home: "Detroit",
-      final: "1 - 5",
-      prediction: "0-5",
-      time: "8:12:15 AM",
-      co: "CA",
-      city: "NL",
-      prov: "NL",
-      state: "NL",
-      player: "Topdog",
-      r: "45 Pts",
-      tp: "24 Pts",
-      br: true,
-      odds: "43",
-      accuracy: "43",
-      shutOut: "Regulation",
-      endings: "Regulation",
-    },
-    {
-      visitor: "Minnesota",
-      home: "Saint. Catherines",
-      final: "1 - 5",
-      prediction: "0-5",
-      time: "8:12:15 AM",
-      co: "CA",
-      city: "NL",
-      prov: "NL",
-      state: "NL",
-      player: "Topdog",
-      r: "45 Pts",
-      tp: "24 Pts",
-      br: false,
-      odds: "43",
-      accuracy: "43",
-      shutOut: "Regulation",
-      endings: "Regulation",
-    },
-    // Add more rows here up to 580 lines...
-  ];
-
   return (
     <div className="table-container">
       <table>
         <thead>
           <tr>
-            {/* <td>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={21}
-                viewBox="0 0 20 21"
-                fill="none"
-              >
-                <path
-                  d="M17.5 18L12.5 13M17.5 18V14M17.5 18H13.5M2.5 14V18M2.5 18H6.5M2.5 18L7.5 13M17.5 7V3M17.5 3H13.5M17.5 3L12.5 8M2.5 7V3M2.5 3H6.5M2.5 3L7.5 8"
-                  stroke="#737373"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </td> */}
             {filteredHeaderOptions.map((item, ind) => (
               <th key={ind} className="text-xs font-medium">
                 {item}
@@ -104,135 +75,98 @@ const TableComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {dataRows.map((row, index) => (
-            <tr key={index} className="h-14 bg-[#181818] text-white separator">
-              {/* <td>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={21}
-                viewBox="0 0 20 21"
-                fill="none"
-              >
-                <path
-                  d="M17.5 18L12.5 13M17.5 18V14M17.5 18H13.5M2.5 14V18M2.5 18H6.5M2.5 18L7.5 13M17.5 7V3M17.5 3H13.5M17.5 3L12.5 8M2.5 7V3M2.5 3H6.5M2.5 3L7.5 8"
-                  stroke="#737373"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </td> */}
+          {Array.isArray(dataRows) && dataRows.length > 0 ? (
+            dataRows.map((row, index) => {
+              const gameData = gameDataMap[row.gameData] || {}; // Get the corresponding gameData
+              return (
+                <tr
+                  key={index}
+                  className="h-14 bg-[#181818] text-white separator"
+                >
+                  <td className="text-xs font-medium text-center">
+                    {gameData.visitor || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {gameData.home || "-"}
+                  </td>
+                  <td
+                    className="text-xs font-medium text-center"
+                    style={{ color: "#ffff00" }}
+                  >
+                    {`${gameData.hFinalScore || "-"} - ${
+                      gameData.vFinalScore || "-"
+                    }`}
+                  </td>
+                  <td
+                    className="text-xs font-medium text-center"
+                    style={{ color: "#ffff00" }}
+                  >
+                    {`${row.pick_visitor || "-"} - ${row.pick_home || "-"}`}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {new Date(row.createdAt).toLocaleTimeString()}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.co || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.state || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.prov || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.city || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.player || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.R || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.TP || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.BR || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.ML || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.O_U || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.Sprd || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row["1S"] || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row["1S0"] || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.Reg || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.OT || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {row.SO || "-"}
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
               <td
+                colSpan={filteredHeaderOptions.length}
                 className="text-xs font-medium text-center"
-                // style={{ color: "#ffb800" }}
               >
-                {row.visitor}
-              </td>
-              <td
-                className="text-xs font-medium text-center"
-                // style={{ color: "#ffb800" }}
-              >
-                {row.home}
-              </td>
-              <td
-                className="text-xs font-medium text-center"
-                style={{ color: "#ffff00" }}
-              >
-                {row.final}
-              </td>
-              <td className="text-xs font-medium text-center">
-                {row.prediction}
-              </td>
-              <td className="text-xs font-medium text-center">{row.time}</td>
-              <td className="text-xs font-medium text-center">{row.co}</td>
-              <td className="text-xs font-medium text-center">{row.state}</td>
-              <td className="text-xs font-medium text-center">{row.prov}</td>
-              <td className="text-xs font-medium text-center">{row.city}</td>
-              <td className="text-xs font-medium text-center">{row.prov}</td>
-
-              <td
-                className="text-xs font-medium text-center"
-                // style={{ color: "#ffb800" }}
-              >
-                {row.player}
-              </td>
-              <td className="text-xs font-medium text-center">{row.r}</td>
-              <td className="text-xs font-medium text-center">{row.tp}</td>
-              <td
-              // style={{
-              //   background: row.br
-              //     ? "linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%)"
-              //     : "transparent",
-              // }}
-              >
-                {row.br && (
-                  <span className="flex justify-center items-center">
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={39}
-                      height={39}
-                      viewBox="0 0 39 39"
-                      fill="none"
-                    >
-                      <circle
-                        cx="19.1313"
-                        cy="19.1875"
-                        r="14.2617"
-                        stroke="black"
-                        strokeWidth={4}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M23.8853 16.0181L17.5467 22.3566L14.3774 19.1873"
-                        stroke="black"
-                        strokeWidth={4}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg> */}
-                  </span>
-                )}
-              </td>
-              <td
-                className="text-xs font-medium text-center"
-                // style={{
-                //   backgroundColor: "rgb(98 197 85 / 100%)",
-                //   color: "rgb(248 250 19 / 100%)",
-                // }}
-              >
-                {row.odds}
-              </td>
-              <td
-                className="text-xs font-medium text-center"
-                // style={{
-                //   backgroundColor: "rgb(98 197 85 / 100%)",
-                //   color: "rgb(248 250 19 / 100%)",
-                // }}
-              >
-                {row.accuracy}
-              </td>
-              <td
-                className="text-xs font-medium text-center"
-                // style={{
-                //   backgroundColor: "rgb(230 28 28 / 100%)",
-                //   color: "rgb(248 250 19 / 100%)",
-                // }}
-              >
-                {row.shutOut}
-              </td>
-              <td
-                className="text-xs font-medium text-center"
-                // style={{
-                //   backgroundColor: "rgb(98 197 85 / 100%)",
-                //   color: "rgb(248 250 19 / 100%)",
-                // }}
-              >
-                {row.endings}
+                No data available
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
