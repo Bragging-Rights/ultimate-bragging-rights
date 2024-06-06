@@ -158,13 +158,19 @@ exports.getGamePlayedByGameData = async (req, res) => {
 // Get game played records by userId
 exports.getGamePlayedByUserId = async (req, res) => {
   try {
-    const gamePlayed = await GamesPlayed.find({
+    const gamesPlayed = await GamesPlayed.find({
       userId: req.params.userId,
     });
+    let gameData;
+    if (gamesPlayed.length > 0) {
+      gameData = await Promise.all(
+        gamesPlayed.map((gamePlayed) => Game.findById(gamePlayed.gameData))
+      );
+    }
     res.status(200).json({
       success: true,
       message: "Game played records retrieved successfully.",
-      data: gamePlayed,
+      data: { gamesPlayed: gamesPlayed, gameData: gameData },
     });
   } catch (err) {
     console.error("Error retrieving game played records:", err);
