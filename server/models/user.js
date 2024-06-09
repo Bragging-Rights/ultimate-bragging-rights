@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+const { genSalt } = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -18,22 +20,60 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  username: {
-    type: String,
-    // required: true,
-  },
   referralCode: {
     type: String,
+    default: () => crypto.randomBytes(16).toString("hex"),
     unique: true,
   },
-  affiliateCode: {
-    type: String,
-    unique: true,
-  },
+  // affiliateCode: {
+  //   type: String,
+  //   unique: true,
+  // },
   referredBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  city: {
+    type: String,
+    // required: true,
+  },
+  state: {
+    type: String,
+    // required: true,
+  },
+  country: {
+    type: String,
+    // required: true,
+  },
+  zipCode: {
+    type: String,
+    // required: true,
+  },
+  phone: {
+    type: String,
+    // required: true,
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female"],
+  },
+  leagues: [
+    {
+      league: {
+        type: String,
+        required: true,
+      },
+      team: {
+        type: String,
+        required: true,
+      },
+      username: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  // data for future
   directReferrals: [
     {
       type: mongoose.Schema.Types.ObjectId,

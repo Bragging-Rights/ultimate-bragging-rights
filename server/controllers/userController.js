@@ -6,12 +6,12 @@ const { responseObject } = require("../utils/responseObject");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.signUpController = async (req, res) => {
+  console.log("req.body", req.body);
   try {
-    const { firstName, lastName, email, password, username, referralCode } =
-      req.body;
-
+    const user = req.body;
+    const usermail = user.email;
     // Check if the email is unique
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: useremail });
     if (existingUser) {
       return res.status(409).json({
         message: "Email already exists. Please try another one",
@@ -22,42 +22,41 @@ exports.signUpController = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    let refferal;
+    if (user.referralName) {
+      refferal = await User.findOne({ referralCode: user.referralName });
+      if (!refferal) {
+        return res.status(404).json({
+          message: "Invalid referral code.",
+          success: false,
+        });
+      }
+    }
+
     const newUser = new User({
-      firstName,
-      lastName,
-      email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
       password: hashedPassword, // Save the hashed password
-      username,
+      username, ///to be cheked
+      referredBy: refferal ? refferal._id : null,
+      city: user.city,
+      state: user.province,
+      country: user.country,
+      zipCode: user.postalCode,
+      phone: user.phoneNumber,
+      gender: user.gender,
+      leagues: user.leagues.map((league) => {
+        return {
+          league: league.league,
+          username: league.username,
+          team: league.team,
+        };
+      }),
     });
 
     // Update the referral tree and tickets for direct referral
-    if (referralCode) {
-      const referrer = await User.findOne({ referralCode });
-      if (referrer) {
-        newUser.referredBy = referrer._id;
-        referrer.directReferrals.push(newUser._id);
-        referrer.tickets += 2; // Add 2 tickets for direct referral
-        await referrer.save();
-      }
-    }
-
-    // Save the user
     const savedUser = await newUser.save();
-
-    // Update the referral tree and tickets for indirect referral
-    if (savedUser.referredBy) {
-      const indirectReferrer = await User.findById(savedUser.referredBy);
-      if (indirectReferrer) {
-        // Check if the indirect referrer has its own referrer
-        const grandReferrer = await User.findById(indirectReferrer.referredBy);
-        if (grandReferrer) {
-          grandReferrer.indirectReferrals.push(savedUser._id);
-          grandReferrer.tickets += 1; // Add 1 ticket for indirect referral
-          await grandReferrer.save();
-        }
-      }
-    }
-
     res.status(200).json(savedUser);
   } catch (err) {
     console.error("Error inserting user:", err);
