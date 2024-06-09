@@ -431,25 +431,6 @@ const Registration = (props) => {
             </strong>
             <div className="logo-container"></div>
           </li>
-
-          {/* <li
-              className={`step ${currentStep === 5 ? "active" : ""}`}
-              id="confirm"
-            >
-              <strong
-                style={{
-                  color: currentStep === 5 ? "#FFAE00" : "inherit",
-                }}
-              >
-                Setup Account
-              </strong>
-              <div className="logo-container"></div>
-            </li> */}
-
-          <br />
-          <br />
-          <br />
-          <br />
         </ul>
 
         {Array.from({ length: 4 }, (_, index) => (
@@ -458,7 +439,6 @@ const Registration = (props) => {
             style={{ display: index + 1 === currentStep ? "block" : "none" }}
           >
             <div className="form-card">
-              <br /> <br />
               {index === 0 && (
                 <>
                   <h2 id="heading" className="signup-heading">
@@ -467,14 +447,14 @@ const Registration = (props) => {
                   <p className="signup-subtitle">
                     We just need some basic Info
                   </p>
-                  <br />
+
                   <div className="label-container">
                     <label className="info-require">
                       * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <br />
+
                   <div className="form-container">
                     <ModalInput
                       label={
@@ -556,9 +536,9 @@ const Registration = (props) => {
                       placeholder={"Coupon Code"}
                       name="couponCode"
                       // value={formData.couponcode}
-                      // onChange={inputChangeHandler}
+                      onChange={inputChangeHandler}
                       style={{ flex: "1" }}
-                      requiredFields
+                      // requiredFields
                     />
                   </div>
                 </>
@@ -572,19 +552,18 @@ const Registration = (props) => {
                     To Determine Which Conference and Division you will play in
                   </p>
 
-                  <br />
                   <div className="label-container">
                     <label className="info-require">
                       * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <br />
-                  <div className="form-container">
+
+                  <div className="form-container form-index1">
                     <CountrySelect
                       value={selectedCountry}
                       onChange={(e) => handleCountryChange(e)}
-                      defaultValue={{ value: "CA", label: "Canada" }} // Set the default value to Canada
+                      defaultValue={{ value: "CA", label: "Canada" }}
                     />
                     <StateSelect
                       country={countryCode}
@@ -596,7 +575,6 @@ const Registration = (props) => {
                         });
                       }}
                     />
-
                     <CitySelect
                       onChange={(e) =>
                         setFormData({
@@ -608,7 +586,9 @@ const Registration = (props) => {
                       countryCode={countryCode}
                       stateCode={stateCode}
                     />
+                  </div>
 
+                  <div className="form-container form-index1">
                     <ModalInput
                       label={
                         <h2
@@ -620,14 +600,13 @@ const Registration = (props) => {
                         </h2>
                       }
                       placeholder="Postal/ZIP code"
-                      type="text" // Assuming "string" was a typo, and you intended to use "text" as the type
+                      type="text"
                       name="postalCode"
                       value={formData.postalCode}
                       onChange={inputChangeHandler}
                       className="zip-code"
                       style={{ height: "59px" }}
                     />
-
                     <PhoneNumber
                       value={formData.phoneNumber}
                       onChange={(e) => {
@@ -636,10 +615,12 @@ const Registration = (props) => {
                           phoneNumber: e,
                         });
                       }}
+                      className="phone-number"
                     />
                   </div>
                 </>
               )}
+
               {index === 2 && (
                 <>
                   <h2 id="heading" className="signup-heading">
@@ -648,16 +629,16 @@ const Registration = (props) => {
                   <p className="signup-subtitle">
                     by creating a username in that league{" "}
                   </p>
-                  <br />
+
                   <div className="label-container">
                     <label className="info-require">
                       * You Must Join At least One League{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <br />
+
                   <div className="row">
-                    <div className="col-md-4 col-lg-6">
+                    <div className="col-md-4 col-lg-12">
                       {userLeagues.map((info, innerIndex) => {
                         const unselectedLeagues = [...leaguesOptions];
                         userLeagues
@@ -702,36 +683,21 @@ const Registration = (props) => {
                     lowercase, numbers, and symbols) and never share it with
                     anyone.
                   </p>
-                  <br />
+
                   <div className="label-container">
                     <label className="info-require">
                       * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <br />
-                  <div className="form-container">
-                    <ModalInput
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          * EMAIL
-                        </h2>
-                      }
-                      placeholder={"Email"}
-                      value={formData.email}
-                      onChange={inputChangeHandler}
-                      type="email"
-                      name="email"
-                    >
-                      <div className="email-modal"></div>
-                    </ModalInput>
-                  </div>
-                  <div className="password-section">
-                    <div className="password-inputs">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "16px",
+                    }}
+                  >
+                    <div style={{ flex: "1", display: "flex", gap: "16px" }}>
                       <ModalInput
                         label={
                           <h2
@@ -739,7 +705,23 @@ const Registration = (props) => {
                             className="signup-heading"
                             style={{ fontSize: "14px", color: "#FFAE00" }}
                           >
-                            * CREATE PASSWORD
+                            EMAIL
+                          </h2>
+                        }
+                        placeholder={"Email"}
+                        value={formData.email}
+                        onChange={inputChangeHandler}
+                        type="email"
+                        name="email"
+                      />
+                      <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            CREATE PASSWORD
                           </h2>
                         }
                         placeholder={"Create Password"}
@@ -755,7 +737,7 @@ const Registration = (props) => {
                             className="signup-heading"
                             style={{ fontSize: "14px", color: "#FFAE00" }}
                           >
-                            * CONFIRM PASSWORD
+                            CONFIRM PASSWORD
                           </h2>
                         }
                         placeholder={"Confirm Password"}
@@ -778,104 +760,64 @@ const Registration = (props) => {
                       checked={formData.termsAccepted}
                       onChange={handleTermsChange}
                     />
-                    <br /> <br />
-                    <br /> <br />
+                    <br />
+                    <br />
                     <div style={{ color: "white" }}>
                       I certify that I am at least 18 years old and that I agree
                       to the Terms of services and Privacy Policy.{" "}
                     </div>
                   </div>
-                  <br />
+
                   <Captcha
                     setCaptchaState={setCaptchaState}
                     captchaState={captchaState}
                   />
                 </>
               )}
-              {/* {index === 4 && (
-                  <>
-                    <h2 id="heading" className="signup-heading">
-                      PLEASE CHECK YOUR EMAIL FOR THE CONFIRMATION CODE
-                    </h2>
-                    <p className="signup-subtitle">
-                      Once Enter We Will Setup Your Account. Enter Confirmation
-                      Code Below
-                    </p>
-                    <br />
-                    <div className="label-container">
-                      <label className="info-require">
-                        * Information Needed{" "}
-                      </label>
-                      <div className=" line"></div>
-                    </div>
-                    <div className="form-container">
-                    <ModalInput
-                        label={
-                          <h2
-                            id="heading"
-                            className="signup-heading"
-                            style={{ fontSize: "14px", color: "#FFAE00" }}
-                          >
-                            * ENTER YOUR VERIFICATION CODE
-                          </h2>
-                        }
-                        placeholder={"Enter Your Verification Code"}
-                        name="code"
-                        value={formData.verifyCode}
-                        onChange={inputChangeHandler}
-                        style={{ flex: "1" }}
-                      />
-                    </div>
-                    <br />
-                    <div style={{ color: "red", textAlign: "center" }}>
-                      * If you close this window without entering the confirmation
-                      code, you will have to start the whole process all over
-                      again!
-                      <br />
-                      Please go check your email now for the code. If you do not
-                      see it, please check your Spam or Junk Folder.
-                    </div>
-                  </>
-                )} */}
-              <br />
+
               {index + 1 < 4 && (
-                <>
-                  <input
-                    type="button"
-                    onClick={nextStep}
-                    className="next action-button"
-                    value="Next"
-                  />
-                  {index > 0 && (
+                <div className="button-container">
+                  <div className="button-next-prev">
+                    {index > 0 && (
+                      <input
+                        type="button"
+                        onClick={prevStep}
+                        className="previous action-button-previous"
+                        value="Previous"
+                      />
+                    )}
                     <input
                       type="button"
-                      onClick={prevStep}
-                      className="previous action-button-previous"
-                      value="Previous"
+                      onClick={nextStep}
+                      className="next action-button"
+                      value="Next"
                     />
-                  )}
-                </>
+                  </div>
+                </div>
               )}
             </div>
             {index + 1 === 4 && (
-              <>
-                <button
-                  className={`submit action-button 
-                  // ${!captchaState && "cursor-not-allowed"}      
+              <div className="button-container">
+                <div className="button-next-prev">
+                  {" "}
+                  <input
+                    type="button"
+                    onClick={prevStep}
+                    className="previous action-button-previous"
+                    value="Previous"
+                  />
+                  <button
+                    className={`submit action-button 
+                   ${!captchaState && "cursor-not-allowed"}      
                               `}
-                  onClick={handleRegistration}
-                  type="button"
-                  // disabled={!captchaState}
-                >
-                  Create Account {isLoading && <Loader />}
-                </button>
-                <input
-                  type="button"
-                  onClick={prevStep}
-                  className="previous action-button-previous"
-                  value="Previous"
-                />
-              </>
+                    onClick={handleRegistration}
+                    type="button"
+                    // disabled={!captchaState}
+                  >
+                    Create Account {isLoading && <Loader />}
+                  </button>
+                </div>
+              </div>
             )}
           </fieldset>
         ))}

@@ -41,7 +41,8 @@ element-container{
     border-radius: 4px;
     border: 1px solid #3C3C3C;
     background: #2C2C2C;
-    color: white
+    color: white;
+    width: 100%;
   } 
   
   * {
@@ -188,26 +189,32 @@ element-container{
     border: 1px solid #FFAE00;
     outline-width: 0
   }
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Adjust the gap as needed */
+    position: absolute;
+    right: 10px;
+    bottom: -15%;
+  }
   
-   .action-button {
+  .action-button {
     width: 132px;
-    background: #FFAE00 !important;
+    background: #ffae00 !important;
     font-weight: bold;
     color: white;
     border: 0 none;
     border-radius: 0px;
-    cursor: pointer;
     padding: 10px 5px;
-    margin: 10px 330px 10px 5px;
-        float: right;
+    cursor: pointer;
   }
   
-   .action-button:hover,
-   .action-button:focus {
-    background-color: #311B92
+  .action-button:hover,
+  .action-button:focus {
+    background-color: #311b92;
   }
   
-   .action-button-previous {
+  .action-button-previous {
     width: 100px;
     background: #616161 !important;
     font-weight: bold;
@@ -216,13 +223,16 @@ element-container{
     border-radius: 0px;
     cursor: pointer;
     padding: 10px 5px;
-    margin: 10px 5px 10px 0px;
-    float: right;
   }
   
-   .action-button-previous:hover,
-   .action-button-previous:focus {
-    background-color: #000000
+  .action-button-previous:hover,
+  .action-button-previous:focus {
+    background-color: #000000;
+  }
+  
+  .button-next-prev {
+    display: flex;
+    gap: 10px; /* Adjust the gap as needed */
   }
   
   .card {
@@ -354,6 +364,26 @@ element-container{
   
 /* Common styles for all devices */
 
+.form-index1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px; /* Adjust the gap as needed */
+  margin-bottom: 16px; /* Add some spacing between rows */
+  padding: 1%;
+}
+
+.form-index1 > * {
+  flex: 1;
+  min-width: 150px; /* Ensure a minimum width */
+  height: 59px; /* Ensure a consistent height */
+}
+
+.zip-code, .phone-number {
+  flex: 1;
+  min-width: 150px;
+  height: 59px;
+}
 
 @media only screen and (max-width: 767px) {
   .form-container {

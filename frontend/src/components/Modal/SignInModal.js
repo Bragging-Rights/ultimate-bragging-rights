@@ -148,8 +148,13 @@ export const SignInModal = (props) => {
       <br />
       <div className="password-reset-container text-white">
         <button
-          className="reset-password-btn text-yellow-300"
-          style={{ textDecoration: "underline", fontSize: "16px" }}
+          style={{
+            fontSize: "16px",
+            color: "#fcd34d",
+            cursor: "pointer",
+            backgroundColor: "transparent",
+            border: "none",
+          }}
           onClick={() => setForgotPasswordModalOpen(true)}
         >
           Forgot Password?
@@ -165,6 +170,7 @@ export const SignInModal = (props) => {
           style={{
             color: "#ff0000",
             fontSize: "16px",
+            padding: "1%",
           }}
           onClick={() => setRegistrationModalOpen(true)}
         >
