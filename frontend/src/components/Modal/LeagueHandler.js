@@ -63,12 +63,16 @@ const LeagueHandler = ({
       </StyledButton>
       <StyledModalSelect
         label={<StyledLabel>*</StyledLabel>}
-        options={options}
+        options={[
+          { label: "Select league", value: "" }, // Placeholder option
+          ...options, // Spread the existing options array
+        ]}
         name={`league`}
         width="100%"
-        value={info?.league}
+        value={info?.league || ""} // Ensure placeholder is selected if no league is set
         onChange={(e) => handleLeagueChange(e, index)}
       />
+
       <StyledModalInput
         label={<StyledLabel>* CREATE USERNAME</StyledLabel>}
         placeholder="Username"

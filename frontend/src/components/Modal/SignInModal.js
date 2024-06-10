@@ -171,6 +171,7 @@ export const SignInModal = (props) => {
             color: "#ff0000",
             fontSize: "16px",
             padding: "1%",
+            cursor: "pointer",
           }}
           onClick={() => setRegistrationModalOpen(true)}
         >

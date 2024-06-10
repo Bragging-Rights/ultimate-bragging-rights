@@ -774,51 +774,52 @@ const Registration = (props) => {
                   />
                 </>
               )}
-
-              {index + 1 < 4 && (
-                <div className="button-container">
-                  <div className="button-next-prev">
-                    {index > 0 && (
+              <div className="button-layout " style={{ marginTop: "7%" }}>
+                {index + 1 < 4 && (
+                  <div className="button-container">
+                    <div className="button-next-prev">
+                      {index > 0 && (
+                        <input
+                          type="button"
+                          onClick={prevStep}
+                          className="previous action-button-previous"
+                          value="Previous"
+                        />
+                      )}
                       <input
                         type="button"
-                        onClick={prevStep}
-                        className="previous action-button-previous"
-                        value="Previous"
+                        onClick={nextStep}
+                        className="next action-button"
+                        value="Next"
                       />
-                    )}
+                    </div>
+                  </div>
+                )}
+              </div>
+              {index + 1 === 4 && (
+                <div className="button-container">
+                  <div className="button-next-prev">
+                    {" "}
                     <input
                       type="button"
-                      onClick={nextStep}
-                      className="next action-button"
-                      value="Next"
+                      onClick={prevStep}
+                      className="previous action-button-previous"
+                      value="Previous"
                     />
+                    <button
+                      className={`submit action-button 
+                   ${!captchaState && "cursor-not-allowed"}      
+                              `}
+                      onClick={handleRegistration}
+                      type="button"
+                      // disabled={!captchaState}
+                    >
+                      Create Account {isLoading && <Loader />}
+                    </button>
                   </div>
                 </div>
               )}
             </div>
-            {index + 1 === 4 && (
-              <div className="button-container">
-                <div className="button-next-prev">
-                  {" "}
-                  <input
-                    type="button"
-                    onClick={prevStep}
-                    className="previous action-button-previous"
-                    value="Previous"
-                  />
-                  <button
-                    className={`submit action-button 
-                   ${!captchaState && "cursor-not-allowed"}      
-                              `}
-                    onClick={handleRegistration}
-                    type="button"
-                    // disabled={!captchaState}
-                  >
-                    Create Account {isLoading && <Loader />}
-                  </button>
-                </div>
-              </div>
-            )}
           </fieldset>
         ))}
       </form>
