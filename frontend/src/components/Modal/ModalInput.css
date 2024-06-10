@@ -189,52 +189,55 @@ element-container{
     border: 1px solid #FFAE00;
     outline-width: 0
   }
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px; /* Adjust the gap as needed */
-    position: absolute;
-    right: 10px;
-    bottom: -15%;
-  }
-  
-  .action-button {
-    width: 132px;
-    background: #ffae00 !important;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    padding: 10px 5px;
-    cursor: pointer;
-  }
-  
-  .action-button:hover,
-  .action-button:focus {
-    background-color: #311b92;
-  }
-  
-  .action-button-previous {
-    width: 100px;
-    background: #616161 !important;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 5px;
-  }
-  
-  .action-button-previous:hover,
-  .action-button-previous:focus {
-    background-color: #000000;
-  }
-  
-  .button-next-prev {
-    display: flex;
-    gap: 10px; /* Adjust the gap as needed */
-  }
-  
+ /* Container for the buttons, positioned at the bottom right of the screen */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Adjust the gap as needed */
+  position: fixed; /* Use fixed positioning to keep the buttons in place */
+  right: 50px;
+  bottom: 50px; /* Adjust the bottom position as needed */
+  z-index: 1000; /* Ensure the buttons are on top of other content */
+}
+
+.action-button {
+  width: 132px;
+  background: #ffae00 !important;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.action-button:hover,
+.action-button:focus {
+  background-color: #311b92;
+}
+
+.action-button-previous {
+  width: 100px;
+  background: #616161 !important;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 10px 5px;
+}
+
+.action-button-previous:hover,
+.action-button-previous:focus {
+  background-color: #000000;
+}
+
+/* Container for the previous and next buttons, with some gap between them */
+.button-next-prev {
+  display: flex;
+  gap: 10px; /* Adjust the gap as needed */
+}
+
   .card {
     z-index: 0;
     border: none;
