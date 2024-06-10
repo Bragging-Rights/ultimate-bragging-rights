@@ -13,12 +13,13 @@ const TableComponent = () => {
   const id = localStorage.getItem("_id");
 
   const getUser = () => {
-    getUserById(id).then((res) => {
+    return getUserById(id).then((res) => {
       console.log("User data:", res);
+      return res.data; // Return the user data
     });
   };
 
-  const getResult = () => {
+  const getResult = (userData) => {
     getGamePlayedByUserId(id)
       .then((res) => {
         console.log("Game data:", res);
@@ -31,7 +32,17 @@ const TableComponent = () => {
           const filteredData = res.data.data.gamesPlayed.filter(
             (game) => game.league === selectedLeague
           );
-          setDataRows(filteredData);
+
+          // Add user data to each game entry
+          const enhancedData = filteredData.map((game) => ({
+            ...game,
+            co: userData.country || "-",
+            state: userData.state || "-",
+            city: userData.city || "-",
+            player: userData.username || "-",
+          }));
+
+          setDataRows(enhancedData);
 
           // Create a map of gameData for easy lookup
           const gameDataArray = res.data.data.gameData || [];
@@ -41,7 +52,7 @@ const TableComponent = () => {
           });
           setGameDataMap(gameDataLookup);
 
-          console.log("Filtered data:", filteredData);
+          console.log("Enhanced data:", enhancedData);
           console.log("Game Data Map:", gameDataLookup);
         } else {
           console.error("Expected array but got:", res);
@@ -58,8 +69,10 @@ const TableComponent = () => {
     } else {
       setFilteredHeaderOptions([]); // Set empty array for consistency
     }
-    getUser();
-    getResult();
+
+    getUser().then((userData) => {
+      getResult(userData);
+    });
   }, [selectedLeague]);
 
   return (
@@ -112,9 +125,9 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">
                     {row.state || "-"}
                   </td>
-                  <td className="text-xs font-medium text-center">
+                  {/* <td className="text-xs font-medium text-center">
                     {row.prov || "-"}
-                  </td>
+                  </td> */}
                   <td className="text-xs font-medium text-center">
                     {row.city || "-"}
                   </td>
