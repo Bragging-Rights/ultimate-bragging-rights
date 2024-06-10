@@ -11,7 +11,7 @@ exports.signUpController = async (req, res) => {
     const user = req.body;
     const usermail = user.email;
     // Check if the email is unique
-    const existingUser = await User.findOne({ email: useremail });
+    const existingUser = await User.findOne({ email: usermail });
     if (existingUser) {
       return res.status(409).json({
         message: "Email already exists. Please try another one",
@@ -20,7 +20,7 @@ exports.signUpController = async (req, res) => {
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(user.password, salt);
 
     let refferal;
     if (user.referralName) {
@@ -38,7 +38,7 @@ exports.signUpController = async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       password: hashedPassword, // Save the hashed password
-      username, ///to be cheked
+
       referredBy: refferal ? refferal._id : null,
       city: user.city,
       state: user.province,
@@ -67,6 +67,52 @@ exports.signUpController = async (req, res) => {
   }
 };
 
+exports.signInController = async (req, res) => {
+  const { email, password } = req.body;
+  console.log("email", email);
+
+  try {
+    const foundUser = await User.findOne({ email: email });
+    console.log(foundUser);
+    if (!foundUser) {
+      return res
+        .status(201)
+        .json(responseObject({}, "Incorrect username or password.", true));
+    }
+
+    const checkPassword = await bcrypt.compare(password, foundUser.password);
+    console.log("checked password", checkPassword);
+    if (!checkPassword) {
+      return res
+        .status(201)
+        .json(responseObject({}, "Incorrect username or password.", true));
+    }
+
+    const payload = {
+      user: {
+        id: foundUser._id,
+        role: foundUser?.role,
+      },
+    };
+    delete foundUser.password;
+    delete foundUser.otp;
+    console.log(config);
+    // jwt.sign(payload, config.jwtSecret, (err, token) => {
+    jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
+      if (err) {
+        res.status(400).json(responseObject({}, "Jwt Error", true));
+        console.log(err);
+      } else {
+        foundUser.token = token;
+        res
+          .status(200)
+          .json(responseObject(foundUser, "Logged In Successfully", false));
+      }
+    });
+  } catch (err) {
+    res.status(404).send(responseObject({}, "Error Logging in", false));
+  }
+};
 exports.useAffiliateController = async (req, res) => {
   try {
     const { affiliateCode } = req.body;
@@ -145,52 +191,6 @@ exports.createCheckout = async (req, res) => {
   } catch (error) {
     console.error("Error creating Checkout session:", error);
     res.status(500).json({ error: "Failed to create Checkout session" });
-  }
-};
-
-exports.signInController = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const foundUser = await User.findOne({ email });
-    console.log(foundUser);
-    if (!foundUser) {
-      return res
-        .status(201)
-        .json(responseObject({}, "Incorrect username or password.", true));
-    }
-
-    const checkPassword = await bcrypt.compare(password, foundUser.password);
-    console.log("checked password", checkPassword);
-    if (!checkPassword) {
-      return res
-        .status(201)
-        .json(responseObject({}, "Incorrect username or password.", true));
-    }
-
-    const payload = {
-      user: {
-        id: foundUser._id,
-        role: foundUser?.role,
-      },
-    };
-    delete foundUser.password;
-    delete foundUser.otp;
-    console.log(config);
-    // jwt.sign(payload, config.jwtSecret, (err, token) => {
-    jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
-      if (err) {
-        res.status(400).json(responseObject({}, "Jwt Error", true));
-        console.log(err);
-      } else {
-        foundUser.token = token;
-        res
-          .status(200)
-          .json(responseObject(foundUser, "Logged In Successfully", false));
-      }
-    });
-  } catch (err) {
-    res.status(404).send(responseObject({}, "Error Logging in", false));
   }
 };
 
