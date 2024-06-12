@@ -39,7 +39,7 @@ const TableComponent = () => {
             co: userData.country || "-",
             state: userData.state || "-",
             city: userData.city || "-",
-            player: userData.username || "-",
+            player: userData.leagues[0]?.username || "-", // Extracting username
           }));
 
           setDataRows(enhancedData);
@@ -125,9 +125,6 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">
                     {row.state || "-"}
                   </td>
-                  {/* <td className="text-xs font-medium text-center">
-                    {row.prov || "-"}
-                  </td> */}
                   <td className="text-xs font-medium text-center">
                     {row.city || "-"}
                   </td>

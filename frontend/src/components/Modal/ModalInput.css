@@ -1,24 +1,25 @@
-element-container{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 49%;
-  }
-  .element-container .star{
+element-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 49%;
+}
+
+.element-container .star {
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
-  background:  linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
+  background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  }
-  
-  .element-container .input-label{
-  
+}
+
+.element-container .input-label {
+
   color: #FFF;
   font-family: Inter;
   font-size: 16px;
@@ -26,61 +27,63 @@ element-container{
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
-  }
-  .element-container input {
-  
-    padding: 17px 20px;
-    border-radius: 4px;
-    border: 1px solid #3C3C3C;
-    background: #2C2C2C;
-    color: white;
-  } 
-  .element-container select{
-  
-    padding: 16px 20px;
-    border-radius: 4px;
-    border: 1px solid #3C3C3C;
-    background: #2C2C2C;
-    color: white;
-    width: 100%;
-  } 
-  
-  * {
-    margin: 0;
-    padding: 0
-  }
-  
-  html {
-    height: 100%
-  }
-  
-  p {
-    color: grey
-  }
-  
-  #heading {
-    text-transform: uppercase;
-    color: #FFAE00;
-    font-weight: normal
-  }
-  
-  #msform {
-    text-align: center;
-    position: relative;
-    margin-top: 20px
-  }
-  
-  #msform fieldset {
-    
-    border: 0 none;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    padding-bottom: 20px;
-    position: relative
-  }
-  
+}
+
+.element-container input {
+
+  padding: 17px 20px;
+  border-radius: 4px;
+  border: 1px solid #3C3C3C;
+  background: #2C2C2C;
+  color: white;
+}
+
+.element-container select {
+
+  padding: 16px 20px;
+  border-radius: 4px;
+  border: 1px solid #3C3C3C;
+  background: #2C2C2C;
+  color: white;
+  width: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0
+}
+
+html {
+  height: 100%
+}
+
+p {
+  color: grey
+}
+
+#heading {
+  text-transform: uppercase;
+  color: #FFAE00;
+  font-weight: normal
+}
+
+#msform {
+  text-align: center;
+  position: relative;
+  margin-top: 20px
+}
+
+#msform fieldset {
+
+  border: 0 none;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+  position: relative
+}
+
 /* Default styles for all screens */
 /* Default styles for all screens */
 .form-card {
@@ -121,16 +124,19 @@ element-container{
 /* Media query for smaller screens, like mobile phones */
 @media only screen and (max-width: 600px) {
   .form-card {
-    margin-left: -10px;  
-    width: 100%;       
-      overflow-x: auto; /* Enable horizontal scrolling if needed */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
-    max-height: 50vh; /* Limit the maximum height if needed */
+    margin-left: -10px;
+    width: 100%;
+    overflow-x: auto;
+    /* Enable horizontal scrolling if needed */
+    overflow-y: auto;
+    /* Enable vertical scrolling if needed */
+    max-height: 50vh;
+    /* Limit the maximum height if needed */
   }
 
 
   .custom-modal {
-      width: 90%; 
+    width: 90%;
   }
 
 
@@ -155,49 +161,55 @@ element-container{
 /* Media query for larger screens, like laptops and desktops */
 @media only screen and (min-width: 1025px) {
   .form-card {
-      width: 90%;  /* Adjust the width for larger screens */
+    width: 90%;
+    /* Adjust the width for larger screens */
   }
 
 
 }
 
 
-   fieldset:not(:first-of-type) {
-    display: none
-  }
-  
-   textarea {
-    padding: 8px 15px 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 25px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: montserrat;
-    color: #2C3E50;
-    background-color: #ECEFF1;
-    font-size: 16px;
-    letter-spacing: 1px
-  }
-  
-   input:focus,
-   textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #FFAE00;
-    outline-width: 0
-  }
- /* Container for the buttons, positioned at the bottom right of the screen */
+fieldset:not(:first-of-type) {
+  display: none
+}
+
+textarea {
+  padding: 8px 15px 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  background-color: #ECEFF1;
+  font-size: 16px;
+  letter-spacing: 1px
+}
+
+input:focus,
+textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #FFAE00;
+  outline-width: 0
+}
+
+/* Container for the buttons, positioned at the bottom right of the screen */
 .button-container {
   display: flex;
   justify-content: flex-end;
-  gap: 10px; /* Adjust the gap as needed */
-  position: fixed; /* Use fixed positioning to keep the buttons in place */
+  gap: 10px;
+  /* Adjust the gap as needed */
+  position: fixed;
+  /* Use fixed positioning to keep the buttons in place */
   right: 50px;
-  bottom: 50px; /* Adjust the bottom position as needed */
-  z-index: 1000; /* Ensure the buttons are on top of other content */
+  bottom: 50px;
+  /* Adjust the bottom position as needed */
+  z-index: 1000;
+  /* Ensure the buttons are on top of other content */
 }
 
 .action-button {
@@ -235,154 +247,160 @@ element-container{
 /* Container for the previous and next buttons, with some gap between them */
 .button-next-prev {
   display: flex;
-  gap: 10px; /* Adjust the gap as needed */
+  gap: 10px;
+  /* Adjust the gap as needed */
 }
 
-  .card {
-    z-index: 0;
-    border: none;
-    position: relative
-  }
-  
-  .fs-title {
-    font-size: 25px;
-    color: #FFAE00;
-    margin-bottom: 15px;
-    font-weight: normal;
-    text-align: left
-  }
-  
-  .purple-text {
-    color: #FFAE00;
-    font-weight: normal
-  }
-  
-  .steps {
-    font-size: 25px;
-    color: gray;
-    margin-bottom: 10px;
-    font-weight: normal;
-    text-align: right
-  }
-  
-  .fieldlabels {
-    color: gray;
-    text-align: left
-  }
-  
-  #progressbar {
-    margin-bottom: 30px;
-    overflow: hidden;
-    color: lightgrey
-  }
-  
-  #progressbar .active {
-    color: #FFAE00
-  }
-  
-  #progressbar li {
-    list-style-type: none;
-    font-size: 15px;
-    width: 25%;
-    float: left;
-    position: relative;
-    font-weight: 400
-  }
-  
-  #progressbar #account:before {
-    font-family: FontAwesome;
-    content: "\f13e"
-  }
-  
-  #progressbar #personal:before {
-    font-family: FontAwesome;
-    content: "\f007"
-  }
-  
-  #progressbar #payment:before {
-    font-family: FontAwesome;
-    content: "\f030"
-  }
-  
-  #progressbar #confirm:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-  }
-  
-  #progressbar li:before {
-    width: 50px;
-    height: 50px;
-    line-height: 45px;
-    display: block;
-    font-size: 20px;
-    color: #ffffff;
-    background: lightgray;
-    border-radius: 50%;
-    margin: 0 auto 10px auto;
-    padding: 2px
-  }
-  
-  #progressbar li:after {
-    content: '';
-    width: 100%;
-    height: 2px;
-    background: lightgray;
-    position: absolute;
-    left: 0;
-    top: 25px;
-    z-index: -1
-  }
-  
-  #progressbar li.active:before,
-  #progressbar li.active:after {
-    background: #FFAE00
-  }
-  
-  .progress {
-    height: 20px
-  }
-  
-  .progress-bar {
-    background-color: #FFAE00
-  }
-  
-  .fit-image {
-    width: 100%;
-    object-fit: cover
-  }
-  
-  section {
-    padding: 100px;
+.card {
+  z-index: 0;
+  border: none;
+  position: relative
+}
+
+.fs-title {
+  font-size: 25px;
+  color: #FFAE00;
+  margin-bottom: 15px;
+  font-weight: normal;
+  text-align: left
+}
+
+.purple-text {
+  color: #FFAE00;
+  font-weight: normal
+}
+
+.steps {
+  font-size: 25px;
+  color: gray;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: right
+}
+
+.fieldlabels {
+  color: gray;
+  text-align: left
+}
+
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: lightgrey
+}
+
+#progressbar .active {
+  color: #FFAE00
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 15px;
+  width: 25%;
+  float: left;
+  position: relative;
+  font-weight: 400
+}
+
+#progressbar #account:before {
+  font-family: FontAwesome;
+  content: "\f13e"
+}
+
+#progressbar #personal:before {
+  font-family: FontAwesome;
+  content: "\f007"
+}
+
+#progressbar #payment:before {
+  font-family: FontAwesome;
+  content: "\f030"
+}
+
+#progressbar #confirm:before {
+  font-family: FontAwesome;
+  content: "\f00c"
+}
+
+#progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  /* color: #ffffff; */
+  background: lightgray;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px
+}
+
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: lightgray;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #FFAE00
+}
+
+.progress {
+  height: 20px
+}
+
+.progress-bar {
+  background-color: #FFAE00
+}
+
+.fit-image {
+  width: 100%;
+  object-fit: cover
+}
+
+section {
+  padding: 100px;
   width: 1000px;
-    margin: 30px auto;
-    margin-right: 30px;
-    background: #212227;
-    background: rgba(33, 34, 39, 0.9);
-    backdrop-filter: blur(10px);
-    box-shadow: 0px 2px 20px 0px rgba(255, 174, 0, 0.7), 0px 2px 40px 20px rgba(255, 174, 0, 0.3);
-    border: 2px solid #FFAE00;
-    border-radius: 5px;
-    transition: transform 0.2s ease-in-out;
-  }
-  
+  margin: 30px auto;
+  margin-right: 30px;
+  background: #212227;
+  background: rgba(33, 34, 39, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 2px 20px 0px rgba(255, 174, 0, 0.7), 0px 2px 40px 20px rgba(255, 174, 0, 0.3);
+  border: 2px solid #FFAE00;
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+
 /* Common styles for all devices */
 
 .form-index1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px; /* Adjust the gap as needed */
-  margin-bottom: 16px; /* Add some spacing between rows */
+  gap: 16px;
+  /* Adjust the gap as needed */
+  margin-bottom: 16px;
+  /* Add some spacing between rows */
   padding: 1%;
 }
 
-.form-index1 > * {
+.form-index1>* {
   flex: 1;
-  min-width: 150px; /* Ensure a minimum width */
-  height: 59px; /* Ensure a consistent height */
+  min-width: 150px;
+  /* Ensure a minimum width */
+  height: 59px;
+  /* Ensure a consistent height */
 }
 
-.zip-code, .phone-number {
+.zip-code,
+.phone-number {
   flex: 1;
   min-width: 150px;
   height: 59px;
@@ -392,18 +410,16 @@ element-container{
   .form-container {
     flex-direction: column;
     width: 65vh;
-    
+
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-}
+@media only screen and (min-width: 768px) and (max-width: 1023px) {}
 
-@media only screen and (min-width: 1024px) and (max-width: 1279px) {
-}
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {}
 
-@media only screen and (min-width: 1280px) and (max-width: 1400px){
-}
+@media only screen and (min-width: 1280px) and (max-width: 1400px) {}
+
 .form-container {
   display: flex;
   flex-wrap: wrap;
@@ -429,48 +445,50 @@ element-container{
 
 /* Styles for mobile devices (e.g., iPhone, Android) */
 @media only screen and (max-width: 767px) {
-  .action-button{
-    margin: 10px 247px; 
+  .action-button {
+    margin: 10px 247px;
 
   }
+
   .action-button-previous {
-    margin: 10px -130px; 
+    margin: 10px -130px;
   }
+
   .mb-2 {
     margin-bottom: 0.5rem;
     display: flex;
     flex-wrap: wrap;
     width: 68vh;
-}
-.camcel-circle{
-  margin: 10px -130px; 
-}
-.add-another-league{
-  margin: 10px 194px; 
-}
+  }
+
+  .camcel-circle {
+    margin: 10px -130px;
+  }
+
+  .add-another-league {
+    margin: 10px 194px;
+  }
 }
 
 /* Styles for tablets (e.g., iPad) */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
+
   .action-button,
-  .action-button-previous {
-  }
+  .action-button-previous {}
 }
 
 /* Styles for small desktops and laptops */
 @media only screen and (min-width: 1024px) and (max-width: 1279px) {
+
   .action-button,
-  .action-button-previous {
-  }
+  .action-button-previous {}
 }
 
 /* Styles for larger desktops and TVs */
-@media only screen and (min-width: 1280px) {
-}
+@media only screen and (min-width: 1280px) {}
 
 /* Styles for iMac or large screens */
-@media only screen and (min-width: 1440px) {
-}
+@media only screen and (min-width: 1440px) {}
 
 /* 
 password section */

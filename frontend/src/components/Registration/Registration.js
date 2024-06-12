@@ -669,6 +669,12 @@ const Registration = (props) => {
                           />
                         );
                       })}
+                      <div
+                        className="add-another-league"
+                        onClick={addAnotherLeague}
+                      >
+                        +Add Another League
+                      </div>
                     </div>
                   </div>
                 </>
