@@ -91,6 +91,27 @@ const TableComponent = () => {
           {Array.isArray(dataRows) && dataRows.length > 0 ? (
             dataRows.map((row, index) => {
               const gameData = gameDataMap[row.gameData] || {}; // Get the corresponding gameData
+
+              // Calculate ML, O/U, and Spread
+              const ml = `${gameData["h-ml-points"] || "0"} - ${
+                gameData["v-ml-points"] || "0"
+              }`;
+              const ou = `${gameData["h-ou-points"] || "0"} - ${
+                gameData["v-ou-points"] || "0"
+              }`;
+              const spread = `${gameData["h-sprd-points"] || "0"} - ${
+                gameData["v-sprd-points"] || "0"
+              }`;
+
+              // Calculate TP (Total Points)
+              const tp =
+                parseFloat(gameData["h-ml-points"] || 0) +
+                parseFloat(gameData["v-ml-points"] || 0) +
+                (parseFloat(gameData["h-ou-points"] || 0) +
+                  parseFloat(gameData["v-ou-points"] || 0)) +
+                (parseFloat(gameData["h-sprd-points"] || 0) +
+                  parseFloat(gameData["v-sprd-points"] || 0));
+
               return (
                 <tr
                   key={index}
@@ -134,21 +155,13 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">
                     {row.R || "-"}
                   </td>
-                  <td className="text-xs font-medium text-center">
-                    {row.TP || "-"}
-                  </td>
+                  <td className="text-xs font-medium text-center">{tp}</td>
                   <td className="text-xs font-medium text-center">
                     {row.BR || "-"}
                   </td>
-                  <td className="text-xs font-medium text-center">
-                    {row.ML || "-"}
-                  </td>
-                  <td className="text-xs font-medium text-center">
-                    {row.O_U || "-"}
-                  </td>
-                  <td className="text-xs font-medium text-center">
-                    {row.Sprd || "-"}
-                  </td>
+                  <td className="text-xs font-medium text-center">{ml}</td>
+                  <td className="text-xs font-medium text-center">{ou}</td>
+                  <td className="text-xs font-medium text-center">{spread}</td>
                   <td className="text-xs font-medium text-center">
                     {row["1S"] || "-"}
                   </td>
