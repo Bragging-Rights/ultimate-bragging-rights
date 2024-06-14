@@ -283,10 +283,7 @@ const ScoreEntry = () => {
                     selectedLeague !== "NCAA" &&
                     selectedLeague !== "UFL" &&
                     selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
-                  {selectedLeague !== "NFL" &&
-                    selectedLeague !== "CFL" &&
-                    selectedLeague !== "NCAAF" &&
-                    selectedLeague !== "UFL" && <TableCell>#</TableCell>}
+                  {<TableCell></TableCell>}
                   <TableCell>Not Completed</TableCell>
                   <TableCell>Reason</TableCell>
                 </TableRow>
@@ -342,16 +339,28 @@ const ScoreEntry = () => {
                       </RadioGroup>
                     </TableCell>
                     <TableCell>
-                      <RadioGroup
-                        value={selectedValues[game._id]}
-                        onChange={(event) => handleRadioChange(event, game._id)}
-                      >
-                        <FormControlLabel
-                          value="S/O"
-                          control={<Radio size="small" />}
-                          label=""
-                        />
-                      </RadioGroup>
+                      {selectedLeague !== "NBA" &&
+                        selectedLeague !== "WNBA" &&
+                        selectedLeague !== "NCAAB" &&
+                        selectedLeague !== "CFL" &&
+                        selectedLeague !== "NCAAF" &&
+                        selectedLeague !== "MLB" &&
+                        selectedLeague !== "NCAA" &&
+                        selectedLeague !== "UFL" &&
+                        selectedLeague !== "NFL" && (
+                          <RadioGroup
+                            value={selectedValues[game._id]}
+                            onChange={(event) =>
+                              handleRadioChange(event, game._id)
+                            }
+                          >
+                            <FormControlLabel
+                              value="S/O"
+                              control={<Radio size="small" />}
+                              label=""
+                            />
+                          </RadioGroup>
+                        )}
                     </TableCell>
                     <TableCell>
                       <Select

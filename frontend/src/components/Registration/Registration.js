@@ -197,6 +197,7 @@ const Registration = (props) => {
     }
   };
 
+  //refresh
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => Register(data),
     {
@@ -211,10 +212,13 @@ const Registration = (props) => {
           displayToast(rec?.data?.message, "error");
         } else {
           displayToast("Register successfully.", "success");
+          window.location.reload(); // Add this line to refresh the page
         }
       },
     }
   );
+
+  //refresh
 
   const handleRegistration = async () => {
     const requiredFields = [
@@ -228,6 +232,7 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
+      "termsAccepted",
       // "username", // Add username to required fields
     ];
     // leagues
