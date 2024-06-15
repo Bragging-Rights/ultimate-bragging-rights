@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
+import Swal from "sweetalert2";
 import "../Modal/Modal.css";
 import { useQuery, useMutation } from "react-query";
 import { getTeasmByLeage } from "../../Apis/Teams";
@@ -16,6 +17,7 @@ import { Register } from "../../Apis/auth";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
+import ModalPassword from "../Modal/ModalPassword";
 
 const Registration = (props) => {
   const { modalIsOpen, closeModal } = props;
@@ -35,7 +37,6 @@ const Registration = (props) => {
   ]);
 
   const [leaguesOptions, setLeaguesOptions] = useState([
-    // { value: "", label: "Select league" },
     { value: "nba", label: "NBA", isSelected: false },
     { value: "nfl", label: "NFL", isSelected: false },
     { value: "mlb", label: "MLB", isSelected: false },
@@ -48,10 +49,7 @@ const Registration = (props) => {
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    // enabled: false,
-    onError: (err) => {
-      // displayToast("An error occurred while getting the teams.", "error");
-    },
+    onError: (err) => {},
     onSuccess: (rec) => {
       const sortedTeams = rec.data.sort((a, b) => {
         const nameA = a?.displayName;
@@ -71,30 +69,21 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    // enabled: false,
-    onError: (err) => {
-      // displayToast("An error occurred while getting the teams.", "error");
-    },
+    onError: (err) => {},
     onSuccess: (rec) => {
       setAvailableTeams({ ...availableTeams, nba: [...rec.data] });
     },
   });
 
   const { refetch: refetchNfl } = useQuery(["teams", "nfl"], getTeasmByLeage, {
-    // enabled: false,
-    onError: (err) => {
-      // displayToast("An error occurred while getting the teams.", "error");
-    },
+    onError: (err) => {},
     onSuccess: (rec) => {
       setAvailableTeams({ ...availableTeams, nfl: [...rec.data] });
     },
   });
 
   const { refetch: refetchMlb } = useQuery(["teams", "mlb"], getTeasmByLeage, {
-    // enabled: false,
-    onError: (err) => {
-      // displayToast("An error occurred while getting the teams.", "error");
-    },
+    onError: (err) => {},
     onSuccess: (rec) => {
       setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
     },
@@ -105,14 +94,12 @@ const Registration = (props) => {
     refetchNfl();
     refetchNba();
     refetchNhl();
-    // refetch();
   }, [league]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
     couponcode: "",
-
     lastName: "",
     email: "",
     city: "",
@@ -124,7 +111,6 @@ const Registration = (props) => {
     confirmPassword: "",
     referralName: "",
     username: "",
-
     termsAccepted: false,
   });
   const [countryCode, setCountryCode] = useState("");
@@ -197,7 +183,6 @@ const Registration = (props) => {
     }
   };
 
-  //refresh
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => Register(data),
     {
@@ -218,8 +203,6 @@ const Registration = (props) => {
     }
   );
 
-  //refresh
-
   const handleRegistration = async () => {
     const requiredFields = [
       "firstName",
@@ -232,10 +215,7 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
-      "termsAccepted",
-      // "username", // Add username to required fields
     ];
-    // leagues
 
     const invalidFields = requiredFields.filter((field) => !formData[field]);
 
@@ -254,7 +234,6 @@ const Registration = (props) => {
       return;
     }
 
-    // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       displayToast(
         "Passwords do not match. Please enter matching passwords.",
@@ -273,6 +252,27 @@ const Registration = (props) => {
     console.log(data);
     mutate(data);
   };
+
+  const handleNextClick = () => {
+    if (currentStep === 3 && userLeagues.length === 1) {
+      Swal.fire({
+        title: "You have only selected one league. Do you want to continue?",
+        showDenyButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          nextStep(); // Proceed to the next step
+        } else if (result.isDenied) {
+          Swal.fire("You can add more leagues before proceeding", "", "info");
+          // Stay on the current page
+        }
+      });
+    } else {
+      nextStep(); // Proceed to the next step if more than one league is selected or not on the "Choose League" step
+    }
+  };
+
   const nextStep = () => {
     if (validateStep()) {
       setCurrentStep(currentStep + 1);
@@ -284,12 +284,10 @@ const Registration = (props) => {
   };
 
   const displayErrorMessage = (message) => {
-    // Implement your error display mechanism here
     console.error(message);
   };
 
   const validateStep = () => {
-    // Validation for the first step
     if (currentStep === 1) {
       const requiredFields = ["firstName", "lastName", "gender"];
       const invalidFields = requiredFields.filter((field) => !formData[field]);
@@ -303,7 +301,6 @@ const Registration = (props) => {
       }
     }
 
-    // Validation for the second step
     if (currentStep === 2) {
       const requiredFields = [
         "country",
@@ -323,7 +320,6 @@ const Registration = (props) => {
       }
     }
 
-    // Validation for the third step
     if (currentStep === 3) {
       if (!validateLeagues(userLeagues)) {
         displayToast(
@@ -540,10 +536,8 @@ const Registration = (props) => {
                       }
                       placeholder={"Coupon Code"}
                       name="couponCode"
-                      // value={formData.couponcode}
                       onChange={inputChangeHandler}
                       style={{ flex: "1" }}
-                      // requiredFields
                     />
                   </div>
                 </>
@@ -725,7 +719,7 @@ const Registration = (props) => {
                         type="email"
                         name="email"
                       />
-                      <ModalInput
+                      <ModalPassword
                         label={
                           <h2
                             id="heading"
@@ -741,7 +735,7 @@ const Registration = (props) => {
                         onChange={inputChangeHandler}
                         type="password"
                       />
-                      <ModalInput
+                      <ModalPassword
                         label={
                           <h2
                             id="heading"
@@ -770,7 +764,9 @@ const Registration = (props) => {
                       name="termsAccepted"
                       checked={formData.termsAccepted}
                       onChange={handleTermsChange}
+                      required // This makes the checkbox required
                     />
+
                     <br />
                     <br />
                     <div style={{ color: "white" }}>
@@ -785,7 +781,7 @@ const Registration = (props) => {
                   />
                 </>
               )}
-              <div className="button-layout " style={{ marginTop: "7%" }}>
+              <div className="button-layout" style={{ marginTop: "7%" }}>
                 {index + 1 < 4 && (
                   <div className="button-container">
                     <div className="button-next-prev">
@@ -799,7 +795,7 @@ const Registration = (props) => {
                       )}
                       <input
                         type="button"
-                        onClick={nextStep}
+                        onClick={handleNextClick} // Use the new function here
                         className="next action-button"
                         value="Next"
                       />
@@ -837,4 +833,5 @@ const Registration = (props) => {
     </Modal>
   );
 };
+
 export default Registration;

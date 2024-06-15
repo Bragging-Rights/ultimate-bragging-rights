@@ -1,12 +1,13 @@
 import React from "react";
 import { ImCancelCircle } from "react-icons/im";
+import styled from "styled-components";
 import ModalSelect from "./ModalSelect";
 import ModalInput from "./ModalInput";
-import styled from "styled-components";
 
+// Styled components
 const Container = styled.div`
   display: flex;
-  flex-direction: row; // Changed from column to row
+  flex-direction: row;
   gap: 1rem;
   margin-bottom: 2rem;
   position: relative;
@@ -52,6 +53,10 @@ const LeagueHandler = ({
   info,
   index,
 }) => {
+  const onLeagueChange = (e) => {
+    handleLeagueChange(e, index);
+  };
+
   return (
     <Container key={index}>
       <StyledButton
@@ -70,16 +75,15 @@ const LeagueHandler = ({
         name={`league`}
         width="100%"
         value={info?.league || ""} // Ensure placeholder is selected if no league is set
-        onChange={(e) => handleLeagueChange(e, index)}
+        onChange={onLeagueChange} // Call the handler passed from parent component
       />
-
       <StyledModalInput
         label={<StyledLabel>* CREATE USERNAME</StyledLabel>}
         placeholder="Username"
         type="text"
         name={`username`}
         value={info?.username}
-        onChange={(e) => handleLeagueChange(e, index)}
+        onChange={onLeagueChange} // Call the handler passed from parent component
         aria-label="Create Username"
       />
       <StyledModalSelect
@@ -93,7 +97,7 @@ const LeagueHandler = ({
             value: team?.fullName,
           })) || [{ label: "No team available", value: "" }]),
         ]}
-        onChange={(e) => handleLeagueChange(e, index)}
+        onChange={onLeagueChange} // Call the handler passed from parent component
       />
     </Container>
   );
