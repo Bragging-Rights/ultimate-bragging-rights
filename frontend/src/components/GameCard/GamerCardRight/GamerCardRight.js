@@ -9,6 +9,8 @@ import { useMutation } from "react-query";
 import { useLeagueContext } from "../../LeagueContext";
 
 const GamerCardRight = ({ gameData }) => {
+  const [Pick_Ei, setPick_Ei] = useState(false); // Example of setting Pick_Ei
+
   const labelStyles = {
     borderBottom: "2px solid #BE8200",
     width: "90%",
@@ -293,6 +295,7 @@ const GamerCardRight = ({ gameData }) => {
             setPick_so={setPick_so}
             setPick_ot={setPick_ot}
             setPick_Reg={setPick_Reg}
+            setPick_Ei={setPick_Ei} // Ensure setPick_Ei is passed correctly
           />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>

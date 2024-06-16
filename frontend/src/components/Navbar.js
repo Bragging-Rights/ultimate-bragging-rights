@@ -94,7 +94,7 @@ const Navbar = () => {
                     justifyContent: "flex-end",
                   }}
                 >
-                  {isHomepage && (
+                  {isHomepage && !userEmail && (
                     <Typography
                       variant="body1"
                       color="inherit"

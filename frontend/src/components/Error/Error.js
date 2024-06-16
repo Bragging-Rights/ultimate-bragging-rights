@@ -4,7 +4,6 @@ import "./error.css";
 const Error = () => {
   return (
     <div className="error-404">
-      {" "}
       <div id="clouds">
         <div className="cloud x1" />
         <div className="cloud x1_5" />
