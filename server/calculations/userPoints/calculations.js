@@ -64,14 +64,6 @@ exports.calculateResultPoints = (
     moneylineTotalPoints
   );
 
-  // const ap = accuracyPoints(
-  //   sport,
-  //   pickedScore,
-  //   actualScore,
-  //   pickedWinner,
-  //   moneylineTotalPoints
-  // );
-
   const ep = endingsPoints(sport, userpick, gameEnd, pickedScore, actualScore);
   // console.log(pickedScore, actualScore, pickedWinner, moneyline);
   const ps = perfectScore(
@@ -92,6 +84,8 @@ exports.calculateResultPoints = (
   );
 
   const sp = shutoutPoints(sport, pickedScore, actualScore);
+  // console.log("result points", vp, ep, vistor_ap, home_ap, sp, ps);
+  console.log("perfect scores", ps);
   // return vp + ep + ap + sp + ps;
   return {
     vegasOdds: vp,
@@ -128,6 +122,7 @@ const accuracyPoints = (
       pickedWinner,
       moneylineTotalPoints
     );
+    console.log("picking score", p1s, p1s2p, p2s2p);
     return { p1s: p1s, p1s2p: p1s2p, p2s2p: p2s2p };
   } else if (sport != "baseball" && sport != "hockey") {
     const p1s3p = picking1Score3Points(
@@ -154,8 +149,11 @@ const accuracyPoints = (
       pickedWinner,
       moneylineTotalPoints
     );
+
+    console.log("picking score", p1s, p1s3p, p2s3p, p1s7p, p2s7p);
     return { p1s: p1s, p1s3p: p1s3p, p2s3p: p2s3p, p1s7p: p1s7p, p2s7p: p2s7p };
   } else {
+    console.log("picking score", p1s);
     return p1s;
   }
 };
@@ -196,6 +194,7 @@ const endingsPoints = (
           extraInnings
         )
       : 0;
+  console.log("endings points", pr, po, pi, ps);
   return {
     pickRegulation: pr,
     pickOverTime: po,
@@ -258,6 +257,8 @@ const vegasOdds = (
     hOU,
     hOUpoints
   );
+
+  console.log("vegas odds", pf, pu, ps, po, pUnder);
   return {
     pickingFavorite: pf,
     pickingUnderdog: pu,
@@ -284,6 +285,8 @@ const shutoutPoints = (sport, pickedScore, actualScore) => {
             actualScore.hScore
           )
         : 0;
+
+    console.log("shutout points", oneTS, twoTS);
     return { oneTeamShutout: oneTS, twoTeamShutout: twoTS };
   }
   return 0;

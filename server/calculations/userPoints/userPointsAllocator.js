@@ -2,17 +2,20 @@ const GamesPlayed = require("../../models/gamesPlayed");
 const Game = require("../../models/games");
 
 exports.allotUserPoints = async (resultPoints) => {
-  console.log("in allotUserPoints");
-  console.log(resultPoints);
+  console.log("result points", resultPoints);
 
   resultPoints.forEach(async (r) => {
     const gamePlayed = await GamesPlayed.findOne({ _id: r.playedGame._id });
-    console.log(gamePlayed);
+    // console.log(gamePlayed);
+    console.log("result point ods", r.result);
+    Object.entries(r.result || {}).forEach(([key, value]) => {
+      console.log(key, value);
+    });
 
     if (gamePlayed) {
       const OGgame = Game.findById(r.playedGame?.gameData);
 
-      console.log(r.result?.endingsPoints);
+      // console.log(r.result?);
 
       gamePlayed.UBR = r.perfectScore;
       gamePlayed.ML = OGgame["v-ml-points"] + OGgame["h-ml-points"];
@@ -31,7 +34,7 @@ exports.allotUserPoints = async (resultPoints) => {
 
       gamePlayed.Reg = r.result?.endingsPoints?.pickRegulation;
       gamePlayed.EI = r.result?.endingsPoints.pickRegulation;
-
+      // console.log(gamePlayed);
       gamePlayed.save();
     }
   });

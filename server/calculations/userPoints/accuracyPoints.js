@@ -35,12 +35,38 @@ exports.picking1Score = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  console.log("picking1Score", pickedScore, actualScore, pickedWinner);
   let points = 0;
+
+  // Convert inputs to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
+  // Check if any of the inputs is NaN
+  if (
+    isNaN(pickedScore) ||
+    isNaN(actualScore) ||
+    isNaN(pickedWinner) ||
+    isNaN(moneylineTotalPoints)
+  ) {
+    console.error(
+      "One or more inputs are not a number:",
+      pickedScore,
+      actualScore,
+      pickedWinner,
+      moneylineTotalPoints
+    );
+    return points;
+  }
+
   if (pickedScore === actualScore) {
     points = pickedWinner
       ? moneylineTotalPoints * 0.5
       : moneylineTotalPoints * 0.25;
   }
+  console.log("picking1Score points", points);
   return points;
 };
 
