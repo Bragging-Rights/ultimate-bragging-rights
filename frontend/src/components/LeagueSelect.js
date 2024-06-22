@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "./LeagueContext";
 import {
   AppBar,
@@ -41,6 +41,14 @@ const LeagueSelect = () => {
   const [direction, setDirection] = useState("left");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+
+  // Fetch user's preferred league from local storage or API
+  useEffect(() => {
+    const preferredLeague = localStorage.getItem("preferredLeague");
+    if (preferredLeague) {
+      setSelectedLeague(preferredLeague);
+    }
+  }, [setSelectedLeague]);
 
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
@@ -181,7 +189,6 @@ const LeagueSelect = () => {
                                 transform: "translateX(-50%)",
                                 width: "30px",
                                 height: "10px",
-                                // filter: "drop-shadow(0 0 5px yellow)",
                               }}
                             />
                           )

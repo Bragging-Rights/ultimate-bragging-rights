@@ -7,6 +7,7 @@ import { ForgotPasswordModal } from "./ForgotPasswordModal";
 import Registration from "../Registration/Registration";
 import { login } from "../../Apis/auth";
 import { useNavigate } from "react-router-dom";
+import ModalPassword from "./ModalPassword";
 
 const customStyles = {
   content: {
@@ -136,7 +137,7 @@ export const SignInModal = (props) => {
           value={formData.email}
           onChange={inputChangeHandler}
         />
-        <ModalInput
+        <ModalPassword
           label={"Password"}
           placeholder={"Password"}
           type="password"

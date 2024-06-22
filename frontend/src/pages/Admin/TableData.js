@@ -27,6 +27,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { getGamesByDate, updateGameFields } from "../../Apis/games";
 import { cloneDeep } from "lodash";
+import { useMutation } from "react-query";
+import displayToast from "../../components/Alert/Alert";
 
 import "./TableData.css";
 
@@ -106,6 +108,22 @@ const ScoreEntry = () => {
     }));
   };
 
+  const { mutate, reset } = useMutation((data) => updateGameFields(data), {
+    onError: (err) => {
+      console.error("Error updating game fields:", err);
+      displayToast(
+        "An error occurred while updating the game fields.",
+        "error"
+      );
+    },
+    onSuccess: (rec) => {
+      displayToast("Game fields updated successfully.", "success");
+      reset();
+      // Refresh the page or reset the form data here
+      window.location.reload(); // You can use this or a more graceful way to reset the form data
+    },
+  });
+
   const handleReasonSubmit = (gameId) => {
     if (reason.trim() !== "") {
       setReasonData((prevReasonData) => ({
@@ -168,19 +186,11 @@ const ScoreEntry = () => {
       }
     });
 
-    console.log("GameData with Selected Radio Button and Reason:");
-    console.log(updatedGameData);
-    Promise.all(
-      updatedGameData
-        .filter((game) => game.vScore != null && game.hScore != null)
-        .map((game) => updateGameFields(game))
-    )
-      .then((responses) => {
-        console.log(responses);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    updatedGameData.forEach((game) => {
+      if (game.vScore != null && game.hScore != null) {
+        mutate(game);
+      }
+    });
 
     // Log the reason for each game
     updatedGameData.forEach((game) => {
@@ -283,10 +293,7 @@ const ScoreEntry = () => {
                     selectedLeague !== "NCAA" &&
                     selectedLeague !== "UFL" &&
                     selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
-                  {selectedLeague !== "NFL" &&
-                    selectedLeague !== "CFL" &&
-                    selectedLeague !== "NCAAF" &&
-                    selectedLeague !== "UFL" && <TableCell>#</TableCell>}
+                  {<TableCell></TableCell>}
                   <TableCell>Not Completed</TableCell>
                   <TableCell>Reason</TableCell>
                 </TableRow>
@@ -342,16 +349,28 @@ const ScoreEntry = () => {
                       </RadioGroup>
                     </TableCell>
                     <TableCell>
-                      <RadioGroup
-                        value={selectedValues[game._id]}
-                        onChange={(event) => handleRadioChange(event, game._id)}
-                      >
-                        <FormControlLabel
-                          value="S/O"
-                          control={<Radio size="small" />}
-                          label=""
-                        />
-                      </RadioGroup>
+                      {selectedLeague !== "NBA" &&
+                        selectedLeague !== "WNBA" &&
+                        selectedLeague !== "NCAAB" &&
+                        selectedLeague !== "CFL" &&
+                        selectedLeague !== "NCAAF" &&
+                        selectedLeague !== "MLB" &&
+                        selectedLeague !== "NCAA" &&
+                        selectedLeague !== "UFL" &&
+                        selectedLeague !== "NFL" && (
+                          <RadioGroup
+                            value={selectedValues[game._id]}
+                            onChange={(event) =>
+                              handleRadioChange(event, game._id)
+                            }
+                          >
+                            <FormControlLabel
+                              value="S/O"
+                              control={<Radio size="small" />}
+                              label=""
+                            />
+                          </RadioGroup>
+                        )}
                     </TableCell>
                     <TableCell>
                       <Select

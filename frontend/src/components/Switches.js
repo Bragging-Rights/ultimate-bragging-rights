@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Switches = (props) => {
- const {
+  const {
     league,
     season,
     setPick_num_ot,
@@ -9,14 +9,14 @@ const Switches = (props) => {
     setPick_ot,
     setPick_Reg,
     setPick_Ei,
- } = props;
+  } = props;
 
- const [regChecked, setRegChecked] = useState(true);
- const [otChecked, setOtChecked] = useState(false);
- const [soChecked, setSoChecked] = useState(false);
- const [eiChecked, setEiChecked] = useState(false);
+  const [regChecked, setRegChecked] = useState(true);
+  const [otChecked, setOtChecked] = useState(false);
+  const [soChecked, setSoChecked] = useState(false);
+  const [eiChecked, setEiChecked] = useState(false);
 
- return (
+  return (
     <div className="flex md:flex-row gap-5">
       {(league === "NHL" &&
         (season === "Regular" || season === "Pre Season")) ||
@@ -169,6 +169,7 @@ const Switches = (props) => {
           <select
             className="mt-4"
             onChange={(e) => setPick_num_ot(e.target.value)}
+            disabled={regChecked}
           >
             {Array.from({ length: 20 }, (_, i) => (
               <option key={i + 1} value={i + 1}>
@@ -179,7 +180,7 @@ const Switches = (props) => {
         </>
       )}
     </div>
- );
+  );
 };
 
 export default Switches;
