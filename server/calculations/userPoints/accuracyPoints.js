@@ -35,7 +35,7 @@ exports.picking1Score = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
-  console.log("picking1Score", pickedScore, actualScore, pickedWinner);
+  // console.log("picking1Score", pickedScore, actualScore, pickedWinner);
   let points = 0;
 
   // Convert inputs to numbers
@@ -76,6 +76,12 @@ exports.picking1Score2Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  // Convert values to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
   //only for baseball
   let points = 0;
   if (Math.abs(pickedScore - actualScore) <= 2) {
@@ -92,6 +98,12 @@ exports.picking2Score2Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  // Convert values to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
   //only for baseball
   let points = 0;
   let closeScore = Math.abs(pickedScore - actualScore) <= 2;
@@ -109,6 +121,12 @@ exports.picking1Score3Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  // Convert values to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
   //only for football & basketball
   let points = 0;
   if (Math.abs(pickedScore - actualScore) <= 3) {
@@ -127,6 +145,14 @@ exports.picking2Score3Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  // Convert values to numbers
+  pickedScore1 = Number(pickedScore1);
+  actualScore1 = Number(actualScore1);
+  pickedScore2 = Number(pickedScore2);
+  actualScore2 = Number(actualScore2);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
   //only for football & basketball
   let points = 0;
   let closeScore1 = Math.abs(pickedScore1 - actualScore1) <= 3;
@@ -145,6 +171,12 @@ exports.picking1Score7Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  // Convert values to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
   //only for football & basketball
   let points = 0;
   if (Math.abs(pickedScore - actualScore) <= 7) {
@@ -163,6 +195,14 @@ exports.picking2Score7Points = (
   pickedWinner,
   moneylineTotalPoints
 ) => {
+  // Convert values to numbers
+  pickedScore1 = Number(pickedScore1);
+  actualScore1 = Number(actualScore1);
+  pickedScore2 = Number(pickedScore2);
+  actualScore2 = Number(actualScore2);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
   //only for football & basketball
   let points = 0;
   let closeScore1 = Math.abs(pickedScore1 - actualScore1) <= 7;
