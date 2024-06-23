@@ -75,17 +75,25 @@ exports.calculateResultPoints = (
     moneyline.hml
   );
   const vp = vegasOdds(
-    sport,
+    // sport,
     moneyline,
-    visitorSpreadOdds,
-    homeSpreadOdds,
-    visitorOverUnderOdds,
-    HomeOverUnderOdds
+    actualScore,
+    pickedScore,
+    spread,
+    spreadPoints,
+    vOU,
+    vOUpoints,
+    hOU,
+    hOUpoints
+    // visitorSpreadOdds,
+    // homeSpreadOdds,
+    // visitorOverUnderOdds,
+    // HomeOverUnderOdds
   );
 
   const sp = shutoutPoints(sport, pickedScore, actualScore);
   // console.log("result points", vp, ep, vistor_ap, home_ap, sp, ps);
-  console.log("perfect scores", ps);
+  // console.log("perfect scores", ps);
   // return vp + ep + ap + sp + ps;
   return {
     vegasOdds: vp,

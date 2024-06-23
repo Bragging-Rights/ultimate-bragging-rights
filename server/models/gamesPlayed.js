@@ -14,6 +14,17 @@ const gamesPlayedSchema = new mongoose.Schema(
     league: String,
     innings: String,
 
+    ///result data
+    result: {
+      vegasOdds: mongoose.Schema.Types.Mixed, // Assuming dynamic structure, otherwise define a schema
+      endingsPoints: mongoose.Schema.Types.Mixed, // Assuming dynamic structure, otherwise define a schema
+      accuracyPoints: mongoose.Schema.Types.Mixed, // Assuming dynamic structure, otherwise define a schema
+      shutoutPoints: Number,
+      perfectScore: Number,
+    },
+
+    ///game data that will replace result data
+
     ///league data
 
     R: String, //rank from front

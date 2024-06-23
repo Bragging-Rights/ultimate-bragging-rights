@@ -66,7 +66,7 @@ exports.picking1Score = (
       ? moneylineTotalPoints * 0.5
       : moneylineTotalPoints * 0.25;
   }
-  console.log("picking1Score points", points);
+  // console.log("picking1Score points", points);
   return points;
 };
 
