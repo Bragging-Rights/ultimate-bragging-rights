@@ -112,6 +112,27 @@ const TableComponent = () => {
                 (parseFloat(gameData["h-sprd-points"] || 0) +
                   parseFloat(gameData["v-sprd-points"] || 0));
 
+              // Calculate 1S, 1SW2, and 2SW2
+              const homeAccuracyPoints = gameData.accuracyPoints?.home || {};
+              const visitorAccuracyPoints =
+                gameData.accuracyPoints?.visitor || {};
+
+              const oneS =
+                (homeAccuracyPoints.p1s || 0) +
+                (visitorAccuracyPoints.p1s || 0);
+              const oneSW2 =
+                (homeAccuracyPoints.p1s2p || 0) +
+                (visitorAccuracyPoints.p1s2p || 0);
+              const twoSW2 =
+                (homeAccuracyPoints.p2s2p || 0) +
+                (visitorAccuracyPoints.p2s2p || 0);
+
+              // Extract pickRegulation and pickExtrainnings
+              const pickRegulation =
+                gameData.endingsPoints?.pickRegulation || 0;
+              const pickExtrainnings =
+                gameData.endingsPoints?.pickExtrainnings || 0;
+
               return (
                 <tr
                   key={index}
@@ -162,17 +183,17 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">{ml}</td>
                   <td className="text-xs font-medium text-center">{ou}</td>
                   <td className="text-xs font-medium text-center">{spread}</td>
+                  <td className="text-xs font-medium text-center">{oneS}</td>
                   <td className="text-xs font-medium text-center">
-                    {row["1S"] || "-"}
+                    {row.oneSo || "-"}
+                  </td>
+                  <td className="text-xs font-medium text-center">{oneSW2}</td>
+                  <td className="text-xs font-medium text-center">{twoSW2}</td>
+                  <td className="text-xs font-medium text-center">
+                    {pickRegulation}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {row["1S0"] || "-"}
-                  </td>
-                  <td className="text-xs font-medium text-center">
-                    {row.Reg || "-"}
-                  </td>
-                  <td className="text-xs font-medium text-center">
-                    {row.OT || "-"}
+                    {pickExtrainnings}
                   </td>
                   <td className="text-xs font-medium text-center">
                     {row.SO || "-"}
@@ -183,7 +204,7 @@ const TableComponent = () => {
           ) : (
             <tr>
               <td
-                colSpan={filteredHeaderOptions.length}
+                colSpan={filteredHeaderOptions.length + 2} // Adjust colSpan to account for added columns
                 className="text-xs font-medium text-center"
               >
                 No data available

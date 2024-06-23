@@ -156,14 +156,14 @@ const LeagueSelect = () => {
                           filter: selectedLeague.includes(item)
                             ? "drop-shadow(0px 20px 10px #fff)"
                             : "inherit",
-
                           borderBottom: selectedLeague.includes(item)
                             ? "2px solid #ff0000"
                             : "inherit",
-
                           color: selectedLeague.includes(item)
                             ? "#ff0000"
                             : "white",
+                          fontWeight:
+                            selectedLeague === item ? "bold" : "normal", // Add this line
                           position: "relative",
                           ...(glowingLeagues.includes(item) && {
                             "&.Mui-selected": {
