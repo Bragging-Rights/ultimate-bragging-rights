@@ -258,7 +258,7 @@ const vegasOdds = (
     hOUpoints
   );
 
-  console.log("vegas odds", pf, pu, ps, po, pUnder);
+  // console.log("vegas odds", pf, pu, ps, po, pUnder);
   return {
     pickingFavorite: pf,
     pickingUnderdog: pu,

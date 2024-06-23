@@ -1,4 +1,10 @@
 exports.pickRegulation = (userpick, gameEnd, pickedScore, actualScore) => {
+  // Convert scores to numbers
+  pickedScore.pickVistor = Number(pickedScore.pickVistor);
+  pickedScore.pickHome = Number(pickedScore.pickHome);
+  actualScore.vScore = Number(actualScore.vScore);
+  actualScore.hScore = Number(actualScore.hScore);
+
   const userWinner =
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
   const gameWinner =
@@ -15,6 +21,12 @@ exports.pickRegulation = (userpick, gameEnd, pickedScore, actualScore) => {
 };
 
 exports.pickOvertime = (userpick, gameEnd, pickedScore, actualScore) => {
+  // Convert scores to numbers
+  pickedScore.pickVistor = Number(pickedScore.pickVistor);
+  pickedScore.pickHome = Number(pickedScore.pickHome);
+  actualScore.vScore = Number(actualScore.vScore);
+  actualScore.hScore = Number(actualScore.hScore);
+
   const userWinner =
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
   const gameWinner =
@@ -37,6 +49,14 @@ exports.pickExtraInnings = (
   userInnings,
   extraInnings
 ) => {
+  // Convert scores and innings to numbers
+  pickedScore.pickVistor = Number(pickedScore.pickVistor);
+  pickedScore.pickHome = Number(pickedScore.pickHome);
+  actualScore.vScore = Number(actualScore.vScore);
+  actualScore.hScore = Number(actualScore.hScore);
+  userInnings = Number(userInnings);
+  extraInnings = Number(extraInnings);
+
   const userWinner =
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
   const gameWinner =
@@ -59,6 +79,14 @@ exports.pickShootout = (
   userInnings,
   extraInnings
 ) => {
+  // Convert scores and innings to numbers
+  pickedScore.pickVistor = Number(pickedScore.pickVistor);
+  pickedScore.pickHome = Number(pickedScore.pickHome);
+  actualScore.vScore = Number(actualScore.vScore);
+  actualScore.hScore = Number(actualScore.hScore);
+  userInnings = Number(userInnings);
+  extraInnings = Number(extraInnings);
+
   const userWinner =
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
   const gameWinner =
@@ -75,6 +103,10 @@ exports.pickShootout = (
 };
 
 exports.inningsCalculator = (predictedNumOfInnings, pointValue) => {
+  // Convert to numbers
+  predictedNumOfInnings = Number(predictedNumOfInnings);
+  pointValue = Number(pointValue);
+
   let point = pointValue;
   for (let i = 0; i < predictedNumOfInnings; i++) {
     if (predictedNumOfInnings == 1) {

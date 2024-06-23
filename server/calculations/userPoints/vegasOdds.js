@@ -1,6 +1,7 @@
 //0 is fav
 //1 for ud
 
+// Ensure all inputs are converted to numbers
 exports.pickingFavorite = (
   vml,
   hml,
@@ -9,6 +10,14 @@ exports.pickingFavorite = (
   pick_visitor,
   pick_home
 ) => {
+  // Convert all inputs to numbers
+  vml = Number(vml);
+  hml = Number(hml);
+  finalscorevisitor = Number(finalscorevisitor);
+  finalscorehome = Number(finalscorehome);
+  pick_visitor = Number(pick_visitor);
+  pick_home = Number(pick_home);
+
   let v = 1,
     h = 1; // Initialize as underdogs
   if (vml < 0) v = 0; // Favorite
@@ -27,6 +36,7 @@ exports.pickingFavorite = (
   }
   return value;
 };
+
 exports.pickingUnderdog = (
   vml,
   hml,
@@ -35,6 +45,14 @@ exports.pickingUnderdog = (
   pick_visitor,
   pick_home
 ) => {
+  // Convert all inputs to numbers
+  vml = Number(vml);
+  hml = Number(hml);
+  finalscorevisitor = Number(finalscorevisitor);
+  finalscorehome = Number(finalscorehome);
+  pick_visitor = Number(pick_visitor);
+  pick_home = Number(pick_home);
+
   let v = 0,
     h = 0; // Initialize as favorites
   let value;
@@ -54,10 +72,10 @@ exports.pickingUnderdog = (
   }
   return value;
 };
+
 exports.pickingSpread = (
   vSpread,
   hSpread,
-
   finalscorevisitor,
   finalscorehome,
   pick_visitor,
@@ -65,17 +83,23 @@ exports.pickingSpread = (
   vSpreadPoints,
   hSpreadPoints
 ) => {
+  // Convert all inputs to numbers
+  vSpread = Number(vSpread);
+  hSpread = Number(hSpread);
+  finalscorevisitor = Number(finalscorevisitor);
+  finalscorehome = Number(finalscorehome);
+  pick_visitor = Number(pick_visitor);
+  pick_home = Number(pick_home);
+  vSpreadPoints = Number(vSpreadPoints);
+  hSpreadPoints = Number(hSpreadPoints);
+
   let value;
   if (
     vSpread + finalscorevisitor > hSpread + finalscorehome &&
     vSpread + pick_visitor > hSpread + pick_home
   ) {
-    //visitor would be the underdog
-    //add the abs value of spread to the underdog
     value = { vSpreadPoints: vSpreadPoints };
   } else {
-    //home would be the underdog
-    //add the abs value of spread to the underdog
     value = { hSpreadPoints: hSpreadPoints };
   }
   return value;
@@ -89,13 +113,19 @@ exports.pickingOver = (
   v_ou,
   v_ou_points
 ) => {
+  // Convert all inputs to numbers
+  finalscorevisitor = Number(finalscorevisitor);
+  finalscorehome = Number(finalscorehome);
+  vPredicted = Number(vPredicted);
+  hPredicted = Number(hPredicted);
+  v_ou = Number(v_ou);
+  v_ou_points = Number(v_ou_points);
+
   let actual_ou_total = finalscorevisitor + finalscorehome;
   let predicted_ou_total = vPredicted + hPredicted;
   let value;
-  if (actual_ou_total > v_ou) {
-    if (predicted_ou_total > v_ou) {
-      value = v_ou_points;
-    }
+  if (actual_ou_total > v_ou && predicted_ou_total > v_ou) {
+    value = v_ou_points;
   }
   return value;
 };
@@ -108,13 +138,19 @@ exports.pickingUnder = (
   h_ou,
   h_ou_points
 ) => {
+  // Convert all inputs to numbers
+  finalscorevisitor = Number(finalscorevisitor);
+  finalscorehome = Number(finalscorehome);
+  vPredicted = Number(vPredicted);
+  hPredicted = Number(hPredicted);
+  h_ou = Number(h_ou);
+  h_ou_points = Number(h_ou_points);
+
   let actual_ou_total = finalscorevisitor + finalscorehome;
   let predicted_ou_total = vPredicted + hPredicted;
   let value;
-  if (actual_ou_total < h_ou) {
-    if (predicted_ou_total < h_ou) {
-      return h_ou_points;
-    }
+  if (actual_ou_total < h_ou && predicted_ou_total < h_ou) {
+    value = h_ou_points;
   }
   return value;
 };
