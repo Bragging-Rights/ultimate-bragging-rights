@@ -9,9 +9,10 @@ const Switches = (props) => {
     setPick_ot,
     setPick_Reg,
     setPick_Ei,
+    uniqueId,
   } = props;
 
-  const [regChecked, setRegChecked] = useState(true);
+  const [regChecked, setRegChecked] = useState(false);
   const [otChecked, setOtChecked] = useState(false);
   const [soChecked, setSoChecked] = useState(false);
   const [eiChecked, setEiChecked] = useState(false);
@@ -25,7 +26,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(true);
                 setOtChecked(false);
@@ -42,7 +43,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(false);
                 setOtChecked(true);
@@ -59,7 +60,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(false);
                 setOtChecked(false);
@@ -92,7 +93,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(true);
                 setOtChecked(false);
@@ -107,7 +108,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(false);
                 setOtChecked(true);
@@ -138,7 +139,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(true);
                 setEiChecked(false);
@@ -153,7 +154,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 setRegChecked(false);
                 setEiChecked(true);
@@ -169,7 +170,7 @@ const Switches = (props) => {
           <select
             className="mt-4"
             onChange={(e) => setPick_num_ot(e.target.value)}
-            disabled={regChecked}
+            disabled={!eiChecked}
           >
             {Array.from({ length: 20 }, (_, i) => (
               <option key={i + 1} value={i + 1}>

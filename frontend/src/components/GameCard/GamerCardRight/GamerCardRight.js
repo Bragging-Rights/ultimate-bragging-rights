@@ -108,6 +108,19 @@ const GamerCardRight = ({ gameData }) => {
     setIsModalOpen(false);
   };
 
+  const renderSwitches = (team) => (
+    <Switches
+      league={gameData.league}
+      season={gameData.season}
+      setPick_num_ot={setPick_num_ot}
+      setPick_so={setPick_so}
+      setPick_ot={setPick_ot}
+      setPick_Reg={setPick_Reg}
+      setPick_Ei={setPick_Ei} // Example of passing setPick_Ei
+      uniqueId={`${gameData._id}-${team}`} // Use a unique identifier
+    />
+  );
+
   const date = new Date(gameData?.gamedate);
   const options = { month: "short", day: "numeric", year: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
@@ -296,6 +309,7 @@ const GamerCardRight = ({ gameData }) => {
             setPick_ot={setPick_ot}
             setPick_Reg={setPick_Reg}
             setPick_Ei={setPick_Ei} // Ensure setPick_Ei is passed correctly
+            uniqueId={gameData._id} // Pass unique identifier
           />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>

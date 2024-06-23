@@ -59,7 +59,7 @@ function GameForm({ game, onUpdateGameData }) {
             onClick={handleResultChange}
             className="bg-purple-500 text-white p-2 rounded"
           >
-            Change Result
+            Change Results
           </button>
         </div>
       ) : (
