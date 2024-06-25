@@ -40,6 +40,7 @@ const TableComponent = () => {
             state: userData.state || "-",
             city: userData.city || "-",
             player: userData.leagues[0]?.username || "-", // Extracting username
+            BR: game.result?.perfectScore || "-", // Assign perfectScore to BR
           }));
 
           setDataRows(enhancedData);
@@ -113,25 +114,21 @@ const TableComponent = () => {
                   parseFloat(gameData["v-sprd-points"] || 0));
 
               // Calculate 1S, 1SW2, and 2SW2
-              const homeAccuracyPoints = gameData.accuracyPoints?.home || {};
-              const visitorAccuracyPoints =
-                gameData.accuracyPoints?.visitor || {};
+              const p1sHome = gameData.result?.accuracyPoints?.home?.p1s || 0;
+              const p1sVisitor =
+                gameData.result?.accuracyPoints?.visitor?.p1s || 0;
+              const p1s2pHome =
+                gameData.result?.accuracyPoints?.home?.p1s2p || 0;
+              const p1s2pVisitor =
+                gameData.result?.accuracyPoints?.visitor?.p1s2p || 0;
+              const p2s2pHome =
+                gameData.result?.accuracyPoints?.home?.p2s2p || 0;
+              const p2s2pVisitor =
+                gameData.result?.accuracyPoints?.visitor?.p2s2p || 0;
 
-              const oneS =
-                (homeAccuracyPoints.p1s || 0) +
-                (visitorAccuracyPoints.p1s || 0);
-              const oneSW2 =
-                (homeAccuracyPoints.p1s2p || 0) +
-                (visitorAccuracyPoints.p1s2p || 0);
-              const twoSW2 =
-                (homeAccuracyPoints.p2s2p || 0) +
-                (visitorAccuracyPoints.p2s2p || 0);
-
-              // Extract pickRegulation and pickExtrainnings
-              const pickRegulation =
-                gameData.endingsPoints?.pickRegulation || 0;
-              const pickExtrainnings =
-                gameData.endingsPoints?.pickExtrainnings || 0;
+              const oneS = p1sHome || p1sVisitor ? p1sHome + p1sVisitor : "-";
+              const oneSW2 = p1s2pHome + p1s2pVisitor;
+              const twoSW2 = p2s2pHome + p2s2pVisitor;
 
               return (
                 <tr
@@ -185,15 +182,15 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">{spread}</td>
                   <td className="text-xs font-medium text-center">{oneS}</td>
                   <td className="text-xs font-medium text-center">
-                    {row.oneSo || "-"}
+                    {row["1S0"] || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
                   <td className="text-xs font-medium text-center">
-                    {pickRegulation}
+                    {row.Reg || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {pickExtrainnings}
+                    {row.OT || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
                     {row.SO || "-"}
@@ -204,7 +201,7 @@ const TableComponent = () => {
           ) : (
             <tr>
               <td
-                colSpan={filteredHeaderOptions.length + 2} // Adjust colSpan to account for added columns
+                colSpan={filteredHeaderOptions.length}
                 className="text-xs font-medium text-center"
               >
                 No data available
