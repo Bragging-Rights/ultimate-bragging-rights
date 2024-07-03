@@ -8,8 +8,8 @@ import { headerOptions } from "./data"; // Import headerOptions
 const TableComponent = () => {
   const { selectedLeague } = useLeagueContext();
   const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
-  const [dataRows, setDataRows] = useState([]);
-  const [gameDataMap, setGameDataMap] = useState({}); // To store gameData
+  const [gamesPlayed, setGamesPlayed] = useState([]);
+  const [gameDataMap, setGameDataMap] = useState({});
   const id = localStorage.getItem("_id");
 
   const getUser = () => {
@@ -28,12 +28,10 @@ const TableComponent = () => {
           res.data.data &&
           Array.isArray(res.data.data.gamesPlayed)
         ) {
-          // Filter data based on the selected league
           const filteredData = res.data.data.gamesPlayed.filter(
             (game) => game.league === selectedLeague
           );
 
-          // Add user data to each game entry
           const enhancedData = filteredData.map((game) => ({
             ...game,
             co: userData.country || "-",
@@ -43,9 +41,8 @@ const TableComponent = () => {
             BR: game.result?.perfectScore || "-", // Assign perfectScore to BR
           }));
 
-          setDataRows(enhancedData);
+          setGamesPlayed(enhancedData);
 
-          // Create a map of gameData for easy lookup
           const gameDataArray = res.data.data.gameData || [];
           const gameDataLookup = {};
           gameDataArray.forEach((game) => {
@@ -89,11 +86,10 @@ const TableComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(dataRows) && dataRows.length > 0 ? (
-            dataRows.map((row, index) => {
-              const gameData = gameDataMap[row.gameData] || {}; // Get the corresponding gameData
+          {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
+            gamesPlayed.map((row, index) => {
+              const gameData = gameDataMap[row.gameData] || {};
 
-              // Calculate ML, O/U, and Spread
               const ml = `${gameData["h-ml-points"] || "0"} - ${
                 gameData["v-ml-points"] || "0"
               }`;
@@ -104,7 +100,6 @@ const TableComponent = () => {
                 gameData["v-sprd-points"] || "0"
               }`;
 
-              // Calculate TP (Total Points)
               const tp =
                 parseFloat(gameData["h-ml-points"] || 0) +
                 parseFloat(gameData["v-ml-points"] || 0) +
@@ -112,24 +107,20 @@ const TableComponent = () => {
                   parseFloat(gameData["v-ou-points"] || 0)) +
                 (parseFloat(gameData["h-sprd-points"] || 0) +
                   parseFloat(gameData["v-sprd-points"] || 0));
+              const oneS = (
+                (row.result?.accuracyPoints?.home?.p1s || 0) +
+                (row.result?.accuracyPoints?.visitor?.p1s || 0)
+              ).toFixed(2);
 
-              // Calculate 1S, 1SW2, and 2SW2
-              const p1sHome = gameData.result?.accuracyPoints?.home?.p1s || 0;
-              const p1sVisitor =
-                gameData.result?.accuracyPoints?.visitor?.p1s || 0;
-              const p1s2pHome =
-                gameData.result?.accuracyPoints?.home?.p1s2p || 0;
-              const p1s2pVisitor =
-                gameData.result?.accuracyPoints?.visitor?.p1s2p || 0;
-              const p2s2pHome =
-                gameData.result?.accuracyPoints?.home?.p2s2p || 0;
-              const p2s2pVisitor =
-                gameData.result?.accuracyPoints?.visitor?.p2s2p || 0;
+              const oneSW2 = (
+                (row.result?.accuracyPoints?.home?.p1s2p || 0) +
+                (row.result?.accuracyPoints?.visitor?.p1s2p || 0)
+              ).toFixed(2);
 
-              const oneS = p1sHome || p1sVisitor ? p1sHome + p1sVisitor : "-";
-              const oneSW2 = p1s2pHome + p1s2pVisitor;
-              const twoSW2 = p2s2pHome + p2s2pVisitor;
-
+              const twoSW2 = (
+                (row.result?.accuracyPoints?.home?.p2s2p || 0) +
+                (row.result?.accuracyPoints?.visitor?.p2s2p || 0)
+              ).toFixed(2);
               return (
                 <tr
                   key={index}
@@ -145,8 +136,8 @@ const TableComponent = () => {
                     className="text-xs font-medium text-center"
                     style={{ color: "#ffff00" }}
                   >
-                    {`${gameData.hFinalScore || "-"} - ${
-                      gameData.vFinalScore || "-"
+                    {`${gameData.vFinalScore || "-"} - ${
+                      gameData.hFinalScore || "-"
                     }`}
                   </td>
                   <td
@@ -192,9 +183,9 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">
                     {row.OT || "-"}
                   </td>
-                  <td className="text-xs font-medium text-center">
+                  {/* <td className="text-xs font-medium text-center">
                     {row.SO || "-"}
-                  </td>
+                  </td> */}
                 </tr>
               );
             })

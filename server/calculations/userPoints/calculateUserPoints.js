@@ -16,6 +16,7 @@ const leagueSportMap = {
 };
 
 exports.calculateUserPoints = async (data) => {
+  // console.log("data", data); // data is the game data from the database
   const {
     league,
     vScore,
@@ -41,9 +42,12 @@ exports.calculateUserPoints = async (data) => {
     _id,
   } = data;
 
+  console.log("data", data);
+
   const sport = leagueSportMap[league] || "";
   const moneyline = { vml, hml };
   const actualScore = { vScore, hScore };
+
   const moneylineTotalPoints = Number(vmlPoints) + Number(hmlPoints);
   const spread = { vSpread, hSpread };
   const spreadPoints = { vSpreadPoints, hSpreadPoints };
@@ -55,6 +59,8 @@ exports.calculateUserPoints = async (data) => {
     console.error(error);
     return;
   }
+
+  console.log("gamePlayed", gamePlayed);
 
   const resultPoints = gamePlayed.map((game) => {
     const {

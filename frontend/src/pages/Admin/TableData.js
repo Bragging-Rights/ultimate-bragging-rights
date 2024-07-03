@@ -120,7 +120,7 @@ const ScoreEntry = () => {
       displayToast("Game fields updated successfully.", "success");
       reset();
       // Refresh the page or reset the form data here
-      window.location.reload(); // You can use this or a more graceful way to reset the form data
+      // window.location.reload(); // You can use this or a more graceful way to reset the form data
     },
   });
 

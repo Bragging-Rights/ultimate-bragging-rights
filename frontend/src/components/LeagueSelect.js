@@ -92,15 +92,17 @@ const LeagueSelect = () => {
           <Grid container alignItems="center" justifyContent="space-between">
             {/* Logo Grid */}
             <Grid item xs={1}>
-              <img
-                src={logoImage}
-                alt="Logo"
-                style={{
-                  marginRight: 16,
-                  width: isSmallScreen ? "30px" : "50px",
-                  height: "auto",
-                }}
-              />
+              <a href="/games">
+                <img
+                  src={logoImage}
+                  alt="Logo"
+                  style={{
+                    marginRight: 16,
+                    width: isSmallScreen ? "30px" : "50px",
+                    height: "auto",
+                  }}
+                />
+              </a>
             </Grid>
 
             {/* League Grid */}

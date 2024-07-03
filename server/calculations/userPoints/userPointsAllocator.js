@@ -2,7 +2,7 @@ const GamesPlayed = require("../../models/gamesPlayed");
 const Game = require("../../models/games");
 
 exports.allotUserPoints = async (resultPoints) => {
-  console.log("result points", resultPoints);
+  // console.log("result points", resultPoints);
 
   resultPoints.forEach(async (r) => {
     Object.entries(r.result || {}).forEach(([key, value]) => {
@@ -15,9 +15,9 @@ exports.allotUserPoints = async (resultPoints) => {
       console.error("Game not found");
       return;
     } else {
-      console.log("Game found");
+      // console.log("Game found");
       gamePlayed.result = r.result;
-      console.log("game played", gamePlayed);
+      // console.log("game played", gamePlayed);
       gamePlayed.save();
     }
 

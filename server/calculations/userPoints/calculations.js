@@ -56,6 +56,7 @@ exports.calculateResultPoints = (
     pickedWinner,
     moneylineTotalPoints
   );
+
   const home_ap = accuracyPoints(
     sport,
     pickedScore.pickHome,
@@ -67,7 +68,7 @@ exports.calculateResultPoints = (
   const ep = endingsPoints(sport, userpick, gameEnd, pickedScore, actualScore);
   // console.log(pickedScore, actualScore, pickedWinner, moneyline);
   const ps = perfectScore(
-    actualScore.vSore,
+    actualScore.vScore,
     actualScore.hScore,
     pickedScore.pickVistor,
     pickedScore.pickHome,

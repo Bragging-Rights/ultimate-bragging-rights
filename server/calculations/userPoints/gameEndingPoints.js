@@ -1,22 +1,49 @@
 exports.pickRegulation = (userpick, gameEnd, pickedScore, actualScore) => {
+  console.log("Initial inputs:", {
+    userpick,
+    gameEnd,
+    pickedScore,
+    actualScore,
+  });
+
   // Convert scores to numbers
   pickedScore.pickVistor = Number(pickedScore.pickVistor);
+  console.log(
+    "Converted pickedScore.pickVistor to number:",
+    pickedScore.pickVistor
+  );
+
   pickedScore.pickHome = Number(pickedScore.pickHome);
+  console.log(
+    "Converted pickedScore.pickHome to number:",
+    pickedScore.pickHome
+  );
+
   actualScore.vScore = Number(actualScore.vScore);
+  console.log("Converted actualScore.vScore to number:", actualScore.vScore);
+
   actualScore.hScore = Number(actualScore.hScore);
+  console.log("Converted actualScore.hScore to number:", actualScore.hScore);
 
   const userWinner =
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
+  console.log("Determined userWinner:", userWinner);
+
   const gameWinner =
     actualScore.vScore > actualScore.hScore ? "visitor" : "home";
+  console.log("Determined gameWinner:", gameWinner);
 
   if (userpick === gameEnd) {
+    console.log("Userpick matches gameEnd");
     if (userWinner === gameWinner) {
+      console.log("User picked the correct winner");
       return 2; // Correct ending and winner
     } else {
+      console.log("User picked the incorrect winner");
       return 1; // Correct ending, incorrect winner
     }
   }
+  console.log("Userpick does not match gameEnd");
   return 0; // Incorrect ending
 };
 
