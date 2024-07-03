@@ -39,6 +39,7 @@ const TableComponent = () => {
             city: userData.city || "-",
             player: userData.leagues[0]?.username || "-", // Extracting username
             BR: game.result?.perfectScore || "-", // Assign perfectScore to BR
+            vegasOdds: game.result?.vegasOdds || {}, // Add vegasOdds to the enhanced data
           }));
 
           setGamesPlayed(enhancedData);
@@ -90,16 +91,6 @@ const TableComponent = () => {
             gamesPlayed.map((row, index) => {
               const gameData = gameDataMap[row.gameData] || {};
 
-              const ml = `${gameData["h-ml-points"] || "0"} - ${
-                gameData["v-ml-points"] || "0"
-              }`;
-              const ou = `${gameData["h-ou-points"] || "0"} - ${
-                gameData["v-ou-points"] || "0"
-              }`;
-              const spread = `${gameData["h-sprd-points"] || "0"} - ${
-                gameData["v-sprd-points"] || "0"
-              }`;
-
               const tp =
                 parseFloat(gameData["h-ml-points"] || 0) +
                 parseFloat(gameData["v-ml-points"] || 0) +
@@ -107,6 +98,8 @@ const TableComponent = () => {
                   parseFloat(gameData["v-ou-points"] || 0)) +
                 (parseFloat(gameData["h-sprd-points"] || 0) +
                   parseFloat(gameData["v-sprd-points"] || 0));
+
+              // Calculate 1SW2 and 2SW2
               const oneS = (
                 (row.result?.accuracyPoints?.home?.p1s || 0) +
                 (row.result?.accuracyPoints?.visitor?.p1s || 0)
@@ -121,6 +114,27 @@ const TableComponent = () => {
                 (row.result?.accuracyPoints?.home?.p2s2p || 0) +
                 (row.result?.accuracyPoints?.visitor?.p2s2p || 0)
               ).toFixed(2);
+
+              // Extract one of the values from vegasOdds
+              const vegasOddsValue = row.vegasOdds?.pickingFavorite || "-";
+
+              // Compute ml, ou, spread values based on the specified properties
+              const ml = parseFloat(
+                row.result?.vegasOdds?.pickingFavorite ||
+                  row.result?.vegasOdds?.pickingUnderdog ||
+                  0
+              ).toFixed(2);
+              const ou = parseFloat(
+                row.result?.vegasOdds?.pickingOver ||
+                  row.result?.vegasOdds?.pickingUnder ||
+                  0
+              ).toFixed(2);
+              const spread = parseFloat(
+                row.result?.vegasOdds?.pickingSpread?.vSpreadPoints ||
+                  row.result?.vegasOdds?.pickingSpread?.hSpreadPoints ||
+                  0
+              ).toFixed(2);
+
               return (
                 <tr
                   key={index}
@@ -136,15 +150,14 @@ const TableComponent = () => {
                     className="text-xs font-medium text-center"
                     style={{ color: "#ffff00" }}
                   >
-                    {`${gameData.vFinalScore || "-"} - ${
-                      gameData.hFinalScore || "-"
-                    }`}
+                    {gameData.vFinalScore || "-"} -{" "}
+                    {gameData.hFinalScore || "-"}
                   </td>
                   <td
                     className="text-xs font-medium text-center"
                     style={{ color: "#ffff00" }}
                   >
-                    {`${row.pick_visitor || "-"} - ${row.pick_home || "-"}`}
+                    {row.pick_visitor || "-"} - {row.pick_home || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
                     {new Date(row.createdAt).toLocaleTimeString()}
@@ -183,9 +196,10 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">
                     {row.OT || "-"}
                   </td>
-                  {/* <td className="text-xs font-medium text-center">
-                    {row.SO || "-"}
-                  </td> */}
+                  {/* Add a new column for the extracted vegasOdds value */}
+                  <td className="text-xs font-medium text-center">
+                    {vegasOddsValue}
+                  </td>
                 </tr>
               );
             })
