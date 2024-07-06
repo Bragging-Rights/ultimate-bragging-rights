@@ -2,20 +2,22 @@ import React, { useState, useEffect } from "react";
 import TimeFormat from "../../services/TimeFormat";
 import "./GameCard.css";
 import Switches from "../Switches.js";
-import Modal from "react-modal"; // Import the modal library
+import Modal from "react-modal";
 import { addPrediction } from "../../Apis/predictions";
 import displayToast from "../Alert/Alert";
 import { useMutation } from "react-query";
 import { useLeagueContext } from "../LeagueContext";
+import Swal from "sweetalert2";
 
 const GameCard = ({ gameData }) => {
-  const [Pick_Ei, setPick_Ei] = useState(false); // Example of setting Pick_Ei
+  const [Pick_Ei, setPick_Ei] = useState(false);
 
   const labelStyles = {
     borderBottom: "2px solid #BE8200",
     width: "90%",
     textAlign: "center",
   };
+
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,12 +26,17 @@ const GameCard = ({ gameData }) => {
   const [Pick_ot, setPick_ot] = useState(false);
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
+  const [inputChanged, setInputChanged] = useState(false);
+  const [previousValues, setPreviousValues] = useState({
+    pick_visitor: "",
+    pick_home: "",
+  });
 
   const { selectedLeague } = useLeagueContext();
 
   const userId = localStorage.getItem("_id");
 
-  let gameEnding = ""; // Change const to let
+  let gameEnding = "";
 
   const handleEnterPick = () => {
     const dataToSave = {
@@ -48,6 +55,105 @@ const GameCard = ({ gameData }) => {
   };
 
   const handleLockIn = () => {
+    const visitorScore = parseInt(pick_visitor);
+    const homeScore = parseInt(pick_home);
+
+    let showAlert = false;
+    let alertMessage = "";
+    let showError = false;
+    let errorMessage = "";
+
+    if (selectedLeague === "NHL") {
+      if (visitorScore > 10 || homeScore > 10) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    } else if (selectedLeague === "NBA") {
+      if (
+        visitorScore < 60 ||
+        visitorScore > 150 ||
+        homeScore < 60 ||
+        homeScore > 150
+      ) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showError = true;
+        errorMessage = "Score cannot be zero.";
+      }
+    } else if (selectedLeague === "MLB") {
+      if (visitorScore > 10 || homeScore > 10) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    } else if (selectedLeague === "NFL") {
+      if (visitorScore > 35 || homeScore > 35) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showAlert = true;
+        alertMessage = "Scores are the same. Are you sure?";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    }
+
+    if (showError) {
+      displayToast(errorMessage, "error");
+    } else if (showAlert) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: alertMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        background: "#212121",
+        color: "white",
+        customClass: {
+          popup: "swal2-popup",
+          confirmButton: "swal2-confirm",
+          cancelButton: "swal2-cancel",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          lockInPrediction();
+        }
+      });
+    } else {
+      lockInPrediction();
+    }
+  };
+
+  const lockInPrediction = () => {
     const timestamp = new Date().toISOString();
     console.log("User ID in GameCard:", userId);
 
@@ -68,7 +174,6 @@ const GameCard = ({ gameData }) => {
       league: selectedLeague,
     };
 
-    // Send the data to the database using an HTTP request
     mutate(dataToSave);
   };
 
@@ -86,27 +191,50 @@ const GameCard = ({ gameData }) => {
 
   useEffect(() => {
     const date = new Date(gameData?.gamedate);
-    console.log(date);
     const options = { month: "short", day: "numeric", year: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
-    console.log("formattedDate", formattedDate);
   }, [gameData]);
 
   const handleInputChange = (e) => {
-    setPickVisitor(e.target.value);
+    const value = e.target.value;
+    if (value !== previousValues.pick_visitor) {
+      setInputChanged(true);
+    }
+    setPickVisitor(value);
   };
 
   const handleHomeChange = (e) => {
-    setPickHome(e.target.value);
+    const value = e.target.value;
+    if (value !== previousValues.pick_home) {
+      setInputChanged(true);
+    }
+    setPickHome(value);
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (inputChanged) {
+        const message =
+          "You have unsaved changes, are you sure you want to leave?";
+        e.returnValue = message;
+        return message;
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [inputChanged]);
 
   const handleSaveEdit = () => {
     setIsModalOpen(false);
+    setInputChanged(false);
+    setPreviousValues({ pick_visitor, pick_home });
     console.log("Saved data:", editedGameData);
   };
 
   const handleModalClose = () => {
-    // Close the modal without saving
     setIsModalOpen(false);
   };
 
@@ -118,8 +246,8 @@ const GameCard = ({ gameData }) => {
       setPick_so={setPick_so}
       setPick_ot={setPick_ot}
       setPick_Reg={setPick_Reg}
-      setPick_Ei={setPick_Ei} // Example of passing setPick_Ei
-      uniqueId={`${gameData._id}-${team}`} // Use a unique identifier
+      setPick_Ei={setPick_Ei}
+      uniqueId={`${gameData._id}-${team}`}
     />
   );
 
@@ -308,8 +436,8 @@ const GameCard = ({ gameData }) => {
             setPick_so={setPick_so}
             setPick_ot={setPick_ot}
             setPick_Reg={setPick_Reg}
-            setPick_Ei={setPick_Ei} // Ensure setPick_Ei is passed correctly
-            uniqueId={gameData._id} // Pass unique identifier
+            setPick_Ei={setPick_Ei}
+            uniqueId={gameData._id}
           />
 
           <div
@@ -332,8 +460,6 @@ const GameCard = ({ gameData }) => {
       >
         <h2>Edit Game Data</h2>
         <form>
-          {/* Render editable fields for editedGameData */}
-          {/* Example: */}
           <input
             type="text"
             value={editedGameData?.visitor}
@@ -341,7 +467,6 @@ const GameCard = ({ gameData }) => {
               setEditedGameData({ ...editedGameData, visitor: e.target.value })
             }
           />
-          {/* Add more fields for other properties of editedGameData */}
           <button onClick={handleSaveEdit}>Save</button>
           <button onClick={handleModalClose}>Cancel</button>
         </form>
