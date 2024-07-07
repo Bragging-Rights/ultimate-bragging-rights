@@ -7,6 +7,8 @@ const {
   picking2Score3Points,
   picking1Score7Points,
   picking2Score7Points,
+  picking2Score0Points,
+  picking1Score0Points,
 } = require("./accuracyPoints");
 const {
   pickRegulation,
@@ -118,6 +120,13 @@ const accuracyPoints = (
     pickedWinner,
     moneylineTotalPoints
   );
+  let p1s0, p2s0;
+  if (sport != "basketball") {
+    p1s0 = picking1Score0Points(pickedScore, actualScore);
+  }
+  if (sport == "football") {
+    p2s0 = picking2Score0Points(pickedScore, actualScore);
+  }
   if (sport == "baseball") {
     const p1s2p = picking1Score2Points(
       pickedScore,
@@ -131,8 +140,8 @@ const accuracyPoints = (
       pickedWinner,
       moneylineTotalPoints
     );
-    console.log("picking score", p1s, p1s2p, p2s2p);
-    return { p1s: p1s, p1s2p: p1s2p, p2s2p: p2s2p };
+    console.log("picking score", p1s, p1s0, p2s0, p1s2p, p2s2p);
+    return { p1s, p1s0, p2s0, p1s2p, p2s2p };
   } else if (sport != "baseball" && sport != "hockey") {
     const p1s3p = picking1Score3Points(
       pickedScore,
@@ -159,11 +168,11 @@ const accuracyPoints = (
       moneylineTotalPoints
     );
 
-    console.log("picking score", p1s, p1s3p, p2s3p, p1s7p, p2s7p);
-    return { p1s: p1s, p1s3p: p1s3p, p2s3p: p2s3p, p1s7p: p1s7p, p2s7p: p2s7p };
+    console.log("picking score", p1s, p1s0, p2s0, p1s3p, p2s3p, p1s7p, p2s7p);
+    return { p1s, p1s0, p2s0, p1s3p, p2s3p, p1s7p, p2s7p };
   } else {
-    console.log("picking score", p1s);
-    return p1s;
+    console.log("picking score", p1s, p1s0, p2s0);
+    return { p1s, p1s0, p2s0 };
   }
 };
 

@@ -214,3 +214,39 @@ exports.picking2Score7Points = (
   }
   return points;
 };
+
+exports.picking1Score0Points = (pickedScore, actualScore, pickedWinner) => {
+  // Convert values to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
+  let points = 0;
+  if (
+    (pickedScore.pickVistor === 0 && actualScore.vScore === 0) ||
+    (pickedScore.pickHome === 0 && actualScore.hScore === 0)
+  ) {
+    points = 10;
+  }
+  return points;
+};
+
+exports.picking2Score0Points = (pickedScore, actualScore, pickedWinner) => {
+  // Convert values to numbers
+  pickedScore = Number(pickedScore);
+  actualScore = Number(actualScore);
+  pickedWinner = Number(pickedWinner);
+  moneylineTotalPoints = Number(moneylineTotalPoints);
+
+  let points = 0;
+  if (
+    pickedScore.pickVistor === 0 &&
+    actualScore.vScore === 0 &&
+    pickedScore.pickHome === 0 &&
+    actualScore.hScore === 0
+  ) {
+    points = 50;
+  }
+  return points;
+};
