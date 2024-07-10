@@ -290,3 +290,7 @@
 .swal2-cancel {
   width: 80px;
 }
+.glowing-border {
+  border: 2px solid red;
+  box-shadow: 0 0 10px red;
+}

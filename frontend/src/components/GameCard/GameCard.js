@@ -27,6 +27,8 @@ const GameCard = ({ gameData }) => {
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
   const [inputChanged, setInputChanged] = useState(false);
+  const [invalidFields, setInvalidFields] = useState([]);
+
   const [previousValues, setPreviousValues] = useState({
     pick_visitor: "",
     pick_home: "",
@@ -37,8 +39,25 @@ const GameCard = ({ gameData }) => {
   const userId = localStorage.getItem("_id");
 
   let gameEnding = "";
-
   const handleEnterPick = () => {
+    const invalidFields = [];
+    if (!pick_visitor) invalidFields.push("pick_visitor");
+    if (!pick_home) invalidFields.push("pick_home");
+    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+
+    setInvalidFields(invalidFields);
+
+    if (invalidFields.length > 0) {
+      Swal.fire({
+        title: "Error",
+        text: "Select one of the radio button.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
+    }
+
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -55,8 +74,27 @@ const GameCard = ({ gameData }) => {
   };
 
   const handleLockIn = () => {
+    const invalidFields = [];
     const visitorScore = parseInt(pick_visitor);
     const homeScore = parseInt(pick_home);
+
+    if (!pick_visitor || isNaN(visitorScore))
+      invalidFields.push("pick_visitor");
+    if (!pick_home || isNaN(homeScore)) invalidFields.push("pick_home");
+    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+
+    setInvalidFields(invalidFields);
+
+    if (invalidFields.length > 0) {
+      Swal.fire({
+        title: "Error",
+        text: "Both pick_visitor, pick_home, and at least one switch are required fields.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
+    }
 
     let showAlert = false;
     let alertMessage = "";
@@ -138,11 +176,6 @@ const GameCard = ({ gameData }) => {
         cancelButtonText: "No",
         background: "#212121",
         color: "white",
-        customClass: {
-          popup: "swal2-popup",
-          confirmButton: "swal2-confirm",
-          cancelButton: "swal2-cancel",
-        },
       }).then((result) => {
         if (result.isConfirmed) {
           lockInPrediction();
@@ -152,6 +185,18 @@ const GameCard = ({ gameData }) => {
       lockInPrediction();
     }
   };
+
+  // In the JSX, ensure the switches component is included
+  <Switches
+    league={gameData?.league}
+    season={gameData?.seasonflag}
+    setPick_num_ot={setPick_num_ot}
+    setPick_so={setPick_so}
+    setPick_ot={setPick_ot}
+    setPick_Reg={setPick_Reg}
+    setPick_Ei={setPick_Ei}
+    uniqueId={gameData._id}
+  />;
 
   const lockInPrediction = () => {
     const timestamp = new Date().toISOString();
@@ -271,9 +316,11 @@ const GameCard = ({ gameData }) => {
             <div className="game-date">{gameData.gamedate}</div> &nbsp;
             <input
               type="text"
-              className="card-input mb-3"
+              className={`score-input card-input mb-3 ${
+                invalidFields.includes("pick_visitor") ? "glowing-border" : ""
+              }`}
               value={pick_visitor}
-              onChange={handleInputChange}
+              onChange={(e) => setPickVisitor(e.target.value)}
             />
           </div>
 
@@ -370,9 +417,11 @@ const GameCard = ({ gameData }) => {
             <input
               type="text"
               id="pick-home"
-              className="card-input mb-3"
+              className={`score-input card-input mb-3 ${
+                invalidFields.includes("pick_home") ? "glowing-border" : ""
+              }`}
               value={pick_home}
-              onChange={handleHomeChange}
+              onChange={(e) => setPickHome(e.target.value)}
             />
           </div>
 
@@ -429,6 +478,7 @@ const GameCard = ({ gameData }) => {
 
         <div className="flex justify-between items-center">
           <div className="card-id"></div>
+
           <Switches
             league={gameData?.league}
             season={gameData?.seasonflag}
@@ -438,6 +488,7 @@ const GameCard = ({ gameData }) => {
             setPick_Reg={setPick_Reg}
             setPick_Ei={setPick_Ei}
             uniqueId={gameData._id}
+            glowing={invalidFields.includes("pick_switch")}
           />
 
           <div
