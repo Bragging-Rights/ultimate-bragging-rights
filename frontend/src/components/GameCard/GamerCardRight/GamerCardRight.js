@@ -26,6 +26,7 @@ const GamerCardRight = ({ gameData }) => {
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
   const { selectedLeague } = useLeagueContext();
+  const [invalidFields, setInvalidFields] = useState([]);
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
@@ -35,30 +36,23 @@ const GamerCardRight = ({ gameData }) => {
   };
   const userId = localStorage.getItem("_id");
 
-  let gameEnding = ""; // Change const to let
-
+  let gameEnding = "";
   const handleEnterPick = () => {
-    const dataToSave = {
-      gameData: gameData._id,
-      pick_visitor,
-      pick_home,
-      gameEnding,
-      userId,
-      Pick_num_ot,
-      Pick_so,
-      Pick_ot,
-      Pick_Reg,
-    };
-    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
-    displayToast("Saved successfully!");
-  };
+    const invalidFields = [];
+    if (!pick_visitor) invalidFields.push("pick_visitor");
+    if (!pick_home) invalidFields.push("pick_home");
+    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
 
-  const lockInPrediction = () => {
-    const timestamp = new Date().toISOString();
-    console.log("User ID in GameCard:", userId);
-
-    if (!gameEnding) {
-      gameEnding = "null";
+    if (invalidFields.length > 0) {
+      setInvalidFields(invalidFields);
+      Swal.fire({
+        title: "Error",
+        text: "Both pick_visitor, pick_home, and at least one switch are required fields.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
     }
 
     const dataToSave = {
@@ -72,12 +66,28 @@ const GamerCardRight = ({ gameData }) => {
       Pick_ot,
       Pick_Reg,
     };
-
-    // Send the data to the database using an HTTP request
-    mutate(dataToSave);
+    localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
+    displayToast("Saved successfully!", "success");
   };
 
   const handleLockIn = () => {
+    const invalidFields = [];
+    if (!pick_visitor) invalidFields.push("pick_visitor");
+    if (!pick_home) invalidFields.push("pick_home");
+    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+
+    if (invalidFields.length > 0) {
+      setInvalidFields(invalidFields);
+      Swal.fire({
+        title: "Error",
+        text: "Fill all the required fields.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
+    }
+
     const visitorScore = parseInt(pick_visitor);
     const homeScore = parseInt(pick_home);
 
@@ -176,6 +186,32 @@ const GamerCardRight = ({ gameData }) => {
     }
   };
 
+  const lockInPrediction = () => {
+    const dataToSave = {
+      gameData: gameData._id,
+      pick_visitor,
+      pick_home,
+      gameEnding,
+      userId,
+      Pick_num_ot,
+      Pick_so,
+      Pick_ot,
+      Pick_Reg,
+    };
+    mutate(dataToSave);
+  };
+
+  // In the JSX, ensure the switches component is included
+  <Switches
+    league={gameData?.league}
+    season={gameData?.seasonflag}
+    setPick_num_ot={setPick_num_ot}
+    setPick_so={setPick_so}
+    setPick_ot={setPick_ot}
+    setPick_Reg={setPick_Reg}
+    setPick_Ei={setPick_Ei}
+    uniqueId={gameData._id}
+  />;
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => addPrediction(data),
     {
@@ -244,7 +280,9 @@ const GamerCardRight = ({ gameData }) => {
             <div className="game-date">{gameData.gamedate}</div> &nbsp;
             <input
               type="text"
-              className="card-input mb-3"
+              className={`score-input card-input mb-3 ${
+                invalidFields.includes("pick_visitor") ? "glowing-border" : ""
+              }`}
               value={pick_visitor}
               onChange={handleInputChange}
             />
@@ -344,7 +382,9 @@ const GamerCardRight = ({ gameData }) => {
             <input
               type="text"
               id="pick-home"
-              className="card-input mb-3"
+              className={`score-input card-input mb-3 ${
+                invalidFields.includes("pick_home") ? "glowing-border" : ""
+              }`}
               value={pick_home}
               onChange={handleHomeChange}
             />
@@ -410,6 +450,7 @@ const GamerCardRight = ({ gameData }) => {
             setPick_Reg={setPick_Reg}
             setPick_Ei={setPick_Ei} // Ensure setPick_Ei is passed correctly
             uniqueId={gameData._id} // Pass unique identifier
+            glowing={invalidFields.includes("pick_switch")}
           />
           <div
             className="button-pick"

@@ -10,6 +10,7 @@ const Switches = (props) => {
     setPick_Reg,
     setPick_Ei,
     uniqueId,
+    glowing,
   } = props;
 
   const [regChecked, setRegChecked] = useState(false);
@@ -37,6 +38,7 @@ const Switches = (props) => {
               }}
               checked={regChecked}
               key={`reg-${regChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -54,6 +56,7 @@ const Switches = (props) => {
               }}
               checked={otChecked}
               key={`ot-${otChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">O/T</label>
           </div>
@@ -71,6 +74,7 @@ const Switches = (props) => {
               }}
               checked={soChecked}
               key={`so-${soChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">S/O</label>
           </div>
@@ -102,6 +106,7 @@ const Switches = (props) => {
               }}
               checked={regChecked}
               key={`reg-${regChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -117,6 +122,7 @@ const Switches = (props) => {
               }}
               checked={otChecked}
               key={`ot-${otChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">O/T</label>
           </div>
@@ -148,6 +154,7 @@ const Switches = (props) => {
               }}
               checked={regChecked}
               key={`reg-${regChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -163,6 +170,7 @@ const Switches = (props) => {
               }}
               checked={eiChecked}
               key={`ei-${eiChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">E/I</label>
           </div>
