@@ -49,9 +49,9 @@ exports.calculateUserPoints = async (data) => {
   const actualScore = { vScore, hScore };
 
   const moneylineTotalPoints = Number(vmlPoints) + Number(hmlPoints);
+  console.log("moneylineTotalPoints", moneylineTotalPoints);
   const spread = { vSpread, hSpread };
   const spreadPoints = { vSpreadPoints, hSpreadPoints };
-
   let gamePlayed;
   try {
     gamePlayed = await GamesPlayed.find({ gameData: _id });

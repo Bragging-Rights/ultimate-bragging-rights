@@ -220,7 +220,6 @@ exports.picking1Score0Points = (pickedScore, actualScore, pickedWinner) => {
   pickedScore = Number(pickedScore);
   actualScore = Number(actualScore);
   pickedWinner = Number(pickedWinner);
-  moneylineTotalPoints = Number(moneylineTotalPoints);
 
   let points = 0;
   if (
@@ -237,7 +236,6 @@ exports.picking2Score0Points = (pickedScore, actualScore, pickedWinner) => {
   pickedScore = Number(pickedScore);
   actualScore = Number(actualScore);
   pickedWinner = Number(pickedWinner);
-  moneylineTotalPoints = Number(moneylineTotalPoints);
 
   let points = 0;
   if (
