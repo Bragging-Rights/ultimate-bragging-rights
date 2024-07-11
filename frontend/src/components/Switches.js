@@ -83,9 +83,9 @@ const Switches = (props) => {
             onChange={(e) => setPick_num_ot(e.target.value)}
             disabled={regChecked}
           >
-            {Array.from({ length: 30 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+            {Array.from({ length: 11 }, (_, i) => (
+              <option key={i} value={i}>
+                {i}
               </option>
             ))}
           </select>
@@ -131,9 +131,9 @@ const Switches = (props) => {
             onChange={(e) => setPick_num_ot(e.target.value)}
             disabled={regChecked}
           >
-            {Array.from({ length: 10 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+            {Array.from({ length: 11 }, (_, i) => (
+              <option key={i} value={i}>
+                {i}
               </option>
             ))}
           </select>
@@ -180,9 +180,9 @@ const Switches = (props) => {
             onChange={(e) => setPick_num_ot(e.target.value)}
             disabled={!eiChecked}
           >
-            {Array.from({ length: 20 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+            {Array.from({ length: 11 }, (_, i) => (
+              <option key={i} value={i}>
+                {i}
               </option>
             ))}
           </select>

@@ -190,9 +190,9 @@ const TableComponent = () => {
                   </td>
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
-                  <td className="text-xs font-medium text-center">
+                  {/* <td className="text-xs font-medium text-center">
                     {row.Reg || "-"}
-                  </td>
+                  </td> */}
                   <td className="text-xs font-medium text-center">
                     {row.OT || "-"}
                   </td>
