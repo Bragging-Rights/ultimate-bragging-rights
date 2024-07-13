@@ -49,14 +49,17 @@ exports.calculateResultPoints = (
   vOU,
   vOUpoints,
   hOU,
-  hOUpoints
+  hOUpoints,
+  moneylinePoints,
+  actualWinner
 ) => {
   const vistor_ap = accuracyPoints(
     sport,
     pickedScore.pickVistor,
     actualScore.vScore,
     pickedWinner,
-    moneylineTotalPoints
+    moneylineTotalPoints,
+    actualWinner
   );
 
   const home_ap = accuracyPoints(
@@ -64,7 +67,8 @@ exports.calculateResultPoints = (
     pickedScore.pickHome,
     actualScore.hScore,
     pickedWinner,
-    moneylineTotalPoints
+    moneylineTotalPoints,
+    actualWinner
   );
 
   const ep = endingsPoints(sport, userpick, gameEnd, pickedScore, actualScore);
@@ -74,8 +78,7 @@ exports.calculateResultPoints = (
     actualScore.hScore,
     pickedScore.pickVistor,
     pickedScore.pickHome,
-    moneyline.vml,
-    moneyline.hml
+    moneylineTotalPoints
   );
   const vp = vegasOdds(
     // sport,
@@ -87,7 +90,8 @@ exports.calculateResultPoints = (
     vOU,
     vOUpoints,
     hOU,
-    hOUpoints
+    hOUpoints,
+    moneylinePoints
     // visitorSpreadOdds,
     // homeSpreadOdds,
     // visitorOverUnderOdds,
@@ -112,13 +116,15 @@ const accuracyPoints = (
   pickedScore,
   actualScore,
   pickedWinner,
-  moneylineTotalPoints
+  moneylineTotalPoints,
+  actualWinner
 ) => {
   const p1s = picking1Score(
     pickedScore,
     actualScore,
     pickedWinner,
-    moneylineTotalPoints
+    moneylineTotalPoints,
+    actualWinner
   );
   let p1s0, p2s0;
   if (sport != "basketball") {
@@ -132,13 +138,15 @@ const accuracyPoints = (
       pickedScore,
       actualScore,
       pickedWinner,
-      moneylineTotalPoints
+      moneylineTotalPoints,
+      actualWinner
     );
     const p2s2p = picking2Score2Points(
       pickedScore,
       actualScore,
       pickedWinner,
-      moneylineTotalPoints
+      moneylineTotalPoints,
+      actualWinner
     );
     console.log("picking score", p1s, p1s0, p2s0, p1s2p, p2s2p);
     return { p1s, p1s0, p2s0, p1s2p, p2s2p };
@@ -147,25 +155,29 @@ const accuracyPoints = (
       pickedScore,
       actualScore,
       pickedWinner,
-      moneylineTotalPoints
+      moneylineTotalPoints,
+      actualWinner
     );
     const p2s3p = picking2Score3Points(
       pickedScore,
       actualScore,
       pickedWinner,
-      moneylineTotalPoints
+      moneylineTotalPoints,
+      actualWinner
     );
     const p1s7p = picking1Score7Points(
       pickedScore,
       actualScore,
       pickedWinner,
-      moneylineTotalPoints
+      moneylineTotalPoints,
+      actualWinner
     );
     const p2s7p = picking2Score7Points(
       pickedScore,
       actualScore,
       pickedWinner,
-      moneylineTotalPoints
+      moneylineTotalPoints,
+      actualWinner
     );
 
     console.log("picking score", p1s, p1s0, p2s0, p1s3p, p2s3p, p1s7p, p2s7p);
@@ -230,7 +242,8 @@ const vegasOdds = (
   vOU,
   vOUpoints,
   hOU,
-  hOUpoints
+  hOUpoints,
+  moneylinePoints
 ) => {
   const pf = pickingFavorite(
     moneyline.vml,
@@ -238,7 +251,8 @@ const vegasOdds = (
     actualScore.vScore,
     actualScore.hScore,
     pickedScore.pickVistor,
-    pickedScore.pickHome
+    pickedScore.pickHome,
+    moneylinePoints
   );
   const pu = pickingUnderdog(
     moneyline.vml,
@@ -246,7 +260,8 @@ const vegasOdds = (
     actualScore.vScore,
     actualScore.hScore,
     pickedScore.pickVistor,
-    pickedScore.pickHome
+    pickedScore.pickHome,
+    moneylinePoints
   );
   const ps = pickingSpread(
     spread.vSpread,

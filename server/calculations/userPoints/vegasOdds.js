@@ -10,15 +10,36 @@ exports.pickingFavorite = (
   finalscorevisitor,
   finalscorehome,
   pick_visitor,
-  pick_home
+  pick_home,
+  moneylinePoints
 ) => {
+  console.log("Initial inputs:", {
+    vml,
+    hml,
+    finalscorevisitor,
+    finalscorehome,
+    pick_visitor,
+    pick_home,
+  });
+
   // Convert all inputs to numbers and check for NaN
   vml = Number(vml);
+  console.log("Converted vml to number:", vml);
+
   hml = Number(hml);
+  console.log("Converted hml to number:", hml);
+
   finalscorevisitor = Number(finalscorevisitor);
+  console.log("Converted finalscorevisitor to number:", finalscorevisitor);
+
   finalscorehome = Number(finalscorehome);
+  console.log("Converted finalscorehome to number:", finalscorehome);
+
   pick_visitor = Number(pick_visitor);
+  console.log("Converted pick_visitor to number:", pick_visitor);
+
   pick_home = Number(pick_home);
+  console.log("Converted pick_home to number:", pick_home);
 
   // Error checking for NaN
   if (
@@ -35,22 +56,27 @@ exports.pickingFavorite = (
 
   let v = 1,
     h = 1; // Initialize as underdogs
-  if (vml < 0) v = 0; // Favorite
-  if (hml < 0) h = 0; // Favorite
+  console.log("Initial favorite status:", { v, h });
+
+  if (vml > 0) v = 0; // Favorite
+  if (hml > 0) h = 0; // Favorite
+  console.log("Updated favorite status:", { v, h });
+
   let value;
   if (
     finalscorevisitor > finalscorehome &&
     v === 0 &&
     pick_visitor > pick_home
   ) {
-    console.log("Visitor has a greater score");
-    value = Math.abs(vml); // Award points
+    console.log("Visitor has a greater score and is the favorite.");
+    value = Math.abs(Number(moneylinePoints.vmlPoints)); // Award points
   } else if (finalscorevisitor < finalscorehome && h === 0) {
-    console.log("Home has a greater score");
-    value = Math.abs(hml); // Award points
+    console.log("Home has a greater score and is the favorite.");
+    value = Math.abs(Number(moneylinePoints.hmlPoints)); // Award points
   } else {
-    console.log("No points awarded");
+    console.log("No points awarded, conditions not met.");
   }
+  console.log("Final value:", value);
   return value;
 };
 
@@ -62,13 +88,33 @@ exports.pickingUnderdog = (
   pick_visitor,
   pick_home
 ) => {
+  console.log("Initial inputs:", {
+    vml,
+    hml,
+    finalscorevisitor,
+    finalscorehome,
+    pick_visitor,
+    pick_home,
+  });
+
   // Convert all inputs to numbers and check for NaN
   vml = Number(vml);
+  console.log("Converted vml to number:", vml);
+
   hml = Number(hml);
+  console.log("Converted hml to number:", hml);
+
   finalscorevisitor = Number(finalscorevisitor);
+  console.log("Converted finalscorevisitor to number:", finalscorevisitor);
+
   finalscorehome = Number(finalscorehome);
+  console.log("Converted finalscorehome to number:", finalscorehome);
+
   pick_visitor = Number(pick_visitor);
+  console.log("Converted pick_visitor to number:", pick_visitor);
+
   pick_home = Number(pick_home);
+  console.log("Converted pick_home to number:", pick_home);
 
   // Error checking for NaN
   if (
@@ -85,23 +131,27 @@ exports.pickingUnderdog = (
 
   let v = 0,
     h = 0; // Initialize as favorites
-  let value;
-  if (vml > 0) v = 1; // Underdog
-  if (hml > 0) h = 1; // Underdog
+  console.log("Initial underdog status:", { v, h });
 
+  if (vml < 0) v = 1; // Underdog
+  if (hml < 0) h = 1; // Underdog
+  console.log("Updated underdog status:", { v, h });
+
+  let value;
   if (
     finalscorevisitor > finalscorehome &&
     v === 1 &&
     pick_visitor < pick_home
   ) {
-    console.log("Visitor has a greater score");
-    value = Math.abs(vml); // Award points
+    console.log("Visitor has a greater score and is the underdog.");
+    value = Math.abs(Number(moneylinePoints.vmlPoints)); // Award points
   } else if (finalscorevisitor < finalscorehome && h === 1) {
-    console.log("Home has a greater score");
-    value = Math.abs(hml); // Award points
+    console.log("Home has a greater score and is the underdog.");
+    value = Math.abs(Number(moneylinePoints.hmlPoints)); // Award points
   } else {
-    console.log("No points awarded");
+    console.log("No points awarded, conditions not met.");
   }
+  console.log("Final value:", value);
   return value;
 };
 

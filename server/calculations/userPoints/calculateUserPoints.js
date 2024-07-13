@@ -48,8 +48,10 @@ exports.calculateUserPoints = async (data) => {
   const moneyline = { vml, hml };
   const actualScore = { vScore, hScore };
 
-  const moneylineTotalPoints = Number(vmlPoints) + Number(hmlPoints);
+  const moneylineTotalPoints =
+    Math.abs(Number(vmlPoints)) + Math.abs(Number(hmlPoints));
   console.log("moneylineTotalPoints", moneylineTotalPoints);
+  const moneylinePoints = { vmlPoints, hmlPoints };
   const spread = { vSpread, hSpread };
   const spreadPoints = { vSpreadPoints, hSpreadPoints };
   let gamePlayed;
@@ -70,7 +72,8 @@ exports.calculateUserPoints = async (data) => {
       gameEnding: userpick,
     } = game;
     const pickedScore = { pickVistor, pickHome };
-    const pickedWinner = pickVistor > pickHome ? pickVistor : pickHome;
+    const pickedWinner = pickVistor > pickHome ? "v" : "h";
+    const actualWinner = vScore > hScore ? "v" : "h";
 
     return {
       playedGame: game,
@@ -94,7 +97,9 @@ exports.calculateUserPoints = async (data) => {
         vOU,
         vOUpoints,
         hOU,
-        hOUpoints
+        hOUpoints,
+        moneylinePoints,
+        actualWinner
       ),
     };
   });
