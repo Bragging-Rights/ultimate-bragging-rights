@@ -38,8 +38,11 @@ const TableComponent = () => {
             state: userData.state || "-",
             city: userData.city || "-",
             player: userData.leagues[0]?.username || "-", // Extracting username
-            BR: game.result?.perfectScore || "-", // Assign perfectScore to BR
-            vegasOdds: game.result?.vegasOdds || {}, // Add vegasOdds to the enhanced data
+            BR:
+              game.result?.perfectScore != null
+                ? parseFloat(game.result?.perfectScore).toFixed(2)
+                : "-",
+            vegasOdds: game.result?.vegasOdds || {},
           }));
 
           setGamesPlayed(enhancedData);
@@ -74,6 +77,39 @@ const TableComponent = () => {
     });
   }, [selectedLeague]);
 
+  // Function to calculate TP points and rank them
+  const calculateTPandRank = (games) => {
+    const tpValues = games.map((row) => {
+      return parseFloat(
+        (row.result?.accuracyPoints?.home?.p1s || 0) +
+          (row.result?.accuracyPoints?.vistor?.p1s || 0) +
+          (row.result?.accuracyPoints?.home?.p1s2p || 0) +
+          (row.result?.accuracyPoints?.vistor?.p1s2p || 0) +
+          (row.result?.accuracyPoints?.home?.p2s2p || 0) +
+          (row.result?.accuracyPoints?.vistor?.p2s2p || 0) +
+          (row.result?.vegasOdds?.pickingFavorite ||
+            row.result?.vegasOdds?.pickingUnderdog ||
+            0) +
+          (row.result?.vegasOdds?.pickingOver ||
+            row.result?.vegasOdds?.pickingUnder ||
+            0) +
+          (row.result?.vegasOdds?.pickingSpread?.vSpreadPoints ||
+            row.result?.vegasOdds?.pickingSpread?.hSpreadPoints ||
+            0) +
+          (row.BR || 0)
+      ).toFixed(2);
+    });
+
+    // Rank the TP values
+    const sortedTPValues = [...tpValues].sort((a, b) => b - a);
+    const ranks = tpValues.map((tp) => sortedTPValues.indexOf(tp) + 1);
+
+    return { tpValues, ranks };
+  };
+
+  // Calculate TP points and ranks
+  const { tpValues, ranks } = calculateTPandRank(gamesPlayed);
+
   return (
     <div className="table-container">
       <table>
@@ -91,32 +127,26 @@ const TableComponent = () => {
             gamesPlayed.map((row, index) => {
               const gameData = gameDataMap[row.gameData] || {};
 
-              const tp =
-                parseFloat(gameData["h-ml-points"] || 0) +
-                parseFloat(gameData["v-ml-points"] || 0) +
-                (parseFloat(gameData["h-ou-points"] || 0) +
-                  parseFloat(gameData["v-ou-points"] || 0)) +
-                (parseFloat(gameData["h-sprd-points"] || 0) +
-                  parseFloat(gameData["v-sprd-points"] || 0));
+              const tp = tpValues[index];
 
               // Calculate 1SW2 and 2SW2
               const oneS = (
                 (row.result?.accuracyPoints?.home?.p1s || 0) +
-                (row.result?.accuracyPoints?.visitor?.p1s || 0)
+                (row.result?.accuracyPoints?.vistor?.p1s || 0)
               ).toFixed(2);
 
               const oneSW2 = (
                 (row.result?.accuracyPoints?.home?.p1s2p || 0) +
-                (row.result?.accuracyPoints?.visitor?.p1s2p || 0)
+                (row.result?.accuracyPoints?.vistor?.p1s2p || 0)
               ).toFixed(2);
 
               const twoSW2 = (
                 (row.result?.accuracyPoints?.home?.p2s2p || 0) +
-                (row.result?.accuracyPoints?.visitor?.p2s2p || 0)
+                (row.result?.accuracyPoints?.vistor?.p2s2p || 0)
               ).toFixed(2);
 
               // Extract one of the values from vegasOdds
-              const vegasOddsValue = row.vegasOdds?.pickingFavorite || "-";
+              const vegasOddsValue = row.vegasOdds?.pickExtraInnings || "0";
 
               // Compute ml, ou, spread values based on the specified properties
               const ml = parseFloat(
@@ -175,7 +205,7 @@ const TableComponent = () => {
                     {row.player || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {row.R || "-"}
+                    {ranks[index] || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">{tp}</td>
                   <td className="text-xs font-medium text-center">
@@ -190,12 +220,12 @@ const TableComponent = () => {
                   </td>
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
-                  {/* <td className="text-xs font-medium text-center">
-                    {row.Reg || "-"}
-                  </td> */}
                   <td className="text-xs font-medium text-center">
-                    {row.OT || "-"}
+                    {row.Reg || "0"}
                   </td>
+                  {/* <td className="text-xs font-medium text-center">
+                    {row.OT || "-"}
+                  </td> */}
                   {/* Add a new column for the extracted vegasOdds value */}
                   <td className="text-xs font-medium text-center">
                     {vegasOddsValue}
