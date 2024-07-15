@@ -95,7 +95,7 @@ const Stats = () => {
 
 
 
-      <div className="w-full">
+      <div style={{width : '97%'}}>
      
      {selectedLeague === "NBA" && <Basketball />}
      {selectedLeague === "NFL" && <Football />}

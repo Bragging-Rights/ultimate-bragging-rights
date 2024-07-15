@@ -117,7 +117,7 @@ export default function Statspage() {
   };
 
   return (
-    <div>
+    <div >
       <div style={{ backgroundColor: 'rgb(179, 179, 0)' , display: 'flex', justifyContent: 'flex-start', alignItems: 'center', padding: '10px' }}>
         <span>{formattedDate}</span>
         <span style={{ textAlign: 'center', color: 'black', flexGrow: 1 }}>Game Breakdowns</span>

@@ -3,6 +3,7 @@
   overflow-y: visible; /* Allow vertical overflow for dropdowns */
   -ms-overflow-style: none;  /* Hide scroll bar in Internet Explorer */
   scrollbar-width: none;  /* Hide scroll bar in Firefox */
+  margin: 10px;
 }
 
 .search-bar-container::-webkit-scrollbar {
@@ -36,10 +37,18 @@ li {
   align-items: center;
   z-index: 100;
 }
+.menu-nav-header {
+  font-size: 1rem; 
+  color: #eaeaea;
+  width: 100%; /* Make sure the header spans the entire width */
+  text-align: center; /* Center the text, adjust as needed */
+  margin-bottom: 10px; /* Space between the header and buttons, adjust as needed */
+}
 
 .menu-nav {
   width: 100%;
   display: flex;
+  flex-direction: column;
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -197,7 +206,7 @@ button.reset-button:hover {
   button,
   a,
   li {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .menu-nav button {
@@ -219,6 +228,6 @@ button.reset-button:hover {
 
 @media (max-width: 420px) {
   .menu-nav button {
-    width: 45vw;
+    /* width: 45vw; */
   }
 }

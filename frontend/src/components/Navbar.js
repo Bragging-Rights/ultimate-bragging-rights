@@ -70,7 +70,8 @@ const Navbar = () => {
                       textAlign: "left",
                     }}
                   >
-                    LIMITED FREE LIFETIME MEMBERSHIP <br/>AVAILABLE{" "}{" "}
+                    LIMITED FREE LIFETIME MEMBERSHIP <br />
+                    AVAILABLE{" "}
                     <span
                       style={{
                         color: "red",
@@ -78,7 +79,8 @@ const Navbar = () => {
                         fontSize: isMobileView ? "0.4rem" : "0.8rem",
                       }}
                     >
-                     {" "} $250
+                      {" "}
+                      $250
                     </span>
                   </Typography>
                 )}
@@ -103,7 +105,7 @@ const Navbar = () => {
                         fontSize: isMobileView ? "0.3rem" : "0.8rem",
                       }}
                     >
-                      <span>Already A Member</span>
+                      <span>Already{" "}Member</span>
                     </Typography>
                   )}
                   <SignInModal

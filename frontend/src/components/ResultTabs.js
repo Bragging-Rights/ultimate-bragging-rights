@@ -43,13 +43,13 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
           sx={{
             display: "flex",
             justifyContent: "space-around",
-            width: isMobileView ? "50vh" : "57%",
-            height: isMobileView ? "10vh" : "10vh",
+            width: isMobileView ? "40vh" : "57%",
+            height: isMobileView ? "8vh" : "10vh",
             backgroundColor: "black",
             borderRadius: "5vh",
             position: "relative",
             overflow: "hidden",
-            marginLeft: "21%",
+            margin: "auto",
           }}
         >
           {tabs.map((tab, index) => (
