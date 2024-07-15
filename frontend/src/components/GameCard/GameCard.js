@@ -38,7 +38,8 @@ const GameCard = ({ gameData }) => {
 
   const userId = localStorage.getItem("_id");
 
-  let gameEnding = "";
+  const [gameEnding, setGameEnding] = useState(""); // State for gameEnding
+
   const handleEnterPick = () => {
     const invalidFields = [];
     if (!pick_visitor) invalidFields.push("pick_visitor");
@@ -72,7 +73,6 @@ const GameCard = ({ gameData }) => {
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
     displayToast("Saved successfully!", "success");
   };
-
   const handleLockIn = () => {
     const invalidFields = [];
     const visitorScore = parseInt(pick_visitor);
@@ -81,14 +81,17 @@ const GameCard = ({ gameData }) => {
     if (!pick_visitor || isNaN(visitorScore))
       invalidFields.push("pick_visitor");
     if (!pick_home || isNaN(homeScore)) invalidFields.push("pick_home");
-    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+
+    // Ensure at least one of the options is selected
+    if (!Pick_Reg && !Pick_ot && !Pick_so && !Pick_Ei)
+      invalidFields.push("pick_switch");
 
     setInvalidFields(invalidFields);
 
     if (invalidFields.length > 0) {
       Swal.fire({
         title: "Error",
-        text: "Both pick_visitor, pick_home, and at least one switch are required fields.",
+        text: "Select one of the options.",
         icon: "error",
         background: "#212121",
         color: "white",
@@ -186,25 +189,9 @@ const GameCard = ({ gameData }) => {
     }
   };
 
-  // In the JSX, ensure the switches component is included
-  <Switches
-    league={gameData?.league}
-    season={gameData?.seasonflag}
-    setPick_num_ot={setPick_num_ot}
-    setPick_so={setPick_so}
-    setPick_ot={setPick_ot}
-    setPick_Reg={setPick_Reg}
-    setPick_Ei={setPick_Ei}
-    uniqueId={gameData._id}
-  />;
-
   const lockInPrediction = () => {
     const timestamp = new Date().toISOString();
     console.log("User ID in GameCard:", userId);
-
-    if (!gameEnding) {
-      gameEnding = "null";
-    }
 
     const dataToSave = {
       gameData: gameData._id,
@@ -285,14 +272,16 @@ const GameCard = ({ gameData }) => {
 
   const renderSwitches = (team) => (
     <Switches
-      league={gameData.league}
-      season={gameData.season}
+      league={gameData?.league}
+      season={gameData?.seasonflag}
       setPick_num_ot={setPick_num_ot}
       setPick_so={setPick_so}
       setPick_ot={setPick_ot}
       setPick_Reg={setPick_Reg}
       setPick_Ei={setPick_Ei}
-      uniqueId={`${gameData._id}-${team}`}
+      uniqueId={gameData._id}
+      glowing={invalidFields.includes("pick_switch")}
+      setGameEnding={setGameEnding} // Pass the function to update gameEnding
     />
   );
 
@@ -489,6 +478,7 @@ const GameCard = ({ gameData }) => {
             setPick_Ei={setPick_Ei}
             uniqueId={gameData._id}
             glowing={invalidFields.includes("pick_switch")}
+            setGameEnding={setGameEnding} // Pass the function to update gameEnding
           />
 
           <div

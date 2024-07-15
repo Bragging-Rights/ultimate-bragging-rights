@@ -295,6 +295,8 @@ const ScoreEntry = () => {
                     selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
                   {<TableCell></TableCell>}
                   <TableCell>Not Completed</TableCell>
+                  <TableCell></TableCell>
+
                   <TableCell>Reason</TableCell>
                 </TableRow>
               </TableHead>

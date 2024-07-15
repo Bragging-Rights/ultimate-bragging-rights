@@ -36,7 +36,7 @@ const GamerCardRight = ({ gameData }) => {
   };
   const userId = localStorage.getItem("_id");
 
-  let gameEnding = "";
+  const [gameEnding, setGameEnding] = useState(""); // State for gameEnding
   const handleEnterPick = () => {
     const invalidFields = [];
     if (!pick_visitor) invalidFields.push("pick_visitor");
@@ -72,24 +72,34 @@ const GamerCardRight = ({ gameData }) => {
 
   const handleLockIn = () => {
     const invalidFields = [];
-    if (!pick_visitor) invalidFields.push("pick_visitor");
-    if (!pick_home) invalidFields.push("pick_home");
-    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+    const visitorScore = parseInt(pick_visitor);
+    const homeScore = parseInt(pick_home);
+
+    if (!pick_visitor || isNaN(visitorScore))
+      invalidFields.push("pick_visitor");
+    if (!pick_home || isNaN(homeScore)) invalidFields.push("pick_home");
+
+    // Ensure at least one of the options is selected
+    if (!Pick_Reg && !Pick_ot && !Pick_so && !Pick_Ei)
+      invalidFields.push("pick_switch");
+
+    console.log("Pick_Reg:", Pick_Reg);
+    console.log("Pick_ot:", Pick_ot);
+    console.log("Pick_so:", Pick_so);
+    console.log("Pick_Ei:", Pick_Ei);
+
+    setInvalidFields(invalidFields);
 
     if (invalidFields.length > 0) {
-      setInvalidFields(invalidFields);
       Swal.fire({
         title: "Error",
-        text: "Fill all the required fields.",
+        text: "Select one of the options.",
         icon: "error",
         background: "#212121",
         color: "white",
       });
       return;
     }
-
-    const visitorScore = parseInt(pick_visitor);
-    const homeScore = parseInt(pick_home);
 
     let showAlert = false;
     let alertMessage = "";
@@ -202,16 +212,7 @@ const GamerCardRight = ({ gameData }) => {
   };
 
   // In the JSX, ensure the switches component is included
-  <Switches
-    league={gameData?.league}
-    season={gameData?.seasonflag}
-    setPick_num_ot={setPick_num_ot}
-    setPick_so={setPick_so}
-    setPick_ot={setPick_ot}
-    setPick_Reg={setPick_Reg}
-    setPick_Ei={setPick_Ei}
-    uniqueId={gameData._id}
-  />;
+
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => addPrediction(data),
     {
@@ -225,16 +226,10 @@ const GamerCardRight = ({ gameData }) => {
   );
 
   const handleEdit = () => {
-    // Open the edit modal
     setIsModalOpen(true);
   };
 
   const handleSaveEdit = () => {
-    // Save the edited game data
-    // Implement your logic to save the editedGameData
-    // You can make an HTTP request to update the data in your backend
-    // or use a state management library like Redux to update the data
-    // After saving, close the modal
     setIsModalOpen(false);
     console.log("Saved data:", editedGameData);
   };
@@ -246,14 +241,16 @@ const GamerCardRight = ({ gameData }) => {
 
   const renderSwitches = (team) => (
     <Switches
-      league={gameData.league}
-      season={gameData.season}
+      league={gameData?.league}
+      season={gameData?.seasonflag}
       setPick_num_ot={setPick_num_ot}
       setPick_so={setPick_so}
       setPick_ot={setPick_ot}
       setPick_Reg={setPick_Reg}
-      setPick_Ei={setPick_Ei} // Example of passing setPick_Ei
-      uniqueId={`${gameData._id}-${team}`} // Use a unique identifier
+      setPick_Ei={setPick_Ei}
+      uniqueId={gameData._id}
+      glowing={invalidFields.includes("pick_switch")}
+      setGameEnding={setGameEnding} // Pass the function to update gameEnding
     />
   );
 
@@ -448,9 +445,10 @@ const GamerCardRight = ({ gameData }) => {
             setPick_so={setPick_so}
             setPick_ot={setPick_ot}
             setPick_Reg={setPick_Reg}
-            setPick_Ei={setPick_Ei} // Ensure setPick_Ei is passed correctly
-            uniqueId={gameData._id} // Pass unique identifier
+            setPick_Ei={setPick_Ei}
+            uniqueId={gameData._id}
             glowing={invalidFields.includes("pick_switch")}
+            setGameEnding={setGameEnding} // Pass the function to update gameEnding
           />
           <div
             className="button-pick"
