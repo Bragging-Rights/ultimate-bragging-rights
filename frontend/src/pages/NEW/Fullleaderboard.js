@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+import './TableStyles.css';
+
 
 export default function Fullleaderboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
