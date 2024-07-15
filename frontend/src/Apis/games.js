@@ -5,7 +5,7 @@ export const addGame = async (data) => {
     "api/admin/games/createGame",
     JSON.stringify(data)
   );
-  // console.log("Response:", response);
+
   return response;
 };
 

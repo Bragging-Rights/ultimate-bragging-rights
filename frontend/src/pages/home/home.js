@@ -40,9 +40,9 @@ const HomePage = () => {
     },
     header: {
       fontWeight: "normal",
-      marginBottom: isMobileView || isTabletView ? "-0px" : "-10px",
+      marginBottom: isMobileView || isTabletView ? "-0px" : "-12px",
       color: "#FFFF00",
-      fontSize: isMobileView ? "0.7rem" : "1.4rem",
+      fontSize: isMobileView ? "0.4rem" : "0.9rem",
       fontStyle: "italic",
     },
     column: {
@@ -107,7 +107,7 @@ const HomePage = () => {
             />
             <div style={styles.introContainer}>
               <div style={styles.contentContainer}>
-                <Typography variant="h4" component="h1" sx={styles.header}>
+                <Typography variant="h1" component="h1" sx={styles.header}>
                   THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
                 </Typography>
                 <br />

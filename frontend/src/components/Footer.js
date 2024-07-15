@@ -26,7 +26,7 @@ const Footer = () => {
           <img
             src={logo}
             alt="logo"
-            width={isMobileView ? 40 : 60}
+            width={isMobileView ? 50 : 70}
             height={isMobileView ? 30 : 45}
           />
         </Grid>
@@ -36,34 +36,17 @@ const Footer = () => {
             className="footer-text"
             style={{
               color: "#FFF",
-              fontSize: isMobileView ? "0.25rem" : "10px",
+              fontSize: isMobileView ? "0.45rem" : "10px",
               opacity: "0.5",
               marginTop: "10px",
             }}
           >
             ©2020 Sports Fans Challenges Inc . A Global Sports Network with a
-            Conscience.
-          </Typography>
-          <Typography
-            className="footer-text"
-            style={{
-              color: "#FFF",
-              fontSize: isMobileView ? "0.25rem" : "10px",
-              opacity: "0.5",
-            }}
-          >
-            All Rights Reserved. Terms of Use / New Privacy Policy
-          </Typography>
-          <Typography
-            className="footer-text"
-            style={{
-              color: "#FFF",
-              fontSize: isMobileView ? "0.25rem" : "10px",
-              opacity: "0.5",
-            }}
-          >
+            Conscience.<br/>
+            All Rights Reserved. Terms of Use / New Privacy Policy.<br/>
             We never sell your information!
           </Typography>
+
           <Typography
             className="footer-text"
             style={{

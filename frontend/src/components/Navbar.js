@@ -70,7 +70,7 @@ const Navbar = () => {
                       textAlign: "left",
                     }}
                   >
-                    LIMITED FREE LIFETIME MEMBERSHIP AVAILABLE{" "}
+                    LIMITED FREE LIFETIME MEMBERSHIP <br/>AVAILABLE{" "}{" "}
                     <span
                       style={{
                         color: "red",
@@ -78,7 +78,7 @@ const Navbar = () => {
                         fontSize: isMobileView ? "0.4rem" : "0.8rem",
                       }}
                     >
-                      $250
+                     {" "} $250
                     </span>
                   </Typography>
                 )}
@@ -94,17 +94,16 @@ const Navbar = () => {
                     justifyContent: "flex-end",
                   }}
                 >
-                  {isHomepage && !userEmail && (
+                  {isHomepage && (
                     <Typography
                       variant="body1"
                       color="inherit"
                       sx={{
-                        marginLeft: "auto",
-                        fontSize: isMobileView ? "0.4rem" : "0.8rem",
+                        // marginLeft: "auto",
+                        fontSize: isMobileView ? "0.3rem" : "0.8rem",
                       }}
                     >
-                      <span>Already</span>
-                      <span> A Member</span>
+                      <span>Already A Member</span>
                     </Typography>
                   )}
                   <SignInModal
@@ -137,7 +136,7 @@ const Navbar = () => {
                           onClick={() => setSignInModalIsOpen(true)}
                           size="small"
                           sx={{
-                            border: "2px solid #f6e05e",
+                            border: "1px solid #f6e05e",
                             color: "#f0e68c",
                             fontWeight: 800,
                             borderRadius: "0.375rem",

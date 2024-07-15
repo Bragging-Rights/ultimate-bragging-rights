@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import Swal from "sweetalert2";
 import "../Modal/Modal.css";
 import { useQuery, useMutation } from "react-query";
 import { getTeasmByLeage } from "../../Apis/Teams";
@@ -17,7 +16,6 @@ import { Register } from "../../Apis/auth";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
-import ModalPassword from "../Modal/ModalPassword";
 
 const Registration = (props) => {
   const { modalIsOpen, closeModal } = props;
@@ -37,6 +35,7 @@ const Registration = (props) => {
   ]);
 
   const [leaguesOptions, setLeaguesOptions] = useState([
+    // { value: "", label: "Select league" },
     { value: "nba", label: "NBA", isSelected: false },
     { value: "nfl", label: "NFL", isSelected: false },
     { value: "mlb", label: "MLB", isSelected: false },
@@ -49,7 +48,10 @@ const Registration = (props) => {
     data: teamsData,
     refetch: refetchNhl,
   } = useQuery(["teams", league], getTeasmByLeage, {
-    onError: (err) => {},
+    // enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
     onSuccess: (rec) => {
       const sortedTeams = rec.data.sort((a, b) => {
         const nameA = a?.displayName;
@@ -69,21 +71,30 @@ const Registration = (props) => {
   });
 
   const { refetch: refetchNba } = useQuery(["teams", "nba"], getTeasmByLeage, {
-    onError: (err) => {},
+    // enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
     onSuccess: (rec) => {
       setAvailableTeams({ ...availableTeams, nba: [...rec.data] });
     },
   });
 
   const { refetch: refetchNfl } = useQuery(["teams", "nfl"], getTeasmByLeage, {
-    onError: (err) => {},
+    // enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
     onSuccess: (rec) => {
       setAvailableTeams({ ...availableTeams, nfl: [...rec.data] });
     },
   });
 
   const { refetch: refetchMlb } = useQuery(["teams", "mlb"], getTeasmByLeage, {
-    onError: (err) => {},
+    // enabled: false,
+    onError: (err) => {
+      // displayToast("An error occurred while getting the teams.", "error");
+    },
     onSuccess: (rec) => {
       setAvailableTeams({ ...availableTeams, mlb: [...rec.data] });
     },
@@ -94,12 +105,14 @@ const Registration = (props) => {
     refetchNfl();
     refetchNba();
     refetchNhl();
+    // refetch();
   }, [league]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
     couponcode: "",
+
     lastName: "",
     email: "",
     city: "",
@@ -111,6 +124,7 @@ const Registration = (props) => {
     confirmPassword: "",
     referralName: "",
     username: "",
+
     termsAccepted: false,
   });
   const [countryCode, setCountryCode] = useState("");
@@ -197,7 +211,6 @@ const Registration = (props) => {
           displayToast(rec?.data?.message, "error");
         } else {
           displayToast("Register successfully.", "success");
-          window.location.reload(); // Add this line to refresh the page
         }
       },
     }
@@ -215,7 +228,9 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
+      // "username", // Add username to required fields
     ];
+    // leagues
 
     const invalidFields = requiredFields.filter((field) => !formData[field]);
 
@@ -234,6 +249,7 @@ const Registration = (props) => {
       return;
     }
 
+    // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       displayToast(
         "Passwords do not match. Please enter matching passwords.",
@@ -252,27 +268,6 @@ const Registration = (props) => {
     console.log(data);
     mutate(data);
   };
-
-  const handleNextClick = () => {
-    if (currentStep === 3 && userLeagues.length === 1) {
-      Swal.fire({
-        title: "You have only selected one league. Do you want to continue?",
-        showDenyButton: true,
-        confirmButtonText: "Yes",
-        denyButtonText: "No",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          nextStep(); // Proceed to the next step
-        } else if (result.isDenied) {
-          Swal.fire("You can add more leagues before proceeding", "", "info");
-          // Stay on the current page
-        }
-      });
-    } else {
-      nextStep(); // Proceed to the next step if more than one league is selected or not on the "Choose League" step
-    }
-  };
-
   const nextStep = () => {
     if (validateStep()) {
       setCurrentStep(currentStep + 1);
@@ -284,10 +279,12 @@ const Registration = (props) => {
   };
 
   const displayErrorMessage = (message) => {
+    // Implement your error display mechanism here
     console.error(message);
   };
 
   const validateStep = () => {
+    // Validation for the first step
     if (currentStep === 1) {
       const requiredFields = ["firstName", "lastName", "gender"];
       const invalidFields = requiredFields.filter((field) => !formData[field]);
@@ -301,6 +298,7 @@ const Registration = (props) => {
       }
     }
 
+    // Validation for the second step
     if (currentStep === 2) {
       const requiredFields = [
         "country",
@@ -320,6 +318,7 @@ const Registration = (props) => {
       }
     }
 
+    // Validation for the third step
     if (currentStep === 3) {
       if (!validateLeagues(userLeagues)) {
         displayToast(
@@ -432,6 +431,25 @@ const Registration = (props) => {
             </strong>
             <div className="logo-container"></div>
           </li>
+
+          {/* <li
+              className={`step ${currentStep === 5 ? "active" : ""}`}
+              id="confirm"
+            >
+              <strong
+                style={{
+                  color: currentStep === 5 ? "#FFAE00" : "inherit",
+                }}
+              >
+                Setup Account
+              </strong>
+              <div className="logo-container"></div>
+            </li> */}
+
+          <br />
+          <br />
+          <br />
+          <br />
         </ul>
 
         {Array.from({ length: 4 }, (_, index) => (
@@ -440,6 +458,7 @@ const Registration = (props) => {
             style={{ display: index + 1 === currentStep ? "block" : "none" }}
           >
             <div className="form-card">
+              <br /> <br />
               {index === 0 && (
                 <>
                   <h2 id="heading" className="signup-heading">
@@ -448,14 +467,14 @@ const Registration = (props) => {
                   <p className="signup-subtitle">
                     We just need some basic Info
                   </p>
-
+                  <br />
                   <div className="label-container">
                     <label className="info-require">
                       * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-
+                  <br />
                   <div className="form-container">
                     <ModalInput
                       label={
@@ -536,8 +555,10 @@ const Registration = (props) => {
                       }
                       placeholder={"Coupon Code"}
                       name="couponCode"
-                      onChange={inputChangeHandler}
+                      // value={formData.couponcode}
+                      // onChange={inputChangeHandler}
                       style={{ flex: "1" }}
+                      requiredFields
                     />
                   </div>
                 </>
@@ -551,18 +572,19 @@ const Registration = (props) => {
                     To Determine Which Conference and Division you will play in
                   </p>
 
+                  <br />
                   <div className="label-container">
                     <label className="info-require">
                       * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-
-                  <div className="form-container form-index1">
+                  <br />
+                  <div className="form-container">
                     <CountrySelect
                       value={selectedCountry}
                       onChange={(e) => handleCountryChange(e)}
-                      defaultValue={{ value: "CA", label: "Canada" }}
+                      defaultValue={{ value: "CA", label: "Canada" }} // Set the default value to Canada
                     />
                     <StateSelect
                       country={countryCode}
@@ -574,6 +596,7 @@ const Registration = (props) => {
                         });
                       }}
                     />
+
                     <CitySelect
                       onChange={(e) =>
                         setFormData({
@@ -585,9 +608,7 @@ const Registration = (props) => {
                       countryCode={countryCode}
                       stateCode={stateCode}
                     />
-                  </div>
 
-                  <div className="form-container form-index1">
                     <ModalInput
                       label={
                         <h2
@@ -599,13 +620,14 @@ const Registration = (props) => {
                         </h2>
                       }
                       placeholder="Postal/ZIP code"
-                      type="text"
+                      type="text" // Assuming "string" was a typo, and you intended to use "text" as the type
                       name="postalCode"
                       value={formData.postalCode}
                       onChange={inputChangeHandler}
                       className="zip-code"
                       style={{ height: "59px" }}
                     />
+
                     <PhoneNumber
                       value={formData.phoneNumber}
                       onChange={(e) => {
@@ -614,12 +636,10 @@ const Registration = (props) => {
                           phoneNumber: e,
                         });
                       }}
-                      className="phone-number"
                     />
                   </div>
                 </>
               )}
-
               {index === 2 && (
                 <>
                   <h2 id="heading" className="signup-heading">
@@ -628,16 +648,16 @@ const Registration = (props) => {
                   <p className="signup-subtitle">
                     by creating a username in that league{" "}
                   </p>
-
+                  <br />
                   <div className="label-container">
                     <label className="info-require">
                       * You Must Join At least One League{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-
+                  <br />
                   <div className="row">
-                    <div className="col-md-4 col-lg-12">
+                    <div className="col-md-4 col-lg-6">
                       {userLeagues.map((info, innerIndex) => {
                         const unselectedLeagues = [...leaguesOptions];
                         userLeagues
@@ -668,12 +688,6 @@ const Registration = (props) => {
                           />
                         );
                       })}
-                      <div
-                        className="add-another-league"
-                        onClick={addAnotherLeague}
-                      >
-                        +Add Another League
-                      </div>
                     </div>
                   </div>
                 </>
@@ -688,21 +702,36 @@ const Registration = (props) => {
                     lowercase, numbers, and symbols) and never share it with
                     anyone.
                   </p>
-
+                  <br />
                   <div className="label-container">
                     <label className="info-require">
                       * Information Needed{" "}
                     </label>
                     <div className=" line"></div>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "16px",
-                    }}
-                  >
-                    <div style={{ flex: "1", display: "flex", gap: "16px" }}>
+                  <br />
+                  <div className="form-container">
+                    <ModalInput
+                      label={
+                        <h2
+                          id="heading"
+                          className="signup-heading"
+                          style={{ fontSize: "14px", color: "#FFAE00" }}
+                        >
+                          * EMAIL
+                        </h2>
+                      }
+                      placeholder={"Email"}
+                      value={formData.email}
+                      onChange={inputChangeHandler}
+                      type="email"
+                      name="email"
+                    >
+                      <div className="email-modal"></div>
+                    </ModalInput>
+                  </div>
+                  <div className="password-section">
+                    <div className="password-inputs">
                       <ModalInput
                         label={
                           <h2
@@ -710,23 +739,7 @@ const Registration = (props) => {
                             className="signup-heading"
                             style={{ fontSize: "14px", color: "#FFAE00" }}
                           >
-                            EMAIL
-                          </h2>
-                        }
-                        placeholder={"Email"}
-                        value={formData.email}
-                        onChange={inputChangeHandler}
-                        type="email"
-                        name="email"
-                      />
-                      <ModalPassword
-                        label={
-                          <h2
-                            id="heading"
-                            className="signup-heading"
-                            style={{ fontSize: "14px", color: "#FFAE00" }}
-                          >
-                            CREATE PASSWORD
+                            * CREATE PASSWORD
                           </h2>
                         }
                         placeholder={"Create Password"}
@@ -735,14 +748,14 @@ const Registration = (props) => {
                         onChange={inputChangeHandler}
                         type="password"
                       />
-                      <ModalPassword
+                      <ModalInput
                         label={
                           <h2
                             id="heading"
                             className="signup-heading"
                             style={{ fontSize: "14px", color: "#FFAE00" }}
                           >
-                            CONFIRM PASSWORD
+                            * CONFIRM PASSWORD
                           </h2>
                         }
                         placeholder={"Confirm Password"}
@@ -764,74 +777,110 @@ const Registration = (props) => {
                       name="termsAccepted"
                       checked={formData.termsAccepted}
                       onChange={handleTermsChange}
-                      required // This makes the checkbox required
                     />
-
-                    <br />
-                    <br />
+                    <br /> <br />
+                    <br /> <br />
                     <div style={{ color: "white" }}>
                       I certify that I am at least 18 years old and that I agree
                       to the Terms of services and Privacy Policy.{" "}
                     </div>
                   </div>
-
+                  <br />
                   <Captcha
                     setCaptchaState={setCaptchaState}
                     captchaState={captchaState}
                   />
                 </>
               )}
-              <div className="button-layout" style={{ marginTop: "7%" }}>
-                {index + 1 < 4 && (
-                  <div className="button-container">
-                    <div className="button-next-prev">
-                      {index > 0 && (
-                        <input
-                          type="button"
-                          onClick={prevStep}
-                          className="previous action-button-previous"
-                          value="Previous"
-                        />
-                      )}
-                      <input
-                        type="button"
-                        onClick={handleNextClick} // Use the new function here
-                        className="next action-button"
-                        value="Next"
+              {/* {index === 4 && (
+                  <>
+                    <h2 id="heading" className="signup-heading">
+                      PLEASE CHECK YOUR EMAIL FOR THE CONFIRMATION CODE
+                    </h2>
+                    <p className="signup-subtitle">
+                      Once Enter We Will Setup Your Account. Enter Confirmation
+                      Code Below
+                    </p>
+                    <br />
+                    <div className="label-container">
+                      <label className="info-require">
+                        * Information Needed{" "}
+                      </label>
+                      <div className=" line"></div>
+                    </div>
+                    <div className="form-container">
+                    <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * ENTER YOUR VERIFICATION CODE
+                          </h2>
+                        }
+                        placeholder={"Enter Your Verification Code"}
+                        name="code"
+                        value={formData.verifyCode}
+                        onChange={inputChangeHandler}
+                        style={{ flex: "1" }}
                       />
                     </div>
-                  </div>
-                )}
-              </div>
-              {index + 1 === 4 && (
-                <div className="button-container">
-                  <div className="button-next-prev">
-                    {" "}
+                    <br />
+                    <div style={{ color: "red", textAlign: "center" }}>
+                      * If you close this window without entering the confirmation
+                      code, you will have to start the whole process all over
+                      again!
+                      <br />
+                      Please go check your email now for the code. If you do not
+                      see it, please check your Spam or Junk Folder.
+                    </div>
+                  </>
+                )} */}
+              <br />
+              {index + 1 < 4 && (
+                <>
+                  <input
+                    type="button"
+                    onClick={nextStep}
+                    className="next action-button"
+                    value="Next"
+                  />
+                  {index > 0 && (
                     <input
                       type="button"
                       onClick={prevStep}
                       className="previous action-button-previous"
                       value="Previous"
                     />
-                    <button
-                      className={`submit action-button 
-                   ${!captchaState && "cursor-not-allowed"}      
-                              `}
-                      onClick={handleRegistration}
-                      type="button"
-                      // disabled={!captchaState}
-                    >
-                      Create Account {isLoading && <Loader />}
-                    </button>
-                  </div>
-                </div>
+                  )}
+                </>
               )}
             </div>
+            {index + 1 === 4 && (
+              <>
+                <button
+                  className={`submit action-button 
+                  // ${!captchaState && "cursor-not-allowed"}      
+                              `}
+                  onClick={handleRegistration}
+                  type="button"
+                  // disabled={!captchaState}
+                >
+                  Create Account {isLoading && <Loader />}
+                </button>
+                <input
+                  type="button"
+                  onClick={prevStep}
+                  className="previous action-button-previous"
+                  value="Previous"
+                />
+              </>
+            )}
           </fieldset>
         ))}
       </form>
     </Modal>
   );
 };
-
 export default Registration;

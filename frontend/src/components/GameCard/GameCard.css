@@ -268,29 +268,3 @@
   transform: rotate(270deg);
   writing-mode: vertical-rl;
 }
-
-.swal2-popup {
-  background: #212121;
-  border: 2px solid #626262;
-}
-
-.swal2-confirm {
-  border-radius: 4px !important;
-  background: linear-gradient(
-    180deg,
-    #be8200 0%,
-    #fef098 47.4%,
-    #efd261 100%
-  ) !important;
-  padding: 10px !important;
-  color: #000 !important;
-  width: 80px;
-}
-
-.swal2-cancel {
-  width: 80px;
-}
-.glowing-border {
-  border: 2px solid red;
-  box-shadow: 0 0 10px red;
-}

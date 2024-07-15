@@ -7,7 +7,6 @@ import { ForgotPasswordModal } from "./ForgotPasswordModal";
 import Registration from "../Registration/Registration";
 import { login } from "../../Apis/auth";
 import { useNavigate } from "react-router-dom";
-import ModalPassword from "./ModalPassword";
 
 const customStyles = {
   content: {
@@ -137,7 +136,7 @@ export const SignInModal = (props) => {
           value={formData.email}
           onChange={inputChangeHandler}
         />
-        <ModalPassword
+        <ModalInput
           label={"Password"}
           placeholder={"Password"}
           type="password"
@@ -149,13 +148,8 @@ export const SignInModal = (props) => {
       <br />
       <div className="password-reset-container text-white">
         <button
-          style={{
-            fontSize: "16px",
-            color: "#fcd34d",
-            cursor: "pointer",
-            backgroundColor: "transparent",
-            border: "none",
-          }}
+          className="reset-password-btn text-yellow-300"
+          style={{ textDecoration: "underline", fontSize: "16px" }}
           onClick={() => setForgotPasswordModalOpen(true)}
         >
           Forgot Password?
@@ -171,8 +165,6 @@ export const SignInModal = (props) => {
           style={{
             color: "#ff0000",
             fontSize: "16px",
-            padding: "1%",
-            cursor: "pointer",
           }}
           onClick={() => setRegistrationModalOpen(true)}
         >

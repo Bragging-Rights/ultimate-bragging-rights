@@ -5,7 +5,7 @@ const ModalInput = (props) => {
   return (
     <div className="element-container">
       <div>
-        {/* <label className="star">*</label> */}
+        <label className="star">*</label>
         <label className="input-label">{label}</label>
       </div>
       <input

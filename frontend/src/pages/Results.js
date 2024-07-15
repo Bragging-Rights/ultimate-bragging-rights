@@ -8,8 +8,8 @@ import ResultTabs from "../components/ResultTabs";
 import TableComponent from "../components/TableComponent/TableComponent";
 import NightlyStatsTable from "../components/NightlyStatsTable/NightlyStatsTable";
 
-// import img1 from "../assets/card.png";
-// import img2 from "../assets/card2.png";
+import img1 from "../assets/card.png";
+import img2 from "../assets/card2.png";
 import NightResult from "../components/NightResult/NightResult";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 
@@ -155,15 +155,15 @@ const Results = () => {
         <Grid item xs={12}>
           <Line />
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6}>
           <img src={img1} alt="img1" className="img-same-size" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <img src={img2} alt="img2" className="img-same-size" />
-        </Grid> */}
+        </Grid>
 
         {/* <Banner date={formattedDate} label={"Game Breakdowns"} /> */}
-        {/* <Grid item xs={12} display="flex" justifyContent="center">
+        <Grid item xs={12} display="flex" justifyContent="center">
           <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
         </Grid>
         <Grid item xs={12}>
@@ -174,7 +174,7 @@ const Results = () => {
           ) : (
             ""
           )}
-        </Grid> */}
+        </Grid>
       </Grid>
     </>
   );
