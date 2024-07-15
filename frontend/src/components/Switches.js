@@ -9,12 +9,23 @@ const Switches = (props) => {
     setPick_ot,
     setPick_Reg,
     setPick_Ei,
- } = props;
+    uniqueId,
+    glowing,
+    setGameEnding,
+  } = props;
 
- const [regChecked, setRegChecked] = useState(true);
- const [otChecked, setOtChecked] = useState(false);
- const [soChecked, setSoChecked] = useState(false);
- const [eiChecked, setEiChecked] = useState(false);
+  const [regChecked, setRegChecked] = useState(false);
+  const [otChecked, setOtChecked] = useState(false);
+  const [soChecked, setSoChecked] = useState(false);
+  const [eiChecked, setEiChecked] = useState(false);
+
+  const handleRadioChange = (endingType) => {
+    setGameEnding(endingType); // Update gameEnding in the parent
+    setRegChecked(endingType === "Reg");
+    setOtChecked(endingType === "O/T");
+    setSoChecked(endingType === "S/O");
+    setEiChecked(endingType === "E/I");
+  };
 
  return (
     <div className="flex md:flex-row gap-5">
@@ -27,6 +38,7 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("Reg");
                 setRegChecked(true);
                 setOtChecked(false);
                 setSoChecked(false);
@@ -35,7 +47,7 @@ const Switches = (props) => {
                 setPick_so(false);
               }}
               checked={regChecked}
-              key={`reg-${regChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -44,6 +56,7 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("O/T");
                 setRegChecked(false);
                 setOtChecked(true);
                 setSoChecked(false);
@@ -52,7 +65,7 @@ const Switches = (props) => {
                 setPick_so(false);
               }}
               checked={otChecked}
-              key={`ot-${otChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">O/T</label>
           </div>
@@ -61,6 +74,7 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("S/O");
                 setRegChecked(false);
                 setOtChecked(false);
                 setSoChecked(true);
@@ -69,7 +83,7 @@ const Switches = (props) => {
                 setPick_so(true);
               }}
               checked={soChecked}
-              key={`so-${soChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">S/O</label>
           </div>
@@ -94,13 +108,14 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("Reg");
                 setRegChecked(true);
                 setOtChecked(false);
                 setPick_Reg(true);
                 setPick_ot(false);
               }}
               checked={regChecked}
-              key={`reg-${regChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -109,13 +124,14 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("O/T");
                 setRegChecked(false);
                 setOtChecked(true);
                 setPick_Reg(false);
                 setPick_ot(true);
               }}
               checked={otChecked}
-              key={`ot-${otChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">O/T</label>
           </div>
@@ -140,13 +156,14 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("Reg");
                 setRegChecked(true);
                 setEiChecked(false);
                 setPick_Reg(true);
                 setPick_Ei(false);
               }}
               checked={regChecked}
-              key={`reg-${regChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">Reg</label>
           </div>
@@ -155,13 +172,14 @@ const Switches = (props) => {
               type="radio"
               name="radio-group"
               onClick={() => {
+                handleRadioChange("E/I");
                 setRegChecked(false);
                 setEiChecked(true);
                 setPick_Reg(false);
                 setPick_Ei(true);
               }}
               checked={eiChecked}
-              key={`ei-${eiChecked}`}
+              className={`${glowing ? "glowing-border" : ""}`}
             />
             <label className="card-label">E/I</label>
           </div>

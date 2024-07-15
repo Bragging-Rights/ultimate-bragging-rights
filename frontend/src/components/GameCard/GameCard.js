@@ -27,8 +27,7 @@ const GameCard = ({ gameData }) => {
 
   const userId = localStorage.getItem("_id");
 
-  let gameEnding = ""; // Change const to let
-
+  let gameEnding = "";
   const handleEnterPick = () => {
     const dataToSave = {
       gameData: gameData._id,
@@ -44,14 +43,134 @@ const GameCard = ({ gameData }) => {
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
     displayToast("Saved successfully!", "success");
   };
-
   const handleLockIn = () => {
+    const invalidFields = [];
+    const visitorScore = parseInt(pick_visitor);
+    const homeScore = parseInt(pick_home);
+
+    if (!pick_visitor || isNaN(visitorScore))
+      invalidFields.push("pick_visitor");
+    if (!pick_home || isNaN(homeScore)) invalidFields.push("pick_home");
+    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+
+    setInvalidFields(invalidFields);
+
+    if (invalidFields.length > 0) {
+      Swal.fire({
+        title: "Error",
+        text: "Both pick_visitor, pick_home, and at least one switch are required fields.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
+    }
+
+    let showAlert = false;
+    let alertMessage = "";
+    let showError = false;
+    let errorMessage = "";
+
+    if (selectedLeague === "NHL") {
+      if (visitorScore > 10 || homeScore > 10) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    } else if (selectedLeague === "NBA") {
+      if (
+        visitorScore < 60 ||
+        visitorScore > 150 ||
+        homeScore < 60 ||
+        homeScore > 150
+      ) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showError = true;
+        errorMessage = "Score cannot be zero.";
+      }
+    } else if (selectedLeague === "MLB") {
+      if (visitorScore > 10 || homeScore > 10) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    } else if (selectedLeague === "NFL") {
+      if (visitorScore > 35 || homeScore > 35) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showAlert = true;
+        alertMessage = "Scores are the same. Are you sure?";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    }
+
+    if (showError) {
+      displayToast(errorMessage, "error");
+    } else if (showAlert) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: alertMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        background: "#212121",
+        color: "white",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          lockInPrediction();
+        }
+      });
+    } else {
+      lockInPrediction();
+    }
+  };
+
+  // In the JSX, ensure the switches component is included
+  <Switches
+    league={gameData?.league}
+    season={gameData?.seasonflag}
+    setPick_num_ot={setPick_num_ot}
+    setPick_so={setPick_so}
+    setPick_ot={setPick_ot}
+    setPick_Reg={setPick_Reg}
+    setPick_Ei={setPick_Ei}
+    uniqueId={gameData._id}
+  />;
+
+  const lockInPrediction = () => {
     const timestamp = new Date().toISOString();
     console.log("User ID in GameCard:", userId);
-
-    if (!gameEnding) {
-      gameEnding = "null";
-    }
 
     const dataToSave = {
       gameData: gameData._id,
@@ -112,6 +231,19 @@ const GameCard = ({ gameData }) => {
     // Close the modal without saving
     setIsModalOpen(false);
   };
+
+  const renderSwitches = (team) => (
+    <Switches
+      league={gameData.league}
+      season={gameData.season}
+      setPick_num_ot={setPick_num_ot}
+      setPick_so={setPick_so}
+      setPick_ot={setPick_ot}
+      setPick_Reg={setPick_Reg}
+      setPick_Ei={setPick_Ei}
+      uniqueId={`${gameData._id}-${team}`}
+    />
+  );
 
   return (
     <>
@@ -298,6 +430,9 @@ const GameCard = ({ gameData }) => {
             setPick_so={setPick_so}
             setPick_ot={setPick_ot}
             setPick_Reg={setPick_Reg}
+            setPick_Ei={setPick_Ei}
+            uniqueId={gameData._id}
+            glowing={invalidFields.includes("pick_switch")}
           />
           <div
             className="button-pick"

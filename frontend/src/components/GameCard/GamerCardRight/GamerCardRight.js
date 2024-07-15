@@ -32,8 +32,7 @@ const GamerCardRight = ({ gameData }) => {
   };
   const userId = localStorage.getItem("_id");
 
-  let gameEnding = ""; // Change const to let
-
+  const [gameEnding, setGameEnding] = useState(""); // State for gameEnding
   const handleEnterPick = () => {
     const dataToSave = {
       gameData: gameData._id,
@@ -51,13 +50,132 @@ const GamerCardRight = ({ gameData }) => {
   };
 
   const handleLockIn = () => {
-    const timestamp = new Date().toISOString();
-    console.log("User ID in GameCard:", userId);
+    const invalidFields = [];
+    const visitorScore = parseInt(pick_visitor);
+    const homeScore = parseInt(pick_home);
 
-    if (!gameEnding) {
-      gameEnding = "null";
+    if (!pick_visitor || isNaN(visitorScore))
+      invalidFields.push("pick_visitor");
+    if (!pick_home || isNaN(homeScore)) invalidFields.push("pick_home");
+
+    // Ensure at least one of the options is selected
+    if (!Pick_Reg && !Pick_ot && !Pick_so && !Pick_Ei)
+      invalidFields.push("pick_switch");
+
+    console.log("Pick_Reg:", Pick_Reg);
+    console.log("Pick_ot:", Pick_ot);
+    console.log("Pick_so:", Pick_so);
+    console.log("Pick_Ei:", Pick_Ei);
+
+    setInvalidFields(invalidFields);
+
+    if (invalidFields.length > 0) {
+      Swal.fire({
+        title: "Error",
+        text: "Select one of the options.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
     }
 
+    let showAlert = false;
+    let alertMessage = "";
+    let showError = false;
+    let errorMessage = "";
+
+    if (selectedLeague === "NHL") {
+      if (visitorScore > 10 || homeScore > 10) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    } else if (selectedLeague === "NBA") {
+      if (
+        visitorScore < 60 ||
+        visitorScore > 150 ||
+        homeScore < 60 ||
+        homeScore > 150
+      ) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showError = true;
+        errorMessage = "Score cannot be zero.";
+      }
+    } else if (selectedLeague === "MLB") {
+      if (visitorScore > 10 || homeScore > 10) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showError = true;
+        errorMessage = "Scores cannot be the same.";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    } else if (selectedLeague === "NFL") {
+      if (visitorScore > 35 || homeScore > 35) {
+        showAlert = true;
+        alertMessage =
+          "The scores you entered are unusual. Do you want to lock in your prediction?";
+      }
+      if (visitorScore === homeScore) {
+        showAlert = true;
+        alertMessage = "Scores are the same. Are you sure?";
+      }
+      if (visitorScore === 0 || homeScore === 0) {
+        showAlert = true;
+        alertMessage = "Score cannot be zero. Are you sure?";
+      }
+    }
+
+    if (showError) {
+      displayToast(errorMessage, "error");
+    } else if (showAlert) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: alertMessage,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        background: "#212121",
+        color: "white",
+        customClass: {
+          popup: "swal2-popup",
+          confirmButton: "swal2-confirm",
+          cancelButton: "swal2-cancel",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          lockInPrediction();
+        }
+      });
+    } else {
+      lockInPrediction();
+    }
+  };
+
+  const lockInPrediction = () => {
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -74,6 +192,8 @@ const GamerCardRight = ({ gameData }) => {
     // mutate(dataToSave); error msg
   };
 
+  // In the JSX, ensure the switches component is included
+
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => addPrediction(data),
     {
@@ -87,16 +207,10 @@ const GamerCardRight = ({ gameData }) => {
   );
 
   const handleEdit = () => {
-    // Open the edit modal
     setIsModalOpen(true);
   };
 
   const handleSaveEdit = () => {
-    // Save the edited game data
-    // Implement your logic to save the editedGameData
-    // You can make an HTTP request to update the data in your backend
-    // or use a state management library like Redux to update the data
-    // After saving, close the modal
     setIsModalOpen(false);
     console.log("Saved data:", editedGameData);
   };
@@ -105,6 +219,21 @@ const GamerCardRight = ({ gameData }) => {
     // Close the modal without saving
     setIsModalOpen(false);
   };
+
+  const renderSwitches = (team) => (
+    <Switches
+      league={gameData?.league}
+      season={gameData?.seasonflag}
+      setPick_num_ot={setPick_num_ot}
+      setPick_so={setPick_so}
+      setPick_ot={setPick_ot}
+      setPick_Reg={setPick_Reg}
+      setPick_Ei={setPick_Ei}
+      uniqueId={gameData._id}
+      glowing={invalidFields.includes("pick_switch")}
+      setGameEnding={setGameEnding} // Pass the function to update gameEnding
+    />
+  );
 
   const date = new Date(gameData?.gamedate);
   const options = { month: "short", day: "numeric", year: "numeric" };
@@ -293,6 +422,10 @@ const GamerCardRight = ({ gameData }) => {
             setPick_so={setPick_so}
             setPick_ot={setPick_ot}
             setPick_Reg={setPick_Reg}
+            setPick_Ei={setPick_Ei}
+            uniqueId={gameData._id}
+            glowing={invalidFields.includes("pick_switch")}
+            setGameEnding={setGameEnding} // Pass the function to update gameEnding
           />
           {/* {isAdmin && (
             <button className="card-btn-outline mt-4" onClick={handleEdit}>
