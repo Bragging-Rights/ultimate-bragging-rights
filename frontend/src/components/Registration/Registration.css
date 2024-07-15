@@ -1,40 +1,62 @@
+
 #progressbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
 }
 
 #progressbar li {
-  display: inline-block;
-  /* width: 20%;  */
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  line-height: 50px; /* Adjust as needed */
+  line-height: 1.5;
+  flex: 1;
 }
 
 #progressbar li.active:before,
 #progressbar li.active:after {
   background: #ffae00;
   background-image: url("../../assets/RedCircle-BR-Logo.png");
-  background-size: contain; /* Adjust as needed */
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center;
 }
-
-/* Add your other styles as needed */
 
 .Captcha {
   font-family: sans-serif;
-  /* text-align: center; */
   margin-top: 10px;
   width: 100%;
 }
 
 .password-section {
-  width: 140vh;
+  width: 100%;
 }
 
 .custom-modal {
   overflow: auto;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .modal-form-container {
+      flex-direction: row;
+      flex-wrap: wrap;
+  }
+
+  .modal-bottom {
+      flex-wrap: wrap;
+  }
+
+  .password-section .password-inputs {
+      flex-direction: row;
+  }
+
+  .privacy-policy {
+      flex-direction: row;
+      align-items: center;
+  }
 }

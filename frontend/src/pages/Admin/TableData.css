@@ -1,97 +1,150 @@
 /* ScoreEntry.css */
 
 .score-entry-container {
-    background-color: #212121 !important;
-    color: rgba(190, 130, 0, 1) !important;
+  background-color: #212121 !important;
+  color: rgb(255, 255, 255) !important;
 }
-
-
 
 .css-1ygcj2i-MuiTableCell-root,
 .css-1ex1afd-MuiTableCell-root {
-    color: rgba(190, 130, 0, 1) !important;
-
+  color: rgb(255, 255, 255) !important;
 }
 
 .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
-
-    background-color: white !important;
+  background-color: white !important;
 }
 
 .MuiTabs-root {
-    /* padding: 10px; */
-    /* border-bottom: 2px solid rgba(190, 130, 0, 1); */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  /* padding: 10px; */
+  /* border-bottom: 2px solid rgba(190, 130, 0, 1); */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Styles for the active tab */
 .Mui-selected {
-
-    /* background-color: #FF0000 !important; */
-    color: white !important;
+  /* background-color: #FF0000 !important; */
+  color: white !important;
 }
 
 .css-1wf8b0h-MuiTabs-flexContainer {
-
-    display: flex !important;
-    justify-content: flex-start !important;
-    column-gap: 1vh !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  column-gap: 1vh !important;
 }
 
 .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
-    background-color: white !important;
-    border-radius: 15px;
+  background-color: white !important;
+  border-radius: 15px;
 }
 
 /* Date */
-.css-4jnixx-MuiStack-root>.MuiTextField-root {
-    background-color: gray;
+.css-4jnixx-MuiStack-root > .MuiTextField-root {
+  background-color: gray;
 }
 
 .centered-button {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked,
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root {
-    color: white !important;
+  color: white !important;
 }
 
 .league-select {
-    background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border: 1px solid #be8200 !important;
-    border-radius: 4px !important;
-
-
-
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: 1px solid #be8200 !important;
+  border-radius: 4px !important;
 }
 
 .Tab {
-    background: linear-gradient(185deg, #45423a 15.54%, #202126 114.57%);
-    font-weight: 800;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    color: white;
-    flex-direction: column;
-
+  background: linear-gradient(185deg, #45423a 15.54%, #202126 114.57%);
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+  flex-direction: column;
 }
 
 .date-picker {
-    background-color: #212121 !important;
-    -webkit-text-fill-color: white;
-    border: 1px solid #be8200 !important;
-    border-radius: 4px !important;
+  background-color: #212121 !important;
+  -webkit-text-fill-color: white;
+  border: 1px solid #be8200 !important;
+  border-radius: 4px !important;
 }
 
 .Textfield {
-    background-color: #212121 !important;
-    -webkit-text-fill-color: white;
-    border: 1px solid #be8200 !important;
-    border-radius: 4px !important;
+  background-color: #212121 !important;
+  -webkit-text-fill-color: white;
+  border: 1px solid #be8200 !important;
+  border-radius: 4px !important;
+}
+
+/* TableData.css */
+
+/* Default tab styling */
+.league-select {
+  position: relative;
+}
+
+/* Styling for selected tab */
+.MuiTab-root.Mui-selected {
+  color: #fcfcfc;
+  /* Color for glowing text */
+  text-shadow: 0 0 5px rgba(243, 156, 18, 0.8);
+  /* Glowing effect for text */
+}
+
+/* Ensure the blue line is only shown when the tab is selected */
+.MuiTabs-indicator {
+  background-color: #1e90ff;
+  /* Color of the blue line */
+  height: 4px;
+}
+
+/* Add a glowing line below the selected tab text */
+.MuiTab-root.Mui-selected::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  /* Adjust to position the line correctly */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 4px;
+  background-color: #1e90ff;
+  /* Color of the glowing line */
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.8);
+  /* Glowing effect for the line */
+}
+
+/* TableData.css */
+.MuiTextField-root {
+  background-color: white;
+  color: black;
+}
+
+/* TableData.css */
+.score-entry-container {
+  padding: 20px;
+}
+
+.table-header-row {
+  background-color: #443030;
+}
+
+/* .table-row {
+    &:hover {
+        background-color: #e0e0e0;
+    }
+} */
+
+.centered-button {
+  margin: 0 auto;
 }

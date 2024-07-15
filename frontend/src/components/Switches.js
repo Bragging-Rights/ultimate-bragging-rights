@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Switches = (props) => {
- const {
+  const {
     league,
     season,
     setPick_num_ot,
@@ -27,7 +27,7 @@ const Switches = (props) => {
     setEiChecked(endingType === "E/I");
   };
 
- return (
+  return (
     <div className="flex md:flex-row gap-5">
       {(league === "NHL" &&
         (season === "Regular" || season === "Pre Season")) ||
@@ -36,7 +36,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("Reg");
                 setRegChecked(true);
@@ -54,7 +54,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("O/T");
                 setRegChecked(false);
@@ -72,7 +72,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("S/O");
                 setRegChecked(false);
@@ -92,9 +92,9 @@ const Switches = (props) => {
             onChange={(e) => setPick_num_ot(e.target.value)}
             disabled={regChecked}
           >
-            {Array.from({ length: 30 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+            {Array.from({ length: 11 }, (_, i) => (
+              <option key={i} value={i}>
+                {i}
               </option>
             ))}
           </select>
@@ -106,7 +106,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("Reg");
                 setRegChecked(true);
@@ -122,7 +122,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("O/T");
                 setRegChecked(false);
@@ -140,9 +140,9 @@ const Switches = (props) => {
             onChange={(e) => setPick_num_ot(e.target.value)}
             disabled={regChecked}
           >
-            {Array.from({ length: 10 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+            {Array.from({ length: 11 }, (_, i) => (
+              <option key={i} value={i}>
+                {i}
               </option>
             ))}
           </select>
@@ -154,7 +154,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("Reg");
                 setRegChecked(true);
@@ -170,7 +170,7 @@ const Switches = (props) => {
           <div className="flex mt-4 gap-1 items-center">
             <input
               type="radio"
-              name="radio-group"
+              name={`gameEnding-${uniqueId}`}
               onClick={() => {
                 handleRadioChange("E/I");
                 setRegChecked(false);
@@ -187,17 +187,18 @@ const Switches = (props) => {
           <select
             className="mt-4"
             onChange={(e) => setPick_num_ot(e.target.value)}
+            disabled={!eiChecked}
           >
-            {Array.from({ length: 20 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+            {Array.from({ length: 11 }, (_, i) => (
+              <option key={i} value={i}>
+                {i}
               </option>
             ))}
           </select>
         </>
       )}
     </div>
- );
+  );
 };
 
 export default Switches;

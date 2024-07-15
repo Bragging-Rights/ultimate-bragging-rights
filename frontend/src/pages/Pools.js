@@ -10,6 +10,3 @@ const Pools = () => {
 }
 
 export default Pools
-
-
-// discussion about it

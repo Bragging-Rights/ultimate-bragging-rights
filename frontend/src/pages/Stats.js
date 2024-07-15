@@ -14,10 +14,10 @@ import img2 from "../assets/card2.png";
 import pf from "../assets/pf.png";
 import flag from "../assets/download.png";
 import { LeagueProvider, useLeagueContext } from "../components/LeagueContext";
-import Baseball from "./Leaderboard/Baseball";
-import Basketball from "./Leaderboard/Basketball";
-import Football from './Leaderboard/Football';
-import Hockey from './Leaderboard/Hockey';
+import Baseball from "./Leaderboard/Baseball"
+import Basketball from "./Leaderboard/Basketball"
+import Football from './Leaderboard/Football'
+import Hockey from './Leaderboard/Hockey'
 import { useDispatch } from "react-redux";
 import { statsPageReducer } from "../store/searchBarSlice";
 
@@ -95,7 +95,7 @@ const Stats = () => {
 
 
 
-      <div style={{width : '97%'}}>
+      <div className="w-full">
      
      {selectedLeague === "NBA" && <Basketball />}
      {selectedLeague === "NFL" && <Football />}

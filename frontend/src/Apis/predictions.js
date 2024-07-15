@@ -8,3 +8,8 @@ export const addPrediction = async (data) => {
   );
   return response;
 };
+
+export const getGamePlayedByUserId = async (userId) => {
+  const response = await api.get(`api/user/gamesplayed/gamePlayed/${userId}`);
+  return response;
+} 

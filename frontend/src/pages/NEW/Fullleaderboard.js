@@ -1,7 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import './TableStyles.css';
-
 
 export default function Fullleaderboard() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -264,9 +262,9 @@ export default function Fullleaderboard() {
         <span>{formattedDate}</span>
         <span style={{ textAlign: 'center', color: 'black', flexGrow: 1 }}>Game Breakdowns</span>
       </div>
-      <button  style={{ backgroundColor: 'black',color:"white",padding:"1rem",border:"none" }}>League</button>
-      <button  style={{ backgroundColor: 'black',color:"white",padding:"1rem",margin:"1rem",border:"none" }}>Home</button>
-      <button style={{backgroundColor:"black",color:"white",padding:"1rem",border:"none" }}>Away</button>
+      <button  style={{ backgroundColor: '#1B1C21',color:"white",padding:"1rem",border:"none" }}>League</button>
+      <button  style={{ backgroundColor: '#1B1C21',color:"white",padding:"1rem",border:"none" }}>Home</button>
+      <button style={{backgroundColor:"#1B1C21",color:"white",padding:"1rem",border:"none" }}>Away</button>
       <div style={{ color: 'white' }}>
         <div className="grid-item">
           <table className="custom-table">

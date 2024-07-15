@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "./LeagueContext";
 import {
   AppBar,
@@ -39,8 +39,15 @@ const LeagueSelect = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState("left");
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+
+  // Fetch user's preferred league from local storage or API
+  useEffect(() => {
+    const preferredLeague = localStorage.getItem("preferredLeague");
+    if (preferredLeague) {
+      setSelectedLeague(preferredLeague);
+    }
+  }, [setSelectedLeague]);
 
   const handleLeagueSelect = (item) => {
     setSelectedLeague(item);
@@ -75,36 +82,47 @@ const LeagueSelect = () => {
         position="static"
         sx={{
           backgroundColor: "#1B1C21",
-          height: isMobile ? "15%" : "10%", // Adjusted height
-          marginLeft: isMobile ? "0" : "-13%",
-          width: isMobile ? "100%" : "125%",
+          height: isSmallScreen ? "auto" : "10%",
+          marginLeft: isSmallScreen ? "0" : "-13%",
+
+          width: isSmallScreen ? "100%" : "125%",
         }}
       >
         <Toolbar>
           <Grid container alignItems="center" justifyContent="space-between">
             {/* Logo Grid */}
-            <Grid item xs={1}>
-              <img
-                src={logoImage}
-                alt="Logo"
-                style={{
-                  marginRight: 16,
-                  width: isSmallScreen ? "30px" : "50px",
-                  height: "auto",
-                }}
-              />
+            <Grid item xs={isSmallScreen ? 2 : 1}>
+              <a href="/games">
+                <img
+                  src={logoImage}
+                  alt="Logo"
+                  style={{
+                    marginRight: 8,
+                    width: isSmallScreen ? "30px" : "50px",
+                    height: "auto",
+                  }}
+                />
+              </a>
             </Grid>
 
             {/* League Grid */}
-            <Grid item xs>
+            <Grid item xs={isSmallScreen ? 8 : 9}>
               <Box
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                sx={{ height: "60px" }} // Fixed height
+                sx={{
+                  height: isSmallScreen ? "auto" : "60px",
+                }}
               >
-                <IconButton sx={{ color: "white" }} onClick={prevPage}>
-                  <ArrowBackIos />
+                <IconButton
+                  sx={{ color: "white" }}
+                  onClick={prevPage}
+                  size={isSmallScreen ? "small" : "medium"}
+                >
+                  <ArrowBackIos
+                    sx={{ fontSize: isSmallScreen ? "10px" : "24px" }}
+                  />
                 </IconButton>
                 <Slide
                   direction={direction}
@@ -120,22 +138,22 @@ const LeagueSelect = () => {
                       style: { backgroundColor: "#FFC107" },
                     }}
                     sx={{
-                      margin: "0 20px",
-
+                      margin: isSmallScreen ? "0 8px" : "0 20px",
                       "& .MuiTab-root": {
                         minWidth: "auto",
-                        padding: isSmallScreen ? "0 10px" : "0 20px",
+                        padding: isSmallScreen ? "0 6px" : "0 20px",
+                        fontSize: isSmallScreen ? "0.5rem" : "0.8rem",
                         transition: "transform 0.5s ease-in-out",
                         "&.Mui-selected": {
                           color: "#FFC107",
                           fontWeight: "bold",
                           backgroundColor: "rgba(255, 193, 7, 0.2)",
-                          boxShadow: "0px 0px 12px #fff",
+                          boxShadow: "0px 0px 22px #ff0000",
                           transform: "scale(1)",
                         },
                       },
                     }}
-                    variant="scrollable"
+                    variant={isSmallScreen ? "scrollable" : "standard"}
                     scrollButtons={false}
                   >
                     {leaguesToShow.map((item) => (
@@ -146,26 +164,25 @@ const LeagueSelect = () => {
                         disabled={disabledLeagues.includes(item)}
                         sx={{
                           filter: selectedLeague.includes(item)
-                            ? "drop-shadow(0px 20px 10px #fff)"
+                            ? "drop-shadow(0px 10px 10px #ff0000)"
                             : "inherit",
-
                           borderBottom: selectedLeague.includes(item)
                             ? "2px solid #ff0000"
                             : "inherit",
-
                           color: selectedLeague.includes(item)
                             ? "#ff0000"
                             : "white",
+                          fontWeight: selectedLeague === item ? "bold" : "bold",
                           position: "relative",
                           ...(glowingLeagues.includes(item) && {
                             "&.Mui-selected": {
-                              textShadow: "0 0 8px #ffd700",
+                              textShadow: "0 0 4px #ffd700",
                               backgroundColor: "rgba(255, 215, 0, 0.2)",
                               borderBottom: "2px solid #ffd700",
                             },
                           }),
                           "&.Mui-selected": item === selectedLeague && {
-                            filter: "drop-shadow(0 0 10px #fff)",
+                            filter: "drop-shadow(0 0 6px #fff)",
                           },
                         }}
                         icon={
@@ -176,12 +193,11 @@ const LeagueSelect = () => {
                               alt="Selected League Arrow"
                               sx={{
                                 position: "absolute",
-                                top: "10px",
-                                left: "35%",
+                                top: isSmallScreen ? "5px" : "8px",
+                                left: isSmallScreen ? "16%" : "34%",
                                 transform: "translateX(-50%)",
-                                width: "30px",
-                                height: "10px",
-                                // filter: "drop-shadow(0 0 5px yellow)",
+                                width: isSmallScreen ? "25px" : "30px",
+                                height: isSmallScreen ? "10px" : "13px",
                               }}
                             />
                           )
@@ -191,15 +207,21 @@ const LeagueSelect = () => {
                     ))}
                   </Tabs>
                 </Slide>
-                <IconButton sx={{ color: "white" }} onClick={nextPage}>
-                  <ArrowForwardIos />
+                <IconButton
+                  sx={{ color: "white" }}
+                  onClick={nextPage}
+                  size={isSmallScreen ? "small" : "medium"}
+                >
+                  <ArrowForwardIos
+                    sx={{ fontSize: isSmallScreen ? "16px" : "24px" }}
+                  />
                 </IconButton>
               </Box>
             </Grid>
 
             {/* Buttons Grid */}
-            <Grid item>
-              <Box display="flex" alignItems="center">
+            <Grid item xs={isSmallScreen ? 2 : 2}>
+              <Box display="flex" alignItems="center" justifyContent="flex-end">
                 {userEmail ? (
                   <Button
                     color="inherit"
@@ -208,7 +230,9 @@ const LeagueSelect = () => {
                     sx={{
                       borderColor: "#FFC107",
                       color: "#FFC107",
-                      marginRight: 2,
+                      marginRight: isSmallScreen ? "4px" : "8px",
+                      padding: isSmallScreen ? "2px 4px" : "6px 12px",
+                      fontSize: isSmallScreen ? "0.5rem" : "0.8rem",
                     }}
                   >
                     Logout

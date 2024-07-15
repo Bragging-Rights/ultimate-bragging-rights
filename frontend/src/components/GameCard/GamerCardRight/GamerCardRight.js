@@ -7,8 +7,11 @@ import TimeFormat from "../../../services/TimeFormat.js";
 import Switches from "../../Switches";
 import { useMutation } from "react-query";
 import { useLeagueContext } from "../../LeagueContext";
+import Swal from "sweetalert2"; // Import SweetAlert
 
 const GamerCardRight = ({ gameData }) => {
+  const [Pick_Ei, setPick_Ei] = useState(false); // Example of setting Pick_Ei
+
   const labelStyles = {
     borderBottom: "2px solid #BE8200",
     width: "90%",
@@ -23,6 +26,7 @@ const GamerCardRight = ({ gameData }) => {
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
   const { selectedLeague } = useLeagueContext();
+  const [invalidFields, setInvalidFields] = useState([]);
 
   const handleInputChange = (e) => {
     setPickVisitor(e.target.value);
@@ -34,6 +38,23 @@ const GamerCardRight = ({ gameData }) => {
 
   const [gameEnding, setGameEnding] = useState(""); // State for gameEnding
   const handleEnterPick = () => {
+    const invalidFields = [];
+    if (!pick_visitor) invalidFields.push("pick_visitor");
+    if (!pick_home) invalidFields.push("pick_home");
+    if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
+
+    if (invalidFields.length > 0) {
+      setInvalidFields(invalidFields);
+      Swal.fire({
+        title: "Error",
+        text: "Both pick_visitor, pick_home, and at least one switch are required fields.",
+        icon: "error",
+        background: "#212121",
+        color: "white",
+      });
+      return;
+    }
+
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -46,7 +67,7 @@ const GamerCardRight = ({ gameData }) => {
       Pick_Reg,
     };
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
-    displayToast("Saved successfully!");
+    displayToast("Saved successfully!", "success");
   };
 
   const handleLockIn = () => {
@@ -187,9 +208,7 @@ const GamerCardRight = ({ gameData }) => {
       Pick_ot,
       Pick_Reg,
     };
-
-    // Send the data to the database using an HTTP request
-    // mutate(dataToSave); error msg
+    mutate(dataToSave);
   };
 
   // In the JSX, ensure the switches component is included
@@ -198,10 +217,10 @@ const GamerCardRight = ({ gameData }) => {
     (data) => addPrediction(data),
     {
       onSuccess: (data) => {
-        displayToast("Preduction added successfully", "success");
+        displayToast("Prediction added successfully", "success");
       },
       onError: (error) => {
-        displayToast("Error while adding the preduction", "error");
+        displayToast("Error while adding the prediction", "error");
       },
     }
   );
@@ -243,7 +262,7 @@ const GamerCardRight = ({ gameData }) => {
     <>
       <div className="game-card grid col-span-2 xl:col-span-1">
         <div className="flex justify-between">
-          <div className=" flex flex-col ">
+          <div className="flex flex-col">
             <div
               className="game-time font-inter mb-3"
               style={{
@@ -255,18 +274,20 @@ const GamerCardRight = ({ gameData }) => {
             >
               {TimeFormat(gameData?.time)}
             </div>
-            <div className=" game-date">{gameData.gamedate}</div> &nbsp;
+            <div className="game-date">{gameData.gamedate}</div> &nbsp;
             <input
               type="text"
-              className="card-input mb-3"
+              className={`score-input card-input mb-3 ${
+                invalidFields.includes("pick_visitor") ? "glowing-border" : ""
+              }`}
               value={pick_visitor}
               onChange={handleInputChange}
             />
           </div>
 
-          <div className=" flex flex-col  ">
+          <div className="flex flex-col">
             <div
-              className=" game-time font-inter mb-3"
+              className="game-time font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
@@ -276,13 +297,13 @@ const GamerCardRight = ({ gameData }) => {
             >
               Team
             </div>
-            <div className=" box  px-7 h-12">
-              <label className="upside-down ">{gameData?.visitor}</label>
+            <div className="box px-7 h-12">
+              <label className="upside-down">{gameData?.visitor}</label>
             </div>
           </div>
-          <div className=" flex flex-col  ">
+          <div className="flex flex-col">
             <div
-              className=" game-time font-inter mb-3"
+              className="game-time font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
@@ -292,15 +313,15 @@ const GamerCardRight = ({ gameData }) => {
             >
               Money Line
             </div>
-            <div className=" box px-7 h-12">
+            <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ml"]}</label>
 
               <label>{gameData?.["v-ml-points"]} Pts</label>
             </div>
           </div>
-          <div className=" flex flex-col  ">
+          <div className="flex flex-col">
             <div
-              className=" game-time"
+              className="game-time"
               style={{
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
@@ -310,17 +331,17 @@ const GamerCardRight = ({ gameData }) => {
             >
               Spread
             </div>
-            <div className=" box px-7 h-12">
+            <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
 
-              <label className=" text-white">
+              <label className="text-white">
                 {gameData?.["v-sprd-points"]} Pts
               </label>
             </div>
           </div>
-          <div className=" flex flex-col  ">
+          <div className="flex flex-col">
             <div
-              className=" game-time"
+              className="game-time"
               style={{
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
@@ -331,14 +352,14 @@ const GamerCardRight = ({ gameData }) => {
               Over/Under
             </div>
 
-            <div className=" box px-7 h-12">
+            <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ou"]}</label>
               <label>{gameData?.["v-ou-points"]} Pts</label>
             </div>
           </div>
         </div>
 
-        <div className=" flex justify-between gap-1">
+        <div className="flex justify-between gap-1">
           <div
             className="line"
             style={{
@@ -353,24 +374,26 @@ const GamerCardRight = ({ gameData }) => {
           ></div>
         </div>
 
-        <div className=" flex justify-between ">
-          <div className=" flex flex-col " style={{ paddingRight: "4.54%" }}>
+        <div className="flex justify-between">
+          <div className="flex flex-col" style={{ paddingRight: "4.54%" }}>
             <input
               type="text"
               id="pick-home"
-              className="card-input mb-3"
+              className={`score-input card-input mb-3 ${
+                invalidFields.includes("pick_home") ? "glowing-border" : ""
+              }`}
               value={pick_home}
               onChange={handleHomeChange}
             />
           </div>
 
           <div className="flex flex-col justify-start">
-            <div className=" box px-7 h-12">
+            <div className="box px-7 h-12">
               <label className="upside-down">{gameData?.home}</label>
             </div>
           </div>
           <div
-            className=" flex flex-col justify-start "
+            className="flex flex-col justify-start"
             style={{
               WebkitTextStroke: "0.3px black",
               textStroke: "0.3px black",
@@ -378,13 +401,13 @@ const GamerCardRight = ({ gameData }) => {
               fontSize: "16px",
             }}
           >
-            <div className=" box px-7 h-12">
+            <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ml"]}</label>
               <label>{gameData?.["h-ml-points"]} Pts</label>
             </div>
           </div>
           <div
-            className=" flex flex-col justify-start "
+            className="flex flex-col justify-start"
             style={{
               WebkitTextStroke: "0.3px black",
               textStroke: "0.3px black",
@@ -392,13 +415,13 @@ const GamerCardRight = ({ gameData }) => {
               fontSize: "16px",
             }}
           >
-            <div className=" box px-7 h-12">
+            <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
               <label>{gameData?.["h-sprd-points"]} Pts</label>
             </div>
           </div>
           <div
-            className=" flex flex-col justify-start"
+            className="flex flex-col justify-start"
             style={{
               WebkitTextStroke: "0.3px black",
               textStroke: "0.3px black",
@@ -406,14 +429,14 @@ const GamerCardRight = ({ gameData }) => {
               fontSize: "16px",
             }}
           >
-            <div className=" box  px-7 h-12">
+            <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ou"]}</label>
               <label>{gameData?.["h-ou-points"]} Pts</label>
             </div>
           </div>
         </div>
 
-        <div className=" flex justify-between items-center">
+        <div className="flex justify-between items-center">
           <div className="card-id"></div>
           <Switches
             league={gameData?.league}
@@ -427,21 +450,16 @@ const GamerCardRight = ({ gameData }) => {
             glowing={invalidFields.includes("pick_switch")}
             setGameEnding={setGameEnding} // Pass the function to update gameEnding
           />
-          {/* {isAdmin && (
-            <button className="card-btn-outline mt-4" onClick={handleEdit}>
-              EDIT
-            </button>
-          )} */}
           <div
             className="button-pick"
             style={{ display: "flex", columnGap: "3vh" }}
           >
             <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
               ENTER PICK
-            </button>{" "}
+            </button>
             <button className="card-btn mt-4" onClick={handleLockIn}>
               LOCK IT IN
-            </button>{" "}
+            </button>
           </div>
         </div>
       </div>

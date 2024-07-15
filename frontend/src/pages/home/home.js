@@ -40,9 +40,9 @@ const HomePage = () => {
     },
     header: {
       fontWeight: "normal",
-      marginBottom: isMobileView || isTabletView ? "-0px" : "-12px",
+      marginBottom: isMobileView || isTabletView ? "-0px" : "-10px",
       color: "#FFFF00",
-      fontSize: isMobileView ? "0.5rem" : "0.9rem",
+      fontSize: isMobileView ? "0.7rem" : "1.4rem",
       fontStyle: "italic",
     },
     column: {
@@ -107,7 +107,7 @@ const HomePage = () => {
             />
             <div style={styles.introContainer}>
               <div style={styles.contentContainer}>
-                <Typography variant="h1" component="h1" sx={styles.header}>
+                <Typography variant="h4" component="h1" sx={styles.header}>
                   THIS SITE IS BUILT FOR SPORTS FANS WHO LOVE
                 </Typography>
                 <br />
@@ -137,7 +137,7 @@ const HomePage = () => {
                         variant="body1"
                         sx={{
                           fontSize:
-                            isMobileView || isTabletView ? "0.23rem" : "0.9rem",
+                            isMobileView || isTabletView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -147,7 +147,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -157,7 +157,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -179,7 +179,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -189,7 +189,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -199,7 +199,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -221,7 +221,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -231,7 +231,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -241,7 +241,7 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         sx={{
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                           color: "white",
                         }}
                       >
@@ -263,8 +263,8 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         style={{
-                          color: "white",
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          color: "#ffff00",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                         }}
                       >
                         <i className="fa fa-microphone mr-2 text-blue-500"></i>{" "}
@@ -273,8 +273,8 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         style={{
-                          color: "white",
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          color: "#ffff00",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                         }}
                       >
                         <i className="fa fa-heart mr-2 text-blue-500"></i> AND
@@ -283,8 +283,8 @@ const HomePage = () => {
                       <Typography
                         variant="body1"
                         style={{
-                          color: "white",
-                          fontSize: isMobileView ? "0.23rem" : "0.9rem",
+                          color: "#ffff00",
+                          fontSize: isMobileView ? "0.23rem" : "1rem",
                         }}
                       >
                         <i className="fa fa-tv mr-2 text-blue-500"></i> Ultimate

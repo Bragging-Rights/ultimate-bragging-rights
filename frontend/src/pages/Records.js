@@ -10,5 +10,3 @@ const Records = () => {
 }
 
 export default Records
-
-// want to discuss
