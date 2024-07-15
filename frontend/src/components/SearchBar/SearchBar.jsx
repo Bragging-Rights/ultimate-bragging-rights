@@ -24,6 +24,7 @@ const SearchBar = () => {
     <div className="search-bar-container" style={{backgroundColor:"#1B1C21"}}>
       <div className="menu-container">
         <div className="menu-nav">
+          <div className="menu-nav-header">Choose as you want</div>
           <div className="menu-nav-buttons">
             <div className="nav-button-container">
               <button

@@ -70,3 +70,20 @@ td {
 [style*="background:"] {
   border-radius: 4px;
 }
+
+.table-container {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  max-width: 100%; /* Ensure the table container doesn't exceed the viewport width */
+}
+
+/* Optionally, you can add styles to the table itself */
+.table-container table {
+  width: 100%; /* Ensure the table takes up 100% of its container */
+  border-collapse: collapse; /* Optional: collapse borders between table cells */
+}
+
+.table-container th,
+.table-container td {
+  padding: 8px; /* Optional: adjust padding for table cells */
+  text-align: center; /* Optional: center-align text within cells */
+}
