@@ -34,6 +34,7 @@ const MainLayout = ({ children }) => {
             backgroundColor: "#A3A4A6",
             borderRadius: "25px",
             overflow: "hidden",
+            margin : '20px 20px',
           }}
         >
           <Typography
