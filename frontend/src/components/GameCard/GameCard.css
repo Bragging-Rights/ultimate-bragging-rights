@@ -114,7 +114,7 @@
   .card-label,
   .card-btn-outline,
   .card-btn {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .box {
@@ -130,17 +130,9 @@
     height: 6px;
   }
 
-  .flex {
-    display: block;
-  }
-
-  .flex-col {
-    flex-direction: column;
-  }
-
   .px-7 {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .h-12 {
@@ -160,10 +152,8 @@
   .card-input,
   .line,
   .card-id,
-  .card-label,
-  .card-btn-outline,
-  .card-btn {
-    font-size: 12px;
+  .card-label {
+    font-size: 9px;
   }
 
   .box {
@@ -179,17 +169,9 @@
     height: 4px;
   }
 
-  .flex {
-    display: block;
-  }
-
-  .flex-col {
-    flex-direction: column;
-  }
-
   .px-7 {
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .h-12 {
@@ -200,19 +182,37 @@
 @media (max-width: 480px) {
   .game-card {
     padding: 12px;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .game-time,
   .game-date,
   .box,
-  .card-input,
   .line,
   .card-id,
-  .card-label,
-  .card-btn-outline,
-  .card-btn {
-    font-size: 11px;
+  .card-label
+  {
+    font-size: 4px;
+  }
+  .test-size{
+    font-style: italic;
+    font-size: 0.5rem;
+    margin-top: auto;
+    /* border: 2px solid gold; */
+  }
+
+  .card-input {
+    border-radius: 4px;
+    border: 2px solid #be8200;
+    width: 53px;
+    height: 42px;
+    font-size: 14px;
+    background-color: transparent;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .box {
@@ -228,12 +228,40 @@
   }
 
   .px-7 {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 
   .h-12 {
     height: 2.75rem;
+  }
+
+  .flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: space-between; /* Adjust spacing */
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+}
+
+/* Ensure flex containers stay within bounds */
+.flex,
+.flex-col {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .flex {
+    flex-wrap: nowrap;
+    overflow-x: auto; /* Allow horizontal scroll if needed */
   }
 }
 
