@@ -94,7 +94,7 @@ const MainNavBar = () => {
                     transition:
                       "transform 0.3s ease, background-color 0.3s ease",
                     "&:hover": {
-                      transform: "scale(1)",
+                      transform: "scale(1.1)",
                       color: "#333333", // Unique hover effect
                     },
                     "&.Mui-selected": {
