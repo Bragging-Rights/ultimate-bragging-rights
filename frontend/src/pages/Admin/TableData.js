@@ -82,17 +82,9 @@ const ScoreEntry = () => {
         console.log(error);
       });
   };
-
   const handleRadioChange = (event, gameId) => {
     setSelectedValues((prevSelectedValues) => ({
       ...prevSelectedValues,
-      [gameId]: event.target.value,
-    }));
-  };
-
-  const handleDropdownChange = (event, gameId) => {
-    setDropdownValues((prevDropdownValues) => ({
-      ...prevDropdownValues,
       [gameId]: event.target.value,
     }));
   };
@@ -117,6 +109,7 @@ const ScoreEntry = () => {
       );
     },
     onSuccess: (rec) => {
+      console.log("Update response:", rec); // Log the response from the API
       displayToast("Game fields updated successfully.", "success");
       reset();
       // Refresh the page or reset the form data here
@@ -161,8 +154,8 @@ const ScoreEntry = () => {
         case "OT":
           optionId = "OT";
           break;
-        case "S/O":
-          optionId = "S/O";
+        case "SO":
+          optionId = "SO";
           break;
         case "EI":
           optionId = "EI";
@@ -179,6 +172,7 @@ const ScoreEntry = () => {
           table: selectedLeague,
           optionId: optionId,
           selectedOption: selectedOption,
+          selectedDropdown: selectedDropdown, // Include dropdown value
           reason: reasonData[game._id] || "",
         };
       } else {
@@ -188,8 +182,20 @@ const ScoreEntry = () => {
 
     updatedGameData.forEach((game) => {
       if (game.vScore != null && game.hScore != null) {
-        mutate(game);
+        mutate(game); // Save the game data using mutate
       }
+    });
+
+    // Log the updated game data
+    updatedGameData.forEach((game) => {
+      console.log("Game Data:", {
+        gameId: game._id,
+        vScore: game.vScore,
+        hScore: game.hScore,
+        selectedOption: game.selectedOption,
+        selectedDropdown: game.selectedDropdown, // Log the dropdown value
+        reason: game.reason,
+      });
     });
 
     // Log the reason for each game
@@ -197,7 +203,13 @@ const ScoreEntry = () => {
       console.log(`Reason for Game ${game._id}:`, game.reason);
     });
   };
-
+  const handleDropdownChange = (event, gameId) => {
+    const { value } = event.target;
+    setDropdownValues((prevDropdownValues) => ({
+      ...prevDropdownValues,
+      [gameId]: value,
+    }));
+  };
   const handleReasonCancel = () => {
     setReasonPopupOpen(false);
     setReason("");
@@ -292,7 +304,7 @@ const ScoreEntry = () => {
                     selectedLeague !== "MLB" &&
                     selectedLeague !== "NCAA" &&
                     selectedLeague !== "UFL" &&
-                    selectedLeague !== "NFL" && <TableCell>S/O</TableCell>}
+                    selectedLeague !== "NFL" && <TableCell>SO</TableCell>}
                   {<TableCell></TableCell>}
                   <TableCell>Not Completed</TableCell>
                   <TableCell>Reason</TableCell>
@@ -365,7 +377,7 @@ const ScoreEntry = () => {
                             }
                           >
                             <FormControlLabel
-                              value="S/O"
+                              value="SO"
                               control={<Radio size="small" />}
                               label=""
                             />
@@ -374,7 +386,7 @@ const ScoreEntry = () => {
                     </TableCell>
                     <TableCell>
                       <Select
-                        value={dropdownValues[game._id]}
+                        value={dropdownValues[game._id] || ""}
                         onChange={(event) =>
                           handleDropdownChange(event, game._id)
                         }
@@ -387,32 +399,19 @@ const ScoreEntry = () => {
                         size="small"
                         disabled={
                           selectedValues[game._id] !== "OT" &&
-                          selectedValues[game._id] !== "S/O"
+                          selectedValues[game._id] !== "SO"
                         }
                       >
                         <MenuItem value="">
                           <em>0</em>
                         </MenuItem>
-                        <MenuItem value="Option1">1</MenuItem>
-                        <MenuItem value="Option2">2</MenuItem>
-                        <MenuItem value="Option3">3</MenuItem>
-                        <MenuItem value="Option4">4</MenuItem>
-                        <MenuItem value="Option5">5</MenuItem>
-                        <MenuItem value="Option6">6</MenuItem>
-                        <MenuItem value="Option7">7</MenuItem>
-                        <MenuItem value="Option8">8</MenuItem>
-                        <MenuItem value="Option9">9</MenuItem>
-                        <MenuItem value="Option10">10</MenuItem>
-                        <MenuItem value="Option11">11</MenuItem>
-                        <MenuItem value="Option12">12</MenuItem>
-                        <MenuItem value="Option13">13</MenuItem>
-                        <MenuItem value="Option14">14</MenuItem>
-                        <MenuItem value="Option15">15</MenuItem>
-                        <MenuItem value="Option16">16</MenuItem>
-                        <MenuItem value="Option17">17</MenuItem>
-                        <MenuItem value="Option18">18</MenuItem>
-                        <MenuItem value="Option19">19</MenuItem>
-                        <MenuItem value="Option20">20</MenuItem>
+                        {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                          (option) => (
+                            <MenuItem key={option} value={option}>
+                              {option}
+                            </MenuItem>
+                          )
+                        )}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -561,7 +560,7 @@ const ScoreEntry = () => {
                 <TableCell>H-SCORE</TableCell>
                 <TableCell>REG</TableCell>
                 <TableCell>OT</TableCell>
-                <TableCell>S/O</TableCell>
+                <TableCell>SO</TableCell>
                 <TableCell>EI</TableCell>
                 <TableCell>Not Completed</TableCell>
                 <TableCell>Reason</TableCell>
@@ -608,7 +607,7 @@ const ScoreEntry = () => {
                       onChange={(event) => handleRadioChange(event, game._id)}
                     >
                       <FormControlLabel
-                        value="S/O"
+                        value="SO"
                         control={<Radio size="small" />}
                         label=""
                       />

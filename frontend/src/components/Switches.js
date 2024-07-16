@@ -23,7 +23,7 @@ const Switches = (props) => {
     setGameEnding(endingType); // Update gameEnding in the parent
     setRegChecked(endingType === "Reg");
     setOtChecked(endingType === "O/T");
-    setSoChecked(endingType === "S/O");
+    setSoChecked(endingType === "SO");
     setEiChecked(endingType === "E/I");
   };
 
@@ -74,7 +74,7 @@ const Switches = (props) => {
               type="radio"
               name={`gameEnding-${uniqueId}`}
               onClick={() => {
-                handleRadioChange("S/O");
+                handleRadioChange("SO");
                 setRegChecked(false);
                 setOtChecked(false);
                 setSoChecked(true);
@@ -85,7 +85,7 @@ const Switches = (props) => {
               checked={soChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            <label className="card-label">S/O</label>
+            <label className="card-label">SO</label>
           </div>
           <select
             className="mt-4"
