@@ -2,6 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
+const colors = require("colors")
 const bodyParser = require("body-parser");
 // const mysql = require('mysql');
 const userRoutes = require("./routes/userRoutes");
@@ -30,7 +31,7 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
   })
-  .then(() => console.log("DB Connected"))
+  .then(() => console.log("DB Connected".bgYellow))
   .catch((err) => {
     console.log("Error in db connection", err);
   });
@@ -76,5 +77,5 @@ app.get("/", async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`.bgGreen);
 });
