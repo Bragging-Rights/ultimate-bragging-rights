@@ -62,7 +62,7 @@ const MainLayout = ({ children }) => {
           </Typography>
         </Box>
       )}
-      {showsearchBar && <SearchBar />}
+      {/* {showsearchBar && <SearchBar />} */}
       <div className="flex justify-content">
         <div className="w-full ml-5 mt-4">
           <Outlet />
