@@ -72,6 +72,11 @@ const MainNavBar = () => {
               backgroundColor: "black",
               borderRadius: "4vh",
               width: "130vh",
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
+              "-ms-overflow-style": "none", // for Internet Explorer and Edge
+              "scrollbar-width": "none", // for Firefox
             }}
           >
             {navItem.map((item, index) => {
