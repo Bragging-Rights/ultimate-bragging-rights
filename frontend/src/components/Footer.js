@@ -14,7 +14,7 @@ const Footer = () => {
       style={{
         background: "#1B1C21",
         padding: "10px",
-        margin: "10px",
+        margin: "0px",
       }}
     >
       <Grid
