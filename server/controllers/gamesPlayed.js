@@ -10,7 +10,7 @@ exports.createGamePlayed = async (req, res) => {
     const gameData = await Game.find({
       _id: gamePlayed.gameData,
     });
-    console.log("gameData:", gameData);
+    // console.log("gameData:", gameData);
     await gamePlayed.save();
     res.status(201).json({
       success: true,

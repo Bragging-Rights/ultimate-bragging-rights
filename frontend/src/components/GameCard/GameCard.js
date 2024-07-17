@@ -205,7 +205,7 @@ const GameCard = ({ gameData }) => {
       Pick_Reg,
       league: selectedLeague,
     };
-
+    // console.log("Data to save:", dataToSave);
     mutate(dataToSave);
   };
 
@@ -288,7 +288,10 @@ const GameCard = ({ gameData }) => {
   return (
     <>
       <div className="game-card grid col-span-2 xl:col-span-1">
-        <div className="flex justify-between" style={{border : "2px solid red"}}>
+        <div
+          className="flex justify-between"
+          style={{ border: "2px solid red" }}
+        >
           <div className="flex flex-col">
             <div
               className="game-time font-inter mb-3"
@@ -326,7 +329,9 @@ const GameCard = ({ gameData }) => {
               Team
             </div>
             <div className="box px-7 h-12">
-              <label className="upside-down test-size">{gameData?.visitor}</label>
+              <label className="upside-down test-size">
+                {gameData?.visitor}
+              </label>
             </div>
           </div>
 
@@ -401,7 +406,10 @@ const GameCard = ({ gameData }) => {
           ></div>
         </div>
 
-        <div className="flex justify-between" style={{  border : "2px solid green"}}>
+        <div
+          className="flex justify-between"
+          style={{ border: "2px solid green" }}
+        >
           <div className="flex flex-col" style={{ paddingRight: "4.54%" }}>
             <input
               type="text"
@@ -483,7 +491,11 @@ const GameCard = ({ gameData }) => {
 
           <div
             className="button-pick"
-            style={{ display: "flex", columnGap: "3vh" ,  border : "2px solid blue"}}
+            style={{
+              display: "flex",
+              columnGap: "3vh",
+              border: "2px solid blue",
+            }}
           >
             <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
               ENTER PICK

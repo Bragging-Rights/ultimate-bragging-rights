@@ -53,6 +53,9 @@ exports.calculateResultPoints = (
   moneylinePoints,
   actualWinner
 ) => {
+  console.log(
+    "******************************Accuracy Points******************************"
+  );
   const vistor_ap = accuracyPoints(
     sport,
     pickedScore.pickVistor,
@@ -70,8 +73,15 @@ exports.calculateResultPoints = (
     moneylineTotalPoints,
     actualWinner
   );
+  console.log(
+    "******************************Ending Points******************************"
+  );
 
   const ep = endingsPoints(sport, userpick, gameEnd, pickedScore, actualScore);
+  console.log(
+    "******************************Perfect Score******************************"
+  );
+
   // console.log(pickedScore, actualScore, pickedWinner, moneyline);
   const ps = perfectScore(
     actualScore.vScore,
@@ -80,6 +90,11 @@ exports.calculateResultPoints = (
     pickedScore.pickHome,
     moneylineTotalPoints
   );
+
+  console.log(
+    "******************************Vegas Points******************************"
+  );
+
   const vp = vegasOdds(
     // sport,
     moneyline,
@@ -96,6 +111,9 @@ exports.calculateResultPoints = (
     // homeSpreadOdds,
     // visitorOverUnderOdds,
     // HomeOverUnderOdds
+  );
+  console.log(
+    "******************************Shutout Points******************************"
   );
 
   const sp = shutoutPoints(sport, pickedScore, actualScore);
@@ -197,33 +215,42 @@ const endingsPoints = (
   userInnings,
   extraInnings
 ) => {
-  const pr = pickRegulation(userpick, gameEnd, pickedScore, actualScore);
-  const po =
-    sport != "baseball"
-      ? pickOvertime(userpick, gameEnd, pickedScore, actualScore)
-      : 0;
-  const pi =
-    sport == "baseball"
-      ? pickExtraInnings(
-          userpick,
-          gameEnd,
-          pickedScore,
-          actualScore,
-          userInnings,
-          extraInnings
-        )
-      : 0;
-  const ps =
-    sport == "hockey"
-      ? pickShootout(
-          userpick,
-          gameEnd,
-          pickedScore,
-          actualScore,
-          userInnings,
-          extraInnings
-        )
-      : 0;
+  let pr, po, pi, ps;
+  if (userpick.toLowerCase() === "reg") {
+    pr = pickRegulation(userpick, gameEnd, pickedScore, actualScore);
+  }
+  if (userpick.toLowerCase() === "ot") {
+    po =
+      sport != "baseball"
+        ? pickOvertime(userpick, gameEnd, pickedScore, actualScore)
+        : 0;
+  }
+  if (userpick.toLowerCase() === "ei") {
+    pi =
+      sport == "baseball"
+        ? pickExtraInnings(
+            userpick,
+            gameEnd,
+            pickedScore,
+            actualScore,
+            userInnings,
+            extraInnings
+          )
+        : 0;
+  }
+  if (userpick.toLowerCase() === "so") {
+    ps =
+      sport == "hockey"
+        ? pickShootout(
+            userpick,
+            gameEnd,
+            pickedScore,
+            actualScore,
+            userInnings,
+            extraInnings
+          )
+        : 0;
+  }
   console.log("endings points", pr, po, pi, ps);
   return {
     pickRegulation: pr,

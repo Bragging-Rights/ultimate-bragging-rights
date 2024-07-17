@@ -20,6 +20,7 @@ exports.pickingFavorite = (
     finalscorehome,
     pick_visitor,
     pick_home,
+    moneylinePoints,
   });
 
   // Convert all inputs to numbers and check for NaN
@@ -86,36 +87,16 @@ exports.pickingUnderdog = (
   finalscorevisitor,
   finalscorehome,
   pick_visitor,
-  pick_home
+  pick_home,
+  moneylinePoints
 ) => {
-  console.log("Initial inputs:", {
-    vml,
-    hml,
-    finalscorevisitor,
-    finalscorehome,
-    pick_visitor,
-    pick_home,
-  });
-
   // Convert all inputs to numbers and check for NaN
   vml = Number(vml);
-  console.log("Converted vml to number:", vml);
-
   hml = Number(hml);
-  console.log("Converted hml to number:", hml);
-
   finalscorevisitor = Number(finalscorevisitor);
-  console.log("Converted finalscorevisitor to number:", finalscorevisitor);
-
   finalscorehome = Number(finalscorehome);
-  console.log("Converted finalscorehome to number:", finalscorehome);
-
   pick_visitor = Number(pick_visitor);
-  console.log("Converted pick_visitor to number:", pick_visitor);
-
   pick_home = Number(pick_home);
-  console.log("Converted pick_home to number:", pick_home);
-
   // Error checking for NaN
   if (
     isNaN(vml) ||
@@ -131,11 +112,9 @@ exports.pickingUnderdog = (
 
   let v = 0,
     h = 0; // Initialize as favorites
-  console.log("Initial underdog status:", { v, h });
 
   if (vml < 0) v = 1; // Underdog
   if (hml < 0) h = 1; // Underdog
-  console.log("Updated underdog status:", { v, h });
 
   let value;
   if (

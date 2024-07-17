@@ -8,32 +8,18 @@ exports.pickRegulation = (userpick, gameEnd, pickedScore, actualScore) => {
 
   // Convert scores to numbers
   pickedScore.pickVistor = Number(pickedScore.pickVistor);
-  console.log(
-    "Converted pickedScore.pickVistor to number:",
-    pickedScore.pickVistor
-  );
-
   pickedScore.pickHome = Number(pickedScore.pickHome);
-  console.log(
-    "Converted pickedScore.pickHome to number:",
-    pickedScore.pickHome
-  );
 
   actualScore.vScore = Number(actualScore.vScore);
-  console.log("Converted actualScore.vScore to number:", actualScore.vScore);
-
   actualScore.hScore = Number(actualScore.hScore);
-  console.log("Converted actualScore.hScore to number:", actualScore.hScore);
 
   const userWinner =
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
-  console.log("Determined userWinner:", userWinner);
 
   const gameWinner =
     actualScore.vScore > actualScore.hScore ? "visitor" : "home";
-  console.log("Determined gameWinner:", gameWinner);
 
-  if (userpick === gameEnd) {
+  if (userpick.toLowerCase() === gameEnd.toLowerCase()) {
     console.log("Userpick matches gameEnd");
     if (userWinner === gameWinner) {
       console.log("User picked the correct winner");
@@ -58,7 +44,7 @@ exports.pickOvertime = (userpick, gameEnd, pickedScore, actualScore) => {
     pickedScore.pickVistor > pickedScore.pickHome ? "visitor" : "home";
   const gameWinner =
     actualScore.vScore > actualScore.hScore ? "visitor" : "home";
-  if (userpick === gameEnd) {
+  if (userpick.toLowerCase() === gameEnd.toLowerCase()) {
     if (userWinner === gameWinner) {
       return 5; // Correct ending and winner
     } else {
@@ -89,7 +75,7 @@ exports.pickExtraInnings = (
   const gameWinner =
     actualScore.vScore > actualScore.hScore ? "visitor" : "home";
   let points = 0;
-  if (userpick === gameEnd) {
+  if (userpick.toLowerCase() === gameEnd.toLowerCase()) {
     points += userWinner === gameWinner ? 5 : 2.5; // Add points for correct ending
     if (userInnings === extraInnings) {
       points += userInnings; // Add points for correct number of extra innings
@@ -120,7 +106,7 @@ exports.pickShootout = (
     actualScore.vScore > actualScore.hScore ? "visitor" : "home";
 
   let points = 0;
-  if (userpick === gameEnd) {
+  if (userpick.toLowerCase() === gameEnd.toLowerCase()) {
     points += userWinner === gameWinner ? 5 : 2.5; // Add points for correct ending
     if (userInnings === extraInnings) {
       points += userInnings * 0.2; // Add points for correct number of extra innings

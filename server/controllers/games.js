@@ -165,10 +165,8 @@ const updateGameFields = async (req, res) => {
   try {
     const vFinalScore = req.body.vScore;
     const hFinalScore = req.body.hScore;
-    const gameEnd =
-      typeof req.body.selectedOption === "string"
-        ? req.body.selectedOption.toLowerCase()
-        : req.body.selectedOption;
+    const gameEnd = req.body.selectedOption.toLowerCase();
+
     if (gameEnd === "nc") {
       const suspended = true;
       const suspendedReason = req.body.reason;
@@ -185,7 +183,7 @@ const updateGameFields = async (req, res) => {
       if (suspended !== undefined) game.suspended = suspended;
       if (suspendedReason !== undefined) game.suspendedReason = suspendedReason;
     }
-
+    // console.log("game with scores", game);
     await game.save();
     calculateUserPoints(req.body);
     res.json(game);
