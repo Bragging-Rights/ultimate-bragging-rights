@@ -68,11 +68,9 @@ const GameForm = () => {
     getOdds(formData.game)
       .then((oddsData) => {
         console.log("Odds data:", oddsData);
-        const today = new Date().toISOString().split("T")[0];
+
         const filteredOdds = oddsData.data.filter((odd) => {
-          const gameDate = odd.commence_time.split("T")[0];
           return (
-            gameDate === today &&
             odd.away_team &&
             odd.home_team &&
             odd.bookmakers &&
