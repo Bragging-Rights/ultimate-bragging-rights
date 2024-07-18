@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TimeFormat from "../../services/TimeFormat";
+import { useMediaQuery } from "@material-ui/core";
 import "./GameCard.css";
 import Switches from "../Switches.js";
 import Modal from "react-modal";
@@ -10,6 +11,8 @@ import { useLeagueContext } from "../LeagueContext";
 import Swal from "sweetalert2";
 
 const GameCard = ({ gameData }) => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   const [Pick_Ei, setPick_Ei] = useState(false);
 
   const labelStyles = {
@@ -290,25 +293,25 @@ const GameCard = ({ gameData }) => {
       <div className="game-card grid col-span-2 xl:col-span-1">
         <div
           className="flex justify-between"
-          style={{ border: "2px solid red" }}
+          // style={{ border: "2px solid red" }}
         >
           <div className="flex flex-col">
             <div
-              className="game-time font-inter mb-3"
+              className="game-time test-size"
               style={{
                 display: "flex",
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
                 textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
-                fontSize: "14px",
+                fontSize: isMobile ? "10px" : "16px",
               }}
             >
               {TimeFormat(gameData?.time)}
             </div>
-            <div className="">{gameData.gamedate}</div> &nbsp;
+            <div className="">{gameData.gamedate}</div> 
             <input
               type="text"
-              className={`score-input card-input mb-3 ${
+              className={`score-input card-input m-3  ${
                 invalidFields.includes("pick_visitor") ? "glowing-border" : ""
               }`}
               value={pick_visitor}
@@ -321,15 +324,18 @@ const GameCard = ({ gameData }) => {
               className="game-time test-size font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
-                textStroke: "0.3px black",
-                textShadow: "0px 1px 4px 0px #2CDD14",
-                fontSize: "16px",
+                fontSize: isMobile ? "10px" : "16px",
               }}
             >
               Team
             </div>
             <div className="box px-7 h-12">
-              <label className="upside-down test-size">
+              <label
+                className="upside-down "
+                style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}
+              >
                 {gameData?.visitor}
               </label>
             </div>
@@ -337,56 +343,67 @@ const GameCard = ({ gameData }) => {
 
           <div className="flex flex-col">
             <div
-              className="game-time font-inter mb-3"
+              className="game-time test-size font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
-                textStroke: "0.3px black",
-                textShadow: "0px 1px 4px 0px #2CDD14",
-                fontSize: "16px",
+                fontSize: isMobile ? "10px" : "16px",
               }}
             >
               Money Line
             </div>
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ml"]}</label>
-              <label>{gameData?.["v-ml-points"]} Pts</label>
+              <label
+                style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}
+              >
+                {gameData?.["v-ml-points"]} Pts
+              </label>
             </div>
           </div>
 
           <div className="flex flex-col">
             <div
-              className="game-time"
+              className="game-time test-size font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
-                textStroke: "0.3px black",
-                textShadow: "0px 1px 4px 0px #2CDD14",
-                fontSize: "16px",
+                fontSize: isMobile ? "10px" : "16px",
               }}
             >
               Spread
             </div>
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
-              <label className="text-white">
+              <label
+                className="text-white"
+                style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}
+              >
                 {gameData?.["v-sprd-points"]} Pts
               </label>
             </div>
           </div>
           <div className="flex flex-col">
             <div
-              className="game-time"
+              className="game-time test-size font-inter mb-3"
               style={{
                 WebkitTextStroke: "0.3px black",
-                textStroke: "0.3px black",
-                textShadow: "0px 1px 4px 0px #2CDD14",
-                fontSize: "16px",
+                fontSize: isMobile ? "10px" : "16px",
               }}
             >
               Over/Under
             </div>
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ou"]}</label>
-              <label>{gameData?.["v-ou-points"]} Pts</label>
+              <label
+                style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}
+              >
+                {gameData?.["v-ou-points"]} Pts
+              </label>
             </div>
           </div>
         </div>
@@ -408,7 +425,7 @@ const GameCard = ({ gameData }) => {
 
         <div
           className="flex justify-between"
-          style={{ border: "2px solid green" }}
+          // style={{ border: "2px solid green" }}
         >
           <div className="flex flex-col" style={{ paddingRight: "4.54%" }}>
             <input
@@ -424,7 +441,9 @@ const GameCard = ({ gameData }) => {
 
           <div className="flex flex-col justify-start">
             <div className="box px-7 h-12">
-              <label className="upside-down">{gameData?.home}</label>
+              <label style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }} className="upside-down">{gameData?.home}</label>
             </div>
           </div>
 
@@ -434,12 +453,14 @@ const GameCard = ({ gameData }) => {
               WebkitTextStroke: "0.3px black",
               textStroke: "0.3px black",
               textShadow: "0px 1px 4px 0px #2CDD14",
-              fontSize: "16px",
+              fontSize: isMobile ? "10px" : "16px",
             }}
           >
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ml"]}</label>
-              <label>{gameData?.["h-ml-points"]} Pts</label>
+              <label style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}>{gameData?.["h-ml-points"]} Pts</label>
             </div>
           </div>
 
@@ -449,12 +470,14 @@ const GameCard = ({ gameData }) => {
               WebkitTextStroke: "0.3px black",
               textStroke: "0.3px black",
               textShadow: "0px 1px 4px 0px #2CDD14",
-              fontSize: "16px",
+              fontSize: isMobile ? "10px" : "16px",
             }}
           >
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
-              <label>{gameData?.["h-sprd-points"]} Pts</label>
+              <label style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}>{gameData?.["h-sprd-points"]} Pts</label>
             </div>
           </div>
           <div
@@ -463,12 +486,14 @@ const GameCard = ({ gameData }) => {
               WebkitTextStroke: "0.3px black",
               textStroke: "0.3px black",
               textShadow: "0px 1px 4px 0px #2CDD14",
-              fontSize: "16px",
+              fontSize: isMobile ? "10px" : "16px",
             }}
           >
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ou"]}</label>
-              <label>{gameData?.["h-ou-points"]} Pts</label>
+              <label style={{
+                  fontSize: isMobile ? "10px" : "16px",
+                }}>{gameData?.["h-ou-points"]} Pts</label>
             </div>
           </div>
         </div>
@@ -494,7 +519,7 @@ const GameCard = ({ gameData }) => {
             style={{
               display: "flex",
               columnGap: "3vh",
-              border: "2px solid blue",
+              // border: "2px solid blue",
             }}
           >
             <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
