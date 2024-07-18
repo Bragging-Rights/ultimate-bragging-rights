@@ -8,10 +8,7 @@ import {
   ListItemText,
   Box,
 } from "@mui/material";
-import GreenTopBanner from "../assets/GreenTopBanner.png";
-// import LeftImage from "../assets/pngwing.com.png"; // Import your left image
-// import RightImage from "../assets/pngwing.com.png"; // Import your right image
-// import navbg from "../assets/navbg.png"; // Import your right image
+import "./MainNavBar.css"; // Import the CSS file
 
 const navItem = [
   { label: "Games", path: "/games" },
@@ -40,92 +37,62 @@ const MainNavBar = () => {
   }, []);
 
   return (
-    <>
-      <AppBar
-        position="static"
-        className="bg-1E1E1E"
-        style={{
-          backgroundSize: "cover",
-          backgroundColor: "transparent",
+    <AppBar
+      position="static"
+      className="bg-1E1E1E"
+      style={{
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+      }}
+    >
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#1B1C21",
+          padding: "2%",
         }}
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            backgroundColor: "#1B1C21",
-            padding: "2%",
-          }}
-        >
-          <Box sx={{ width: "60vh" }}>
-            {" "}
-            {/* <img src={LeftImage} alt="Left Image" /> */}
-          </Box>
-          <List
-            component="nav"
-            aria-labelledby="main navigation"
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              whiteSpace: "nowrap",
-              backgroundColor: "black",
-              borderRadius: "4vh",
-              width: "130vh",
-              "&::-webkit-scrollbar": {
-                display: "none",
-              },
-              "-ms-overflow-style": "none", // for Internet Explorer and Edge
-              "scrollbar-width": "none", // for Firefox
-            }}
+        {/* <Box sx={{ width: "60vh" }}> */}
+          {/* <img src={LeftImage} alt="Left Image" /> */}
+        {/* </Box> */}
+        <div className="nav-list-container">
+
+        <List
+          component="nav"
+          aria-labelledby="main navigation"
+          className="nav-list"
           >
-            {navItem.map((item, index) => {
-              if (item.label === "Admin" && !isUserAdmin) {
-                return null;
-              }
-              return (
-                <ListItem
-                  key={index}
-                  button
-                  component={NavLink}
-                  to={item.path}
-                  selected={location.pathname === item.path}
-                  sx={{
-                    transition:
-                      "transform 0.3s ease, background-color 0.3s ease",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                      color: "#333333", // Unique hover effect
-                    },
-                    "&.Mui-selected": {
-                      color: "#FF0000 !important",
-                      transform: "scale(1.05)",
-                      backgroundColor: "transparent !important",
-                      position: "relative",
-                      "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        marginleft: "3%",
-                        marginTop: "20%",
-                        width: "50%",
-                        height: "2px",
-                        backgroundColor: "#FF0000",
-                      },
-                    },
-                  }}
-                >
-                  <ListItemText primary={item.label} />
-                </ListItem>
-              );
-            })}
-          </List>
-          <Box sx={{ width: "60vh" }}>
-            {" "}
-            {/* <img src={RightImage} alt="Right Image" />{" "} */}
-          </Box>{" "}
-        </Toolbar>
-      </AppBar>
-    </>
+          {navItem.map((item, index) => {
+            if (item.label === "Admin" && !isUserAdmin) {
+              return null;
+            }
+            return (
+              <ListItem
+              key={index}
+                button
+                component={NavLink}
+                to={item.path}
+                selected={location.pathname === item.path}
+                className={`nav-item ${
+                  location.pathname === item.path ? "nav-item-selected" : ""
+                }`}
+              >
+                <ListItemText
+                  primary={item.label}
+                  className="nav-text"
+                />
+              </ListItem>
+            );
+          })}
+        </List>
+          </div>
+        {/* <Box sx={{ width: "60vh" }}> */}
+          {/* <img src={RightImage} alt="Right Image" /> */}
+        {/* </Box> */}
+      </Toolbar>
+    </AppBar>
   );
 };
 
