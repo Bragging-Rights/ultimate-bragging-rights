@@ -65,6 +65,7 @@ const GamerCardRight = ({ gameData }) => {
       Pick_so,
       Pick_ot,
       Pick_Reg,
+      league: selectedLeague,
     };
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
     displayToast("Saved successfully!", "success");
