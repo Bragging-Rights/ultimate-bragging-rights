@@ -5,6 +5,22 @@ import { getUserById } from "../../Apis/auth";
 import { getGamePlayedByUserId } from "../../Apis/predictions";
 import { headerOptions } from "./data"; // Import headerOptions
 
+const calculateReg = (row) => {
+  return row.result?.endingsPoints?.pickRegulation || 0;
+};
+
+const calculateOT = (row) => {
+  return row.result?.endingsPoints?.pickOverTime || 0;
+};
+
+const calculateSO = (row) => {
+  return row.result?.endingsPoints?.pickShootout || 0;
+};
+
+const calculateEI = (row) => {
+  return row.result?.endingsPoints?.pickExtraInnings || 0;
+};
+
 const TableComponent = () => {
   const { selectedLeague } = useLeagueContext();
   const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
@@ -109,6 +125,42 @@ const TableComponent = () => {
 
   // Calculate TP points and ranks
   const { tpValues, ranks } = calculateTPandRank(gamesPlayed);
+
+  // Define a function to render the appropriate columns based on the selected league
+  const renderColumns = (row, index, ranks, tpValues, gameData) => {
+    const Reg = calculateReg(row);
+    const OT = calculateOT(row);
+    const SO = calculateSO(row);
+    const EI = calculateEI(row);
+
+    switch (selectedLeague) {
+      case "NHL":
+        return (
+          <>
+            <td className="text-xs font-medium text-center">{Reg || "0"}</td>
+            <td className="text-xs font-medium text-center">{OT || "-"}</td>
+            <td className="text-xs font-medium text-center">{SO || "-"}</td>
+          </>
+        );
+      case "NBA":
+      case "NFL":
+        return (
+          <>
+            <td className="text-xs font-medium text-center">{Reg || "0"}</td>
+            <td className="text-xs font-medium text-center">{OT || "-"}</td>
+          </>
+        );
+      case "MLB":
+        return (
+          <>
+            <td className="text-xs font-medium text-center">{Reg || "0"}</td>
+            <td className="text-xs font-medium text-center">{EI || "0"}</td>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="table-container">
@@ -220,16 +272,11 @@ const TableComponent = () => {
                   </td>
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
-                  <td className="text-xs font-medium text-center">
-                    {row.Reg || "0"}
-                  </td>
-                  {/* <td className="text-xs font-medium text-center">
-                    {row.OT || "-"}
-                  </td> */}
+                  {renderColumns(row, index, ranks, tpValues, gameData)}
                   {/* Add a new column for the extracted vegasOdds value */}
-                  <td className="text-xs font-medium text-center">
+                  {/* <td className="text-xs font-medium text-center">
                     {vegasOddsValue}
-                  </td>
+                  </td> */}
                 </tr>
               );
             })

@@ -69,8 +69,20 @@ const GameForm = () => {
       .then((oddsData) => {
         console.log("Odds data:", oddsData);
 
+        const validLeagues = [
+          "americanfootball_nfl",
+          "americanfootball_ufl",
+          "americanfootball_cfl",
+          "americanfootball_ncaaf",
+        ];
+        const today = new Date().toISOString().split("T")[0];
+
         const filteredOdds = oddsData.data.filter((odd) => {
+          const gameDate = odd.commence_time.split("T")[0];
+          const isFootballGame = validLeagues.includes(formData.game);
+
           return (
+            (isFootballGame || gameDate === today) &&
             odd.away_team &&
             odd.home_team &&
             odd.bookmakers &&
