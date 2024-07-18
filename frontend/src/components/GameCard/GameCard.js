@@ -17,7 +17,7 @@ const GameCard = ({ gameData }) => {
 
   const labelStyles = {
     borderBottom: "2px solid #BE8200",
-    width: "90%",
+    width: "100%",
     textAlign: "center",
   };
 
@@ -303,15 +303,15 @@ const GameCard = ({ gameData }) => {
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
                 textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
-                fontSize: isMobile ? "10px" : "16px",
+                fontSize: isMobile ? "9px" : "16px",
               }}
             >
               {TimeFormat(gameData?.time)}
             </div>
-            <div className="">{gameData.gamedate}</div> 
+            <div className="">{gameData.gamedate}</div>
             <input
               type="text"
-              className={`score-input card-input m-3  ${
+              className={`score-input card-input mb-3  ${
                 invalidFields.includes("pick_visitor") ? "glowing-border" : ""
               }`}
               value={pick_visitor}
@@ -425,13 +425,12 @@ const GameCard = ({ gameData }) => {
 
         <div
           className="flex justify-between"
-          // style={{ border: "2px solid green" }}
         >
-          <div className="flex flex-col" style={{ paddingRight: "4.54%" }}>
+          <div className="flex flex-col" style={{ paddingRight: "6%" }}>
             <input
               type="text"
               id="pick-home"
-              className={`score-input card-input mb-3 ${
+              className={`score-input card-input mb-3 mt-auto ${
                 invalidFields.includes("pick_home") ? "glowing-border" : ""
               }`}
               value={pick_home}
@@ -441,9 +440,14 @@ const GameCard = ({ gameData }) => {
 
           <div className="flex flex-col justify-start">
             <div className="box px-7 h-12">
-              <label style={{
+              <label
+                style={{
                   fontSize: isMobile ? "10px" : "16px",
-                }} className="upside-down">{gameData?.home}</label>
+                }}
+                className="upside-down"
+              >
+                {gameData?.home}
+              </label>
             </div>
           </div>
 
@@ -451,16 +455,18 @@ const GameCard = ({ gameData }) => {
             className="flex flex-col justify-start"
             style={{
               WebkitTextStroke: "0.3px black",
-              textStroke: "0.3px black",
-              textShadow: "0px 1px 4px 0px #2CDD14",
               fontSize: isMobile ? "10px" : "16px",
             }}
           >
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ml"]}</label>
-              <label style={{
+              <label
+                style={{
                   fontSize: isMobile ? "10px" : "16px",
-                }}>{gameData?.["h-ml-points"]} Pts</label>
+                }}
+              >
+                {gameData?.["h-ml-points"]} Pts
+              </label>
             </div>
           </div>
 
@@ -468,32 +474,36 @@ const GameCard = ({ gameData }) => {
             className="flex flex-col justify-start"
             style={{
               WebkitTextStroke: "0.3px black",
-              textStroke: "0.3px black",
-              textShadow: "0px 1px 4px 0px #2CDD14",
               fontSize: isMobile ? "10px" : "16px",
             }}
           >
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
-              <label style={{
+              <label
+                style={{
                   fontSize: isMobile ? "10px" : "16px",
-                }}>{gameData?.["h-sprd-points"]} Pts</label>
+                }}
+              >
+                {gameData?.["h-sprd-points"]} Pts
+              </label>
             </div>
           </div>
           <div
             className="flex flex-col"
             style={{
               WebkitTextStroke: "0.3px black",
-              textStroke: "0.3px black",
-              textShadow: "0px 1px 4px 0px #2CDD14",
               fontSize: isMobile ? "10px" : "16px",
             }}
           >
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["h-ou"]}</label>
-              <label style={{
+              <label
+                style={{
                   fontSize: isMobile ? "10px" : "16px",
-                }}>{gameData?.["h-ou-points"]} Pts</label>
+                }}
+              >
+                {gameData?.["h-ou-points"]} Pts
+              </label>
             </div>
           </div>
         </div>
@@ -522,10 +532,22 @@ const GameCard = ({ gameData }) => {
               // border: "2px solid blue",
             }}
           >
-            <button className="card-btn-outline mt-4" onClick={handleEnterPick}>
+            <button
+              className="card-btn-outline mt-4"
+              style={{
+                fontSize: isMobile ? "10px" : "16px",
+              }}
+              onClick={handleEnterPick}
+            >
               ENTER PICK
             </button>{" "}
-            <button className="card-btn mt-4" onClick={handleLockIn}>
+            <button
+              className="card-btn mt-4"
+              style={{
+                fontSize: isMobile ? "10px" : "16px",
+              }}
+              onClick={handleLockIn}
+            >
               LOCK IT IN
             </button>{" "}
           </div>
