@@ -4,10 +4,9 @@ import {
   Typography,
   List,
   ListItem,
-  AppBar,
-  Toolbar,
   Container,
 } from "@mui/material";
+import './ResultTabs.css'; // Import your CSS file
 
 const ResultTabs = ({ changeTab, CurrentTab }) => {
   const tabs = [
@@ -43,13 +42,13 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
           sx={{
             display: "flex",
             justifyContent: "space-around",
-            width: isMobileView ? "30vh" : "57%",
-            height: isMobileView ? "8vh" : "10vh",
+            width: isMobileView ? "35vh" : "57%",
+            height: isMobileView ? "6vh" : "10vh",
             backgroundColor: "black",
             borderRadius: "5vh",
             position: "relative",
             overflow: "hidden",
-            marginLeft: isMobileView ? "15%" : "21%",
+            marginLeft: isMobileView ? "10%" : "21%",
           }}
         >
           {tabs.map((tab, index) => (
@@ -58,7 +57,6 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
               onClick={() => handleTabClick(index)}
               sx={{
                 cursor: "pointer",
-
                 textAlign: "center",
                 padding: "8px",
                 borderRadius: "3px",
@@ -74,6 +72,7 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
             >
               <Typography
                 variant="body1"
+                className={isMobileView ? 'fontSizeImportantMobile' : 'fontSizeImportant'}
                 sx={{
                   color: selectedTab === index ? "#FF0000" : "white",
                   fontWeight: selectedTab === index ? "bold" : "normal",
@@ -86,9 +85,9 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
                 <Box
                   sx={{
                     position: "absolute",
-                    marginTop: "5vh",
+                    marginTop: isMobileView ? "2vh" : "5vh",
                     marginleft: "4%",
-                    width: "60%",
+                    width: "70%",
                     height: "2px",
                     background: "#FF0000",
                     transition: "width 0.3s ease",
