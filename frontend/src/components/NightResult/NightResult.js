@@ -66,6 +66,20 @@ const NightResult = () => {
     });
   }, [selectedLeague]);
 
+  useEffect(() => {
+    if (selectedLeague === "MLB" && gamesPlayed.length > 0) {
+      const gameHeaders = gamesPlayed.map((game) => {
+        const gameData = gameDataMap[game.gameData] || {};
+        return `${gameData.visitor || "-"} vs ${gameData.home || "-"}`;
+      });
+
+      setFilteredHeaderOptions((prevHeaders) => [
+        ...prevHeaders,
+        ...gameHeaders,
+      ]);
+    }
+  }, [gamesPlayed, gameDataMap, selectedLeague]);
+
   return (
     <div className="table-container">
       <div className="night-result-container">
@@ -172,19 +186,7 @@ const NightResult = () => {
                     <td className="text-xs font-medium text-center">
                       {row.R || "-"}
                     </td>
-                    <td className="text-xs font-medium text-center">{tp}</td>
-                    <td className="text-xs font-medium text-center">
-                      {row.BR || "-"}
-                    </td>
-                    <td className="text-xs font-medium text-center">{ml}</td>
-                    <td className="text-xs font-medium text-center">{ou}</td>
-                    <td className="text-xs font-medium text-center">
-                      {spread}
-                    </td>
-                    <td className="text-xs font-medium text-center">{oneS}</td>
-                    <td className="text-xs font-medium text-center">
-                      {row["1S0"] || "-"}
-                    </td>
+
                     <td className="text-xs font-medium text-center">
                       {oneSW2}
                     </td>

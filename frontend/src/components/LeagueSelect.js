@@ -12,6 +12,8 @@ import {
   useTheme,
   Grid,
   Slide,
+  Switch,
+  FormControlLabel,
 } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import arrowImage from "../assets/arr.png";
@@ -30,7 +32,7 @@ const totLeagues = [
   "NCCA",
   "NCAAB",
 ];
-const disabledLeagues = ["WNBA", "CFL", "NCAAF", "UFL", "NCCA", "NCAAB"];
+const defaultDisabledLeagues = ["WNBA", "CFL", "NCAAF", "UFL", "NCCA", "NCAAB"];
 const glowingLeagues = ["NHL", "NFL", "MLB"];
 
 const LeagueSelect = () => {
@@ -39,6 +41,10 @@ const LeagueSelect = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState("left");
+  const [disabledLeagues, setDisabledLeagues] = useState(
+    defaultDisabledLeagues
+  );
+  const [enableAll, setEnableAll] = useState(false);
   const navigate = useNavigate();
 
   // Fetch user's preferred league from local storage or API
@@ -76,6 +82,15 @@ const LeagueSelect = () => {
     navigate("/");
   };
 
+  const handleEnableAllChange = (event) => {
+    setEnableAll(event.target.checked);
+    if (event.target.checked) {
+      setDisabledLeagues([]);
+    } else {
+      setDisabledLeagues(defaultDisabledLeagues);
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -84,7 +99,6 @@ const LeagueSelect = () => {
           backgroundColor: "#1B1C21",
           height: isSmallScreen ? "auto" : "10%",
           marginLeft: isSmallScreen ? "0" : "-13%",
-
           width: isSmallScreen ? "100%" : "125%",
         }}
       >
@@ -238,6 +252,26 @@ const LeagueSelect = () => {
                     Logout
                   </Button>
                 ) : null}
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={enableAll}
+                      onChange={handleEnableAllChange}
+                      color="primary"
+                    />
+                  }
+                  labelPlacement="start"
+                  sx={{
+                    marginRight: isSmallScreen ? "4px" : "8px",
+                    color: "#FFC107",
+                    ".MuiSwitch-switchBase.Mui-checked": {
+                      color: "#FFC107",
+                    },
+                    ".MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                      backgroundColor: "#FFC107",
+                    },
+                  }}
+                />
               </Box>
             </Grid>
           </Grid>
