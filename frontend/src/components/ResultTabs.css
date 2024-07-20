@@ -1,9 +1,8 @@
 .fontSizeImportant {
-    font-size: 1rem !important;
-  }
-  
-  .fontSizeImportantMobile {
-    font-size: 0.7rem !important;
-    font-weight: bold;
-  }
-  
+  font-size: 1rem !important;
+}
+
+.fontSizeImportantMobile {
+  font-size: 0.7rem !important;
+  font-weight: bold;
+}

@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  Container,
-} from "@mui/material";
-import './ResultTabs.css'; // Import your CSS file
+import { Box, Typography, List, ListItem, Container } from "@mui/material";
+import "./ResultTabs.css"; // Import your CSS file
 
 const ResultTabs = ({ changeTab, CurrentTab }) => {
   const tabs = [
@@ -72,7 +66,9 @@ const ResultTabs = ({ changeTab, CurrentTab }) => {
             >
               <Typography
                 variant="body1"
-                className={isMobileView ? 'fontSizeImportantMobile' : 'fontSizeImportant'}
+                className={
+                  isMobileView ? "fontSizeImportantMobile" : "fontSizeImportant"
+                }
                 sx={{
                   color: selectedTab === index ? "#FF0000" : "white",
                   fontWeight: selectedTab === index ? "bold" : "normal",
