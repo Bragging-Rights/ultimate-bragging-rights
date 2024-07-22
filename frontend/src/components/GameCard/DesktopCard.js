@@ -1,25 +1,26 @@
-import React, { useState } from "react";
-import Modal from "react-modal"; // Import the modal library
-import "../GameCard.css";
-import displayToast from "../../Alert/Alert";
-import { addPrediction } from "../../../Apis/predictions";
+import React, { useState, useEffect } from "react";
+import TimeFormat from "../../services/TimeFormat";
 import { useMediaQuery } from "@material-ui/core";
-import TimeFormat from "../../../services/TimeFormat.js";
-import Switches from "../../Switches";
+import "./GameCard.css";
+import Switches from "../Switches.js";
+import Modal from "react-modal";
+import { addPrediction } from "../../Apis/predictions";
+import displayToast from "../Alert/Alert";
 import { useMutation } from "react-query";
-import { useLeagueContext } from "../../LeagueContext";
-import Swal from "sweetalert2"; // Import SweetAlert
+import { useLeagueContext } from "../LeagueContext";
+import Swal from "sweetalert2";
 
-const GamerCardRight = ({ gameData }) => {
+const DesktopCard = ({ gameData }) => {
   const isMobile = useMediaQuery("(max-width:600px)");
 
-  const [Pick_Ei, setPick_Ei] = useState(false); // Example of setting Pick_Ei
+  const [Pick_Ei, setPick_Ei] = useState(false);
 
   const labelStyles = {
     borderBottom: "2px solid #BE8200",
-    width: "90%",
+    width: "100%",
     textAlign: "center",
   };
+
   const [pick_visitor, setPickVisitor] = useState("");
   const [pick_home, setPickHome] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,29 +29,32 @@ const GamerCardRight = ({ gameData }) => {
   const [Pick_ot, setPick_ot] = useState(false);
   const [Pick_so, setPick_so] = useState(false);
   const [Pick_num_ot, setPick_num_ot] = useState("");
-  const { selectedLeague } = useLeagueContext();
+  const [inputChanged, setInputChanged] = useState(false);
   const [invalidFields, setInvalidFields] = useState([]);
 
-  const handleInputChange = (e) => {
-    setPickVisitor(e.target.value);
-  };
-  const handleHomeChange = (e) => {
-    setPickHome(e.target.value);
-  };
+  const [previousValues, setPreviousValues] = useState({
+    pick_visitor: "",
+    pick_home: "",
+  });
+
+  const { selectedLeague } = useLeagueContext();
+
   const userId = localStorage.getItem("_id");
 
   const [gameEnding, setGameEnding] = useState(""); // State for gameEnding
+
   const handleEnterPick = () => {
     const invalidFields = [];
     if (!pick_visitor) invalidFields.push("pick_visitor");
     if (!pick_home) invalidFields.push("pick_home");
     if (!Pick_Reg && !Pick_ot && !Pick_so) invalidFields.push("pick_switch");
 
+    setInvalidFields(invalidFields);
+
     if (invalidFields.length > 0) {
-      setInvalidFields(invalidFields);
       Swal.fire({
         title: "Error",
-        text: "Both pick_visitor, pick_home, and at least one switch are required fields.",
+        text: "Select one of the radio button.",
         icon: "error",
         background: "#212121",
         color: "white",
@@ -68,12 +72,10 @@ const GamerCardRight = ({ gameData }) => {
       Pick_so,
       Pick_ot,
       Pick_Reg,
-      league: selectedLeague,
     };
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
     displayToast("Saved successfully!", "success");
   };
-
   const handleLockIn = () => {
     const invalidFields = [];
     const visitorScore = parseInt(pick_visitor);
@@ -86,11 +88,6 @@ const GamerCardRight = ({ gameData }) => {
     // Ensure at least one of the options is selected
     if (!Pick_Reg && !Pick_ot && !Pick_so && !Pick_Ei)
       invalidFields.push("pick_switch");
-
-    console.log("Pick_Reg:", Pick_Reg);
-    console.log("Pick_ot:", Pick_ot);
-    console.log("Pick_so:", Pick_so);
-    console.log("Pick_Ei:", Pick_Ei);
 
     setInvalidFields(invalidFields);
 
@@ -185,11 +182,6 @@ const GamerCardRight = ({ gameData }) => {
         cancelButtonText: "No",
         background: "#212121",
         color: "white",
-        customClass: {
-          popup: "swal2-popup",
-          confirmButton: "swal2-confirm",
-          cancelButton: "swal2-cancel",
-        },
       }).then((result) => {
         if (result.isConfirmed) {
           lockInPrediction();
@@ -201,6 +193,9 @@ const GamerCardRight = ({ gameData }) => {
   };
 
   const lockInPrediction = () => {
+    const timestamp = new Date().toISOString();
+    console.log("User ID in GameCard:", userId);
+
     const dataToSave = {
       gameData: gameData._id,
       pick_visitor,
@@ -211,11 +206,11 @@ const GamerCardRight = ({ gameData }) => {
       Pick_so,
       Pick_ot,
       Pick_Reg,
+      league: selectedLeague,
     };
+    // console.log("Data to save:", dataToSave);
     mutate(dataToSave);
   };
-
-  // In the JSX, ensure the switches component is included
 
   const { mutate, isLoading, isError, data, error, reset } = useMutation(
     (data) => addPrediction(data),
@@ -229,17 +224,52 @@ const GamerCardRight = ({ gameData }) => {
     }
   );
 
-  const handleEdit = () => {
-    setIsModalOpen(true);
+  useEffect(() => {
+    const date = new Date(gameData?.gamedate);
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+  }, [gameData]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    if (value !== previousValues.pick_visitor) {
+      setInputChanged(true);
+    }
+    setPickVisitor(value);
   };
+
+  const handleHomeChange = (e) => {
+    const value = e.target.value;
+    if (value !== previousValues.pick_home) {
+      setInputChanged(true);
+    }
+    setPickHome(value);
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (inputChanged) {
+        const message =
+          "You have unsaved changes, are you sure you want to leave?";
+        e.returnValue = message;
+        return message;
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [inputChanged]);
 
   const handleSaveEdit = () => {
     setIsModalOpen(false);
+    setInputChanged(false);
+    setPreviousValues({ pick_visitor, pick_home });
     console.log("Saved data:", editedGameData);
   };
 
   const handleModalClose = () => {
-    // Close the modal without saving
     setIsModalOpen(false);
   };
 
@@ -258,18 +288,18 @@ const GamerCardRight = ({ gameData }) => {
     />
   );
 
-  const date = new Date(gameData?.gamedate);
-  const options = { month: "short", day: "numeric", year: "numeric" };
-  const formattedDate = date.toLocaleDateString("en-US", options);
-
   return (
     <>
       <div className="game-card grid col-span-2 xl:col-span-1">
-        <div className="flex justify-between">
+        <div
+          className="flex justify-between"
+          // style={{ border: "2px solid red" }}
+        >
           <div className="flex flex-col">
             <div
               className="game-time test-size"
               style={{
+                display: "flex",
                 WebkitTextStroke: "0.3px black",
                 textStroke: "0.3px black",
                 textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
@@ -278,14 +308,19 @@ const GamerCardRight = ({ gameData }) => {
             >
               {TimeFormat(gameData?.time)}
             </div>
-            <div className="game-date">{gameData.gamedate}</div> &nbsp;
+            <div
+              className="game-date"
+            >
+              {gameData.gamedate}
+            </div>{" "}
+            &nbsp;
             <input
               type="text"
-              className={`score-input card-input mb-3 ${
+              className={`score-input card-input mb-3  ${
                 invalidFields.includes("pick_visitor") ? "glowing-border" : ""
               }`}
               value={pick_visitor}
-              onChange={handleInputChange}
+              onChange={(e) => setPickVisitor(e.target.value)}
             />
           </div>
 
@@ -301,7 +336,7 @@ const GamerCardRight = ({ gameData }) => {
             </div>
             <div className="box px-7 h-12">
               <label
-                className="upside-down"
+                className="upside-down "
                 style={{
                   fontSize: isMobile ? "10px" : "16px",
                 }}
@@ -310,6 +345,7 @@ const GamerCardRight = ({ gameData }) => {
               </label>
             </div>
           </div>
+
           <div className="flex flex-col">
             <div
               className="game-time test-size font-inter mb-3"
@@ -322,7 +358,6 @@ const GamerCardRight = ({ gameData }) => {
             </div>
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ml"]}</label>
-
               <label
                 style={{
                   fontSize: isMobile ? "10px" : "16px",
@@ -332,6 +367,7 @@ const GamerCardRight = ({ gameData }) => {
               </label>
             </div>
           </div>
+
           <div className="flex flex-col">
             <div
               className="game-time test-size font-inter mb-3"
@@ -344,7 +380,6 @@ const GamerCardRight = ({ gameData }) => {
             </div>
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
-
               <label
                 className="text-white"
                 style={{
@@ -365,7 +400,6 @@ const GamerCardRight = ({ gameData }) => {
             >
               Over/Under
             </div>
-
             <div className="box px-7 h-12">
               <label style={labelStyles}>{gameData?.["v-ou"]}</label>
               <label
@@ -403,7 +437,7 @@ const GamerCardRight = ({ gameData }) => {
                 invalidFields.includes("pick_home") ? "glowing-border" : ""
               }`}
               value={pick_home}
-              onChange={handleHomeChange}
+              onChange={(e) => setPickHome(e.target.value)}
             />
           </div>
 
@@ -419,6 +453,7 @@ const GamerCardRight = ({ gameData }) => {
               </label>
             </div>
           </div>
+
           <div
             className="flex flex-col justify-start"
             style={{
@@ -437,6 +472,7 @@ const GamerCardRight = ({ gameData }) => {
               </label>
             </div>
           </div>
+
           <div
             className="flex flex-col justify-start"
             style={{
@@ -456,7 +492,7 @@ const GamerCardRight = ({ gameData }) => {
             </div>
           </div>
           <div
-            className="flex flex-col justify-start"
+            className="flex flex-col"
             style={{
               WebkitTextStroke: "0.3px black",
               fontSize: isMobile ? "10px" : "16px",
@@ -477,6 +513,7 @@ const GamerCardRight = ({ gameData }) => {
 
         <div className="flex justify-between items-center">
           <div className="card-id"></div>
+
           <Switches
             league={gameData?.league}
             season={gameData?.seasonflag}
@@ -489,9 +526,14 @@ const GamerCardRight = ({ gameData }) => {
             glowing={invalidFields.includes("pick_switch")}
             setGameEnding={setGameEnding} // Pass the function to update gameEnding
           />
+
           <div
             className="button-pick"
-            style={{ display: "flex", columnGap: "3vh" }}
+            style={{
+              display: "flex",
+              columnGap: "3vh",
+              // border: "2px solid blue",
+            }}
           >
             <button
               className="card-btn-outline mt-4"
@@ -501,7 +543,7 @@ const GamerCardRight = ({ gameData }) => {
               onClick={handleEnterPick}
             >
               ENTER PICK
-            </button>
+            </button>{" "}
             <button
               className="card-btn mt-4"
               style={{
@@ -510,12 +552,30 @@ const GamerCardRight = ({ gameData }) => {
               onClick={handleLockIn}
             >
               LOCK IT IN
-            </button>
+            </button>{" "}
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+        contentLabel="Edit Game Data"
+      >
+        <h2>Edit Game Data</h2>
+        <form>
+          <input
+            type="text"
+            value={editedGameData?.visitor}
+            onChange={(e) =>
+              setEditedGameData({ ...editedGameData, visitor: e.target.value })
+            }
+          />
+          <button onClick={handleSaveEdit}>Save</button>
+          <button onClick={handleModalClose}>Cancel</button>
+        </form>
+      </Modal>
     </>
   );
 };
 
-export default GamerCardRight;
+export default DesktopCard;
