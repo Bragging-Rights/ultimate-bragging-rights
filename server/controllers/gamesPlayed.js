@@ -181,3 +181,43 @@ exports.getGamePlayedByUserId = async (req, res) => {
     });
   }
 };
+
+// Controller to get gamesPlayed by timestamp
+exports.getGamesPlayedByDate = async (req, res) => {
+  try {
+    // Extract date from query parameters
+    const { date } = req.query;
+
+    // Validate the date
+    if (!date) {
+      return res.status(400).json({ message: "Date is required." });
+    }
+
+    // Convert date string to Date object at the start of the day
+    const startDate = new Date(date);
+    startDate.setHours(0, 0, 0, 0);
+
+    // Create endDate as the start of the next day
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 1);
+
+    // Find games played within the given date
+    const gamesPlayed = await GamesPlayed.find({
+      createdAt: {
+        $gte: startDate,
+        $lt: endDate,
+      },
+    });
+
+    // Return the found games
+    res.status(200).json(gamesPlayed);
+  } catch (error) {
+    // Handle possible errors
+    res
+      .status(500)
+      .json({
+        message: "Error fetching games played by date",
+        error: error.message,
+      });
+  }
+};

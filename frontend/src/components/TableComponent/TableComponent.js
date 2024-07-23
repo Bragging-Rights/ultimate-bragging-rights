@@ -30,7 +30,7 @@ const TableComponent = () => {
 
   const getUser = () => {
     return getUserById(id).then((res) => {
-      console.log("User data:", res);
+      // console.log("User data:", res);
       return res.data; // Return the user data
     });
   };

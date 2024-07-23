@@ -12,4 +12,9 @@ export const addPrediction = async (data) => {
 export const getGamePlayedByUserId = async (userId) => {
   const response = await api.get(`api/user/gamesplayed/gamePlayed/${userId}`);
   return response;
-} 
+};
+
+export const getGamesPlayedByDate = async (date) => {
+  const response = await api.get(`api/games-played-by-date?date=${date}`);
+  return response;
+};

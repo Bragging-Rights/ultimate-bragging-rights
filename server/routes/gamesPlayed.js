@@ -7,6 +7,7 @@ const {
   updateGamePlayedById,
   deleteGamePlayedById,
   getGamePlayedByUserId,
+  getGamesPlayedByDate,
 } = require("../controllers/gamesPlayed");
 
 // Create a new game played record
@@ -25,5 +26,7 @@ router.put("/:id", updateGamePlayedById);
 router.delete("/:id", deleteGamePlayedById);
 
 router.get("/gamePlayed/:userId", getGamePlayedByUserId);
+
+router.get("/games-played-by-date", getGamesPlayedByDate);
 
 module.exports = router;
