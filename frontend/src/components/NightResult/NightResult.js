@@ -20,13 +20,21 @@ const NightResult = () => {
   const getResult = (userData) => {
     getGamePlayedByUserId(id)
       .then((res) => {
+        console.log("API Response:", res.data); // Log the response
         if (
           res.data &&
           res.data.data &&
           Array.isArray(res.data.data.gamesPlayed)
         ) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          yesterday.setHours(0, 0, 0, 0);
+
           const filteredData = res.data.data.gamesPlayed.filter(
-            (game) => game.league === selectedLeague
+            (game) =>
+              game.league === selectedLeague &&
+              new Date(game.createdAt).setHours(0, 0, 0, 0) ===
+                yesterday.getTime()
           );
 
           const enhancedData = filteredData.map((game) => ({
@@ -68,14 +76,20 @@ const NightResult = () => {
 
   useEffect(() => {
     if (selectedLeague === "MLB" && gamesPlayed.length > 0) {
-      const gameHeaders = gamesPlayed.map((game) => {
-        const gameData = gameDataMap[game.gameData] || {};
-        return `${gameData.visitor || "-"} vs ${gameData.home || "-"}`;
-      });
+      const gameHeaders = new Set(
+        gamesPlayed
+          .map((game) => {
+            const gameData = gameDataMap[game.gameData] || {};
+            if (gameData.visitor && gameData.home) {
+              return `${gameData.visitor} VS ${gameData.home}`;
+            }
+            return null;
+          })
+          .filter(Boolean)
+      );
 
       setFilteredHeaderOptions((prevHeaders) => [
-        ...prevHeaders,
-        ...gameHeaders,
+        ...new Set([...prevHeaders, ...gameHeaders]),
       ]);
     }
   }, [gamesPlayed, gameDataMap, selectedLeague]);
@@ -150,6 +164,19 @@ const NightResult = () => {
                     className={`position-${row.position}`}
                   >
                     <td className="text-xs font-medium text-center">
+                      {row.co || "-"}
+                    </td>
+                    <td className="text-xs font-medium text-center">
+                      {row.state || "-"}
+                    </td>
+                    <td className="text-xs font-medium text-center">
+                      {row.player || "-"}
+                    </td>
+                    <td className="text-xs font-medium text-center">
+                      {row.R || "-"}
+                    </td>
+
+                    <td className="text-xs font-medium text-center">
                       {gameData.visitor || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
@@ -171,36 +198,16 @@ const NightResult = () => {
                     <td className="text-xs font-medium text-center">
                       {new Date(row.createdAt).toLocaleTimeString()}
                     </td>
-                    <td className="text-xs font-medium text-center">
-                      {row.co || "-"}
-                    </td>
-                    <td className="text-xs font-medium text-center">
-                      {row.state || "-"}
-                    </td>
+
                     <td className="text-xs font-medium text-center">
                       {row.city || "-"}
                     </td>
-                    <td className="text-xs font-medium text-center">
-                      {row.player || "-"}
-                    </td>
-                    <td className="text-xs font-medium text-center">
-                      {row.R || "-"}
-                    </td>
-
-                    <td className="text-xs font-medium text-center">
-                      {oneSW2}
-                    </td>
-                    <td className="text-xs font-medium text-center">
-                      {twoSW2}
-                    </td>
-                    <td className="text-xs font-medium text-center">
-                      {row.Reg || "-"}
-                    </td>
-                    <td className="text-xs font-medium text-center">
-                      {row.OT || "-"}
-                    </td>
-                    <td className="text-xs font-medium text-center">
-                      {vegasOddsValue}
+                    <td className="text-xs font-medium text-center">{"-"}</td>
+                    <td
+                      className="text-xs font-medium text-center"
+                      style={{ color: "#ffff00" }}
+                    >
+                      {row.pick_visitor || "-"} - {row.pick_home || "-"}
                     </td>
                   </tr>
                 );
