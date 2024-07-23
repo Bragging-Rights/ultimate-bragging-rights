@@ -2,7 +2,20 @@ import React, { useState, useEffect } from "react";
 import TimeFormat from "../../services/TimeFormat";
 import { useMediaQuery } from "@material-ui/core";
 import "./GameCard.css";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Collapse,
+  IconButton,
+} from "@mui/material";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import Switches from "../Switches.js";
+import MobileSwitches from "../Switchmobile.js";
 import Modal from "react-modal";
 import { addPrediction } from "../../Apis/predictions";
 import displayToast from "../Alert/Alert";
@@ -12,6 +25,7 @@ import Swal from "sweetalert2";
 
 const MobileCard = ({ gameData }) => {
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [open, setOpen] = useState(false);
 
   const [Pick_Ei, setPick_Ei] = useState(false);
 
@@ -290,269 +304,137 @@ const MobileCard = ({ gameData }) => {
 
   return (
     <>
-      <div className="game-card grid col-span-2 xl:col-span-1">
-        <div
-          className="flex justify-between"
-          // style={{ border: "2px solid red" }}
-        >
-          <div className="flex flex-col">
-            <div
-              className="game-time test-size"
-              style={{
-                display: "flex",
-                WebkitTextStroke: "0.3px black",
-                textStroke: "0.3px black",
-                textShadow: "4px 7px 7px rgba(255, 0, 0, 0.25)",
-                fontSize: isMobile ? "9px" : "16px",
-              }}
-            >
-              {TimeFormat(gameData?.time)}
-            </div>
-            <div className="">{gameData.gamedate}</div>
-            <input
-              type="text"
-              className={`score-input card-input mb-3  ${
-                invalidFields.includes("pick_visitor") ? "glowing-border" : ""
-              }`}
-              value={pick_visitor}
-              onChange={(e) => setPickVisitor(e.target.value)}
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <div
-              className="game-time test-size font-inter mb-3"
-              style={{
-                WebkitTextStroke: "0.3px black",
-                fontSize: isMobile ? "10px" : "16px",
-              }}
-            >
-              Team
-            </div>
-            <div className="box px-7 h-12">
-              <label
-                className="upside-down "
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ fontSize: "0.90rem", textAlign: "center" }}>
+                {TimeFormat(gameData?.time)}
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.90rem", textAlign: "center" }}>
+                Team
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.90rem", textAlign: "center" }}>
+                Money Line
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.90rem", textAlign: "center" }}>
+                Spread
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.90rem", textAlign: "center" }}>
+                Over/Under
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.90rem", textAlign: "center" }}>
+                Show More
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell sx={{ fontSize: "0.80rem" }}>
+                <TextField>
+                  <Switches
+                    league={gameData?.league}
+                    season={gameData?.seasonflag}
+                    setPick_num_ot={setPick_num_ot}
+                    setPick_so={setPick_so}
+                    setPick_ot={setPick_ot}
+                    setPick_Reg={setPick_Reg}
+                    setPick_Ei={setPick_Ei}
+                    uniqueId={gameData._id}
+                    glowing={invalidFields.includes("pick_switch")}
+                    setGameEnding={setGameEnding} // Pass the function to update gameEnding
+                  />
+                </TextField>
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.80rem" }}>
                 {gameData?.visitor}
-              </label>
-            </div>
-          </div>
-
-          <div className="flex flex-col">
-            <div
-              className="game-time test-size font-inter mb-3"
-              style={{
-                WebkitTextStroke: "0.3px black",
-                fontSize: isMobile ? "10px" : "16px",
-              }}
-            >
-              Money Line
-            </div>
-            <div className="box px-7 h-12">
-              <label style={labelStyles}>{gameData?.["v-ml"]}</label>
-              <label
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.80rem" }}>
                 {gameData?.["v-ml-points"]} Pts
-              </label>
-            </div>
-          </div>
-
-          <div className="flex flex-col">
-            <div
-              className="game-time test-size font-inter mb-3"
-              style={{
-                WebkitTextStroke: "0.3px black",
-                fontSize: isMobile ? "10px" : "16px",
-              }}
-            >
-              Spread
-            </div>
-            <div className="box px-7 h-12">
-              <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
-              <label
-                className="text-white"
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.80rem" }}>
                 {gameData?.["v-sprd-points"]} Pts
-              </label>
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <div
-              className="game-time test-size font-inter mb-3"
-              style={{
-                WebkitTextStroke: "0.3px black",
-                fontSize: isMobile ? "10px" : "16px",
-              }}
-            >
-              Over/Under
-            </div>
-            <div className="box px-7 h-12">
-              <label style={labelStyles}>{gameData?.["v-ou"]}</label>
-              <label
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
+              </TableCell>
+              <TableCell sx={{ fontSize: "0.80rem" }}>
                 {gameData?.["v-ou-points"]} Pts
-              </label>
-            </div>
-          </div>
-        </div>
+              </TableCell>
+              <TableCell>
+                <IconButton
+                  aria-label="expand row"
+                  size="small"
+                  onClick={() => setOpen(!open)}
+                  sx={{ ml: 1 }}
+                >
+                  {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                </IconButton>
+              </TableCell>
+            </TableRow>
 
-        <div className="flex justify-between gap-1">
-          <div
-            className="line"
-            style={{
-              width: "10%",
-            }}
-          ></div>
-          <div
-            className="line"
-            style={{
-              width: "80%",
-            }}
-          ></div>
-        </div>
+            <TableRow>
+              <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell sx={{ fontSize: "1rem" }} colSpan={3}>
+                          {isMobile ? (
+                            <MobileSwitches
+                              league={gameData?.league}
+                              season={gameData?.seasonflag}
+                              setPick_num_ot={setPick_num_ot}
+                              setPick_so={setPick_so}
+                              setPick_ot={setPick_ot}
+                              setPick_Reg={setPick_Reg}
+                              setPick_Ei={setPick_Ei}
+                              uniqueId={gameData._id}
+                              glowing={invalidFields.includes("pick_switch")}
+                              setGameEnding={setGameEnding} // Pass the function to update gameEnding
+                            />
+                          ) : (
+                            <Switches
+                              league={gameData?.league}
+                              season={gameData?.seasonflag}
+                              setPick_num_ot={setPick_num_ot}
+                              setPick_so={setPick_so}
+                              setPick_ot={setPick_ot}
+                              setPick_Reg={setPick_Reg}
+                              setPick_Ei={setPick_Ei}
+                              uniqueId={gameData._id}
+                              glowing={invalidFields.includes("pick_switch")}
+                              setGameEnding={setGameEnding} // Pass the function to update gameEnding
+                            />
+                          )}
+                        </TableCell>
+                        <TableCell sx={{ fontSize: "0.80rem" }}>
+                          <button
+                            style={{
+                              fontSize: isMobile ? "10px" : "16px",
+                            }}
+                            onClick={handleEnterPick}
+                          >
+                            ENTER PICK
+                          </button>{" "}
+                        </TableCell>
+                        <TableCell sx={{ fontSize: "0.80rem" }}>
+                          <button
+                            style={{
+                              fontSize: isMobile ? "10px" : "16px",
+                            }}
+                            onClick={handleLockIn}
+                          >
+                            LOCK IT IN
+                          </button>{" "}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Collapse>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-        <div
-          className="flex justify-between"
-        >
-          <div className="flex flex-col" style={{ paddingRight: "6%" }}>
-            <input
-              type="text"
-              id="pick-home"
-              className={`score-input card-input mb-3 mt-auto ${
-                invalidFields.includes("pick_home") ? "glowing-border" : ""
-              }`}
-              value={pick_home}
-              onChange={(e) => setPickHome(e.target.value)}
-            />
-          </div>
-
-          <div className="flex flex-col justify-start">
-            <div className="box px-7 h-12">
-              <label
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-                className="upside-down"
-              >
-                {gameData?.home}
-              </label>
-            </div>
-          </div>
-
-          <div
-            className="flex flex-col justify-start"
-            style={{
-              WebkitTextStroke: "0.3px black",
-              fontSize: isMobile ? "10px" : "16px",
-            }}
-          >
-            <div className="box px-7 h-12">
-              <label style={labelStyles}>{gameData?.["h-ml"]}</label>
-              <label
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
-                {gameData?.["h-ml-points"]} Pts
-              </label>
-            </div>
-          </div>
-
-          <div
-            className="flex flex-col justify-start"
-            style={{
-              WebkitTextStroke: "0.3px black",
-              fontSize: isMobile ? "10px" : "16px",
-            }}
-          >
-            <div className="box px-7 h-12">
-              <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
-              <label
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
-                {gameData?.["h-sprd-points"]} Pts
-              </label>
-            </div>
-          </div>
-          <div
-            className="flex flex-col"
-            style={{
-              WebkitTextStroke: "0.3px black",
-              fontSize: isMobile ? "10px" : "16px",
-            }}
-          >
-            <div className="box px-7 h-12">
-              <label style={labelStyles}>{gameData?.["h-ou"]}</label>
-              <label
-                style={{
-                  fontSize: isMobile ? "10px" : "16px",
-                }}
-              >
-                {gameData?.["h-ou-points"]} Pts
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="card-id"></div>
-
-          <Switches
-            league={gameData?.league}
-            season={gameData?.seasonflag}
-            setPick_num_ot={setPick_num_ot}
-            setPick_so={setPick_so}
-            setPick_ot={setPick_ot}
-            setPick_Reg={setPick_Reg}
-            setPick_Ei={setPick_Ei}
-            uniqueId={gameData._id}
-            glowing={invalidFields.includes("pick_switch")}
-            setGameEnding={setGameEnding} // Pass the function to update gameEnding
-          />
-
-          <div
-            className="button-pick"
-            style={{
-              display: "flex",
-              columnGap: "3vh",
-              // border: "2px solid blue",
-            }}
-          >
-            <button
-              className="card-btn-outline mt-4"
-              style={{
-                fontSize: isMobile ? "10px" : "16px",
-              }}
-              onClick={handleEnterPick}
-            >
-              ENTER PICK
-            </button>{" "}
-            <button
-              className="card-btn mt-4"
-              style={{
-                fontSize: isMobile ? "10px" : "16px",
-              }}
-              onClick={handleLockIn}
-            >
-              LOCK IT IN
-            </button>{" "}
-          </div>
-        </div>
-      </div>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={handleModalClose}

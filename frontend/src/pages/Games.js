@@ -151,7 +151,8 @@ const Games = () => {
               {index % 2 === 0 ? (
                 <GameCard gameData={game} isAdmin={isAdmin} />
               ) : (
-                <GamerCardRight gameData={game} />
+                ''
+                // <GamerCardRight gameData={game} />
               )}
             </Grid>
           ))

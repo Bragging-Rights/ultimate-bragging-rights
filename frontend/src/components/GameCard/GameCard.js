@@ -1,4 +1,4 @@
-// MainComponent.js
+
 import React from 'react';
 import { useMediaQuery } from '@mui/material';
 import MobileCard from './MobileCard';
