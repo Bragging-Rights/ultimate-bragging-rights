@@ -165,7 +165,7 @@ const NightResult = () => {
                       {row.player || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {row.R || "-"}
+                      {row.BR || "-"}
                     </td>
 
                     <td className="text-xs font-medium text-center">
