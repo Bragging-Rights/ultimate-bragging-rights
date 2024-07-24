@@ -131,7 +131,7 @@ const MobileSwitches = (props) => {
               checked={regChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            <label className="card-label-mlb">Reg</label>
+            {/* <label className="card-label-mlb">Reg</label> */}
           </div>
           <div className="flex  gap-1 items-center">
             <input
@@ -141,7 +141,7 @@ const MobileSwitches = (props) => {
               checked={eiChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            <label className="card-label-mlb">E/I</label>
+            {/* <label className="card-label-mlb">E/I</label> */}
           </div>
 
           <select

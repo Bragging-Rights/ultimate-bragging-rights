@@ -308,12 +308,7 @@ const DesktopCard = ({ gameData }) => {
             >
               {TimeFormat(gameData?.time)}
             </div>
-            <div
-              className="game-date"
-            >
-              {gameData.gamedate}
-            </div>{" "}
-            &nbsp;
+            <div className="game-date">{gameData.gamedate}</div> &nbsp;
             <input
               type="text"
               className={`score-input card-input mb-3  ${
