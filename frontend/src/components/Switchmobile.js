@@ -123,25 +123,27 @@ const MobileSwitches = (props) => {
 
       {league === "MLB" && (
         <>
-          <div className="flex  gap-1 items-center">
+          <div style={{margin : '0'}} className="flex  gap-1 items-center">
             <input
+            style={{margin : '0'}}
               type="radio"
               name={`gameEnding-${uniqueId}`}
               onClick={() => handleRadioChange("Reg")}
               checked={regChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            {/* <label className="card-label-mlb">Reg</label> */}
+            <label>Reg</label>
           </div>
-          <div className="flex  gap-1 items-center">
+          <div style={{margin : '0'}} className="flex  gap-1 items-center">
             <input
+            style={{margin : '0'}}
               type="radio"
               name={`gameEnding-${uniqueId}`}
               onClick={() => handleRadioChange("E/I")}
               checked={eiChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            {/* <label className="card-label-mlb">E/I</label> */}
+            <label >E/I</label>
           </div>
 
           <select
