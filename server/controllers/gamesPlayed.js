@@ -186,7 +186,8 @@ exports.getGamePlayedByUserId = async (req, res) => {
 exports.getGamesPlayedByDate = async (req, res) => {
   try {
     // Extract date from query parameters
-    const { date } = req.query;
+    const { date } = req.params; // Changed from req.params to req.query
+    console.log("date:", date);
 
     // Validate the date
     if (!date) {
@@ -195,11 +196,11 @@ exports.getGamesPlayedByDate = async (req, res) => {
 
     // Convert date string to Date object at the start of the day
     const startDate = new Date(date);
-    startDate.setHours(0, 0, 0, 0);
+    startDate.setUTCHours(0, 0, 0, 0); // Set to start of the day in UTC
 
     // Create endDate as the start of the next day
     const endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 1);
+    endDate.setUTCDate(startDate.getUTCDate() + 1);
 
     // Find games played within the given date
     const gamesPlayed = await GamesPlayed.find({
@@ -213,11 +214,9 @@ exports.getGamesPlayedByDate = async (req, res) => {
     res.status(200).json(gamesPlayed);
   } catch (error) {
     // Handle possible errors
-    res
-      .status(500)
-      .json({
-        message: "Error fetching games played by date",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching games played by date",
+      error: error.message,
+    });
   }
 };

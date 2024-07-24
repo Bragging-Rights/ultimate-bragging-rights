@@ -15,6 +15,8 @@ export const getGamePlayedByUserId = async (userId) => {
 };
 
 export const getGamesPlayedByDate = async (date) => {
-  const response = await api.get(`api/games-played-by-date?date=${date}`);
+  const response = await api.get(
+    `api/user/gamesplayed/games-played-by-date/${date}`
+  );
   return response;
 };

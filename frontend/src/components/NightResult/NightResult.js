@@ -62,6 +62,7 @@ const NightResult = () => {
     }
 
     getUser().then((userData) => {
+      console.log("getting user in night result", userData);
       getResult(userData);
     });
   }, [selectedLeague]);

@@ -27,6 +27,6 @@ router.delete("/:id", deleteGamePlayedById);
 
 router.get("/gamePlayed/:userId", getGamePlayedByUserId);
 
-router.get("/games-played-by-date", getGamesPlayedByDate);
+router.get("/games-played-by-date/:date", getGamesPlayedByDate);
 
 module.exports = router;
