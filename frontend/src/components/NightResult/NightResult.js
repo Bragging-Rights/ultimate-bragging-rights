@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
-import { getGamePlayedByUserId } from "../../Apis/predictions";
-
+import { getGamesPlayedByDate } from "../../Apis/predictions"; // Updated import
 import { headerOptions } from "./data"; // Adjust the path as necessary
 import "./NightResult.css";
 
@@ -18,23 +17,16 @@ const NightResult = () => {
   };
 
   const getResult = (userData) => {
-    getGamePlayedByUserId(id)
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const formattedDate = yesterday.toISOString().split("T")[0];
+
+    getGamesPlayedByDate(formattedDate)
       .then((res) => {
         console.log("API Response:", res.data); // Log the response
-        if (
-          res.data &&
-          res.data.data &&
-          Array.isArray(res.data.data.gamesPlayed)
-        ) {
-          const yesterday = new Date();
-          yesterday.setDate(yesterday.getDate() - 1);
-          yesterday.setHours(0, 0, 0, 0);
-
-          const filteredData = res.data.data.gamesPlayed.filter(
-            (game) =>
-              game.league === selectedLeague &&
-              new Date(game.createdAt).setHours(0, 0, 0, 0) ===
-                yesterday.getTime()
+        if (res.data && Array.isArray(res.data)) {
+          const filteredData = res.data.filter(
+            (game) => game.league === selectedLeague
           );
 
           const enhancedData = filteredData.map((game) => ({
@@ -49,7 +41,7 @@ const NightResult = () => {
 
           setGamesPlayed(enhancedData);
 
-          const gameDataArray = res.data.data.gameData || [];
+          const gameDataArray = res.data.data || [];
           const gameDataLookup = {};
           gameDataArray.forEach((game) => {
             gameDataLookup[game._id] = game;
