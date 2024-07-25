@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./MobileSwitch.css"
+import "./MobileSwitch.css";
 
 const MobileSwitches = (props) => {
   const {
@@ -123,36 +123,58 @@ const MobileSwitches = (props) => {
 
       {league === "MLB" && (
         <>
-          <div style={{margin : '0'}} className="flex  gap-1 items-center">
+          <div
+            style={{
+              margin: "10px",
+              // display: "flex",
+              gap: "1px",
+              // alignItems: "center",
+              fontSize: "0.60rem",
+            }}
+          >
             <input
-            style={{margin : '0'}}
+              style={{ margin: "0", padding: "0" , fontSize: "0.60rem" }}
               type="radio"
               name={`gameEnding-${uniqueId}`}
               onClick={() => handleRadioChange("Reg")}
               checked={regChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            <label>Reg</label>
+            <label style={{ margin: "0"   , fontSize: "0.60rem"}}>Reg</label>
           </div>
-          <div style={{margin : '0'}} className="flex  gap-1 items-center">
+          <div
+            style={{
+              marginTop: "10px",
+              marginLeft: "-10px",
+              // display: "flex",
+              gap: "1px",
+               fontSize: "0.60rem",
+              // alignItems: "center"
+            }}
+          >
             <input
-            style={{margin : '0'}}
+              style={{ margin: "0", padding: "0", fontSize: "0.60rem" }}
               type="radio"
               name={`gameEnding-${uniqueId}`}
               onClick={() => handleRadioChange("E/I")}
               checked={eiChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
-            <label >E/I</label>
+            <label style={{ margin: "0" , fontSize: "0.60rem"  }}>E/I</label>
           </div>
 
           <select
-            className=""
+            style={{
+              height : '25px',
+              marginLeft: "-10px",
+              marginTop: "15px",
+              fontSize: "0.60rem",
+            }}
             onChange={(e) => setPick_num_ot(e.target.value)}
             disabled={!eiChecked}
           >
             {Array.from({ length: 11 }, (_, i) => (
-              <option style={{fontSize: "13px"}} key={i} value={i}>
+              <option key={i} value={i}>
                 {i}
               </option>
             ))}
