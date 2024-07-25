@@ -10,7 +10,7 @@ const NightResult = () => {
   const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
   const [gamesPlayed, setGamesPlayed] = useState([]);
   const [gameDataMap, setGameDataMap] = useState({});
-  // const id = localStorage.getItem("_id"); ignore for now
+  const id = localStorage.getItem("_id"); 
 
   const getUser = () => {
     return getUserById(id).then((res) => res.data);
