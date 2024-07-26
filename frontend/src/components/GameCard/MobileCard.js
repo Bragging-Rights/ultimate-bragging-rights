@@ -363,7 +363,7 @@ const MobileCard = ({ gameData }) => {
                   aria-label="expand row"
                   size="small"
                   onClick={() => setOpen(!open)}
-                  sx={{ ml: 0  , fontSize: "0.50rem" , color : 'lightblue' , marginLeft : '3.5rem'}}
+                  sx={{ ml: 0  , fontSize: "0.50rem" , color : 'lightblue' , marginLeft : '2.5rem'}}
                 >
                   {open ? 'close' : 'More odds'}
                 </IconButton>

@@ -142,6 +142,8 @@ const Games = () => {
         justifyContent="flex-start"
         sx={{
           width: isMobile ? "97%" : "110%",
+          marginBottom : '0%',
+          marginTop : '0%'
           // marginLeft: isMobile ? "20px" : "-60px",
         }}
       >
