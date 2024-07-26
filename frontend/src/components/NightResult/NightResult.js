@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
-import { getGamesPlayedByDate } from "../../Apis/predictions"; // Updated import
-import { headerOptions } from "./data"; // Adjust the path as necessary
+import { getGamesPlayedByDate } from "../../Apis/predictions";
+import { headerOptions } from "./data";
 import "./NightResult.css";
 
 const NightResult = () => {
@@ -10,43 +10,44 @@ const NightResult = () => {
   const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
   const [gamesPlayed, setGamesPlayed] = useState([]);
   const [gameDataMap, setGameDataMap] = useState({});
-  const id = localStorage.getItem("_id"); 
+  const [userStatsMap, setUserStatsMap] = useState({});
 
-  const getUser = () => {
-    return getUserById(id).then((res) => res.data);
+  const getUser = (userId) => {
+    return getUserById(userId).then((res) => res.data);
   };
 
-  const getResult = (userData) => {
+  const getResult = () => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const formattedDate = yesterday.toISOString().split("T")[0];
 
     getGamesPlayedByDate(formattedDate)
-      .then((res) => {
-        console.log("API Response:", res.data); // Log the response
+      .then(async (res) => {
+        console.log("API Response:", res.data);
         if (res.data && Array.isArray(res.data)) {
           const filteredData = res.data.filter(
             (game) => game.league === selectedLeague
           );
 
-          const enhancedData = filteredData.map((game) => ({
-            ...game,
-            co: userData.country || "-",
-            state: userData.state || "-",
-            city: userData.city || "-",
-            player: userData.leagues[0]?.username || "-",
-            BR: game.result?.perfectScore || "-",
-            vegasOdds: game.result?.vegasOdds || {},
-          }));
+          const userPromises = filteredData.map((game) =>
+            getUser(game.userId).then((userData) => ({
+              ...game,
+              userData,
+            }))
+          );
+
+          const enhancedData = await Promise.all(userPromises);
 
           setGamesPlayed(enhancedData);
 
-          const gameDataArray = res.data.data || [];
           const gameDataLookup = {};
-          gameDataArray.forEach((game) => {
+          enhancedData.forEach((game) => {
             gameDataLookup[game._id] = game;
           });
           setGameDataMap(gameDataLookup);
+
+          const userStats = calculateUserStats(enhancedData);
+          setUserStatsMap(userStats);
         }
       })
       .catch((error) => {
@@ -61,10 +62,7 @@ const NightResult = () => {
       setFilteredHeaderOptions([]);
     }
 
-    getUser().then((userData) => {
-      console.log("getting user in night result", userData);
-      getResult(userData);
-    });
+    getResult();
   }, [selectedLeague]);
 
   useEffect(() => {
@@ -87,6 +85,45 @@ const NightResult = () => {
     }
   }, [gamesPlayed, gameDataMap, selectedLeague]);
 
+  const calculateUserStats = (games) => {
+    const statsMap = {};
+
+    games.forEach((game) => {
+      const userId = game.userId;
+
+      if (!statsMap[userId]) {
+        statsMap[userId] = {
+          gamesPlayed: 0,
+          wins: 0,
+          losses: 0,
+          points: 0,
+        };
+      }
+
+      statsMap[userId].gamesPlayed += 1;
+      statsMap[userId].points += game.BR ? parseFloat(game.BR) : 0;
+
+      if (game.BR > 0) {
+        statsMap[userId].wins += 1;
+      } else {
+        statsMap[userId].losses += 1;
+      }
+    });
+
+    Object.keys(statsMap).forEach((userId) => {
+      const userStats = statsMap[userId];
+      userStats.winPercentage = (
+        (userStats.wins / userStats.gamesPlayed) *
+        100
+      ).toFixed(2);
+      userStats.avgPointsPerGame = (
+        userStats.points / userStats.gamesPlayed
+      ).toFixed(2);
+    });
+
+    return statsMap;
+  };
+
   return (
     <div className="table-container">
       <div className="night-result-container">
@@ -106,102 +143,43 @@ const NightResult = () => {
           </thead>
           <tbody style={{ fontSize: "0.8rem" }}>
             {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
-              gamesPlayed.map((row, index) => {
-                const gameData = gameDataMap[row.gameData] || {};
-
-                const tp =
-                  parseFloat(gameData["h-ml-points"] || 0) +
-                  parseFloat(gameData["v-ml-points"] || 0) +
-                  (parseFloat(gameData["h-ou-points"] || 0) +
-                    parseFloat(gameData["v-ou-points"] || 0)) +
-                  (parseFloat(gameData["h-sprd-points"] || 0) +
-                    parseFloat(gameData["v-sprd-points"] || 0));
-
-                const oneS = (
-                  (row.result?.accuracyPoints?.home?.p1s || 0) +
-                  (row.result?.accuracyPoints?.visitor?.p1s || 0)
-                ).toFixed(2);
-
-                const oneSW2 = (
-                  (row.result?.accuracyPoints?.home?.p1s2p || 0) +
-                  (row.result?.accuracyPoints?.visitor?.p1s2p || 0)
-                ).toFixed(2);
-
-                const twoSW2 = (
-                  (row.result?.accuracyPoints?.home?.p2s2p || 0) +
-                  (row.result?.accuracyPoints?.visitor?.p2s2p || 0)
-                ).toFixed(2);
-
-                const vegasOddsValue = row.vegasOdds?.pickingFavorite || "-";
-
-                const ml = parseFloat(
-                  row.result?.vegasOdds?.pickingFavorite ||
-                    row.result?.vegasOdds?.pickingUnderdog ||
-                    0
-                ).toFixed(2);
-                const ou = parseFloat(
-                  row.result?.vegasOdds?.pickingOver ||
-                    row.result?.vegasOdds?.pickingUnder ||
-                    0
-                ).toFixed(2);
-                const spread = parseFloat(
-                  row.result?.vegasOdds?.pickingSpread?.vSpreadPoints ||
-                    row.result?.vegasOdds?.pickingSpread?.hSpreadPoints ||
-                    0
-                ).toFixed(2);
+              Object.keys(userStatsMap).map((userId, index) => {
+                const userStats = userStatsMap[userId];
+                const userData = gamesPlayed.find(
+                  (game) => game.userId === userId
+                ).userData;
 
                 return (
-                  <tr
-                    key={index}
-                    style={{ backgroundColor: row.backgroundColor }}
-                    className={`position-${row.position}`}
-                  >
+                  <tr key={index} className={`position-${index + 1}`}>
                     <td className="text-xs font-medium text-center">
-                      {row.co || "-"}
+                      {userData.country || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {row.state || "-"}
+                      {userData.state || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {row.player || "-"}
+                      {userData.leagues[0]?.username || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {row.BR || "-"}
-                    </td>
-
-                    <td className="text-xs font-medium text-center">
-                      {gameData.visitor || "-"}
+                      {index + 1}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {gameData.home || "-"}
-                    </td>
-                    <td
-                      className="text-xs font-medium text-center"
-                      style={{ color: "#ffff00" }}
-                    >
-                      {gameData.vFinalScore || "-"} -{" "}
-                      {gameData.hFinalScore || "-"}
-                    </td>
-                    <td
-                      className="text-xs font-medium text-center"
-                      style={{ color: "#ffff00" }}
-                    >
-                      {row.pick_visitor || "-"} - {row.pick_home || "-"}
+                      {userStats.winPercentage}%
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {new Date(row.createdAt).toLocaleTimeString()}
+                      {userStats.gamesPlayed}
                     </td>
-
                     <td className="text-xs font-medium text-center">
-                      {row.city || "-"}
+                      {userStats.wins}
+                    </td>
+                    <td className="text-xs font-medium text-center">
+                      {userStats.losses}
+                    </td>
+                    <td className="text-xs font-medium text-center">{"0"}</td>
+                    <td className="text-xs font-medium text-center">
+                      {userStats.avgPointsPerGame}
                     </td>
                     <td className="text-xs font-medium text-center">{"-"}</td>
-                    <td
-                      className="text-xs font-medium text-center"
-                      style={{ color: "#ffff00" }}
-                    >
-                      {row.pick_visitor || "-"} - {row.pick_home || "-"}
-                    </td>
                   </tr>
                 );
               })
