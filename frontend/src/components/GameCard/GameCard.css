@@ -277,7 +277,7 @@
   width: auto;
   font-size: 14px;
 }
-
+.visitor,
 .box label {
   background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
   background-clip: text;

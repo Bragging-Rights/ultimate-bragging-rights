@@ -31,7 +31,7 @@ const MobileCard = ({ gameData }) => {
 
   const labelStyles = {
     borderBottom: "2px solid #BE8200",
-    width: "70%",
+    width: "60%",
     textAlign: "center",
   };
 
@@ -307,14 +307,22 @@ const MobileCard = ({ gameData }) => {
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow style={{paddingBottom : '-10px'}} >
+            <TableRow style={{ paddingBottom: "-10px" }}>
               <TableCell sx={{ fontSize: "0.60rem", textAlign: "center" }}>
                 <label>{TimeFormat(gameData?.time)} </label>
-                
               </TableCell>
 
-              <TableCell sx={{ fontSize: "0.60rem", textAlign: "center" , margin : '0' , padding : '0' }}>
-                <label >{gameData?.visitor}</label>
+              <TableCell
+                sx={{
+                  fontSize: "0.60rem",
+                  textAlign: "center",
+                  margin: "0",
+                  padding: "0",
+                  fontWeight : 'bold',
+                  lineHeight : '1.5'
+                }}
+              >
+                <label className="visitor">{gameData?.visitor}</label>
                 <input
                   type="text"
                   style={{
@@ -330,7 +338,9 @@ const MobileCard = ({ gameData }) => {
                   onChange={(e) => setPickVisitor(e.target.value)}
                 />
               </TableCell>
-              <TableCell sx={{ fontSize: "0.60rem", margin : '0' , padding : '0' }} >
+              <TableCell
+                sx={{ fontSize: "0.60rem", margin: "0", padding: "0" }}
+              >
                 {isMobile ? (
                   <MobileSwitches
                     league={gameData?.league}
@@ -357,19 +367,33 @@ const MobileCard = ({ gameData }) => {
                     glowing={invalidFields.includes("pick_switch")}
                     setGameEnding={setGameEnding}
                   />
-                  
                 )}
                 <IconButton
                   aria-label="expand row"
                   size="small"
                   onClick={() => setOpen(!open)}
-                  sx={{ ml: 0  , fontSize: "0.50rem" , color : 'lightblue' , marginLeft : '2.5rem'}}
+                  sx={{
+                    fontSize: "0.50rem",
+                    color: "lightblue",
+                    marginLeft: "2.5rem",
+                    marginTop : "15px",
+                    
+                  }}
                 >
-                  {open ? 'close' : 'More odds'}
+                  {open ? "close" : "More odds"}
                 </IconButton>
               </TableCell>
-              <TableCell sx={{ fontSize: "0.60rem", textAlign: "center"  , margin : '0' , padding : '0' }}>
-                <label>{gameData?.home}</label>
+              <TableCell
+                sx={{
+                  fontSize: "0.60rem",
+                  textAlign: "center",
+                  margin: "0",
+                  padding: "0",
+                  fontWeight : 'bold',
+                  lineHeight : '1.5'
+                }}
+              >
+                <label className="visitor">{gameData?.home}</label>
 
                 <input
                   type="text"
@@ -387,28 +411,25 @@ const MobileCard = ({ gameData }) => {
 
               <TableCell sx={{ fontSize: "0.60rem", textAlign: "center" }}>
                 <button
-              className="card-btn-outline mt-1"
+                  className="card-btn-outline mt-1"
                   style={{ fontSize: isMobile ? "10px" : "16px" }}
                   onClick={handleEnterPick}
                 >
                   ENTER PICK
                 </button>
                 <button
-              className="card-btn-outline mt-1"
+                  className="card-btn-outline mt-1"
                   style={{ fontSize: isMobile ? "10px" : "16px" }}
                   onClick={handleLockIn}
                 >
                   LOCK IT IN
                 </button>
               </TableCell>
-              
             </TableRow>
           </TableHead>
           <TableBody>
-            
-
             <TableRow>
-              <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+              <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                   <Table>
                     <TableBody>
@@ -416,52 +437,49 @@ const MobileCard = ({ gameData }) => {
                         <TableCell
                           sx={{ fontSize: "0.60rem", textAlign: "center" }}
                         >
-                          <label style={labelStyles}>
-                            {gameData?.["v-ml"]}
-                          </label>
-                          <br/>
+                          <label style={labelStyles}>{gameData?.["v-ml"]}</label>
+                          <br />
                           <label>{gameData?.["v-ml-points"]} Pts</label>
                         </TableCell>
                         <TableCell
-                          sx={{ fontSize: "0.60rem",fontWeight : 'bold', textAlign: "center" }}
+                          sx={{
+                            fontSize: "0.60rem",
+                            fontWeight: "bold",
+                            textAlign: "center",
+                          }}
                         >
                           <label>Money Line</label>
                         </TableCell>
                         <TableCell
                           sx={{ fontSize: "0.60rem", textAlign: "center" }}
                         >
-                          <label style={labelStyles}>
-                            {gameData?.["h-ml"]}
-                          </label>
-                          <br/>
-
+                          <label style={labelStyles}>{gameData?.["h-ml"]}</label>
+                          <br />
                           <label>{gameData?.["h-ml-points"]} Pts</label>
-                        </TableCell>  
+                        </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell
                           sx={{ fontSize: "0.60rem", textAlign: "center" }}
                         >
-                          <label style={labelStyles}>
-                            {gameData?.["v-sprd"]}
-                          </label>
-                          <br/>
-
-                          <label> {gameData?.["v-sprd-points"]} Pts</label>
+                          <label style={labelStyles}>{gameData?.["v-sprd"]}</label>
+                          <br />
+                          <label>{gameData?.["v-sprd-points"]} Pts</label>
                         </TableCell>
                         <TableCell
-                          sx={{ fontSize: "0.60rem", fontWeight : 'bold', textAlign: "center" }}
+                          sx={{
+                            fontSize: "0.60rem",
+                            fontWeight: "bold",
+                            textAlign: "center",
+                          }}
                         >
                           <label>Spread</label>
                         </TableCell>
                         <TableCell
                           sx={{ fontSize: "0.60rem", textAlign: "center" }}
                         >
-                          <label style={labelStyles}>
-                            {gameData?.["h-sprd"]}
-                          </label>
-                          <br/>
-
+                          <label style={labelStyles}>{gameData?.["h-sprd"]}</label>
+                          <br />
                           <label>{gameData?.["h-sprd-points"]} Pts</label>
                         </TableCell>
                       </TableRow>
@@ -469,31 +487,26 @@ const MobileCard = ({ gameData }) => {
                         <TableCell
                           sx={{ fontSize: "0.60rem", textAlign: "center" }}
                         >
-                          <label style={labelStyles}>
-                            {gameData?.["v-ou"]}
-                          </label>
-                          <br/>
-
+                          <label style={labelStyles}>{gameData?.["v-ou"]}</label>
+                          <br />
                           <label>{gameData?.["v-ou-points"]} Pts</label>
                         </TableCell>
                         <TableCell
-                          sx={{ fontSize: "0.60rem", fontWeight : 'bold', textAlign: "center" }}
+                          sx={{
+                            fontSize: "0.60rem",
+                            fontWeight: "bold",
+                            textAlign: "center",
+                          }}
                         >
                           <label>Over/Under</label>
-
                         </TableCell>
                         <TableCell
                           sx={{ fontSize: "0.60rem", textAlign: "center" }}
                         >
-                          <label style={labelStyles}>
-                            {gameData?.["h-ou"]}
-                          </label>
-                          <br/>
-
+                          <label style={labelStyles}>{gameData?.["h-ou"]}</label>
+                          <br />
                           <label>{gameData?.["h-ou-points"]} Pts</label>
                         </TableCell>
-                        <TableCell sx={{ textAlign: "center" }}></TableCell>
-                        <TableCell sx={{ textAlign: "center" }}></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>

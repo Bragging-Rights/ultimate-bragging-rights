@@ -126,7 +126,7 @@ const MobileSwitches = (props) => {
           <div
             style={{
               margin: "10px",
-              marginTop: "20px",
+              marginTop: "30px",
 
               // display: "flex",
               // gap: "1px",
@@ -146,7 +146,7 @@ const MobileSwitches = (props) => {
           </div>
           <div
             style={{
-              marginTop: "20px",
+              marginTop: "30px",
 
               marginLeft: "-50px",
               // display: "flex",
@@ -170,7 +170,8 @@ const MobileSwitches = (props) => {
             style={{
               height : '25px',
               marginLeft: "-40px",
-              marginTop: "20px",
+              marginRight: "4px",
+              marginTop: "30px",
               fontSize: "0.60rem",
             }}
             onChange={(e) => setPick_num_ot(e.target.value)}
