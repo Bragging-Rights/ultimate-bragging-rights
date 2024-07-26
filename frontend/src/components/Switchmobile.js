@@ -126,8 +126,10 @@ const MobileSwitches = (props) => {
           <div
             style={{
               margin: "10px",
+              marginTop: "20px",
+
               // display: "flex",
-              gap: "1px",
+              // gap: "1px",
               // alignItems: "center",
               fontSize: "0.60rem",
             }}
@@ -144,8 +146,9 @@ const MobileSwitches = (props) => {
           </div>
           <div
             style={{
-              marginTop: "10px",
-              marginLeft: "-10px",
+              marginTop: "20px",
+
+              marginLeft: "-50px",
               // display: "flex",
               gap: "1px",
                fontSize: "0.60rem",
@@ -166,8 +169,8 @@ const MobileSwitches = (props) => {
           <select
             style={{
               height : '25px',
-              marginLeft: "-10px",
-              marginTop: "15px",
+              marginLeft: "-40px",
+              marginTop: "20px",
               fontSize: "0.60rem",
             }}
             onChange={(e) => setPick_num_ot(e.target.value)}

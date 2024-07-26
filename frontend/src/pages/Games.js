@@ -45,7 +45,7 @@ const Games = () => {
   const gridStyles = {
     display: "grid",
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: "1rem", // You can adjust the gap value accordingly
+    // gap: "1rem", // You can adjust the gap value accordingly
   };
   const [heroImg, setHeroImg] = useState(getRandomImage());
   const theme = useTheme();
@@ -141,8 +141,8 @@ const Games = () => {
         spacing={2}
         justifyContent="flex-start"
         sx={{
-          width: isMobile ? "80%" : "110%",
-          marginLeft: isMobile ? "20px" : "-60px",
+          width: isMobile ? "97%" : "110%",
+          // marginLeft: isMobile ? "20px" : "-60px",
         }}
       >
         {gameData && gameData.length > 0 ? (
@@ -177,7 +177,7 @@ const Games = () => {
       {/* <Grid item>
         <Banner date={nextFormattedDate} label="Tomorrow's Games" />
       </Grid> */}
-      <Grid
+      {/* <Grid
         className="game-grid"
         container
         item
@@ -210,7 +210,7 @@ const Games = () => {
             Loading tomorrow's games...
           </Typography>
         )}
-      </Grid>
+      </Grid> */}
       <Box m={3} />
     </Grid>
   );
