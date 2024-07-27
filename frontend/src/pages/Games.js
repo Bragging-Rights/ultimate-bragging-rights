@@ -54,6 +54,7 @@ const Games = () => {
   const isAdmin = true; // Set this value based on whether the user is an admin or not
   const { selectedLeague } = useLeagueContext();
   const [gameData, setGameData] = useState([]);
+  const [openRow, setOpenRow] = useState(null);
   const [tomorrowGameData, setTomorrowGameData] = useState([]); // Store tomorrow's games separately
 
   const date = new Date();
@@ -114,7 +115,12 @@ const Games = () => {
     refetchTomorrowGame();
   }, [selectedLeague]);
 
+  const handleToggle = (index) => {
+    setOpenRow(openRow === index ? null : index);
+  };
+
   //Images
+
 
   useEffect(() => {
     setHeroImg(getRandomImage());
@@ -151,7 +157,12 @@ const Games = () => {
           gameData.map((game, index) => (
             <Grid key={game.id} item xs={12} md={6}>
               {index % 2 === 0 ? (
-                <GameCard gameData={game} isAdmin={isAdmin} />
+                <GameCard
+                gameData={game}
+                isOpen={openRow === index}
+                onToggle={() => handleToggle(index)}
+                isAdmin={isAdmin}
+              />
               ) : (
                 ''
                 // <GamerCardRight gameData={game} />

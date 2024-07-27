@@ -126,7 +126,7 @@ const MobileSwitches = (props) => {
           <div
             style={{
               margin: "10px",
-              marginTop: "30px",
+              marginTop: "15px",
 
               // display: "flex",
               // gap: "1px",
@@ -142,13 +142,14 @@ const MobileSwitches = (props) => {
               checked={regChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
+            <br/>
             <label style={{ margin: "0"   , fontSize: "0.60rem"}}>Reg</label>
           </div>
           <div
             style={{
-              marginTop: "30px",
+              marginTop: "15px",
 
-              marginLeft: "-50px",
+              marginLeft: "-40px",
               // display: "flex",
               gap: "1px",
                fontSize: "0.60rem",
@@ -163,15 +164,16 @@ const MobileSwitches = (props) => {
               checked={eiChecked}
               className={`${glowing ? "glowing-border" : ""}`}
             />
+            <br/>
             <label style={{ margin: "0" , fontSize: "0.60rem"  }}>E/I</label>
           </div>
 
           <select
             style={{
               height : '25px',
-              marginLeft: "-40px",
+              marginLeft: "-30px",
               marginRight: "4px",
-              marginTop: "30px",
+              marginTop: "15px",
               fontSize: "0.60rem",
             }}
             onChange={(e) => setPick_num_ot(e.target.value)}
