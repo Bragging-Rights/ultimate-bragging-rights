@@ -144,10 +144,10 @@ const Games = () => {
         className="game-grid"
         container
         item
-        spacing={2}
+        spacing={0}
         justifyContent="flex-start"
         sx={{
-          width: isMobile ? "100%" : "110%",
+          width: isMobile ? "98%" : "110%",
           marginBottom : '0%',
           marginTop : '0%'
           // marginLeft: isMobile ? "20px" : "-60px",
