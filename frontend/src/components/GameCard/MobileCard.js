@@ -307,38 +307,53 @@ const MobileCard = ({ gameData, isOpen, onToggle }) => {
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow style={{ paddingBottom: "-10px" }}>
-              {/* <TableCell sx={{ fontSize: "0.60rem", textAlign: "center" }}>
-                <label>{TimeFormat(gameData?.time)} </label>
-              </TableCell> */}
-
+            <TableRow
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <TableCell
                 sx={{
                   fontSize: "0.60rem",
-                  textAlign: "center",
-                  margin: "0",
+                  textAlign: "left",
+                  marginLeft: "10px",
                   padding: "0",
                   fontWeight: "bold",
                   lineHeight: "1.5",
                   position: "relative",
-                  width: "60%",
+                  height: "80px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  flex: 1,
                 }}
               >
-                <label className="visitor">{gameData?.visitor}</label>
+                <label
+                  className="visitor"
+                  style={{
+                    color: "gold",
+                    // fontWeight: "bolder",
+                  }}
+                >
+                  {gameData?.visitor}
+                </label>
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     width: "100%",
                   }}
                 >
                   <input
                     type="text"
                     style={{
-                      width: "30px",
+                      backgroundColor: "white",
+                      width: "70px",
                       height: "30px",
                     }}
-                    className={`score-input card-input m-2 ${
+                    className={`score-input card-input m-1 ${
                       invalidFields.includes("pick_visitor")
                         ? "glowing-border"
                         : ""
@@ -351,25 +366,97 @@ const MobileCard = ({ gameData, isOpen, onToggle }) => {
 
               <TableCell
                 sx={{
-                  fontSize: "0.60rem",
-                  margin: "0",
-                  padding: "0",
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
                   alignItems: "center",
-                  // height: "100px", // Adjust height as needed
+                  justifyContent: "center",
+                  height: "80px",
+                  flex: 1,
                 }}
               >
                 <label
                   style={{
-                    marginBottom: "auto",
-                    color: "green",
+                    color: "gold",
                     fontWeight: "bolder",
                   }}
                 >
                   {TimeFormat(gameData?.time)}
                 </label>
+              </TableCell>
+
+              <TableCell
+                sx={{
+                  fontSize: "0.60rem",
+                  textAlign: "right",
+                  marginRight: "10px",
+                  padding: "0",
+                  fontWeight: "bold",
+                  lineHeight: "1.5",
+                  position: "relative",
+                  height: "80px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  flex: 1,
+                }}
+              >
+                <label
+                  className="visitor"
+                  style={{
+                    color: "gold",
+                    // fontWeight: "bolder",
+                  }}
+                >
+                  {gameData?.home}
+                </label>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    width: "100%",
+                  }}
+                >
+                  <input
+                    type="text"
+                    style={{
+                      backgroundColor: "white",
+                      width: "70px",
+                      height: "30px",
+                    }}
+                    className={`score-input card-input m-1 ${
+                      invalidFields.includes("pick_home")
+                        ? "glowing-border"
+                        : ""
+                    }`}
+                    value={pick_home}
+                    onChange={(e) => setPickHome(e.target.value)}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableHead>
+            <TableRow
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <TableCell
+                sx={{
+                  fontSize: "0.60rem",
+                  margin: "0",
+                  padding: "0",
+                  display: "flex",
+                  flexDirection: "column",
+                  border: "hidden",
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                  flex: "1",
+                  // height: "100px", // Adjust height as needed
+                }}
+              >
                 <div style={{ marginTop: "auto", marginBottom: "auto" }}>
                   {isMobile ? (
                     <MobileSwitches
@@ -399,68 +486,43 @@ const MobileCard = ({ gameData, isOpen, onToggle }) => {
                     />
                   )}
                 </div>
+              </TableCell>
+
+              <TableCell
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flex: "1",
+                  border: "hidden",
+                }}
+              >
                 <IconButton
                   aria-label="expand row"
                   size="small"
                   onClick={onToggle}
                   sx={{
                     fontSize: "0.60rem",
-                    color: "blue",
-                    marginTop: "auto",
+                    color: "gold",
                     fontWeight: "bolder",
                   }}
                 >
-                  {isOpen ? "Close" : "More Odds"}
+                  {isOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                 </IconButton>
               </TableCell>
 
               <TableCell
                 sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  flex: "1",
                   fontSize: "0.60rem",
-                  textAlign: "center",
-                  margin: "0",
-                  padding: "0",
-                  fontWeight: "bold",
-                  lineHeight: "1.5",
-                  position: "relative",
-                  width: "60%",
-
-                }}
-              >
-                <label className="visitor">{gameData?.home}</label>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                  }}
-                >
-                  <input
-                    type="text"
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                    }}
-                    className={`score-input card-input m-2 ${
-                      invalidFields.includes("pick_home")
-                        ? "glowing-border"
-                        : ""
-                    }`}
-                    value={pick_home}
-                    onChange={(e) => setPickHome(e.target.value)}
-                  />
-                </div>
-              </TableCell>
-
-              <TableCell
-                sx={{
-                  fontSize: "0.60rem",
-                  textAlign: "center",
-                  width: "100px", // Adjust the width as needed
+                  border: "hidden",
                 }}
               >
                 <button
-                  className="card-btn-outline mt-1"
+                  className="card-btn-outline m-1"
                   style={{
                     fontSize: isMobile ? "8px" : "16px",
                     padding: "2px 10px",
@@ -470,7 +532,7 @@ const MobileCard = ({ gameData, isOpen, onToggle }) => {
                   ENTER PICK
                 </button>
                 <button
-                  className="card-btn-outline mt-1"
+                  className="card-btn-outline m-1"
                   style={{
                     fontSize: isMobile ? "8px" : "16px",
                     padding: "2px 10px",
