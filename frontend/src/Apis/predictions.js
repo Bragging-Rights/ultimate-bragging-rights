@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const addPrediction = async (data) => {
-  console.log("data", data);
+  console.log("Prediction data:", data); // Log the data being sent
   const response = await api.post(
     "api/user/gamesplayed/create",
     JSON.stringify(data)

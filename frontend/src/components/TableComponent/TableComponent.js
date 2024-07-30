@@ -223,10 +223,10 @@ const TableComponent = () => {
                   className="h-14 bg-[#181818] text-white separator"
                 >
                   <td className="text-xs font-medium text-center">
-                    {gameData.visitor || "-"}
+                    {headerOptions[gameData?.visitor] || gameData?.visitor}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {gameData.home || "-"}
+                    {headerOptions[gameData?.home] || gameData?.home}
                   </td>
                   <td
                     className="text-xs font-medium text-center"
