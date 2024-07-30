@@ -22,6 +22,7 @@ import displayToast from "../Alert/Alert";
 import { useMutation } from "react-query";
 import { useLeagueContext } from "../LeagueContext";
 import Swal from "sweetalert2";
+import { teamNameMappings } from "./data";
 
 const MobileCard = ({ gameData, isOpen, onToggle }) => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -337,7 +338,7 @@ const MobileCard = ({ gameData, isOpen, onToggle }) => {
                     // fontWeight: "bolder",
                   }}
                 >
-                  {gameData?.visitor}
+                  {teamNameMappings[gameData?.visitor] || gameData?.visitor}
                 </label>
                 <div
                   style={{
@@ -406,7 +407,7 @@ const MobileCard = ({ gameData, isOpen, onToggle }) => {
                     // fontWeight: "bolder",
                   }}
                 >
-                  {gameData?.home}
+                  {teamNameMappings[gameData?.home] || gameData?.home}
                 </label>
                 <div
                   style={{

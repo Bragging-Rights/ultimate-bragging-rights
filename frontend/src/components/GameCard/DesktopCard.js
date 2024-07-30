@@ -9,6 +9,7 @@ import displayToast from "../Alert/Alert";
 import { useMutation } from "react-query";
 import { useLeagueContext } from "../LeagueContext";
 import Swal from "sweetalert2";
+import { teamNameMappings } from "./data";
 
 const DesktopCard = ({ gameData }) => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -76,6 +77,7 @@ const DesktopCard = ({ gameData }) => {
     localStorage.setItem(gameData._id, JSON.stringify(dataToSave));
     displayToast("Saved successfully!", "success");
   };
+
   const handleLockIn = () => {
     const invalidFields = [];
     const visitorScore = parseInt(pick_visitor);
@@ -331,12 +333,12 @@ const DesktopCard = ({ gameData }) => {
             </div>
             <div className="box px-7 h-12">
               <label
-                className="upside-down "
+                className="upside-down"
                 style={{
                   fontSize: isMobile ? "10px" : "16px",
                 }}
               >
-                {gameData?.visitor}
+                {teamNameMappings[gameData?.visitor] || gameData?.visitor}
               </label>
             </div>
           </div>
@@ -439,12 +441,12 @@ const DesktopCard = ({ gameData }) => {
           <div className="flex flex-col justify-start">
             <div className="box px-7 h-12">
               <label
+                className="upside-down"
                 style={{
                   fontSize: isMobile ? "10px" : "16px",
                 }}
-                className="upside-down"
               >
-                {gameData?.home}
+                {teamNameMappings[gameData?.home] || gameData?.home}
               </label>
             </div>
           </div>

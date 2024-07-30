@@ -121,7 +121,6 @@ const Games = () => {
 
   //Images
 
-
   useEffect(() => {
     setHeroImg(getRandomImage());
   }, []);
@@ -148,9 +147,9 @@ const Games = () => {
         justifyContent="flex-start"
         sx={{
           width: isMobile ? "98%" : "110%",
-          border : 'hidden',
-          marginBottom : '0%',
-          marginTop : '0%'
+          border: "hidden",
+          marginBottom: "0%",
+          marginTop: "0%",
           // marginLeft: isMobile ? "20px" : "-60px",
         }}
       >
@@ -159,13 +158,13 @@ const Games = () => {
             <Grid key={game.id} item xs={12} md={6}>
               {index % 2 === 0 ? (
                 <GameCard
-                gameData={game}
-                isOpen={openRow === index}
-                onToggle={() => handleToggle(index)}
-                isAdmin={isAdmin}
-              />
+                  gameData={game}
+                  isOpen={openRow === index}
+                  onToggle={() => handleToggle(index)}
+                  isAdmin={isAdmin}
+                />
               ) : (
-                ''
+                ""
                 // <GamerCardRight gameData={game} />
               )}
             </Grid>
