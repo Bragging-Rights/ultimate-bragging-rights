@@ -191,14 +191,15 @@
   .box,
   .line,
   .card-id,
-  .card-label
-  {
+  .card-label {
     font-size: 4px;
   }
-  .game-time{
+
+  .game-time {
     padding-top: 5px;
   }
-  .test-size{
+
+  .test-size {
     /* font-style: italic; */
     /* font-size: 0.7rem; */
     /* margin: auto; */
@@ -238,8 +239,10 @@
   .flex {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    justify-content: space-between; /* Adjust spacing */
+    flex-wrap: nowrap;
+    /* Prevent wrapping */
+    justify-content: space-between;
+    /* Adjust spacing */
   }
 
   .flex-col {
@@ -260,7 +263,8 @@
 @media (max-width: 768px) {
   .flex {
     flex-wrap: nowrap;
-    overflow-x: auto; /* Allow horizontal scroll if needed */
+    overflow-x: auto;
+    /* Allow horizontal scroll if needed */
   }
 }
 
@@ -275,9 +279,10 @@
 
 .h-12 {
   height: 3.7rem;
-  width: auto;
+  width: 8vw;
   font-size: 14px;
 }
+
 /* .visitor, */
 .box label {
   background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
@@ -303,12 +308,10 @@
 
 .swal2-confirm {
   border-radius: 4px !important;
-  background: linear-gradient(
-    180deg,
-    #be8200 0%,
-    #fef098 47.4%,
-    #efd261 100%
-  ) !important;
+  background: linear-gradient(180deg,
+      #be8200 0%,
+      #fef098 47.4%,
+      #efd261 100%) !important;
   padding: 10px !important;
   color: #000 !important;
   width: 80px;
@@ -317,6 +320,7 @@
 .swal2-cancel {
   width: 80px;
 }
+
 .glowing-border {
   border: 2px solid red;
   box-shadow: 0 0 10px red;
