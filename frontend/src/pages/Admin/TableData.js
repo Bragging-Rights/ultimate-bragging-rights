@@ -29,6 +29,7 @@ import { getGamesByDate, updateGameFields } from "../../Apis/games";
 import { cloneDeep } from "lodash";
 import { useMutation } from "react-query";
 import displayToast from "../../components/Alert/Alert";
+import { headerOptions } from "./data"; // Import headerOptions
 
 import "./TableData.css";
 
@@ -313,8 +314,15 @@ const ScoreEntry = () => {
               <TableBody>
                 {filteredGameData.map((game) => (
                   <TableRow key={game._id} className="table-row">
-                    <TableCell>{game.visitor}</TableCell>
-                    <TableCell>{game.home}</TableCell>
+                    <TableCell>
+                    {headerOptions[game.visitor] || game.visitor}
+                      {/* {game.visitor} */}
+                      </TableCell>
+                    <TableCell>
+                    {headerOptions[game.home] || game.home}
+
+                      {/* {game.home} */}
+                      </TableCell>
 
                     <TableCell>
                       <TextField
