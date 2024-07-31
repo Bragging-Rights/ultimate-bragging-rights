@@ -150,7 +150,7 @@ const Games = () => {
           border: "hidden",
           marginBottom: "0%",
           marginTop: "0%",
-          // marginLeft: isMobile ? "20px" : "-60px",
+          marginLeft: isMobile ? "0px" : "-60px",
         }}
       >
         {gameData && gameData.length > 0 ? (
@@ -164,8 +164,11 @@ const Games = () => {
                   isAdmin={isAdmin}
                 />
               ) : (
-                ""
-                // <GamerCardRight gameData={game} />
+                // ""
+                <GamerCardRight gameData={game}
+                isOpen={openRow === index}
+                  onToggle={() => handleToggle(index)}
+                   />
               )}
             </Grid>
           ))
