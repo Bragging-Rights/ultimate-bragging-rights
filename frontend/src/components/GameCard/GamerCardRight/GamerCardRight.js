@@ -860,7 +860,7 @@ const GamerCardRight = ({ gameData, isOpen, onToggle }) => {
                 style={{ display: "flex", columnGap: "3vh" }}
               >
                 <button
-                  className="card-btn-outline mt-4"
+                  className="card-btn mt-4"
                   style={{
                     fontSize: isMobile ? "10px" : "16px",
                   }}
