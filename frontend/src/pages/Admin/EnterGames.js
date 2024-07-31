@@ -6,6 +6,7 @@ import displayToast from "../../components/Alert/Alert";
 import { getTeasmByLeage } from "../../Apis/Teams";
 import { getOdds } from "../../Apis/odds";
 import Button from "@mui/material/Button";
+import { headerOptions } from "./data"; // Import headerOptions
 
 const GameForm = () => {
   const [odds, setOdds] = useState(null);
@@ -338,7 +339,7 @@ const GameForm = () => {
                       <label>Visitor Team</label>
                       <input
                         name={`visitorTeam`}
-                        value={odd.away_team}
+                        value={headerOptions[odd.away_team] || odd.away_team}
                         className="bg-gray-800 text-white p-2 rounded w-full"
                         disabled={true}
                       />
@@ -419,7 +420,7 @@ const GameForm = () => {
                   <label>Home Team</label>
                   <input
                     name={`homeTeam`}
-                    value={odd.home_team}
+                    value={headerOptions[odd.home_team] || odd.home_team}
                     className="bg-gray-800 text-white p-2 rounded w-full"
                     disabled={true}
                   />
