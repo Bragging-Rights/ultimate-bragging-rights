@@ -128,8 +128,8 @@ const NightResult = () => {
     <div className="table-container">
       <div className="night-result-container">
         <div className="animation-controls"></div>
-        <br />
-        <br />
+        {/* <br />
+        <br /> */}
 
         <table style={{ width: "100%" }}>
           <thead style={{ fontSize: "0.8rem" }}>

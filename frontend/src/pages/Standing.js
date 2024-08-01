@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { standingPageReducer } from "../store/searchBarSlice";
+import Line from "../components/Line";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import NightlyBoardTabs from "../components/NightlyBoardTabs";
+
+
+import StandingsTables from "../components/StandingsTables/StandingsTables";
 
 const Standing = () => {
   const dispatch = useDispatch();
@@ -8,7 +14,36 @@ const Standing = () => {
     dispatch(standingPageReducer());
   }, [dispatch]);
 
-  return <div className=" w-full"></div>;
+  const [CurrentTab, setCurrentTab] = useState(0);
+
+  const changeTab = (val) => {
+    setCurrentTab(val);
+  };
+
+  return (
+    <div className=" w-full text-white">
+      <Grid item xs={12}>
+        <Line />
+      </Grid>
+      <br />
+      <Grid>
+        <NightlyBoardTabs changeTab={changeTab} CurrentTab={CurrentTab}/>
+      </Grid>
+      <br />
+      <Grid item xs={12}>
+          {CurrentTab === 0 ? (
+            <StandingsTables />
+          ) : CurrentTab === 1 ? (
+            <StandingsTables />
+          ) : CurrentTab === 2 ? (
+            <StandingsTables />
+          ) : (
+            ""
+          )}
+        </Grid>
+        <br/>
+    </div>
+  );
 };
 
 export default Standing;
