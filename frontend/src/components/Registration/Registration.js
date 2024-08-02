@@ -19,8 +19,48 @@ import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
 import ModalPassword from "../Modal/ModalPassword";
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    border: "1px solid #BE8200",
+    boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
+    height: "85vh",
+    width: "80vw",
+    background: "#212227",
+    padding: "20px",
+  },
+  overlay: {
+    background: "rgba(33, 34, 39, 0.90)",
+  },
+};
+const mobileStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    border: "1px solid #BE8200",
+    boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
+    height: "80vh",
+    width: "85vw",
+    background: "#212227",
+    padding: "10px",
+  },
+  overlay: {
+    background: "rgba(33, 34, 39, 0.90)",
+  },
+};
+
 const Registration = (props) => {
   const { modalIsOpen, closeModal } = props;
+  const isMobile = window.innerWidth <= 600;
   const [selectedCountry, setSelectedCountry] = useState("");
   const [captchaState, setCaptchaState] = useState(false);
 
@@ -352,7 +392,8 @@ const Registration = (props) => {
   return (
     <Modal
       isOpen={modalIsOpen}
-      className="custom-modal"
+      // className="custom-modal"
+      style={isMobile ? mobileStyles : customStyles}
       onRequestClose={closeModal}
     >
       <div className="r-modal-header">
@@ -437,22 +478,24 @@ const Registration = (props) => {
         {Array.from({ length: 4 }, (_, index) => (
           <fieldset
             key={index}
-            style={{ display: index + 1 === currentStep ? "block" : "none" }}
+            className="register-data"
+            style={{
+              display: index + 1 === currentStep ? "block" : "none",
+              padding: "0%",
+            }}
           >
             <div className="form-card">
               {index === 0 && (
                 <>
-                  <h2 id="heading" className="signup-heading">
+                  <p id="heading" className="signup-heading">
                     LET'S CREATE YOUR ACCOUNT!
-                  </h2>
+                  </p>
                   <p className="signup-subtitle">
                     We just need some basic Info
                   </p>
 
                   <div className="label-container">
-                    <label className="info-require">
-                      * Information Needed{" "}
-                    </label>
+                    <label className="info-require">* Information Needed</label>
                     <div className=" line"></div>
                   </div>
 
@@ -471,7 +514,6 @@ const Registration = (props) => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={inputChangeHandler}
-                      style={{ flex: "1" }}
                       requiredFields
                     />
                     <ModalInput
@@ -488,7 +530,6 @@ const Registration = (props) => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={inputChangeHandler}
-                      style={{ flex: "1" }}
                     />
                     <ModalSelect
                       label={
@@ -507,7 +548,6 @@ const Registration = (props) => {
                       ]}
                       name="gender"
                       onChange={inputChangeHandler}
-                      style={{ flex: "1" }}
                     />
                     <ModalInput
                       label={
@@ -537,7 +577,6 @@ const Registration = (props) => {
                       placeholder={"Coupon Code"}
                       name="couponCode"
                       onChange={inputChangeHandler}
-                      style={{ flex: "1" }}
                     />
                   </div>
                 </>
@@ -781,28 +820,8 @@ const Registration = (props) => {
                   />
                 </>
               )}
-              <div className="button-layout" style={{ marginTop: "7%" }}>
-                {index + 1 < 4 && (
-                  <div className="button-container">
-                    <div className="button-next-prev">
-                      {index > 0 && (
-                        <input
-                          type="button"
-                          onClick={prevStep}
-                          className="previous action-button-previous"
-                          value="Previous"
-                        />
-                      )}
-                      <input
-                        type="button"
-                        onClick={handleNextClick} // Use the new function here
-                        className="next action-button"
-                        value="Next"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
+              
+
               {index + 1 === 4 && (
                 <div className="button-container">
                   <div className="button-next-prev">
@@ -827,6 +846,28 @@ const Registration = (props) => {
                 </div>
               )}
             </div>
+            <div className="button-layout">
+                {index + 1 < 4 && (
+                  <div className="button-container">
+                    <div className="button-next-prev">
+                      {index > 0 && (
+                        <input
+                          type="button"
+                          onClick={prevStep}
+                          className="previous action-button-previous"
+                          value="Previous"
+                        />
+                      )}
+                      <input
+                        type="button"
+                        onClick={handleNextClick}
+                        className="next action-button"
+                        value="Next"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
           </fieldset>
         ))}
       </form>
