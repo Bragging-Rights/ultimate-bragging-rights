@@ -12,8 +12,14 @@ const NightResult = () => {
   const [gameDataMap, setGameDataMap] = useState({});
   const [userStatsMap, setUserStatsMap] = useState({});
 
-  const getUser = (userId) => {
-    return getUserById(userId).then((res) => res.data);
+  const getUser = async (userId) => {
+    try {
+      const res = await getUserById(userId);
+      return res.data;
+    } catch (error) {
+      console.error(`Error fetching user ${userId}:`, error);
+      return null; // Return null if there's an error
+    }
   };
 
   const getResult = () => {
@@ -145,20 +151,19 @@ const NightResult = () => {
             {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
               Object.keys(userStatsMap).map((userId, index) => {
                 const userStats = userStatsMap[userId];
-                const userData = gamesPlayed.find(
-                  (game) => game.userId === userId
-                ).userData;
+                const game = gamesPlayed.find((game) => game.userId === userId);
+                const userData = game ? game.userData : {};
 
                 return (
                   <tr key={index} className={`position-${index + 1}`}>
                     <td className="text-xs font-medium text-center">
-                      {userData.country || "-"}
+                      {userData?.country || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {userData.state || "-"}
+                      {userData?.state || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
-                      {userData.leagues[0]?.username || "-"}
+                      {userData?.leagues?.[0]?.username || "-"}
                     </td>
                     <td className="text-xs font-medium text-center">
                       {index + 1}
