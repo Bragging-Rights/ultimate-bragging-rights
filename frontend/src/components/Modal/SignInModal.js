@@ -15,18 +15,35 @@ const customStyles = {
     left: "50%",
     right: "auto",
     bottom: "auto",
-    marginRight: "-50%",
+    // marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     borderRadius: "8px",
     border: "1px solid #BE8200",
     boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
-    height: "65vh",
+    height: "94vh",
     width: "50%",
     background: "#212227",
     padding: "30px",
   },
   overlay: {
     background: "rgba(33, 34, 39, 0.90)",
+  },
+};
+const mobileStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    // marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "8px",
+    border: "1px solid #BE8200",
+    boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
+    height: "65vh",
+    width: "80vw",
+    background: "#212227",
+    padding: "15px",
   },
 };
 
@@ -48,6 +65,7 @@ const registrationModalStyles = {
 
 export const SignInModal = (props) => {
   const { modalIsOpen, closeModal } = props;
+  const isMobile = window.innerWidth <= 600;
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -100,7 +118,7 @@ export const SignInModal = (props) => {
     <Modal
       isOpen={modalIsOpen}
       onRequestClose={closeModal}
-      style={customStyles}
+      style={isMobile ? mobileStyles : customStyles}
     >
       <div className="r-modal-header">
         <h2 className="title">SIGN IN</h2>
@@ -154,6 +172,7 @@ export const SignInModal = (props) => {
             color: "#fcd34d",
             cursor: "pointer",
             backgroundColor: "transparent",
+            marginTop: "-30px",
             border: "none",
           }}
           onClick={() => setForgotPasswordModalOpen(true)}

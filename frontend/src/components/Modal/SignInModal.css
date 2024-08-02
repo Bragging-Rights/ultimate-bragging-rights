@@ -1,0 +1,5 @@
+.input-reduced-height input {
+    height: 40px !important;
+    padding: 8px;
+    background-color: aquamarine;
+  }
