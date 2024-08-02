@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-} from "@mui/material";
+import { AppBar, Toolbar, List, ListItem, ListItemText, Box } from "@mui/material";
 import "./MainNavBar.css"; // Import the CSS file
 
 const navItem = [
@@ -17,10 +10,6 @@ const navItem = [
   { label: "Stats", path: "/stats" },
   { label: "Shares", path: "/share" },
   { label: "Admin", path: "/admin" },
-  // { label: "Teams", path: "/teams" },
-  // { label: "Pools", path: "/pools" },
-  // { label: "FB Challenge", path: "/fb-challenges" },
-  // { label: "Records", path: "/records" },
 ];
 
 const MainNavBar = () => {
@@ -35,12 +24,21 @@ const MainNavBar = () => {
     } catch (error) {
       console.error("Error parsing isAdmin:", error);
     }
+
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 600);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
     <AppBar
       position="static"
-      className="bg-1E1E1E"
       style={{
         backgroundSize: "cover",
         backgroundColor: "transparent",
@@ -49,21 +47,29 @@ const MainNavBar = () => {
       <Toolbar
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#1B1C21",
           padding: "2%",
         }}
       >
-        {/* <Box sx={{ width: "60vh" }}> */}
-        {/* <img src={LeftImage} alt="Left Image" /> */}
-        {/* </Box> */}
-        <div className="nav-list-container">
+        <Box
+          sx={{
+            width: isMobileView ? "100%" : "auto",
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor : 'black',
+            padding : '1% 3%',
+            borderRadius : '40vh',
+            overflow: 'hidden', // Ensure that any overflow is hidden
+            padding: isMobileView ? '2% 3%' : '1% 3%', // Dynamic padding based on screen size
+
+          }}
+        >
           <List
             component="nav"
             aria-labelledby="main navigation"
-            className="nav-list"
-            style={{ width: isMobileView ? "100%" : "60%" }}
+            sx={{ display: "flex", flexDirection: "row", padding: 0 }}
           >
             {navItem.map((item, index) => {
               if (item.label === "Admin" && !isUserAdmin) {
@@ -76,20 +82,36 @@ const MainNavBar = () => {
                   component={NavLink}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  className={`nav-item ${
-                    location.pathname === item.path ? "nav-item-selected" : ""
-                  }`}
+                  sx={{
+                    position: "relative",
+                    padding: "0 16px",
+                    '&.Mui-selected': {
+                      backgroundColor: "transparent",
+                      '&::after': {
+                        content: '""',
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "2px",
+                        backgroundColor: "white",
+                      },
+                      '.nav-text': {
+                        color: "red", // Keep text color red
+                      },
+                    },
+                    '.nav-text': {
+                      fontSize: isMobileView ? "10px" : "16px",
+                      color: location.pathname === item.path ? "red" : "inherit",
+                    },
+                  }}
                 >
-                  <ListItemText primary={item.label} className="nav-text" 
-                  style={{ fontSize: isMobileView ? "10px" : "5px" }} />
+                  <ListItemText primary={item.label} className="nav-text" />
                 </ListItem>
               );
             })}
           </List>
-        </div>
-        {/* <Box sx={{ width: "60vh" }}> */}
-        {/* <img src={RightImage} alt="Right Image" /> */}
-        {/* </Box> */}
+        </Box>
       </Toolbar>
     </AppBar>
   );
