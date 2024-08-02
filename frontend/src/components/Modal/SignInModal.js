@@ -45,6 +45,9 @@ const mobileStyles = {
     background: "#212227",
     padding: "15px",
   },
+  overlay: {
+    background: "rgba(33, 34, 39, 0.90)",
+  },
 };
 
 const registrationModalStyles = {
