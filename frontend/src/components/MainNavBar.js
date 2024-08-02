@@ -26,6 +26,7 @@ const navItem = [
 const MainNavBar = () => {
   const location = useLocation();
   const [isUserAdmin, setIsUserAdmin] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 600);
 
   useEffect(() => {
     const isAdmin = localStorage.getItem("isAdmin");
@@ -55,41 +56,39 @@ const MainNavBar = () => {
         }}
       >
         {/* <Box sx={{ width: "60vh" }}> */}
-          {/* <img src={LeftImage} alt="Left Image" /> */}
+        {/* <img src={LeftImage} alt="Left Image" /> */}
         {/* </Box> */}
         <div className="nav-list-container">
-
-        <List
-          component="nav"
-          aria-labelledby="main navigation"
-          className="nav-list"
+          <List
+            component="nav"
+            aria-labelledby="main navigation"
+            className="nav-list"
+            style={{ width: isMobileView ? "100%" : "60%" }}
           >
-          {navItem.map((item, index) => {
-            if (item.label === "Admin" && !isUserAdmin) {
-              return null;
-            }
-            return (
-              <ListItem
-              key={index}
-                button
-                component={NavLink}
-                to={item.path}
-                selected={location.pathname === item.path}
-                className={`nav-item ${
-                  location.pathname === item.path ? "nav-item-selected" : ""
-                }`}
-              >
-                <ListItemText
-                  primary={item.label}
-                  className="nav-text"
-                />
-              </ListItem>
-            );
-          })}
-        </List>
-          </div>
+            {navItem.map((item, index) => {
+              if (item.label === "Admin" && !isUserAdmin) {
+                return null;
+              }
+              return (
+                <ListItem
+                  key={index}
+                  button
+                  component={NavLink}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  className={`nav-item ${
+                    location.pathname === item.path ? "nav-item-selected" : ""
+                  }`}
+                >
+                  <ListItemText primary={item.label} className="nav-text" 
+                  style={{ fontSize: isMobileView ? "10px" : "5px" }} />
+                </ListItem>
+              );
+            })}
+          </List>
+        </div>
         {/* <Box sx={{ width: "60vh" }}> */}
-          {/* <img src={RightImage} alt="Right Image" /> */}
+        {/* <img src={RightImage} alt="Right Image" /> */}
         {/* </Box> */}
       </Toolbar>
     </AppBar>

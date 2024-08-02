@@ -28,10 +28,10 @@ const MainLayout = ({ children }) => {
       {location.pathname !== "/admin" && (
         <Box
           sx={{
-            border: "2px solid black",
+            // border: "2px solid black",
             height: "30px",
             overflow: "hidden",
-            backgroundColor: "#A3A4A6",
+            // backgroundColor: "#A3A4A6",
             borderRadius: "25px",
             overflow: "hidden",
             margin : '20px 20px',
@@ -54,7 +54,8 @@ const MainLayout = ({ children }) => {
                 width: "100%",
                 position: "absolute",
                 left: "0",
-                color: "#fff",
+                color: "black",
+                backgroundColor : 'red'
               }}
             >
               Results are updated hourly until we find a better solution
