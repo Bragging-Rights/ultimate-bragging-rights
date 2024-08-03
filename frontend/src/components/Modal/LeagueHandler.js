@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ModalSelect from "./ModalSelect";
 import ModalInput from "./ModalInput";
 import Button from "@mui/material/Button";
-import "./LeagueHandler.css";
+// import "./LeagueHandler.css";
 
 // Styled components
 const Container = styled.div`
@@ -96,12 +96,15 @@ const LeagueHandler = ({
         onChange={onLeagueChange} // Call the handler passed from parent component
       />
       <Button
-        className="button"
+        // className="button"
+        style={{
+          display : 'flex', alignItems : 'center' , position : 'absolute' , right : '-70px' , top : '35px'
+        }}
         onClick={() => handleRemoveLeague(index)}
         aria-label="Remove League"
         type="button"
       >
-        <ImCancelCircle className="cancel-icon" />
+        <ImCancelCircle style={{color : 'red' , fontSize : '26px' ,  transition : 'color 0.3s ease' , }} />
       </Button>
     </Container>
   );
