@@ -86,18 +86,20 @@
 }
 .form-container {
   display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
   flex-wrap: wrap;
-  gap: 16px; /* Adjust as needed for spacing */
+  gap: 10px; /* Adjust the gap as needed */
 }
 
-.form-container > * {
-  flex: 1;
-  min-width: 200px; /* Adjust based on your design */
+.form-row > * {
+  flex: 1; /* Allows the inputs to take equal space */
+  min-width: 150px; /* Adjust the minimum width as needed */
 }
 
-.form-container > :nth-child(5) {
-  flex: 100%; /* Makes sure the fifth input takes the full width of the row */
-}
 
 
 /* Media Queries */

@@ -1,0 +1,31 @@
+/* styles.css */
+.button {
+  /* background-color: #ff0000; */
+  color: #ffffff;
+  /* width: 28px;
+  height: 20px; */
+  /* border-radius: 100%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* transition: background-color 0.3s; */
+  position: absolute;
+  right: -70px;
+  top: 35px;
+  /* transform: translateY(-50%); */
+}
+
+/* .button:hover {
+  background-color: #cc0000;
+} */
+
+.cancel-icon {
+  color: rgb(253, 18, 18);
+  font-size: 26px;
+  transition: color 0.3s ease;
+}
+
+.cancel-icon:hover {
+  color: rgb(255, 0, 0);
+}
+

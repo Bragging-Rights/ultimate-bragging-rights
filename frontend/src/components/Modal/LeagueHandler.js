@@ -3,6 +3,8 @@ import { ImCancelCircle } from "react-icons/im";
 import styled from "styled-components";
 import ModalSelect from "./ModalSelect";
 import ModalInput from "./ModalInput";
+import Button from "@mui/material/Button";
+import "./LeagueHandler.css";
 
 // Styled components
 const Container = styled.div`
@@ -16,7 +18,7 @@ const Container = styled.div`
 const StyledButton = styled.button`
   background-color: #ff0000;
   color: #ffffff;
-  width: 28px;
+  width: 1rem;
   height: 28px;
   border-radius: 50%;
   display: flex;
@@ -31,6 +33,7 @@ const StyledButton = styled.button`
     background-color: #cc0000;
   }
 `;
+// abc
 
 const StyledLabel = styled.h2`
   font-size: 14px;
@@ -58,16 +61,9 @@ const LeagueHandler = ({
   };
 
   return (
-    <Container key={index}>
-      <StyledButton
-        onClick={() => handleRemoveLeague(index)}
-        aria-label="Remove League"
-        type="button"
-      >
-        <ImCancelCircle />
-      </StyledButton>
+    <Container key={index} className="form-row">
       <StyledModalSelect
-        label={<StyledLabel>*</StyledLabel>}
+        label={<StyledLabel>* YOUR LEAGUE</StyledLabel>}
         options={[
           { label: "Select league", value: "" }, // Placeholder option
           ...options, // Spread the existing options array
@@ -78,7 +74,7 @@ const LeagueHandler = ({
         onChange={onLeagueChange} // Call the handler passed from parent component
       />
       <StyledModalInput
-        label={<StyledLabel>* CREATE USERNAME</StyledLabel>}
+        label={<StyledLabel>* USERNAME</StyledLabel>}
         placeholder="Username"
         type="text"
         name={`username`}
@@ -87,7 +83,7 @@ const LeagueHandler = ({
         aria-label="Create Username"
       />
       <StyledModalSelect
-        label={<StyledLabel>* SELECT YOUR FAVOURITE TEAM</StyledLabel>}
+        label={<StyledLabel>* YOUR FAVOURITE TEAM</StyledLabel>}
         name={`team`}
         value={info?.team}
         options={[
@@ -99,6 +95,14 @@ const LeagueHandler = ({
         ]}
         onChange={onLeagueChange} // Call the handler passed from parent component
       />
+      <Button
+        className="button"
+        onClick={() => handleRemoveLeague(index)}
+        aria-label="Remove League"
+        type="button"
+      >
+        <ImCancelCircle className="cancel-icon" />
+      </Button>
     </Container>
   );
 };

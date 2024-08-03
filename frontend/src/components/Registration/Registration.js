@@ -496,108 +496,111 @@ const Registration = (props) => {
 
                   <div className="label-container">
                     <label className="info-require">* Information Needed</label>
-                    <div className=" line"></div>
+                    <div className="line"></div>
                   </div>
 
                   <div className="form-container">
-                    <ModalInput
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          * FIRST NAME
-                        </h2>
-                      }
-                      placeholder={"First Name"}
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={inputChangeHandler}
-                      requiredFields
-                    />
-                    <ModalInput
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          * LAST NAME
-                        </h2>
-                      }
-                      placeholder={"Last Name"}
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={inputChangeHandler}
-                    />
-                    <ModalSelect
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          * SEX
-                        </h2>
-                      }
-                      options={[
-                        { value: "", label: "Select Gender" },
-                        { value: "male", label: "Male" },
-                        { value: "female", label: "Female" },
-                      ]}
-                      name="gender"
-                      onChange={inputChangeHandler}
-                    />
-                    <ModalInput
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          REFER BY
-                        </h2>
-                      }
-                      placeholder={"Refer by"}
-                      name="referralName"
-                      value={formData?.refer_by}
-                      onChange={inputChangeHandler}
-                    />
-                    <ModalInput
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          COUPON CODE
-                        </h2>
-                      }
-                      placeholder={"Coupon Code"}
-                      name="couponCode"
-                      onChange={inputChangeHandler}
-                    />
+                    <div className="form-row">
+                      <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * FIRST NAME
+                          </h2>
+                        }
+                        placeholder={"First Name"}
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={inputChangeHandler}
+                        requiredFields
+                      />
+                      <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * LAST NAME
+                          </h2>
+                        }
+                        placeholder={"Last Name"}
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={inputChangeHandler}
+                      />
+                      <ModalSelect
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * SEX
+                          </h2>
+                        }
+                        options={[
+                          { value: "", label: "Gender" },
+                          { value: "male", label: "Male" },
+                          { value: "female", label: "Female" },
+                        ]}
+                        name="gender"
+                        onChange={inputChangeHandler}
+                      />
+                      <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            REFER BY
+                          </h2>
+                        }
+                        placeholder={"Refer by"}
+                        name="referralName"
+                        value={formData?.refer_by}
+                        onChange={inputChangeHandler}
+                      />
+                      <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            COUPON CODE
+                          </h2>
+                        }
+                        placeholder={"Coupon Code"}
+                        name="couponCode"
+                        onChange={inputChangeHandler}
+                      />
+                    </div>
                   </div>
                 </>
               )}
               {index === 1 && (
                 <>
-                  <h2 id="heading" className="signup-heading">
-                    WE NEED YOUR LOCATION!
-                  </h2>
-                  <p className="signup-subtitle">
-                    To Determine Which Conference and Division you will play in
-                  </p>
-
-                  <div className="label-container">
-                    <label className="info-require">
-                      * Information Needed{" "}
-                    </label>
-                    <div className=" line"></div>
-                  </div>
-
-                  <div className="form-container form-index1">
+                <h2 id="heading" className="signup-heading">
+                  WE NEED YOUR LOCATION!
+                </h2>
+                <p className="signup-subtitle">
+                  To Determine Which Conference and Division you will play in
+                </p>
+              
+                <div className="label-container">
+                  <label className="info-require">
+                    * Information Needed
+                  </label>
+                  <div className="line"></div>
+                </div>
+              
+                <div className="form-container">
+                  <div className="form-row">
                     <CountrySelect
                       value={selectedCountry}
                       onChange={(e) => handleCountryChange(e)}
@@ -625,8 +628,10 @@ const Registration = (props) => {
                       stateCode={stateCode}
                     />
                   </div>
-
-                  <div className="form-container form-index1">
+                </div>
+              
+                <div className="form-container">
+                  <div className="form-row">
                     <ModalInput
                       label={
                         <h2
@@ -656,7 +661,9 @@ const Registration = (props) => {
                       className="phone-number"
                     />
                   </div>
-                </>
+                </div>
+              </>
+              
               )}
 
               {index === 2 && (
@@ -820,8 +827,28 @@ const Registration = (props) => {
                   />
                 </>
               )}
-              
-
+            </div>
+            <div className="button-layout">
+              {index + 1 < 4 && (
+                <div className="button-container">
+                  <div className="button-next-prev">
+                    {index > 0 && (
+                      <input
+                        type="button"
+                        onClick={prevStep}
+                        className="previous action-button-previous"
+                        value="Previous"
+                      />
+                    )}
+                    <input
+                      type="button"
+                      onClick={handleNextClick}
+                      className="next action-button"
+                      value="Next"
+                    />
+                  </div>
+                </div>
+              )}
               {index + 1 === 4 && (
                 <div className="button-container">
                   <div className="button-next-prev">
@@ -846,28 +873,6 @@ const Registration = (props) => {
                 </div>
               )}
             </div>
-            <div className="button-layout">
-                {index + 1 < 4 && (
-                  <div className="button-container">
-                    <div className="button-next-prev">
-                      {index > 0 && (
-                        <input
-                          type="button"
-                          onClick={prevStep}
-                          className="previous action-button-previous"
-                          value="Previous"
-                        />
-                      )}
-                      <input
-                        type="button"
-                        onClick={handleNextClick}
-                        className="next action-button"
-                        value="Next"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
           </fieldset>
         ))}
       </form>
