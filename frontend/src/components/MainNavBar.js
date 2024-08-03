@@ -10,7 +10,7 @@ const navItem = [
   { label: "Stats", path: "/stats" },
   { label: "Shares", path: "/share" },
   { label: "Admin", path: "/admin" },
-    // { label: "Teams", path: "/teams" },
+    { label: "Season", path: "/season" },
   // { label: "Pools", path: "/pools" },
   // { label: "FB Challenge", path: "/fb-challenges" },
   // { label: "Records", path: "/records" },
