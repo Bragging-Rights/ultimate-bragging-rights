@@ -20,3 +20,10 @@ export const getGamesPlayedByDate = async (date) => {
   );
   return response;
 };
+
+export const getGamesPlayedByDateRange = async (startDate, endDate) => {
+  const response = await api.get(
+    `api/user/gamesplayed/games-played-by-date-range?startDate=${startDate}&endDate=${endDate}`
+  );
+  return response;
+};

@@ -220,3 +220,43 @@ exports.getGamesPlayedByDate = async (req, res) => {
     });
   }
 };
+
+// Controller to get gamesPlayed by date range
+exports.getGamesPlayedByDateRange = async (req, res) => {
+  try {
+    // Extract startDate and endDate from query parameters
+    const { startDate, endDate } = req.query;
+
+    // Validate the dates
+    if (!startDate || !endDate) {
+      return res
+        .status(400)
+        .json({ message: "Start date and end date are required." });
+    }
+
+    // Convert date strings to Date objects at the start of the day
+    const start = new Date(startDate);
+    start.setUTCHours(0, 0, 0, 0); // Set to start of the day in UTC
+
+    // Create end as the start of the next day after endDate
+    const end = new Date(endDate);
+    end.setUTCHours(23, 59, 59, 999); // Set to end of the day in UTC
+
+    // Find games played within the given date range
+    const gamesPlayed = await GamesPlayed.find({
+      createdAt: {
+        $gte: start,
+        $lte: end,
+      },
+    });
+
+    // Return the found games
+    res.status(200).json(gamesPlayed);
+  } catch (error) {
+    // Handle possible errors
+    res.status(500).json({
+      message: "Error fetching games played by date range",
+      error: error.message,
+    });
+  }
+};
