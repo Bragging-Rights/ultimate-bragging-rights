@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
-import { getGamesPlayedByDate } from "../../Apis/predictions";
+import { getGamePlayedByUserId } from "../../Apis/predictions";
 import { headerOptions } from "./data";
 import "./NightResult.css";
 
@@ -11,6 +11,8 @@ const NightResult = () => {
   const [gamesPlayed, setGamesPlayed] = useState([]);
   const [gameDataMap, setGameDataMap] = useState({});
   const [userStatsMap, setUserStatsMap] = useState({});
+
+  const id = localStorage.getItem("_id");
 
   const getUser = async (userId) => {
     try {
@@ -22,43 +24,44 @@ const NightResult = () => {
     }
   };
 
-  const getResult = () => {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const formattedDate = yesterday.toISOString().split("T")[0];
+  const getResult = async (userData) => {
+    try {
+      const res = await getGamePlayedByUserId(id);
+      console.log("Game data:", res);
+      if (
+        res.data &&
+        res.data.data &&
+        Array.isArray(res.data.data.gamesPlayed)
+      ) {
+        const filteredData = res.data.data.gamesPlayed.filter(
+          (game) => game.league === selectedLeague
+        );
 
-    getGamesPlayedByDate(formattedDate)
-      .then(async (res) => {
-        console.log("API Response:", res.data);
-        if (res.data && Array.isArray(res.data)) {
-          const filteredData = res.data.filter(
-            (game) => game.league === selectedLeague
-          );
+        const enhancedData = filteredData.map((game) => ({
+          ...game,
+          userData, // Store userData directly in the game object
+          BR:
+            game.result?.perfectScore != null
+              ? parseFloat(game.result?.perfectScore).toFixed(2)
+              : "-",
+          vegasOdds: game.result?.vegasOdds || {},
+        }));
 
-          const userPromises = filteredData.map((game) =>
-            getUser(game.userId).then((userData) => ({
-              ...game,
-              userData,
-            }))
-          );
+        setGamesPlayed(enhancedData);
 
-          const enhancedData = await Promise.all(userPromises);
+        const gameDataArray = res.data.data.gameData || [];
+        const gameDataLookup = {};
+        gameDataArray.forEach((game) => {
+          gameDataLookup[game._id] = game;
+        });
+        setGameDataMap(gameDataLookup);
 
-          setGamesPlayed(enhancedData);
-
-          const gameDataLookup = {};
-          enhancedData.forEach((game) => {
-            gameDataLookup[game._id] = game;
-          });
-          setGameDataMap(gameDataLookup);
-
-          const userStats = calculateUserStats(enhancedData);
-          setUserStatsMap(userStats);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching game data:", error);
-      });
+        const userStats = calculateUserStats(enhancedData);
+        setUserStatsMap(userStats);
+      }
+    } catch (error) {
+      console.error("Error fetching game data:", error);
+    }
   };
 
   useEffect(() => {
@@ -68,7 +71,9 @@ const NightResult = () => {
       setFilteredHeaderOptions([]);
     }
 
-    getResult();
+    getUser(id).then((userData) => {
+      getResult(userData);
+    });
   }, [selectedLeague]);
 
   useEffect(() => {
