@@ -82,6 +82,26 @@ const StandingsTables = () => {
   };
 
   useEffect(() => {
+    if (selectedLeague === "MLB" && gamesPlayed.length > 0) {
+      const gameHeaders = new Set(
+        gamesPlayed
+          .map((game) => {
+            const gameData = gameDataMap[game.gameData] || {};
+            if (gameData.visitor && gameData.home) {
+              return `${gameData.visitor} VS ${gameData.home}`;
+            }
+            return null;
+          })
+          .filter(Boolean)
+      );
+  
+      setFilteredHeaderOptions((prevHeaders) => [
+        ...new Set([...prevHeaders, ...gameHeaders]),
+      ]);
+    }
+  }, [gamesPlayed, gameDataMap, selectedLeague]);
+
+  useEffect(() => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       setFilteredHeaderOptions(headerOptions[selectedLeague]);
     } else {
@@ -168,47 +188,51 @@ const StandingsTables = () => {
       style={{ color: "white", marginTop: "10px", overflowX: "auto" }}
     >
       <table className="custom-table ">
-        <thead>
-          <tr>
-            {/* <th style={{ cursor: "pointer" }}>TEAMS</th> */}
-            <th style={{ cursor: "pointer" }}>CO</th>
-            <th style={{ cursor: "pointer" }}>CTY/PROV</th>
-            <th style={{ cursor: "pointer" }}>FAV</th>
-            <th style={{ cursor: "pointer" }}>RANK</th>
-            <th style={{ cursor: "pointer" }}>PLAYER</th>
-            <th style={{ cursor: "pointer" }}>WPT</th>
-            <th style={{ cursor: "pointer" }}>GP</th>
-            <th style={{ cursor: "pointer" }}>BR</th>
-            <th style={{ cursor: "pointer" }}>W</th>
-            <th style={{ cursor: "pointer" }}>L</th>
-            <th style={{ cursor: "pointer" }}>CS</th>
-            <th style={{ cursor: "pointer" }}>WS</th>
-            <th style={{ cursor: "pointer" }}>LS</th>
-            <th style={{ cursor: "pointer" }}>1S </th>
-            <th style={{ cursor: "pointer" }}>1S0</th>
-            <th style={{ cursor: "pointer" }}>2S0</th>
-            <th style={{ cursor: "pointer" }}>1SW2</th>
-            <th style={{ cursor: "pointer" }}>2SW2</th>
-            <th style={{ cursor: "pointer" }}>1SW3</th>
-            <th style={{ cursor: "pointer" }}>2SW3</th>
-            <th style={{ cursor: "pointer" }}>1SW7</th>
-            <th style={{ cursor: "pointer" }}>2SW7</th>
-            <th style={{ cursor: "pointer" }}>ML</th>
-            <th style={{ cursor: "pointer" }}>SPRD</th>
-            <th style={{ cursor: "pointer" }}>O/U</th>
-            <th style={{ cursor: "pointer" }}>APN</th>
-            <th style={{ cursor: "pointer" }}>APG</th>
-            <th style={{ cursor: "pointer" }}>F</th>
-            <th style={{ cursor: "pointer" }}>U</th>
-            <th style={{ cursor: "pointer" }}>REG</th>
-            <th style={{ cursor: "pointer" }}>EI</th>
-            <th style={{ cursor: "pointer" }}>OT</th>
-            <th style={{ cursor: "pointer" }}>S/O</th>
-            <th style={{ cursor: "pointer" }}>L10</th>
-            <th style={{ cursor: "pointer" }}>FPTS</th>
-            <th style={{ cursor: "pointer" }}>UPTS</th>
-          </tr>
-        </thead>
+      <thead>
+            <tr>
+              <th style={{ cursor: "pointer" }}>CO</th>
+              <th style={{ cursor: "pointer" }}>CTY/PROV</th>
+              <th style={{ cursor: "pointer" }}>FAV</th>
+              <th style={{ cursor: "pointer" }}>RANK</th>
+              <th style={{ cursor: "pointer" }}>PLAYER</th>
+              <th style={{ cursor: "pointer" }}>WPT</th>
+              <th style={{ cursor: "pointer" }}>GP</th>
+              <th style={{ cursor: "pointer" }}>BR</th>
+              <th style={{ cursor: "pointer" }}>W</th>
+              <th style={{ cursor: "pointer" }}>L</th>
+              <th style={{ cursor: "pointer" }}>CS</th>
+              <th style={{ cursor: "pointer" }}>WS</th>
+              <th style={{ cursor: "pointer" }}>LS</th>
+              <th style={{ cursor: "pointer" }}>1S </th>
+              <th style={{ cursor: "pointer" }}>1S0</th>
+              <th style={{ cursor: "pointer" }}>2S0</th>
+              <th style={{ cursor: "pointer" }}>1SW2</th>
+              <th style={{ cursor: "pointer" }}>2SW2</th>
+              <th style={{ cursor: "pointer" }}>1SW3</th>
+              <th style={{ cursor: "pointer" }}>2SW3</th>
+              <th style={{ cursor: "pointer" }}>1SW7</th>
+              <th style={{ cursor: "pointer" }}>2SW7</th>
+              <th style={{ cursor: "pointer" }}>ML</th>
+              <th style={{ cursor: "pointer" }}>SPRD</th>
+              <th style={{ cursor: "pointer" }}>O/U</th>
+              <th style={{ cursor: "pointer" }}>APN</th>
+              <th style={{ cursor: "pointer" }}>APG</th>
+              <th style={{ cursor: "pointer" }}>F</th>
+              <th style={{ cursor: "pointer" }}>U</th>
+              <th style={{ cursor: "pointer" }}>REG</th>
+              <th style={{ cursor: "pointer" }}>EI</th>
+              <th style={{ cursor: "pointer" }}>OT</th>
+              <th style={{ cursor: "pointer" }}>S/O</th>
+              <th style={{ cursor: "pointer" }}>L10</th>
+              <th style={{ cursor: "pointer" }}>FPTS</th>
+              <th style={{ cursor: "pointer" }}>UPTS</th>
+              {filteredHeaderOptions.map((item, ind) => (
+                <th key={ind} className="text-xs font-medium">
+                  {item}
+                </th>
+              ))}
+            </tr>
+          </thead>
         <tbody>
           {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
             gamesPlayed.map((row, index) => {
