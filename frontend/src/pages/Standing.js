@@ -7,6 +7,7 @@ import NightlyBoardTabs from "../components/NightlyBoardTabs";
 
 
 import StandingsTables from "../components/StandingsTables/StandingsTables";
+import SeasonTables from "../components/SeasonTables/SeasonTables";
 
 const Standing = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Standing = () => {
           {CurrentTab === 0 ? (
             <StandingsTables />
           ) : CurrentTab === 1 ? (
-            <StandingsTables />
+            <SeasonTables />
           ) : CurrentTab === 2 ? (
             <StandingsTables />
           ) : (

@@ -1,0 +1,99 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .table-container {
+    margin-top: 1.25rem;
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    font-size: 0.8rem;
+    color: #ffc800;
+    background-color: #444;
+  }
+  
+  tbody {
+    font-size: 0.8rem;
+  }
+  
+  th,
+  td {
+    text-align: center;
+    padding: 0.5rem;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  td {
+    color: #fff;
+  }
+  
+  .border-t {
+    border-top: 1px solid #444;
+  }
+  
+  .h-14 {
+    height: 3.5rem;
+  }
+  
+  
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  [style*="background:"] {
+    border-radius: 4px;
+  }
+  
+  .table-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    max-width: 100%; /* Ensure the table container doesn't exceed the viewport width */
+  }
+  
+  /* Optionally, you can add styles to the table itself */
+  .table-container table {
+    width: 100%; /* Ensure the table takes up 100% of its container */
+    border-collapse: collapse; /* Optional: collapse borders between table cells */
+  }
+  
+  .table-container th,
+  .table-container td {
+    padding: 8px; /* Optional: adjust padding for table cells */
+    text-align: center; /* Optional: center-align text within cells */
+  }
