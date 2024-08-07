@@ -88,13 +88,15 @@ const StandingsTables = () => {
           .map((game) => {
             const gameData = gameDataMap[game.gameData] || {};
             if (gameData.visitor && gameData.home) {
-              return `${headerOptions[gameData?.visitor] || gameData?.visitor} VS ${headerOptions[gameData?.home] || gameData?.home}`;
+              return `${
+                headerOptions[gameData?.visitor] || gameData?.visitor
+              } VS ${headerOptions[gameData?.home] || gameData?.home}`;
             }
             return null;
           })
           .filter(Boolean)
       );
-  
+
       setFilteredHeaderOptions((prevHeaders) => [
         ...new Set([...prevHeaders, ...gameHeaders]),
       ]);
@@ -181,6 +183,81 @@ const StandingsTables = () => {
         return null;
     }
   };
+  // calculation of "APN","APG""F""U""Reg""EI""OT""S/O""L10""FPTS""UPTS",
+
+  //   const calculateAPN = (games) => {
+  //     const totalPoints = games.reduce((acc, game) => acc + (game.result?.totalPoints || 0), 0);
+  //     const nights = new Set(games.map(game => game.date)); // Assuming 'date' is available and unique per night
+  //     return (totalPoints / nights.size).toFixed(2);
+  //   };
+
+  //   const calculateAPG = (games) => {
+  //     const totalPoints = games.reduce((acc, game) => acc + (game.result?.totalPoints || 0), 0);
+  //     return (totalPoints / games.length).toFixed(2);
+  //   };
+  //   const calculateF = (games) => {
+  //     const correctFavs = games.filter(game =>
+  //       game.result?.favoriteWin && game.predictedFavorite === game.result?.favorite
+  //     ).length;
+  //     const totalFavs = games.filter(game => game.result?.favoriteWin).length;
+  //     return (correctFavs / totalFavs * 100).toFixed(2);
+  //   };
+  //   const calculateU = (games) => {
+  //     const correctUnderdogs = games.filter(game =>
+  //       !game.result?.favoriteWin && game.predictedUnderdog === game.result?.underdog
+  //     ).length;
+  //     const totalUnderdogs = games.filter(game => !game.result?.favoriteWin).length;
+  //     return (correctUnderdogs / totalUnderdogs * 100).toFixed(2);
+  //   };
+  //   const calculateREG = (games) => {
+  //     const correctRegs = games.filter(game =>
+  //       game.result?.endInRegulation && game.predictedRegulation
+  //     ).length;
+  //     const totalRegs = games.filter(game => game.result?.endInRegulation).length;
+  //     return (correctRegs / totalRegs * 100).toFixed(2);
+  //   };
+  //   const calculateEI = (games) => {
+  //     const correctEIs = games.filter(game =>
+  //       game.result?.endInExtraInnings && game.predictedExtraInnings
+  //     ).length;
+  //     const totalEIs = games.filter(game => game.result?.endInExtraInnings).length;
+  //     return (correctEIs / totalEIs * 100).toFixed(2);
+  //   };
+
+  //   const calculateSO = (games) => {
+  //     const correctSOs = games.filter(game =>
+  //       game.result?.endInShootout && game.predictedShootout
+  //     ).length;
+  //     const totalSOs = games.filter(game => game.result?.endInShootout).length;
+  //     return (correctSOs / totalSOs * 100).toFixed(2);
+  //   };
+
+  //   const calculateOT = (games) => {
+  //     const correctOTs = games.filter(game =>
+  //       game.result?.endInOvertime && game.predictedOvertime
+  //     ).length;
+  //     const totalOTs = games.filter(game => game.result?.endInOvertime).length;
+  //     return (correctOTs / totalOTs * 100).toFixed(2);
+  //   };
+
+  //   const calculateL10 = (games) => {
+  //     const last10Games = games.slice(-10);
+  //     const wins = last10Games.filter(game => game.result?.win).length;
+  //     const losses = last10Games.filter(game => !game.result?.win).length;
+  //     return { wins, losses };
+  //   };
+
+  //   const calculateFPTS = (games) => {
+  //     const totalFavPoints = games.reduce((acc, game) => acc + (game.result?.favoritePoints || 0), 0);
+  //     const totalPossibleFavPoints = games.length * MAX_FAVORITE_POINTS; // Define MAX_FAVORITE_POINTS as needed
+  //     return ((totalFavPoints / totalPossibleFavPoints) * 100).toFixed(2);
+  //   };
+
+  //   const calculateUPTS = (games) => {
+  //   const totalUnderdogPoints = games.reduce((acc, game) => acc + (game.result?.underdogPoints || 0), 0);
+  //   const totalPossibleUnderdogPoints = games.length * MAX_UNDERDOG_POINTS; // Define MAX_UNDERDOG_POINTS as needed
+  //   return ((totalUnderdogPoints / totalPossibleUnderdogPoints) * 100).toFixed(2);
+  // };
 
   return (
     <div
@@ -188,15 +265,15 @@ const StandingsTables = () => {
       style={{ color: "white", marginTop: "10px", overflowX: "auto" }}
     >
       <table className="custom-table ">
-      <thead>
-            <tr>
-              {filteredHeaderOptions.map((item, ind) => (
-                <th key={ind} className="text-xs font-medium">
-                  {item}
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <thead>
+          <tr>
+            {filteredHeaderOptions.map((item, ind) => (
+              <th key={ind} className="text-xs font-medium">
+                {item}
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
             gamesPlayed.map((row, index) => {
@@ -273,53 +350,37 @@ const StandingsTables = () => {
                   <td className="text-xs font-medium text-center">
                     {row.state || "-"}/{row.city || "-"}
                   </td>
-                  <td className="text-xs font-medium text-center"></td>
-                  <td className="text-xs font-medium text-center">
-                    {ranks[index]}
-                  </td>
                   <td className="text-xs font-medium text-center">
                     {row.player || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {/* {row.state || "-"} */}
+                    {ranks[index]}
                   </td>
-                  <td className="text-xs font-medium text-center"></td>
+                  <td className="text-xs font-medium text-center">
+                    {/* {row.player || "-"} */}
+                  </td>
                   <td className="text-xs font-medium text-center">
                     {row.BR || "-"}
+                    {/* {row.state || "-"} */}
                   </td>
-                  <td className="text-xs font-medium text-center">W</td>
-                  <td className="text-xs font-medium text-center">L</td>
-                  <td className="text-xs font-medium text-center"></td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
+                  <td className="text-xs font-medium text-center"> {ml}</td>
+                  <td className="text-xs font-medium text-center">
+                    {/* {row.BR || "-"} */}
+                    {spread}
+                  </td>
+                  <td className="text-xs font-medium text-center">{ou}</td>
+                  <td className="text-xs font-medium text-center">{oneS}</td>
+                  <td className="text-xs font-medium text-center">
+                    {" "}
+                    {row["1S0"] || "-"}
+                  </td>
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">0</td>{" "}
-                  <td className="text-xs font-medium text-center">0</td>{" "}
-                  <td className="text-xs font-medium text-center">0</td>{" "}
-                  <td className="text-xs font-medium text-center">0</td>{" "}
-                  <td className="text-xs font-medium text-center">0</td>
-                  <td className="text-xs font-medium text-center">{ou}</td>
                   {renderColumns(row, index, ranks, tpValues, gameData)}
                   {/* Add a new column for the extracted vegasOdds value */}
                   {/* <td className="text-xs font-medium text-center">
                     {vegasOddsValue}
                   </td> */}
-                  <td className="text-xs font-medium text-center">{spread}</td>
-                  <td className="text-xs font-medium text-center">{oneS}</td>
-                  <td className="text-xs font-medium text-center">
-                    {row["1S0"] || "-"}
-                  </td>
-                  <td className="text-xs font-medium text-center"></td>
-                  <td className="text-xs font-medium text-center"></td>
                 </tr>
               );
             })
@@ -334,7 +395,6 @@ const StandingsTables = () => {
             </tr>
           )}
         </tbody>
-        
       </table>
     </div>
   );
