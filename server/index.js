@@ -33,7 +33,7 @@ mongoose
   })
   .then(() => console.log("DB Connected".bgYellow))
   .catch((err) => {
-    console.log("Error in db connection", err);
+    console.log("Error in db connection".bgRed, err);
   });
 
 // let corsOptions = {
