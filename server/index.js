@@ -2,7 +2,7 @@
 
 const express = require("express");
 const cors = require("cors");
-const colors = require("colors")
+const colors = require("colors");
 const bodyParser = require("body-parser");
 // const mysql = require('mysql');
 const userRoutes = require("./routes/userRoutes");
@@ -15,6 +15,7 @@ const mlbTeams = require("./routes/leagues/mlb");
 const gamesPlayed = require("./routes/gamesPlayed");
 const weekRoutes = require("./routes/weeks");
 const oddsRoutes = require("./routes/odds");
+const seasonDetailsRoutes = require("./routes/seasonDetails");
 
 const mongoose = require("mongoose");
 const moragn = require("morgan");
@@ -64,6 +65,7 @@ app.use("/api/leagues/nfl", nflTeams);
 app.use("/api/leagues/mlb", mlbTeams);
 app.use("/api/user/gamesplayed", gamesPlayed);
 app.use("/api/restaurant", router);
+app.use("/api/season-details", seasonDetailsRoutes);
 
 app.use("/api/weeks", weekRoutes);
 
