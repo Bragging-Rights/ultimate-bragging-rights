@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Line from "../components/Line";
+import Line from "../../components/Line";
 import {
   Box,
   Container,
@@ -14,7 +14,8 @@ import {
   Button,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { createSeasonDetail } from "../Apis/seasonDetails"; // Import the API function
+import displayToast from "../../components/Alert/Alert";
+import { createSeasonDetail } from "../../Apis/seasonDetails"; // Import the API function
 
 const darkTheme = createTheme({
   palette: {
@@ -78,7 +79,7 @@ const Season = () => {
     try {
       const response = await createSeasonDetail(formValues);
       console.log("Season detail created successfully:", response);
-      alert("Season created successfully!");
+      displayToast("Season created successfully!", "success");
     } catch (error) {
       console.error("Error creating season detail:", error);
   
@@ -86,15 +87,15 @@ const Season = () => {
       if (error.response) {
         // The server responded with a status code outside the 2xx range
         console.error("Server responded with:", error.response.status, error.response.data);
-        alert(`Failed to create season: ${error.response.data?.message || error.response.statusText}`);
+        displayToast(`Failed to create season: ${error.response.data?.message || error.response.statusText}`, "error");
       } else if (error.request) {
         // The request was made but no response was received
         console.error("No response received:", error.request);
-        alert("Failed to create season: No response from the server.");
+        displayToast("Failed to create season: No response from the server.", "error");
       } else {
         // Something else happened in setting up the request
         console.error("Error setting up the request:", error.message);
-        alert(`Failed to create season: ${error.message}`);
+        displayToast(`Failed to create season: ${error.message}`, "error");
       }
     }
   };
@@ -103,6 +104,8 @@ const Season = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <div className="w-full text-white">
+        <br/>
+        <br/>
         <Grid item xs={12}>
           <Line />
         </Grid>
@@ -111,6 +114,7 @@ const Season = () => {
           <Tabs value={tabValue} onChange={handleChange} aria-label="season tabs">
             <Tab label="Season Settings" />
           </Tabs>
+          <br/>
           {tabValue === 0 && (
             <Box sx={{ mt: 2 }}>
               <Grid container spacing={2} alignItems="center">
@@ -247,8 +251,10 @@ const Season = () => {
         </Container>
         <br/>
         <Grid item xs={12}>
-          <Line />
+          {/* <Line /> */}
         </Grid>
+        <br/>
+        <br/>
       </div>
     </ThemeProvider>
   );

@@ -7,6 +7,7 @@ import LiveGames from "./LiveGames";
 import UpdateGames from "./UpdateGames";
 import EnterWeek from "./EnterWeek";
 import "./ToggleButton.css";
+import Season from "./Season";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -48,6 +49,7 @@ const FormToggle = () => {
     { label: "Enter Results", formName: "results" },
     { label: "Live Games", formName: "livegames" },
     { label: "Enter Weeks", formName: "enterweeks" },
+    { label: "Enter Seasons", formName: "enterseason" },
   ];
 
   return (
@@ -68,10 +70,10 @@ const FormToggle = () => {
 
       <div className="mt-8">
         {activeForm === "games" && <EnterGames />}
-        {activeForm === "edit" && <UpdateGames />}
         {activeForm === "results" && <EnterResults />}
         {activeForm === "livegames" && <LiveGames />}
         {activeForm === "enterweeks" && <EnterWeek />}
+        {activeForm === "enterseason" && <Season/>}
       </div>
     </div>
   );
