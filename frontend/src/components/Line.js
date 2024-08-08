@@ -17,7 +17,7 @@ const Line = () => {
 
   // return <Box className={classes.line}>
   return  <Box>
-    <img src={goldline} style={{width:"95%", margin:"0 auto", display:"flex"}} />
+    <img src={goldline} style={{width:"90%", margin:"0 auto", display:"flex"}} />
   </Box>;
 };
 
