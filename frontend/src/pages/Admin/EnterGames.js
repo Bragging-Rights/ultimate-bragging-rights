@@ -292,10 +292,10 @@ const GameForm = () => {
               style={{ backgroundColor: "" }}
               key={odd.id}
             >
-              <div className="flex flex-row">
+              <div className="flex flex-row ">
                 <div
                   className="w-1/2 px-2 box box h-18 w-40"
-                  style={{ marginRight: "20px", marginBottom: "8px" }}
+                  style={{ marginRight: "20px",marginBottom: "8px" }}
                 >
                   <label>Time</label>
                   <input
@@ -328,13 +328,43 @@ const GameForm = () => {
                     disabled={true}
                   />
                 </div>
+                {/* <div
+                  className="w-1/2 px-2 box box h-18 w-40"
+                  style={{ marginRight: "20px", marginBottom: "8px" }}
+                >
+                  <label>Season Type</label>
+                  <select
+                    name={`seasonType`}
+                    className="bg-gray-800 text-white p-2 rounded w-full"
+                    disabled={true}
+                  >
+                    <option value="Pre Season">Pre Season</option>
+                    <option value="Regular Season">Regular Season</option>
+                    <option value="Playoffs">Playoffs</option>
+                  </select>
+                </div> */}
+                <div
+                  className="w-1/2 px-2 box box h-18 w-40"
+                  style={{ marginRight: "0px", marginBottom: "8px" }}
+                >
+                  <label htmlFor="seasonType">Season Type</label>
+                  <select
+                    id="seasonType"
+                    name="seasonType"
+                    className="bg-gray-800 text-white p-2 rounded w-full"
+                  >
+                    <option value="Pre Season">Pre Season</option>
+                    <option value="Regular Season">Regular Season</option>
+                    <option value="Playoffs">Playoffs</option>
+                  </select>
+                </div>
               </div>
               {odd.bookmakers &&
                 odd.bookmakers.map((bookmaker, index) => (
-                  <div key={index} className="flex gap-2">
+                  <div key={index} className="flex gap-2 mt-3 ">
                     <div
                       className="box box h-18 w-60"
-                      style={{ marginLeft: "40px" }}
+                      style={{ marginLeft: "0px" }}
                     >
                       <label>Visitor Team</label>
                       <input
@@ -412,10 +442,10 @@ const GameForm = () => {
                     </div>
                   </div>
                 ))}
-              <div className="flex gap-2 mt-5 ">
+              <div className="flex gap-2 mt-1  ">
                 <div
                   className="box box h-18 w-60"
-                  style={{ marginLeft: "40px" }}
+                  style={{ marginLeft: "0px" }}
                 >
                   <label>Home Team</label>
                   <input

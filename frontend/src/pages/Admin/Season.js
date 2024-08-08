@@ -82,16 +82,28 @@ const Season = () => {
       displayToast("Season created successfully!", "success");
     } catch (error) {
       console.error("Error creating season detail:", error);
-  
+
       // Check if there's a response from the server
       if (error.response) {
         // The server responded with a status code outside the 2xx range
-        console.error("Server responded with:", error.response.status, error.response.data);
-        displayToast(`Failed to create season: ${error.response.data?.message || error.response.statusText}`, "error");
+        console.error(
+          "Server responded with:",
+          error.response.status,
+          error.response.data
+        );
+        displayToast(
+          `Failed to create season: ${
+            error.response.data?.message || error.response.statusText
+          }`,
+          "error"
+        );
       } else if (error.request) {
         // The request was made but no response was received
         console.error("No response received:", error.request);
-        displayToast("Failed to create season: No response from the server.", "error");
+        displayToast(
+          "Failed to create season: No response from the server.",
+          "error"
+        );
       } else {
         // Something else happened in setting up the request
         console.error("Error setting up the request:", error.message);
@@ -99,22 +111,25 @@ const Season = () => {
       }
     }
   };
-  
 
   return (
     <ThemeProvider theme={darkTheme}>
       <div className="w-full text-white">
-        <br/>
-        <br/>
+        <br />
+        <br />
         <Grid item xs={12}>
           <Line />
         </Grid>
         <br />
         <Container>
-          <Tabs value={tabValue} onChange={handleChange} aria-label="season tabs">
+          <Tabs
+            value={tabValue}
+            onChange={handleChange}
+            aria-label="season tabs"
+          >
             <Tab label="Season Settings" />
           </Tabs>
-          <br/>
+          <br />
           {tabValue === 0 && (
             <Box sx={{ mt: 2 }}>
               <Grid container spacing={2} alignItems="center">
@@ -125,25 +140,25 @@ const Season = () => {
                     name="startDate"
                     value={formValues.startDate}
                     onChange={handleInputChange}
-                    style={{ backgroundColor: '#212227' }}
+                    style={{ backgroundColor: "#212227" }}
                     InputLabelProps={{
                       shrink: true,
-                      style: { color: '#ffffff' },
+                      style: { color: "#ffffff" },
                     }}
                     InputProps={{
-                      style: { color: '#ffffff' },
+                      style: { color: "#ffffff" },
                     }}
                     fullWidth
                     variant="outlined"
                     sx={{
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#ffffff',
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#ffffff",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#ffffff',
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#ffffff",
                       },
-                      '& .MuiSvgIcon-root': {
-                        color: '#ffffff',
+                      "& .MuiSvgIcon-root": {
+                        color: "#ffffff",
                       },
                     }}
                   />
@@ -155,25 +170,25 @@ const Season = () => {
                     name="endDate"
                     value={formValues.endDate}
                     onChange={handleInputChange}
-                    style={{ backgroundColor: '#212227' }}
+                    style={{ backgroundColor: "#212227" }}
                     InputLabelProps={{
                       shrink: true,
-                      style: { color: '#ffffff' },
+                      style: { color: "#ffffff" },
                     }}
                     InputProps={{
-                      style: { color: '#ffffff' },
+                      style: { color: "#ffffff" },
                     }}
                     fullWidth
                     variant="outlined"
                     sx={{
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#ffffff',
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#ffffff",
                       },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#ffffff',
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#ffffff",
                       },
-                      '& .MuiSvgIcon-root': {
-                        color: '#ffffff',
+                      "& .MuiSvgIcon-root": {
+                        color: "#ffffff",
                       },
                     }}
                   />
@@ -188,15 +203,15 @@ const Season = () => {
                       onChange={handleInputChange}
                       label="League"
                       sx={{
-                        color: '#ffffff',
-                        '.MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#ffffff',
+                        color: "#ffffff",
+                        ".MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#ffffff",
                         },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#ffffff',
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#ffffff",
                         },
-                        '.MuiSvgIcon-root': {
-                          color: '#ffffff',
+                        ".MuiSvgIcon-root": {
+                          color: "#ffffff",
                         },
                       }}
                     >
@@ -218,15 +233,15 @@ const Season = () => {
                       onChange={handleInputChange}
                       label="Season"
                       sx={{
-                        color: '#ffffff',
-                        '.MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#ffffff',
+                        color: "#ffffff",
+                        ".MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#ffffff",
                         },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: '#ffffff',
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#ffffff",
                         },
-                        '.MuiSvgIcon-root': {
-                          color: '#ffffff',
+                        ".MuiSvgIcon-root": {
+                          color: "#ffffff",
                         },
                       }}
                     >
@@ -239,6 +254,10 @@ const Season = () => {
               </Grid>
               <Box sx={{ mt: 4 }}>
                 <Button
+                  style={{
+                    backgroundColor: "#FFD700",
+                    color: "rgba(0, 0, 0, 1)",
+                  }}
                   variant="contained"
                   color="primary"
                   onClick={handleSubmit}
@@ -249,12 +268,12 @@ const Season = () => {
             </Box>
           )}
         </Container>
-        <br/>
+        <br />
         <Grid item xs={12}>
           {/* <Line /> */}
         </Grid>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </div>
     </ThemeProvider>
   );
