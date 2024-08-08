@@ -68,6 +68,28 @@ const SeasonTables = () => {
   };
 
   useEffect(() => {
+    if (selectedLeague === "MLB" && gamesPlayed.length > 0) {
+      const gameHeaders = new Set(
+        gamesPlayed
+          .map((game) => {
+            const gameData = gameDataMap[game.gameData] || {};
+            if (gameData.visitor && gameData.home) {
+              return `${
+                headerOptions[gameData?.visitor] || gameData?.visitor
+              } VS ${headerOptions[gameData?.home] || gameData?.home}`;
+            }
+            return null;
+          })
+          .filter(Boolean)
+      );
+
+      setFilteredHeaderOptions((prevHeaders) => [
+        ...new Set([...prevHeaders, ...gameHeaders]),
+      ]);
+    }
+  }, [gamesPlayed, gameDataMap, selectedLeague]);
+
+  useEffect(() => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       setFilteredHeaderOptions(headerOptions[selectedLeague]);
     } else {
@@ -107,7 +129,9 @@ const SeasonTables = () => {
     return { tpValues, ranks };
   };
 
-  const { tpValues, ranks } = calculateTPandRank(filteredGames.length > 0 ? filteredGames : gamesPlayed);
+  const { tpValues, ranks } = calculateTPandRank(
+    filteredGames.length > 0 ? filteredGames : gamesPlayed
+  );
 
   const renderColumns = (row) => {
     const Reg = calculateReg(row);
@@ -154,6 +178,13 @@ const SeasonTables = () => {
       <table className="custom-table">
         <thead>
           <tr>
+            {filteredHeaderOptions.map((item, ind) => (
+              <th key={ind} className="text-xs font-medium">
+                {item}
+              </th>
+            ))}
+          </tr>
+          {/* <tr>
             <th style={{ cursor: "pointer" }}>CO</th>
             <th style={{ cursor: "pointer" }}>CTY/PROV</th>
             <th style={{ cursor: "pointer" }}>FAV</th>
@@ -190,11 +221,13 @@ const SeasonTables = () => {
             <th style={{ cursor: "pointer" }}>L10</th>
             <th style={{ cursor: "pointer" }}>FPTS</th>
             <th style={{ cursor: "pointer" }}>UPTS</th>
-          </tr>
+          </tr> */}
         </thead>
         <tbody>
           {dataToRender.length > 0 ? (
             dataToRender.map((row, index) => {
+              const gameData = gameDataMap[row.gameData] || {};
+
               const tp = tpValues[index];
               const oneS = (
                 (row.result?.accuracyPoints?.home?.p1s || 0) +
@@ -215,41 +248,62 @@ const SeasonTables = () => {
                 (row.result?.accuracyPoints?.home?.p3s2p || 0) +
                 (row.result?.accuracyPoints?.vistor?.p3s2p || 0)
               ).toFixed(2);
+               // Compute ml, ou, spread values based on the specified properties
+               const ml = parseFloat(
+                row.result?.vegasOdds?.pickingFavorite ||
+                  row.result?.vegasOdds?.pickingUnderdog ||
+                  0
+              ).toFixed(2);
+              const ou = parseFloat(
+                row.result?.vegasOdds?.pickingOver ||
+                  row.result?.vegasOdds?.pickingUnder ||
+                  0
+              ).toFixed(2);
+              const spread = parseFloat(
+                row.result?.vegasOdds?.pickingSpread?.vSpreadPoints ||
+                  row.result?.vegasOdds?.pickingSpread?.hSpreadPoints ||
+                  0
+              ).toFixed(2);
 
               return (
                 <tr key={row._id}>
                   <td className="text-xs font-medium text-center">{row.co}</td>
-                  <td className="text-xs font-medium text-center">{row.state}</td>
-                  <td className="text-xs font-medium text-center">{row.city}</td>
-                  <td className="text-xs font-medium text-center">{ranks[index]}</td>
-                  <td className="text-xs font-medium text-center">{row.player}</td>
+                  <td className="text-xs font-medium text-center">
+                    {row.state}/{row.city}
+                  </td>
+                  {/* <td className="text-xs font-medium text-center"></td> */}
+                  <td className="text-xs font-medium text-center">
+                    {row.player}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {ranks[index]}
+                  </td>
                   <td className="text-xs font-medium text-center">{tp}</td>
-                  <td className="text-xs font-medium text-center">{row.gamesPlayed}</td>
+                  {/* <td className="text-xs font-medium text-center">
+                    {row.gamesPlayed}
+                  </td> */}
                   <td className="text-xs font-medium text-center">{row.BR}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.win || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.lose || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.currentStreak || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.winningStreak || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.losingStreak || 0}</td>
+                  <td className="text-xs font-medium text-center">
+                    {/* {row.result?.win || 0} */}
+                    {ml}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {/* {row.result?.lose || 0} */}
+                    {ou}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {/* {row.result?.currentStreak || 0} */}
+                    {spread}
+                  </td>
                   <td className="text-xs font-medium text-center">{oneS}</td>
+                  <td className="text-xs font-medium text-center">
+                  {row["1S0"] || "-"}
+                  </td>
                   <td className="text-xs font-medium text-center">{oneSw2}</td>
                   <td className="text-xs font-medium text-center">{twoSw2}</td>
-                  <td className="text-xs font-medium text-center">{twoSw3}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.accuracyPoints?.home?.p7s || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.accuracyPoints?.vistor?.p7s || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.accuracyPoints?.home?.p14s || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.accuracyPoints?.vistor?.p14s || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.vegasOdds?.moneyLine || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.vegasOdds?.spread || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.vegasOdds?.overUnder || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.accuracyPoints?.home?.pExtra || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.accuracyPoints?.vistor?.pExtra || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.firstHalf || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.secondHalf || 0}</td>
-                  {renderColumns(row)}
-                  <td className="text-xs font-medium text-center">{row.result?.last10 || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.finalPoints || 0}</td>
-                  <td className="text-xs font-medium text-center">{row.result?.updatedPoints || 0}</td>
+                  
+                  {renderColumns(row, index, ranks, tpValues, gameData)}
+                  
                 </tr>
               );
             })
