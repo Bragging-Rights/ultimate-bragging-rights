@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Line from "../components/Line";
 import {
   Box,
@@ -11,8 +11,10 @@ import {
   InputLabel,
   Tabs,
   Tab,
+  Button,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createSeasonDetail } from "../Apis/seasonDetails"; // Import the API function
 
 const darkTheme = createTheme({
   palette: {
@@ -55,10 +57,48 @@ const darkTheme = createTheme({
 });
 
 const Season = () => {
-  const [tabValue, setTabValue] = React.useState(0);
+  const [tabValue, setTabValue] = useState(0);
+  const [formValues, setFormValues] = useState({
+    startDate: "",
+    endDate: "",
+    league: "",
+    season: "",
+  });
+
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await createSeasonDetail(formValues);
+      console.log("Season detail created successfully:", response);
+      alert("Season created successfully!");
+    } catch (error) {
+      console.error("Error creating season detail:", error);
+  
+      // Check if there's a response from the server
+      if (error.response) {
+        // The server responded with a status code outside the 2xx range
+        console.error("Server responded with:", error.response.status, error.response.data);
+        alert(`Failed to create season: ${error.response.data?.message || error.response.statusText}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+        alert("Failed to create season: No response from the server.");
+      } else {
+        // Something else happened in setting up the request
+        console.error("Error setting up the request:", error.message);
+        alert(`Failed to create season: ${error.message}`);
+      }
+    }
+  };
+  
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -78,18 +118,19 @@ const Season = () => {
                   <TextField
                     label="Start Date"
                     type="date"
-                    style={{backgroundColor : '#212227'}}
+                    name="startDate"
+                    value={formValues.startDate}
+                    onChange={handleInputChange}
+                    style={{ backgroundColor: '#212227' }}
                     InputLabelProps={{
                       shrink: true,
                       style: { color: '#ffffff' },
                     }}
                     InputProps={{
                       style: { color: '#ffffff' },
-                      inputProps: { style: { color: '#ffffff' } },
                     }}
                     fullWidth
                     variant="outlined"
-                    
                     sx={{
                       '& .MuiOutlinedInput-notchedOutline': {
                         borderColor: '#ffffff',
@@ -107,14 +148,16 @@ const Season = () => {
                   <TextField
                     label="End Date"
                     type="date"
-                    style={{backgroundColor : '#212227'}}
+                    name="endDate"
+                    value={formValues.endDate}
+                    onChange={handleInputChange}
+                    style={{ backgroundColor: '#212227' }}
                     InputLabelProps={{
                       shrink: true,
                       style: { color: '#ffffff' },
                     }}
                     InputProps={{
                       style: { color: '#ffffff' },
-                      inputProps: { style: { color: '#ffffff' } },
                     }}
                     fullWidth
                     variant="outlined"
@@ -136,6 +179,9 @@ const Season = () => {
                     <InputLabel id="league-select-label">League</InputLabel>
                     <Select
                       labelId="league-select-label"
+                      name="league"
+                      value={formValues.league}
+                      onChange={handleInputChange}
                       label="League"
                       sx={{
                         color: '#ffffff',
@@ -151,6 +197,8 @@ const Season = () => {
                       }}
                     >
                       <MenuItem value="NFL">NFL</MenuItem>
+                      <MenuItem value="MLB">MLB</MenuItem>
+                      <MenuItem value="NBA">NBA</MenuItem>
                       <MenuItem value="NHL">NHL</MenuItem>
                       <MenuItem value="CFL">CFL</MenuItem>
                     </Select>
@@ -161,6 +209,9 @@ const Season = () => {
                     <InputLabel id="season-select-label">Season</InputLabel>
                     <Select
                       labelId="season-select-label"
+                      name="season"
+                      value={formValues.season}
+                      onChange={handleInputChange}
                       label="Season"
                       sx={{
                         color: '#ffffff',
@@ -182,6 +233,15 @@ const Season = () => {
                   </FormControl>
                 </Grid>
               </Grid>
+              <Box sx={{ mt: 4 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Create Season
+                </Button>
+              </Box>
             </Box>
           )}
         </Container>

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { AppBar, Toolbar, List, ListItem, ListItemText, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+} from "@mui/material";
 import "./MainNavBar.css"; // Import the CSS file
 
 const navItem = [
@@ -10,7 +17,7 @@ const navItem = [
   { label: "Stats", path: "/stats" },
   { label: "Shares", path: "/share" },
   { label: "Admin", path: "/admin" },
-    { label: "Season", path: "/season" },
+  { label: "Season", path: "/season" },
   // { label: "Pools", path: "/pools" },
   // { label: "FB Challenge", path: "/fb-challenges" },
   // { label: "Records", path: "/records" },
@@ -62,12 +69,11 @@ const MainNavBar = () => {
             width: isMobileView ? "100%" : "auto",
             display: "flex",
             justifyContent: "center",
-            backgroundColor : 'black',
-            padding : '1% 3%',
-            borderRadius : '40vh',
-            overflow: 'hidden', // Ensure that any overflow is hidden
-            padding: isMobileView ? '2% 3%' : '1% 3%', // Dynamic padding based on screen size
-
+            backgroundColor: "black",
+            padding: "1% 3%",
+            borderRadius: "40vh",
+            overflow: "hidden", // Ensure that any overflow is hidden
+            padding: isMobileView ? "2% 3%" : "1% 3%", // Dynamic padding based on screen size
           }}
         >
           <List
@@ -89,9 +95,9 @@ const MainNavBar = () => {
                   sx={{
                     position: "relative",
                     padding: "0 16px",
-                    '&.Mui-selected': {
+                    "&.Mui-selected": {
                       backgroundColor: "transparent",
-                      '&::after': {
+                      "&::after": {
                         content: '""',
                         position: "absolute",
                         bottom: 0,
@@ -100,13 +106,14 @@ const MainNavBar = () => {
                         height: "2px",
                         backgroundColor: "white",
                       },
-                      '.nav-text': {
+                      ".nav-text": {
                         color: "red", // Keep text color red
                       },
                     },
-                    '.nav-text': {
+                    ".nav-text": {
                       fontSize: isMobileView ? "10px" : "16px",
-                      color: location.pathname === item.path ? "red" : "inherit",
+                      color:
+                        location.pathname === item.path ? "red" : "inherit",
                     },
                   }}
                 >
