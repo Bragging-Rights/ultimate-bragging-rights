@@ -2,6 +2,7 @@ import api from "./api";
 
 // API to create a new season detail
 export const createSeasonDetail = async (seasonDetail) => {
+  console.log("seasonDetail", seasonDetail);
   const response = await api.post("api/season-details", seasonDetail);
   return response.data;
 };
