@@ -353,6 +353,7 @@ const GameForm = () => {
                     name="seasonType"
                     className="bg-gray-800 text-white p-2 rounded w-full"
                   >
+                    <option value="">Select a Season</option>
                     <option value="Pre Season">Pre Season</option>
                     <option value="Regular Season">Regular Season</option>
                     <option value="Playoffs">Playoffs</option>
