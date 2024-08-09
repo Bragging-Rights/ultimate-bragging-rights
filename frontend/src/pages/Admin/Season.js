@@ -215,11 +215,20 @@ const Season = () => {
                         },
                       }}
                     >
-                      <MenuItem value="NFL">NFL</MenuItem>
-                      <MenuItem value="MLB">MLB</MenuItem>
-                      <MenuItem value="NBA">NBA</MenuItem>
+                      <label>HOCKEY</label>
                       <MenuItem value="NHL">NHL</MenuItem>
+                      <label>FOOTBALL</label>
                       <MenuItem value="CFL">CFL</MenuItem>
+                      <MenuItem value="NCAAF">NCAAF</MenuItem>
+                      <MenuItem value="NFL">NFL</MenuItem>
+                      <MenuItem value="UFL">UFL</MenuItem>
+                      <label>BASEBALL</label>
+                      <MenuItem value="NCCA">NCCA</MenuItem>
+                      <MenuItem value="MLB">MLB</MenuItem>
+                      <label>BASKETBALL</label>
+                      <MenuItem value="NBA">NBA</MenuItem>
+                      <MenuItem value="WNBA">WNBA</MenuItem>
+                      <MenuItem value="NCAAB">NCAAB</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
