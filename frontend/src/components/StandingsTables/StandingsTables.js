@@ -268,7 +268,7 @@ const StandingsTables = () => {
         <thead>
           <tr>
             {filteredHeaderOptions.map((item, ind) => (
-              <th key={ind} className="text-xs font-medium">
+              <th key={ind} className="text-xs font-medium text-center">
                 {item}
               </th>
             ))}
@@ -358,6 +358,7 @@ const StandingsTables = () => {
                   </td>
                   <td className="text-xs font-medium text-center">
                     {/* {row.player || "-"} */}
+                    {tp}
                   </td>
                   <td className="text-xs font-medium text-center">
                     {row.BR || "-"}
