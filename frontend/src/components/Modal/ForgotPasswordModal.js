@@ -15,7 +15,7 @@ const customStyles = {
     borderRadius: "8px",
     border: "1px solid #BE8200",
     boxShadow: "0px 4px 40px 0px rgba(190, 130, 0, 0.60)",
-    height: "52vh",
+    height: "55vh",
     width: "50%",
     background: "#212227",
     padding: "30px",
@@ -84,7 +84,8 @@ export const ForgotPasswordModal = (props) => {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p style={{ color: "white" }}>
-              Enter your email to reset your password:
+              Enter your email to reset your password:<br/>
+              AND We'll Get You Back In The Game
             </p>
           </div>
 
