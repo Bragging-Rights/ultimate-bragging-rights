@@ -243,3 +243,53 @@ exports.getUserById = async (req, res) => {
     });
   }
 };
+
+// working forr forget password controller
+
+exports.sendResetPasswordOTP = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      return res.status(404).json(responseObject({}, "User not found", true));
+    }
+
+    const otp = generateOTP();
+
+    foundUser.otp = otp;
+    await foundUser.save();
+
+    sendOTPEmail(email, otp);
+
+    res.status(200).json(responseObject({}, "OTP sent successfully", false));
+  } catch (err) {
+    res.status(500).json(responseObject({}, "Error sending OTP", true));
+  }
+};
+
+exports.verifyResetPasswordOTP = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  try {
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      return res.status(404).json(responseObject({}, "User not found", true));
+    }
+
+    if (otp === foundUser.otp) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      foundUser.password = hashedPassword;
+      foundUser.otp = "";
+      await foundUser.save();
+
+      res.status(200).json(responseObject({}, "Password reset successful!", false));
+    } else {
+      res.status(400).json(responseObject({}, "Invalid OTP", true));
+    }
+  } catch (err) {
+    res.status(500).json(responseObject({}, "Error resetting password", true));
+  }
+};
