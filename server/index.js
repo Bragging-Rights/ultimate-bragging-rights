@@ -21,6 +21,7 @@ const mongoose = require("mongoose");
 const moragn = require("morgan");
 const router = require("./routes/restaurants");
 const User = require("./models/user");
+const { testMail } = require("./utils/sendEmail");
 require("dotenv").config();
 
 const app = express();
@@ -71,10 +72,8 @@ app.use("/api/weeks", weekRoutes);
 
 app.use("/api/odds", oddsRoutes);
 
-app.get("/", async (req, res) => {
-  const users = await User.find();
-  console.log(users);
-  res.send(users);
+app.get("/", (req, res) => {
+  res.send("Hello from express");
 });
 
 // Start the server
