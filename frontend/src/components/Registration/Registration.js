@@ -63,6 +63,7 @@ const Registration = (props) => {
   const isMobile = window.innerWidth <= 600;
   const [selectedCountry, setSelectedCountry] = useState("");
   const [captchaState, setCaptchaState] = useState(false);
+  const [showOtpInput, setShowOtpInput] = useState(false);
 
   const [availableTeams, setAvailableTeams] = useState([
     {
@@ -149,6 +150,7 @@ const Registration = (props) => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    // otpCode: '',
     referralName: "",
     username: "",
     termsAccepted: false,
@@ -175,6 +177,15 @@ const Registration = (props) => {
       ...prevFormData,
       country: e.label,
     }));
+  };
+  const handleCreateAccountClick = () => {
+    // Logic to create account
+    // If OTP is needed, show the OTP input field
+    setShowOtpInput(true);
+  };
+
+  const handleVerifyClick = () => {
+    // Logic to verify OTP and complete account creation
   };
 
   const handleRemoveLeague = (index) => {
@@ -585,85 +596,82 @@ const Registration = (props) => {
               )}
               {index === 1 && (
                 <>
-                <h2 id="heading" className="signup-heading">
-                  WE NEED YOUR LOCATION!
-                </h2>
-                <p className="signup-subtitle">
-                  To Determine Which Conference and Division you will play in
-                </p>
-              
-                <div className="label-container">
-                  <label className="info-require">
-                    * Information Needed
-                  </label>
-                  <div className="line"></div>
-                </div>
-              
-                <div className="form-container">
-                  <div className="form-row">
-                    <CountrySelect
-                      value={selectedCountry}
-                      onChange={(e) => handleCountryChange(e)}
-                      defaultValue={{ value: "CA", label: "Canada" }}
-                    />
-                    <StateSelect
-                      country={countryCode}
-                      onChange={(e) => {
-                        setStateCode(e.value);
-                        setFormData({
-                          ...formData,
-                          province: e.label,
-                        });
-                      }}
-                    />
-                    <CitySelect
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          city: e.label,
-                        })
-                      }
-                      state={stateCode}
-                      countryCode={countryCode}
-                      stateCode={stateCode}
-                    />
+                  <h2 id="heading" className="signup-heading">
+                    WE NEED YOUR LOCATION!
+                  </h2>
+                  <p className="signup-subtitle">
+                    To Determine Which Conference and Division you will play in
+                  </p>
+
+                  <div className="label-container">
+                    <label className="info-require">* Information Needed</label>
+                    <div className="line"></div>
                   </div>
-                </div>
-              
-                <div className="form-container">
-                  <div className="form-row">
-                    <ModalInput
-                      label={
-                        <h2
-                          id="heading"
-                          className="signup-heading"
-                          style={{ fontSize: "14px", color: "#FFAE00" }}
-                        >
-                          * Postal/ZIP Code
-                        </h2>
-                      }
-                      placeholder="Postal/ZIP code"
-                      type="text"
-                      name="postalCode"
-                      value={formData.postalCode}
-                      onChange={inputChangeHandler}
-                      className="zip-code"
-                      style={{ height: "59px" }}
-                    />
-                    <PhoneNumber
-                      value={formData.phoneNumber}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          phoneNumber: e,
-                        });
-                      }}
-                      className="phone-number"
-                    />
+
+                  <div className="form-container">
+                    <div className="form-row">
+                      <CountrySelect
+                        value={selectedCountry}
+                        onChange={(e) => handleCountryChange(e)}
+                        defaultValue={{ value: "CA", label: "Canada" }}
+                      />
+                      <StateSelect
+                        country={countryCode}
+                        onChange={(e) => {
+                          setStateCode(e.value);
+                          setFormData({
+                            ...formData,
+                            province: e.label,
+                          });
+                        }}
+                      />
+                      <CitySelect
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            city: e.label,
+                          })
+                        }
+                        state={stateCode}
+                        countryCode={countryCode}
+                        stateCode={stateCode}
+                      />
+                    </div>
                   </div>
-                </div>
-              </>
-              
+
+                  <div className="form-container">
+                    <div className="form-row">
+                      <ModalInput
+                        label={
+                          <h2
+                            id="heading"
+                            className="signup-heading"
+                            style={{ fontSize: "14px", color: "#FFAE00" }}
+                          >
+                            * Postal/ZIP Code
+                          </h2>
+                        }
+                        placeholder="Postal/ZIP code"
+                        type="text"
+                        name="postalCode"
+                        value={formData.postalCode}
+                        onChange={inputChangeHandler}
+                        className="zip-code"
+                        style={{ height: "59px" }}
+                      />
+                      <PhoneNumber
+                        value={formData.phoneNumber}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            phoneNumber: e,
+                          });
+                        }}
+                        className="phone-number"
+                      />
+                    </div>
+                  </div>
+                </>
               )}
 
               {index === 2 && (
@@ -802,6 +810,23 @@ const Registration = (props) => {
                         }
                         value={formData.confirmPassword}
                       />
+                      {showOtpInput && (
+                        <ModalInput
+                          label={
+                            <h2
+                              id="heading"
+                              className="signup-heading"
+                              style={{ fontSize: "14px", color: "#FFAE00" }}
+                            >
+                              OTP Code
+                            </h2>
+                          }
+                          placeholder={"Enter OTP Code"}
+                          name="otpCode"
+                          value={formData.otpCode}
+                          onChange={inputChangeHandler}
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="privacy-policy">
@@ -860,14 +885,18 @@ const Registration = (props) => {
                       value="Previous"
                     />
                     <button
-                      className={`submit action-button 
-                   ${!captchaState && "cursor-not-allowed"}      
-                              `}
-                      onClick={handleRegistration}
+                      className={`submit action-button ${
+                        !captchaState && "cursor-not-allowed"
+                      }`}
+                      onClick={
+                        showOtpInput
+                          ? handleVerifyClick
+                          : handleCreateAccountClick
+                      }
                       type="button"
-                      // disabled={!captchaState}
                     >
-                      Create Account {isLoading && <Loader />}
+                      {showOtpInput ? "Create Account" : "Send Code"}{" "}
+                      {isLoading && <Loader />}
                     </button>
                   </div>
                 </div>
