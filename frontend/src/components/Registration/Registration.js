@@ -14,6 +14,8 @@ import CountrySelect from "../Modal/CountrySelect";
 import ModalSelect from "../Modal/ModalSelect";
 import displayToast from "../../components/Alert/Alert";
 import { Register } from "../../Apis/auth";
+import { verifyOTP } from "../../Apis/auth";
+
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
@@ -150,7 +152,7 @@ const Registration = (props) => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    // otpCode: '',
+    // otpCode: "",
     referralName: "",
     username: "",
     termsAccepted: false,
@@ -180,13 +182,37 @@ const Registration = (props) => {
   };
   const handleCreateAccountClick = () => {
     // Logic to create account
+    handleRegistration();
     // If OTP is needed, show the OTP input field
     setShowOtpInput(true);
   };
 
-  const handleVerifyClick = () => {
-    // Logic to verify OTP and complete account creation
+  const handleVerifyClick = async () => {
+    try {
+      const email = document.getElementById("email-input").value;
+      const otp = document.getElementById("otp-input").value; 
+  
+      const response = await verifyOTP({ email, otp });
+  
+      if (response?.status === 200) {
+        if (response.data.error === false) {
+          setShowOtpInput(true); 
+          displayToast("Registration Completed", "success"); 
+          console.log("OTP successfully verified!");
+          window.location.reload(); 
+        } else {
+          displayToast("Invalid OTP", "error"); 
+        }
+      } else {
+        console.error("Error verifying OTP:", response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Failed to verify OTP:", error);
+      displayToast("Failed to verify OTP", "error"); 
+    }
   };
+  
+  
 
   const handleRemoveLeague = (index) => {
     if (userLeagues.length === 1) {
@@ -225,7 +251,7 @@ const Registration = (props) => {
     });
 
     if (resp) {
-      displayToast(" all the required fileds Please fillin the league.");
+      displayToast(" all the required fileds Please fill in the league.");
       return;
     }
 
@@ -247,8 +273,13 @@ const Registration = (props) => {
         if (rec?.data?.hasErrors) {
           displayToast(rec?.data?.message, "error");
         } else {
-          displayToast("Register successfully.", "success");
-          window.location.reload(); // Add this line to refresh the page
+          setShowOtpInput(true);
+          // displayToast("Register successfully.", "success");
+          displayToast(
+            "Code Successfully sent! Please check your inbox",
+            "success"
+          );
+          // window.location.reload(); // Add this line to refresh the page
         }
       },
     }
@@ -266,6 +297,7 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
+      // "otpCode",
     ];
 
     const invalidFields = requiredFields.filter((field) => !formData[field]);
@@ -624,6 +656,10 @@ const Registration = (props) => {
                             province: e.label,
                           });
                         }}
+                        style={{
+                          position: 'relative',
+                          zIndex: 9999,
+                        }}
                       />
                       <CitySelect
                         onChange={(e) =>
@@ -635,6 +671,10 @@ const Registration = (props) => {
                         state={stateCode}
                         countryCode={countryCode}
                         stateCode={stateCode}
+                        style={{
+                          position: 'relative',
+                          zIndex: 9999,
+                        }}
                       />
                     </div>
                   </div>
@@ -863,6 +903,10 @@ const Registration = (props) => {
                         onClick={prevStep}
                         className="previous action-button-previous"
                         value="Previous"
+                        style={{
+                          position: 'relative',
+                          zIndex: 0,
+                        }}
                       />
                     )}
                     <input
@@ -870,6 +914,10 @@ const Registration = (props) => {
                       onClick={handleNextClick}
                       className="next action-button"
                       value="Next"
+                      style={{
+                        position: 'relative',
+                        zIndex: 0,
+                      }}
                     />
                   </div>
                 </div>
@@ -889,9 +937,7 @@ const Registration = (props) => {
                         !captchaState && "cursor-not-allowed"
                       }`}
                       onClick={
-                        showOtpInput
-                          ? handleVerifyClick
-                          : handleCreateAccountClick
+                        showOtpInput ? handleVerifyClick : handleRegistration
                       }
                       type="button"
                     >

@@ -62,3 +62,17 @@ export const getUserById = async (id) => {
     return { error: `An error occurred while fetching user with ID ${id}.` };
   }
 };
+
+export const verifyOTP = async (data) => {
+  try {
+    const response = await api.post(
+      "api/users/verify-otp",
+      JSON.stringify(data)
+    );
+    return response;
+  } catch (error) {
+    console.error("An error occurred during OTP verification:", error);
+    // Optionally, handle the error as needed
+    return { error: "An error occurred during OTP verification." };
+  }
+};

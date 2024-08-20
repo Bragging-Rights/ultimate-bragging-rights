@@ -8,59 +8,66 @@ const { sendOTPEmail } = require("../utils/sendEmail");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.signUpController = async (req, res) => {
-  console.log("req.body", req.body);
   try {
+    console.log("req.body", req.body);
+
     const user = req.body;
     const usermail = user.email;
-    // Check if the email is unique
+    console.log('before email existence')
     const existingUser = await User.findOne({ email: usermail });
     if (existingUser) {
+      console.log("Email already exists:", usermail);
       return res.status(409).json({
         message: "Email already exists. Please try another one",
         success: false,
       });
     }
-
+console.log("method executed")
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(user.password, salt);
 
-    let refferal;
+    let referral;
     if (user.referralName) {
-      refferal = await User.findOne({ referralCode: user.referralName });
-      if (!refferal) {
+      referral = await User.findOne({ referralCode: user.referralName });
+      if (!referral) {
+        console.log("Invalid referral code:", user.referralName);
         return res.status(404).json({
           message: "Invalid referral code.",
           success: false,
         });
       }
     }
+    console.log('before OTP')
     const otp = generateOTP();
+    console.log('After OTP')
     const newUser = new User({
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      password: hashedPassword, // Save the hashed password
+      password: hashedPassword, 
       otp: otp,
-      referredBy: refferal ? refferal._id : null,
+      referredBy: referral ? referral._id : null,
       city: user.city,
       state: user.province,
       country: user.country,
       zipCode: user.postalCode,
       phone: user.phoneNumber,
       gender: user.gender,
-      leagues: user.leagues.map((league) => {
-        return {
-          league: league.league,
-          username: league.username,
-          team: league.team,
-        };
-      }),
+      leagues: user.leagues.map((league) => ({
+        league: league.league,
+        username: league.username,
+        team: league.team,
+      })),
     });
+    console.log('After New user')
 
-    // Update the referral tree and tickets for direct referral
+
     const savedUser = await newUser.save();
+    console.log("New user saved:", savedUser);
 
     sendOTPEmail(user.email, otp);
+    console.log("OTP sent to:", user.email);
+
     res.status(200).json(savedUser);
   } catch (err) {
     console.error("Error inserting user:", err);
@@ -70,6 +77,7 @@ exports.signUpController = async (req, res) => {
     });
   }
 };
+
 
 exports.signInController = async (req, res) => {
   const { email, password } = req.body;
