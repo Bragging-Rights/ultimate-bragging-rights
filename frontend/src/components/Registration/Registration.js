@@ -190,29 +190,27 @@ const Registration = (props) => {
   const handleVerifyClick = async () => {
     try {
       const email = document.getElementById("email-input").value;
-      const otp = document.getElementById("otp-input").value; 
-  
+      const otp = document.getElementById("otp-input").value;
+
       const response = await verifyOTP({ email, otp });
-  
+
       if (response?.status === 200) {
         if (response.data.error === false) {
-          setShowOtpInput(true); 
-          displayToast("Registration Completed", "success"); 
+          setShowOtpInput(true);
+          displayToast("Registration Completed", "success");
           console.log("OTP successfully verified!");
-          window.location.reload(); 
+          window.location.reload();
         } else {
-          displayToast("Invalid OTP", "error"); 
+          displayToast("Invalid OTP", "error");
         }
       } else {
         console.error("Error verifying OTP:", response?.data?.message);
       }
     } catch (error) {
       console.error("Failed to verify OTP:", error);
-      displayToast("Failed to verify OTP", "error"); 
+      displayToast("Failed to verify OTP", "error");
     }
   };
-  
-  
 
   const handleRemoveLeague = (index) => {
     if (userLeagues.length === 1) {
@@ -657,7 +655,7 @@ const Registration = (props) => {
                           });
                         }}
                         style={{
-                          position: 'relative',
+                          position: "relative",
                           zIndex: 9999,
                         }}
                       />
@@ -672,7 +670,7 @@ const Registration = (props) => {
                         countryCode={countryCode}
                         stateCode={stateCode}
                         style={{
-                          position: 'relative',
+                          position: "relative",
                           zIndex: 9999,
                         }}
                       />
@@ -904,7 +902,7 @@ const Registration = (props) => {
                         className="previous action-button-previous"
                         value="Previous"
                         style={{
-                          position: 'relative',
+                          position: "relative",
                           zIndex: 0,
                         }}
                       />
@@ -915,7 +913,7 @@ const Registration = (props) => {
                       className="next action-button"
                       value="Next"
                       style={{
-                        position: 'relative',
+                        position: "relative",
                         zIndex: 0,
                       }}
                     />

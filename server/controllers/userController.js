@@ -13,7 +13,7 @@ exports.signUpController = async (req, res) => {
 
     const user = req.body;
     const usermail = user.email;
-    console.log('before email existence')
+    console.log("before email existence");
     const existingUser = await User.findOne({ email: usermail });
     if (existingUser) {
       console.log("Email already exists:", usermail);
@@ -22,7 +22,7 @@ exports.signUpController = async (req, res) => {
         success: false,
       });
     }
-console.log("method executed")
+    console.log("method executed");
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(user.password, salt);
 
@@ -37,14 +37,14 @@ console.log("method executed")
         });
       }
     }
-    console.log('before OTP')
+    console.log("before OTP");
     const otp = generateOTP();
-    console.log('After OTP')
+    console.log("After OTP");
     const newUser = new User({
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      password: hashedPassword, 
+      password: hashedPassword,
       otp: otp,
       referredBy: referral ? referral._id : null,
       city: user.city,
@@ -59,8 +59,7 @@ console.log("method executed")
         team: league.team,
       })),
     });
-    console.log('After New user')
-
+    console.log("After New user");
 
     const savedUser = await newUser.save();
     console.log("New user saved:", savedUser);
@@ -77,7 +76,6 @@ console.log("method executed")
     });
   }
 };
-
 
 exports.signInController = async (req, res) => {
   const { email, password } = req.body;
@@ -293,7 +291,9 @@ exports.verifyResetPasswordOTP = async (req, res) => {
       foundUser.otp = "";
       await foundUser.save();
 
-      res.status(200).json(responseObject({}, "Password reset successful!", false));
+      res
+        .status(200)
+        .json(responseObject({}, "Password reset successful!", false));
     } else {
       res.status(400).json(responseObject({}, "Invalid OTP", true));
     }
