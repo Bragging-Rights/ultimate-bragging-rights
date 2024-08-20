@@ -18,7 +18,7 @@ export const headerOptions = {
     "O/U",
     "Sprd",
     "1S",
-    "1S 0", // Added for Hockey
+    "1S0", // Added for Hockey
     "Reg",
     "OT",
     "SO",
@@ -59,7 +59,7 @@ export const headerOptions = {
     "ML",
     "Sprd",
     "1S",
-    "1S 0",
+    "1S0",
     "1SW3",
     "2SW3",
     "1SW7",
