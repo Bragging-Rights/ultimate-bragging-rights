@@ -14,6 +14,8 @@ import CountrySelect from "../Modal/CountrySelect";
 import ModalSelect from "../Modal/ModalSelect";
 import displayToast from "../../components/Alert/Alert";
 import { Register } from "../../Apis/auth";
+import { verifyOTP } from "../../Apis/auth";
+
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../Loader/Loader";
 import Captcha from "./Captcha";
@@ -150,7 +152,7 @@ const Registration = (props) => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    // otpCode: '',
+    // otpCode: "",
     referralName: "",
     username: "",
     termsAccepted: false,
@@ -180,12 +182,25 @@ const Registration = (props) => {
   };
   const handleCreateAccountClick = () => {
     // Logic to create account
+    handleRegistration();
     // If OTP is needed, show the OTP input field
     setShowOtpInput(true);
   };
 
-  const handleVerifyClick = () => {
-    // Logic to verify OTP and complete account creation
+  const handleVerifyClick = async () => {
+    try {
+      await verifyOTP();
+      setShowOtpInput(true);
+
+      displayToast(
+        "Code Successfully sent! Please check your inbox",
+        "success"
+      );
+      console.log("Code Successfully sent! Please check your inbox");
+      window.location.reload(); // Add this line to refresh the page
+    } catch (error) {
+      console.error("Failed to send code:", error);
+    }
   };
 
   const handleRemoveLeague = (index) => {
@@ -225,7 +240,7 @@ const Registration = (props) => {
     });
 
     if (resp) {
-      displayToast(" all the required fileds Please fillin the league.");
+      displayToast(" all the required fileds Please fill in the league.");
       return;
     }
 
@@ -247,8 +262,13 @@ const Registration = (props) => {
         if (rec?.data?.hasErrors) {
           displayToast(rec?.data?.message, "error");
         } else {
+          setShowOtpInput(true);
           displayToast("Register successfully.", "success");
-          window.location.reload(); // Add this line to refresh the page
+          displayToast(
+            "Code Successfully sent! Please check your inbox",
+            "success"
+          );
+          // window.location.reload(); // Add this line to refresh the page
         }
       },
     }
@@ -266,6 +286,7 @@ const Registration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
+      // "otpCode",
     ];
 
     const invalidFields = requiredFields.filter((field) => !formData[field]);
@@ -889,9 +910,7 @@ const Registration = (props) => {
                         !captchaState && "cursor-not-allowed"
                       }`}
                       onClick={
-                        showOtpInput
-                          ? handleVerifyClick
-                          : handleCreateAccountClick
+                        showOtpInput ? handleVerifyClick : handleRegistration
                       }
                       type="button"
                     >
