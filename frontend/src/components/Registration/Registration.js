@@ -189,19 +189,30 @@ const Registration = (props) => {
 
   const handleVerifyClick = async () => {
     try {
-      await verifyOTP();
-      setShowOtpInput(true);
-
-      displayToast(
-        "Code Successfully sent! Please check your inbox",
-        "success"
-      );
-      console.log("Code Successfully sent! Please check your inbox");
-      window.location.reload(); // Add this line to refresh the page
+      const email = document.getElementById("email-input").value;
+      const otp = document.getElementById("otp-input").value; 
+  
+      const response = await verifyOTP({ email, otp });
+  
+      if (response?.status === 200) {
+        if (response.data.error === false) {
+          setShowOtpInput(true); 
+          displayToast("Registration Completed", "success"); 
+          console.log("OTP successfully verified!");
+          window.location.reload(); 
+        } else {
+          displayToast("Invalid OTP", "error"); 
+        }
+      } else {
+        console.error("Error verifying OTP:", response?.data?.message);
+      }
     } catch (error) {
-      console.error("Failed to send code:", error);
+      console.error("Failed to verify OTP:", error);
+      displayToast("Failed to verify OTP", "error"); 
     }
   };
+  
+  
 
   const handleRemoveLeague = (index) => {
     if (userLeagues.length === 1) {
@@ -263,7 +274,7 @@ const Registration = (props) => {
           displayToast(rec?.data?.message, "error");
         } else {
           setShowOtpInput(true);
-          displayToast("Register successfully.", "success");
+          // displayToast("Register successfully.", "success");
           displayToast(
             "Code Successfully sent! Please check your inbox",
             "success"
@@ -645,6 +656,10 @@ const Registration = (props) => {
                             province: e.label,
                           });
                         }}
+                        style={{
+                          position: 'relative',
+                          zIndex: 9999,
+                        }}
                       />
                       <CitySelect
                         onChange={(e) =>
@@ -656,6 +671,10 @@ const Registration = (props) => {
                         state={stateCode}
                         countryCode={countryCode}
                         stateCode={stateCode}
+                        style={{
+                          position: 'relative',
+                          zIndex: 9999,
+                        }}
                       />
                     </div>
                   </div>
@@ -884,6 +903,10 @@ const Registration = (props) => {
                         onClick={prevStep}
                         className="previous action-button-previous"
                         value="Previous"
+                        style={{
+                          position: 'relative',
+                          zIndex: 0,
+                        }}
                       />
                     )}
                     <input
@@ -891,6 +914,10 @@ const Registration = (props) => {
                       onClick={handleNextClick}
                       className="next action-button"
                       value="Next"
+                      style={{
+                        position: 'relative',
+                        zIndex: 0,
+                      }}
                     />
                   </div>
                 </div>
