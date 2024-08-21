@@ -192,6 +192,11 @@ const TableComponent = () => {
                 (row.result?.accuracyPoints?.vistor?.p1s2p || 0)
               ).toFixed(2);
 
+              const oneS0 = (
+                (row.result?.accuracyPoints?.home?.p1s0 || 0) +
+                (row.result?.accuracyPoints?.vistor?.p1s0 || 0)
+              ).toFixed(2);
+
               const twoSW2 = (
                 (row.result?.accuracyPoints?.home?.p2s2p || 0) +
                 (row.result?.accuracyPoints?.vistor?.p2s2p || 0)
@@ -267,9 +272,8 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">{ou}</td>
                   <td className="text-xs font-medium text-center">{spread}</td>
                   <td className="text-xs font-medium text-center">{oneS}</td>
-                  <td className="text-xs font-medium text-center">
-                    {row["1S0"] || "-"}
-                  </td>
+                  <td className="text-xs font-medium text-center">{oneS0}</td>
+
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
                   {renderColumns(row, index, ranks, tpValues, gameData)}

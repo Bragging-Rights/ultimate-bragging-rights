@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./Styles.css"; // Import the CSS file containing the hide-scrollbar class
+import "./Styles.css";
 import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
 import { getGamePlayedByUserId } from "../../Apis/predictions";
 import { headerOptions } from "./data"; // Import headerOptions
-
 const calculateReg = (row) => {
   return row.result?.endingsPoints?.pickRegulation || 0;
 };
@@ -21,24 +20,152 @@ const calculateEI = (row) => {
   return row.result?.endingsPoints?.pickExtraInnings || 0;
 };
 
-const StandingsTables = () => {
+// Utility functions for calculations
+const calculateWinStreak = (games) => {
+  let maxStreak = 0,
+    currentStreak = 0;
+  games.forEach((game) => {
+    if (game.BR > 0) {
+      currentStreak++;
+      maxStreak = Math.max(maxStreak, currentStreak);
+    } else {
+      currentStreak = 0;
+    }
+  });
+  return maxStreak;
+};
+
+const calculateLossStreak = (games) => {
+  let maxStreak = 0,
+    currentStreak = 0;
+  games.forEach((game) => {
+    if (game.BR <= 0) {
+      currentStreak++;
+      maxStreak = Math.max(maxStreak, currentStreak);
+    } else {
+      currentStreak = 0;
+    }
+  });
+  return maxStreak;
+};
+
+const calculateCurrentStreak = (games) => {
+  let streak = "";
+  let wins = 0,
+    losses = 0;
+  for (let i = games.length - 1; i >= 0; i--) {
+    if (games[i].BR > 0) {
+      wins++;
+      if (losses > 0) break;
+    } else {
+      losses++;
+      if (wins > 0) break;
+    }
+  }
+  if (wins > 0) streak = `W${wins}`;
+  if (losses > 0) streak = `L${losses}`;
+  return streak;
+};
+
+const calculatePointsPercentage = (games, condition) => {
+  const totalPoints = games.reduce(
+    (acc, game) => acc + (game[condition] || 0),
+    0
+  );
+  const maxPoints = games.length * 100; // Assume max points per condition is 100
+  return ((totalPoints / maxPoints) * 100).toFixed(2);
+};
+
+const calculateL10 = (games) => {
+  const last10Games = games.slice(-10);
+  let winCount = 0,
+    lossCount = 0;
+  last10Games.forEach((game) => {
+    if (game.BR > 0) winCount++;
+    else lossCount++;
+  });
+  return `${winCount}/${lossCount}`;
+};
+
+const calculateFavoritePointsPercentage = (games) => {
+  // Placeholder logic for favorite points calculation
+  const favoritePoints = games.reduce(
+    (acc, game) => acc + (game.favoritePoints || 0),
+    0
+  );
+  const maxFavoritePoints = games.length * 100; // Assume max points for favorites is 100
+  return ((favoritePoints / maxFavoritePoints) * 100).toFixed(2);
+};
+
+const calculateUnderdogPointsPercentage = (games) => {
+  // Placeholder logic for underdog points calculation
+  const underdogPoints = games.reduce(
+    (acc, game) => acc + (game.underdogPoints || 0),
+    0
+  );
+  const maxUnderdogPoints = games.length * 100; // Assume max points for underdogs is 100
+  return ((underdogPoints / maxUnderdogPoints) * 100).toFixed(2);
+};
+
+// Function to calculate user statistics
+const calculateUserStats = (games) => {
+  const statsMap = {};
+
+  games.forEach((game) => {
+    const userId = game.userId;
+
+    if (!statsMap[userId]) {
+      statsMap[userId] = {
+        gamesPlayed: 0,
+        wins: 0,
+        losses: 0,
+        points: 0,
+      };
+    }
+
+    statsMap[userId].gamesPlayed += 1;
+    statsMap[userId].points += game.BR ? parseFloat(game.BR) : 0;
+
+    if (game.BR > 0) {
+      statsMap[userId].wins += 1;
+    } else {
+      statsMap[userId].losses += 1;
+    }
+  });
+
+  Object.keys(statsMap).forEach((userId) => {
+    const userStats = statsMap[userId];
+    userStats.winPercentage = (
+      (userStats.wins / userStats.gamesPlayed) *
+      100
+    ).toFixed(2);
+    userStats.avgPointsPerGame = (
+      userStats.points / userStats.gamesPlayed
+    ).toFixed(2);
+  });
+
+  return statsMap;
+};
+
+const StandingTables = () => {
   const { selectedLeague } = useLeagueContext();
   const [filteredHeaderOptions, setFilteredHeaderOptions] = useState([]);
   const [gamesPlayed, setGamesPlayed] = useState([]);
   const [gameDataMap, setGameDataMap] = useState({});
+  const [userStatsMap, setUserStatsMap] = useState({});
   const id = localStorage.getItem("_id");
 
   const getUser = () => {
     return getUserById(id).then((res) => {
-      // console.log("User data:", res);
+      console.log(res.data);
       return res.data; // Return the user data
     });
   };
+  const [userTeam, setUserTeam] = useState("");
 
   const getResult = (userData) => {
     getGamePlayedByUserId(id)
       .then((res) => {
-        console.log("Game data:", res);
         if (
           res.data &&
           res.data.data &&
@@ -70,8 +197,12 @@ const StandingsTables = () => {
           });
           setGameDataMap(gameDataLookup);
 
-          console.log("Enhanced data:", enhancedData);
-          console.log("Game Data Map:", gameDataLookup);
+          const userStats = calculateUserStats(enhancedData);
+          setUserStatsMap(userStats);
+
+          // Extract and set the user's team
+          const team = userData.leagues[0]?.team || "-";
+          setUserTeam(team);
         } else {
           console.error("Expected array but got:", res);
         }
@@ -80,29 +211,6 @@ const StandingsTables = () => {
         console.error("Error fetching game data:", error);
       });
   };
-
-  useEffect(() => {
-    if (selectedLeague === "MLB" && gamesPlayed.length > 0) {
-      const gameHeaders = new Set(
-        gamesPlayed
-          .map((game) => {
-            const gameData = gameDataMap[game.gameData] || {};
-            if (gameData.visitor && gameData.home) {
-              return `${
-                headerOptions[gameData?.visitor] || gameData?.visitor
-              } VS ${headerOptions[gameData?.home] || gameData?.home}`;
-            }
-            return null;
-          })
-          .filter(Boolean)
-      );
-
-      setFilteredHeaderOptions((prevHeaders) => [
-        ...new Set([...prevHeaders, ...gameHeaders]),
-      ]);
-    }
-  }, [gamesPlayed, gameDataMap, selectedLeague]);
-
   useEffect(() => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       setFilteredHeaderOptions(headerOptions[selectedLeague]);
@@ -115,7 +223,7 @@ const StandingsTables = () => {
     });
   }, [selectedLeague]);
 
-  // Function to calculate TP points and rank them
+  // Calculate TP points and ranks
   const calculateTPandRank = (games) => {
     const tpValues = games.map((row) => {
       return parseFloat(
@@ -183,92 +291,14 @@ const StandingsTables = () => {
         return null;
     }
   };
-  // calculation of "APN","APG""F""U""Reg""EI""OT""S/O""L10""FPTS""UPTS",
-
-  //   const calculateAPN = (games) => {
-  //     const totalPoints = games.reduce((acc, game) => acc + (game.result?.totalPoints || 0), 0);
-  //     const nights = new Set(games.map(game => game.date)); // Assuming 'date' is available and unique per night
-  //     return (totalPoints / nights.size).toFixed(2);
-  //   };
-
-  //   const calculateAPG = (games) => {
-  //     const totalPoints = games.reduce((acc, game) => acc + (game.result?.totalPoints || 0), 0);
-  //     return (totalPoints / games.length).toFixed(2);
-  //   };
-  //   const calculateF = (games) => {
-  //     const correctFavs = games.filter(game =>
-  //       game.result?.favoriteWin && game.predictedFavorite === game.result?.favorite
-  //     ).length;
-  //     const totalFavs = games.filter(game => game.result?.favoriteWin).length;
-  //     return (correctFavs / totalFavs * 100).toFixed(2);
-  //   };
-  //   const calculateU = (games) => {
-  //     const correctUnderdogs = games.filter(game =>
-  //       !game.result?.favoriteWin && game.predictedUnderdog === game.result?.underdog
-  //     ).length;
-  //     const totalUnderdogs = games.filter(game => !game.result?.favoriteWin).length;
-  //     return (correctUnderdogs / totalUnderdogs * 100).toFixed(2);
-  //   };
-  //   const calculateREG = (games) => {
-  //     const correctRegs = games.filter(game =>
-  //       game.result?.endInRegulation && game.predictedRegulation
-  //     ).length;
-  //     const totalRegs = games.filter(game => game.result?.endInRegulation).length;
-  //     return (correctRegs / totalRegs * 100).toFixed(2);
-  //   };
-  //   const calculateEI = (games) => {
-  //     const correctEIs = games.filter(game =>
-  //       game.result?.endInExtraInnings && game.predictedExtraInnings
-  //     ).length;
-  //     const totalEIs = games.filter(game => game.result?.endInExtraInnings).length;
-  //     return (correctEIs / totalEIs * 100).toFixed(2);
-  //   };
-
-  //   const calculateSO = (games) => {
-  //     const correctSOs = games.filter(game =>
-  //       game.result?.endInShootout && game.predictedShootout
-  //     ).length;
-  //     const totalSOs = games.filter(game => game.result?.endInShootout).length;
-  //     return (correctSOs / totalSOs * 100).toFixed(2);
-  //   };
-
-  //   const calculateOT = (games) => {
-  //     const correctOTs = games.filter(game =>
-  //       game.result?.endInOvertime && game.predictedOvertime
-  //     ).length;
-  //     const totalOTs = games.filter(game => game.result?.endInOvertime).length;
-  //     return (correctOTs / totalOTs * 100).toFixed(2);
-  //   };
-
-  //   const calculateL10 = (games) => {
-  //     const last10Games = games.slice(-10);
-  //     const wins = last10Games.filter(game => game.result?.win).length;
-  //     const losses = last10Games.filter(game => !game.result?.win).length;
-  //     return { wins, losses };
-  //   };
-
-  //   const calculateFPTS = (games) => {
-  //     const totalFavPoints = games.reduce((acc, game) => acc + (game.result?.favoritePoints || 0), 0);
-  //     const totalPossibleFavPoints = games.length * MAX_FAVORITE_POINTS; // Define MAX_FAVORITE_POINTS as needed
-  //     return ((totalFavPoints / totalPossibleFavPoints) * 100).toFixed(2);
-  //   };
-
-  //   const calculateUPTS = (games) => {
-  //   const totalUnderdogPoints = games.reduce((acc, game) => acc + (game.result?.underdogPoints || 0), 0);
-  //   const totalPossibleUnderdogPoints = games.length * MAX_UNDERDOG_POINTS; // Define MAX_UNDERDOG_POINTS as needed
-  //   return ((totalUnderdogPoints / totalPossibleUnderdogPoints) * 100).toFixed(2);
-  // };
 
   return (
-    <div
-      className="hide-scrollbar"
-      style={{ color: "white", marginTop: "10px", overflowX: "auto" }}
-    >
-      <table className="custom-table ">
+    <div className="table-container">
+      <table>
         <thead>
           <tr>
             {filteredHeaderOptions.map((item, ind) => (
-              <th key={ind} className="text-xs font-medium text-center">
+              <th key={ind} className="text-xs font-medium">
                 {item}
               </th>
             ))}
@@ -278,10 +308,8 @@ const StandingsTables = () => {
           {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
             gamesPlayed.map((row, index) => {
               const gameData = gameDataMap[row.gameData] || {};
+              const userStats = userStatsMap[row.userId] || {};
 
-              const tp = tpValues[index];
-
-              // Calculate 1SW2 and 2SW2
               const oneS = (
                 (row.result?.accuracyPoints?.home?.p1s || 0) +
                 (row.result?.accuracyPoints?.vistor?.p1s || 0)
@@ -292,37 +320,18 @@ const StandingsTables = () => {
                 (row.result?.accuracyPoints?.vistor?.p1s2p || 0)
               ).toFixed(2);
 
+              const oneS0 = (
+                (row.result?.accuracyPoints?.home?.p1s0 || 0) +
+                (row.result?.accuracyPoints?.vistor?.p1s0 || 0)
+              ).toFixed(2);
+
               const twoSW2 = (
                 (row.result?.accuracyPoints?.home?.p2s2p || 0) +
                 (row.result?.accuracyPoints?.vistor?.p2s2p || 0)
               ).toFixed(2);
 
-              // Calculate 1SW3 and 2SW3
-              const oneSW3 = (
-                (row.result?.accuracyPoints?.home?.p1s3p || 0) +
-                (row.result?.accuracyPoints?.vistor?.p1s3p || 0)
-              ).toFixed(2);
-
-              const twoSW3 = (
-                (row.result?.accuracyPoints?.home?.p2s3p || 0) +
-                (row.result?.accuracyPoints?.vistor?.p2s3p || 0)
-              ).toFixed(2);
-
-              // Calculate 1SW7 and 2SW7
-              const oneSW7 = (
-                (row.result?.accuracyPoints?.home?.p1s7p || 0) +
-                (row.result?.accuracyPoints?.vistor?.p1s7p || 0)
-              ).toFixed(2);
-
-              const twoSW7 = (
-                (row.result?.accuracyPoints?.home?.p2s7p || 0) +
-                (row.result?.accuracyPoints?.vistor?.p2s7p || 0)
-              ).toFixed(2);
-
-              // Extract one of the values from vegasOdds
               const vegasOddsValue = row.vegasOdds?.pickExtraInnings || "0";
 
-              // Compute ml, ou, spread values based on the specified properties
               const ml = parseFloat(
                 row.result?.vegasOdds?.pickingFavorite ||
                   row.result?.vegasOdds?.pickingUnderdog ||
@@ -339,6 +348,36 @@ const StandingsTables = () => {
                   0
               ).toFixed(2);
 
+              const apg = (
+                userStats.avgPointsPerGame !== undefined
+                  ? Number(userStats.avgPointsPerGame)
+                  : 0
+              ).toFixed(2);
+              const ws = calculateWinStreak(gamesPlayed);
+              const ls = calculateLossStreak(gamesPlayed);
+              const cs = calculateCurrentStreak(gamesPlayed);
+              const fPercentage = calculatePointsPercentage(
+                gamesPlayed,
+                "favoritePoints"
+              );
+              const uPercentage = calculatePointsPercentage(
+                gamesPlayed,
+                "underdogPoints"
+              );
+              const regPercentage = calculatePointsPercentage(
+                gamesPlayed,
+                "pickRegulation"
+              );
+              const eiPercentage = calculatePointsPercentage(
+                gamesPlayed,
+                "pickExtraInnings"
+              );
+              const l10 = calculateL10(gamesPlayed);
+              const favPointsPercentage =
+                calculateFavoritePointsPercentage(gamesPlayed);
+              const underdogPointsPercentage =
+                calculateUnderdogPointsPercentage(gamesPlayed);
+
               return (
                 <tr
                   key={index}
@@ -348,40 +387,68 @@ const StandingsTables = () => {
                     {row.co || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {row.state || "-"}/{row.city || "-"}
+                    {row.state || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {row.player || "-"}
+                    {row.city || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {ranks[index]}
+                    {userTeam || "-"}
+                  </td>
+
+                  <td className="text-xs font-medium text-center">
+                    {ranks[index] || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {/* {row.player || "-"} */}
-                    {tp}
+                    {userStats.winPercentage || "0.00%"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {userStats.gamesPlayed || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
                     {row.BR || "-"}
-                    {/* {row.state || "-"} */}
                   </td>
-                  <td className="text-xs font-medium text-center"> {ml}</td>
                   <td className="text-xs font-medium text-center">
-                    {/* {row.BR || "-"} */}
-                    {spread}
+                    {userStats.wins || "0"}
                   </td>
-                  <td className="text-xs font-medium text-center">{ou}</td>
+                  <td className="text-xs font-medium text-center">
+                    {userStats.losses || "0"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {cs || "0"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {ws || "0"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {ls || "0"}
+                  </td>
+
                   <td className="text-xs font-medium text-center">{oneS}</td>
-                  <td className="text-xs font-medium text-center">
-                    {" "}
-                    {row["1S0"] || "-"}
-                  </td>
+                  <td className="text-xs font-medium text-center">{oneS0}</td>
                   <td className="text-xs font-medium text-center">{oneSW2}</td>
                   <td className="text-xs font-medium text-center">{twoSW2}</td>
+                  <td className="text-xs font-medium text-center">{ml}</td>
+                  <td className="text-xs font-medium text-center">{spread}</td>
+                  <td className="text-xs font-medium text-center">{ou}</td>
+                  <td className="text-xs font-medium text-center">{"apn"}</td>
+                  <td className="text-xs font-medium text-center">{apg}</td>
+
+                  <td className="text-xs font-medium text-center">
+                    {fPercentage || "0.00%"}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {uPercentage || "0.00%"}
+                  </td>
+
                   {renderColumns(row, index, ranks, tpValues, gameData)}
-                  {/* Add a new column for the extracted vegasOdds value */}
-                  {/* <td className="text-xs font-medium text-center">
-                    {vegasOddsValue}
-                  </td> */}
+                  <td className="text-xs font-medium text-center">{l10}</td>
+                  <td className="text-xs font-medium text-center">
+                    {favPointsPercentage}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {underdogPointsPercentage}
+                  </td>
                 </tr>
               );
             })
@@ -401,4 +468,4 @@ const StandingsTables = () => {
   );
 };
 
-export default StandingsTables;
+export default StandingTables;

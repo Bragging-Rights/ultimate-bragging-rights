@@ -84,7 +84,9 @@ const NightResult = () => {
           .map((game) => {
             const gameData = gameDataMap[game.gameData] || {};
             if (gameData.visitor && gameData.home) {
-              return `${teamNameMappings[gameData?.visitor] || gameData?.visitor} VS ${teamNameMappings[gameData?.home] || gameData?.home}`;
+              return `${
+                teamNameMappings[gameData?.visitor] || gameData?.visitor
+              } VS ${teamNameMappings[gameData?.home] || gameData?.home}`;
             }
             return null;
           })
