@@ -38,31 +38,13 @@ const TableComponent = () => {
   const getResult = (userData) => {
     getGamePlayedByUserId(id)
       .then((res) => {
-        console.log("Game data:", res);
+        console.log("Game data response:", res);
+
         if (
           res.data &&
           res.data.data &&
           Array.isArray(res.data.data.gamesPlayed)
         ) {
-          const filteredData = res.data.data.gamesPlayed.filter(
-            (game) => game.league === selectedLeague
-          );
-
-          const enhancedData = filteredData.map((game) => ({
-            ...game,
-            co: userData.country || "-",
-            state: userData.state || "-",
-            city: userData.city || "-",
-            player: userData.leagues[0]?.username || "-", // Extracting username
-            BR:
-              game.result?.perfectScore != null
-                ? parseFloat(game.result?.perfectScore).toFixed(2)
-                : "-",
-            vegasOdds: game.result?.vegasOdds || {},
-          }));
-
-          setGamesPlayed(enhancedData);
-
           const gameDataArray = res.data.data.gameData || [];
           const gameDataLookup = {};
           gameDataArray.forEach((game) => {
@@ -70,8 +52,27 @@ const TableComponent = () => {
           });
           setGameDataMap(gameDataLookup);
 
+          const gamesPlayed = res.data.data.gamesPlayed;
+          const enhancedData = gamesPlayed.map((playedGame) => {
+            const correspondingGame = gameDataLookup[playedGame._id] || {};
+
+            return {
+              ...playedGame,
+              ...correspondingGame,
+              co: userData.country || "-",
+              state: userData.state || "-",
+              city: userData.city || "-",
+              player: userData.leagues[0]?.username || "-",
+              BR:
+                playedGame?.result?.perfectScore != null
+                  ? parseFloat(playedGame?.result?.perfectScore).toFixed(2)
+                  : "-",
+              vegasOdds: playedGame?.result?.vegasOdds || {},
+            };
+          });
+
+          setGamesPlayed(enhancedData);
           console.log("Enhanced data:", enhancedData);
-          console.log("Game Data Map:", gameDataLookup);
         } else {
           console.error("Expected array but got:", res);
         }

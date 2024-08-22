@@ -191,7 +191,8 @@ const Registration = (props) => {
     try {
       const email = document.getElementById("email-input").value;
       const otp = document.getElementById("otp-input").value;
-
+      console.log("email", email);
+      console.log("otp", otp);
       const response = await verifyOTP({ email, otp });
 
       if (response?.status === 200) {
