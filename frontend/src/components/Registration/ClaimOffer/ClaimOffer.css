@@ -1,149 +1,149 @@
 .claim-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 55vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 95vh;
 }
 
 .claim {
-    --bg-light: #efefef;
-    --bg-dark: #707070;
-    --clr: #dddb43;
-    --clr-alpha: #9c9c9c60;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 90%;
-    max-width: 500px;
-    padding: 2rem;
-    border: 2px solid var(--clr);
-    border-radius: 10px;
-    transition: all 0.3s ease-in-out;
+  --bg-light: #efefef;
+  --bg-dark: #707070;
+  --clr: #dddb43;
+  --clr-alpha: #9c9c9c60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+  border: 2px solid var(--clr);
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
 }
 
 .claim .input-span-claim {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .claim input[type="email"] {
-    border-radius: 0.5rem;
-    padding: 1rem 0.75rem;
-    width: 100%;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: white;
-    /* Default background is white */
-    outline: 2px solid var(--bg-dark);
+  border-radius: 0.5rem;
+  padding: 1rem 0.75rem;
+  width: 100%;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  /* Default background is white */
+  outline: 2px solid var(--bg-dark);
 }
 
 .claim input[type="email"].disabled {
-    background-color: var(--bg-light);
-    /* Background gray when disabled */
+  background-color: var(--bg-light);
+  /* Background gray when disabled */
 }
 
 .claim input[type="email"]:focus {
-    outline: 2px solid var(--clr);
+  outline: 2px solid var(--clr);
 }
 
 .label-claim {
-    align-self: flex-start;
-    color: var(--clr);
-    font-weight: 600;
+  align-self: flex-start;
+  color: var(--clr);
+  font-weight: 600;
 }
 
 .claim .submit-claim {
-    padding: 1rem 0.75rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 3rem;
-    color: black;
-    border: none;
-    cursor: pointer;
-    transition: all 300ms;
-    font-weight: 600;
-    font-size: 0.9rem;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
+  padding: 1rem 0.75rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 3rem;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: all 300ms;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
 }
 
 .claim .submit-claim.disabled {
-    background-color: gray;
-    cursor: not-allowed;
+  background-color: gray;
+  cursor: not-allowed;
 }
 
 .span-claim {
-    text-decoration: none;
-    color: var(--bg-dark);
+  text-decoration: none;
+  color: var(--bg-dark);
 }
 
 .span-claim a {
-    color: var(--clr);
+  color: var(--clr);
 }
 
 /* Styles for the OTP input fields */
 .otp-input-container {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .otp-input-container input {
-    width: 3rem;
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 0.5rem;
-    border: 2px solid var(--bg-dark);
-    outline: none;
+  width: 3rem;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: 2px solid var(--bg-dark);
+  outline: none;
 }
 
 .otp-input-container input:disabled {
-    background-color: var(--bg-light);
-    cursor: not-allowed;
+  background-color: var(--bg-light);
+  cursor: not-allowed;
 }
 
 .otp-input-container input:enabled {
-    background-color: white;
-    /* Background white when enabled */
+  background-color: white;
+  /* Background white when enabled */
 }
 
 .timer {
-    margin-top: 1rem;
-    color: var(--clr);
-    font-weight: bold;
+  margin-top: 1rem;
+  color: var(--clr);
+  font-weight: bold;
 }
 
 .resend-code-button {
-    margin-left: 1rem;
-    background: none;
-    border: none;
-    color: var(--clr);
-    cursor: pointer;
-    text-decoration: underline;
-    font-weight: bold;
+  margin-left: 1rem;
+  background: none;
+  border: none;
+  color: var(--clr);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .otp-message {
-    margin-top: 1rem;
-    color: green;
-    font-weight: bold;
+  margin-top: 1rem;
+  color: green;
+  font-weight: bold;
 }
 
 /* Add transition for responsiveness */
 @media (min-width: 600px) {
-    .claim {
-        max-width: 400px;
-    }
+  .claim {
+    max-width: 400px;
+  }
 }
 
 @media (min-width: 900px) {
-    .claim {
-        max-width: 500px;
-    }
+  .claim {
+    max-width: 500px;
+  }
 }

@@ -307,6 +307,6 @@ exports.claimOffer = async (req, res) => {
   const { email } = req.body;
   const otp = generateOTP();
   sendOTPEmail(email, otp);
-  console.log("OTP sent to:", user.email);
+  console.log("OTP sent to:", email);
   res.status(200).json({ otp: otp });
 };
