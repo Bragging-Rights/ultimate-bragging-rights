@@ -8,6 +8,7 @@ const {
   useAffiliateController,
   createCheckout,
   getUserById,
+  claimOffer,
 } = require("../controllers/userController");
 
 router.post("/signup", signUpController);
@@ -16,6 +17,7 @@ router.post("/verify-otp", verifyOTP);
 router.post("/useAffiliate", useAffiliateController);
 router.post("/create-checkout", createCheckout);
 router.get("/get-user-by-id/:id", getUserById);
+router.post("/claim", claimOffer);
 // API endpoint for user registration
 // router.post('/signup', (req, res) => {
 //   const { firstName, lastName, email, password, /* ...other fields */ } = req.body;

@@ -76,3 +76,14 @@ export const verifyOTP = async (data) => {
     return { error: "An error occurred during OTP verification." };
   }
 };
+
+export const claimOffer = async (data) => {
+  try {
+    const response = await api.post("api/users/claim", JSON.stringify(data));
+    return response;
+  } catch (error) {
+    console.error("An error occurred during claim offer:", error);
+    // Optionally, handle the error as needed
+    return { error: "An error occurred during claim offer." };
+  }
+};
