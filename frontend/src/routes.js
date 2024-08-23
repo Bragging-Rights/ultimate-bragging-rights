@@ -31,6 +31,7 @@ import TermOfUse from "./pages/TermOfUse";
 import CookiePolicy from "./pages/CookiePolicy";
 import AcceptableUsePolicy from "./pages/AcceptableUsePolicy";
 import Fullleaderboard from "./pages/NEW/Fullleaderboard";
+import ClaimOffer from "./components/Registration/ClaimOffer/ClaimOffer";
 // import Season from "./pages/Season";
 
 const Routes = () => {
@@ -62,6 +63,8 @@ const Routes = () => {
                 <Route path="/testleader" element={<Fullleaderboard />} />
                 <Route path="/standings" element={<Standing />} />
                 <Route path="/teams" element={<Teams />} />
+                <Route path="/claim" element={<ClaimOffer />} />
+
                 {/* <Route path="/season" element={<Season />} /> */}
                 <Route path="/fb-challanges" element={<FbChallanges />} />
                 <Route path="/records" element={<Records />} />
