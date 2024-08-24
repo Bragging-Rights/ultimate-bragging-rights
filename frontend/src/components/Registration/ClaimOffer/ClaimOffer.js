@@ -34,9 +34,9 @@ const ClaimOffer = () => {
   const [email, setEmail] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false); // State to handle modal visibility
   const [labelText, setLabelText] = useState(
-    // New state for label text
     "PLEASE ENTER YOUR EMAIL ADDRESS SO WE CAN SEND YOU AN ACCESS CODE THAT YOU WILL NEED TO ACTIVATE YOUR FREE LIFETIME MEMBERSHIP!"
   );
+  const [generatedOtp, setGeneratedOtp] = useState(""); // State to store the generated OTP
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -72,45 +72,68 @@ const ClaimOffer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
 
-    try {
-      const response = await claimOffer({ email });
-      console.log("OTP Verification Response:", response);
+    if (!otpEnabled) {
+      // Send OTP
+      try {
+        const response = await claimOffer({ email });
+        console.log("OTP Verification Response:", response);
 
-      Swal.fire({
-        title: "Access Code Sent",
-        text: "Please check your email for the Access code.",
-        icon: "success",
-        color: "white",
-        timer: 5000,
-        timerProgressBar: true,
-        didClose: () => {
-          setOtpEnabled(true);
-          setButtonText("CONTINUE");
-          setEmailDisabled(true);
-          setTimer(120);
-          setResendAvailable(false);
+        setGeneratedOtp(response.data.otp); // Store the generated OTP
 
-          // Update the label text after the access code is sent
-          setLabelText(
-            "We have sent an access code to the email you provided. Please go check your email and get the access code we sent you and enter it below! This is a time-sensitive offer, so please go get the code now!"
-          );
-        },
-      });
-    } catch (error) {
-      console.error("An error occurred while sending OTP:", error);
-      Swal.fire({
-        title: "Error",
-        text: "An error occurred while sending OTP.",
-        icon: "error",
-        color: "white",
-      });
+        Swal.fire({
+          title: "Access Code Sent",
+          text: "Please check your email for the Access code.",
+          icon: "success",
+          color: "white",
+          timer: 5000,
+          timerProgressBar: true,
+          didClose: () => {
+            setOtpEnabled(true);
+            setButtonText("CONTINUE");
+            setEmailDisabled(true);
+            setTimer(120);
+            setResendAvailable(false);
+
+            // Update the label text after the access code is sent
+            setLabelText(
+              "We have sent an access code to the email you provided. Please go check your email and get the access code we sent you and enter it below! This is a time-sensitive offer, so please go get the code now!"
+            );
+          },
+        });
+      } catch (error) {
+        console.error("An error occurred while sending OTP:", error);
+        Swal.fire({
+          title: "Error",
+          text: "An error occurred while sending OTP.",
+          icon: "error",
+          color: "white",
+        });
+      }
+    } else {
+      // Verify OTP
+      const enteredOtp = otpInputs.join("");
+      if (enteredOtp === generatedOtp) {
+        console.log("OTP Verified Successfully!");
+
+        // After OTP verification, pass the email to the registration component
+        openModal(); // Open the ClaimRegistration modal
+
+        // Call handleVerify to proceed with further logic if needed
+        handleVerify();
+      } else {
+        Swal.fire({
+          title: "Invalid OTP",
+          text: "The OTP you entered is incorrect. Please try again.",
+          icon: "error",
+          color: "white",
+        });
+      }
     }
   };
 
   const handleVerify = () => {
-    // Open the ClaimRegistration modal when the "Verify" button is clicked
+    // Open the ClaimRegistration modal when the OTP is verified successfully
     setModalIsOpen(true);
   };
 
@@ -166,7 +189,6 @@ const ClaimOffer = () => {
     setButtonDisabled(false);
     setResendAvailable(false);
     setLabelText(
-      // Reset label text when email is changed
       "PLEASE ENTER YOUR EMAIL ADDRESS SO WE CAN SEND YOU AN ACCESS CODE THAT YOU WILL NEED TO ACTIVATE YOUR FREE LIFETIME MEMBERSHIP!"
     );
   };
@@ -185,9 +207,7 @@ const ClaimOffer = () => {
   return (
     <div className="claim-container">
       <form className="claim" onSubmit={handleSubmit}>
-        <label className="label-text-claim">
-          {labelText} {/* Use the dynamic label text */}
-        </label>
+        <label className="label-text-claim">{labelText}</label>
         <br />
         <span className="input-span-claim">
           <label htmlFor="email" className="label-claim">
@@ -234,7 +254,6 @@ const ClaimOffer = () => {
           type="submit"
           value={buttonText}
           disabled={buttonDisabled}
-          onClick={otpEnabled ? handleVerify : undefined} // Call handleVerify when "Verify" button is clicked
         />
 
         {otpEnabled && (
@@ -253,7 +272,6 @@ const ClaimOffer = () => {
         )}
       </form>
 
-      {/* Modal for Claim Registration */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -264,6 +282,7 @@ const ClaimOffer = () => {
           <ClaimRegistration
             modalIsOpen={modalIsOpen}
             closeModal={closeModal}
+            email={email} // Pass email as a prop
           />
         </div>
       </Modal>

@@ -59,7 +59,7 @@ const mobileStyles = {
 };
 
 const ClaimRegistration = (props) => {
-  const { modalIsOpen, closeModal } = props;
+  const { modalIsOpen, closeModal, email } = props; // Accept email as a prop
   const isMobile = window.innerWidth <= 600;
   const [selectedCountry, setSelectedCountry] = useState("");
   const [captchaState, setCaptchaState] = useState(false);
@@ -142,7 +142,7 @@ const ClaimRegistration = (props) => {
     firstName: "",
     couponcode: "",
     lastName: "",
-    email: "",
+    email: email || "", // Use the passed email
     city: "",
     country: "",
     province: "",
@@ -150,7 +150,6 @@ const ClaimRegistration = (props) => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    // otpCode: "",
     referralName: "",
     username: "",
     termsAccepted: false,
@@ -779,10 +778,11 @@ const ClaimRegistration = (props) => {
                           </h2>
                         }
                         placeholder={"Email"}
-                        value={formData.email}
+                        value={formData.email} // The email from formData
                         onChange={inputChangeHandler}
                         type="email"
                         name="email"
+                        disabled={true}
                       />
                       <ModalPassword
                         label={
