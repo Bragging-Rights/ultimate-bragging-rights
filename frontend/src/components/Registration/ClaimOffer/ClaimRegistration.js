@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Loader/Loader";
 import Captcha from "./../Captcha";
 import ModalPassword from "../../Modal/ModalPassword";
+import EmailModalInput from "./EmailRegister";
 
 const customStyles = {
   content: {
@@ -767,23 +768,23 @@ const ClaimRegistration = (props) => {
                     }}
                   >
                     <div style={{ flex: "1", display: "flex", gap: "16px" }}>
-                      <ModalInput
+                      <EmailModalInput
                         label={
                           <h2
                             id="heading"
                             className="signup-heading"
                             style={{ fontSize: "14px", color: "#FFAE00" }}
                           >
-                            EMAIL
+                            * EMAIL
                           </h2>
                         }
                         placeholder={"Email"}
-                        value={formData.email} // The email from formData
-                        onChange={inputChangeHandler}
-                        type="email"
                         name="email"
-                        disabled={true}
+                        value={formData.email}
+                        onChange={inputChangeHandler}
+                        disabled // This line disables the email input field
                       />
+
                       <ModalPassword
                         label={
                           <h2
