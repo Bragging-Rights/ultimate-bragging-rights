@@ -9,11 +9,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.signUpController = async (req, res) => {
   try {
-    console.log("req.body", req.body);
-
     const user = req.body;
     const usermail = user.email;
-    console.log("before email existence");
+
     const existingUser = await User.findOne({ email: usermail });
     if (existingUser) {
       console.log("Email already exists:", usermail);
@@ -22,7 +20,7 @@ exports.signUpController = async (req, res) => {
         success: false,
       });
     }
-    console.log("method executed");
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(user.password, salt);
 
@@ -37,9 +35,13 @@ exports.signUpController = async (req, res) => {
         });
       }
     }
-    console.log("before OTP");
-    const otp = generateOTP();
-    console.log("After OTP");
+    let otp = "";
+    if (user.emailVerified != true) {
+      otp = generateOTP();
+    } else {
+      otp = "";
+    }
+
     const newUser = new User({
       firstName: user.firstName,
       lastName: user.lastName,
@@ -59,13 +61,13 @@ exports.signUpController = async (req, res) => {
         team: league.team,
       })),
     });
-    console.log("After New user");
 
     const savedUser = await newUser.save();
-    console.log("New user saved:", savedUser);
 
-    sendOTPEmail(user.email, otp);
-    console.log("OTP sent to:", user.email);
+    if (user.emailVerified != true) {
+      sendOTPEmail(user.email, otp);
+      console.log("OTP sent to:", user.email);
+    }
 
     res.status(200).json(savedUser);
   } catch (err) {
