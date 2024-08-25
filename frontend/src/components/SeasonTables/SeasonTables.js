@@ -120,6 +120,7 @@ const calculateUserStats = (games) => {
         wins: 0,
         losses: 0,
         points: 0,
+        CGS: 0, // Add CGS property to track consecutive predictions
       };
     }
 
@@ -130,6 +131,13 @@ const calculateUserStats = (games) => {
       statsMap[userId].wins += 1;
     } else {
       statsMap[userId].losses += 1;
+    }
+
+    // Increment CGS if the user made a prediction
+    if (game.result?.predictionMade) {
+      statsMap[userId].CGS += 1;
+    } else {
+      statsMap[userId].CGS = 0; // Reset CGS if the user didn't make a prediction
     }
   });
 
@@ -432,6 +440,7 @@ const SeasonalTables = () => {
                   <td className="text-xs font-medium text-center">{spread}</td>
                   <td className="text-xs font-medium text-center">{ou}</td>
                   <td className="text-xs font-medium text-center">{"apn"}</td>
+                  <td className="text-xs font-medium text-center">{"awp"}</td>
                   <td className="text-xs font-medium text-center">{apg}</td>
 
                   <td className="text-xs font-medium text-center">
@@ -443,6 +452,10 @@ const SeasonalTables = () => {
 
                   {renderColumns(row, index, ranks, tpValues, gameData)}
                   <td className="text-xs font-medium text-center">{l10}</td>
+                  <td className="text-xs font-medium text-center">
+                    {userStats.CGS || 0}
+                  </td>
+
                   <td className="text-xs font-medium text-center">
                     {favPointsPercentage}
                   </td>

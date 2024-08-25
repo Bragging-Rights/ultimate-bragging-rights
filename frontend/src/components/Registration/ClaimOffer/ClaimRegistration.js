@@ -153,6 +153,8 @@ const ClaimRegistration = (props) => {
     confirmPassword: "",
     referralName: "",
     username: "",
+    emailVerified: true,
+
     termsAccepted: false,
   });
   const [countryCode, setCountryCode] = useState("");
@@ -268,6 +270,7 @@ const ClaimRegistration = (props) => {
       "phoneNumber",
       "password",
       "confirmPassword",
+
       // "otpCode",
     ];
 
@@ -894,7 +897,7 @@ const ClaimRegistration = (props) => {
                       onClick={handleRegistration}
                       type="button"
                     >
-                      {showOtpInput ? "Create Account" : "Send Code"}{" "}
+                      Create Account
                       {isLoading && <Loader />}
                     </button>
                   </div>
