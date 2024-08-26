@@ -4,7 +4,6 @@ import { getUserById } from "../../Apis/auth";
 import { getGamePlayedByUserId } from "../../Apis/predictions";
 import { headerOptions } from "./data";
 import "./NightResult.css";
-import { teamNameMappings } from "./data";
 
 const NightResult = () => {
   const { selectedLeague } = useLeagueContext();
@@ -84,9 +83,7 @@ const NightResult = () => {
           .map((game) => {
             const gameData = gameDataMap[game.gameData] || {};
             if (gameData.visitor && gameData.home) {
-              return `${
-                teamNameMappings[gameData?.visitor] || gameData?.visitor
-              } VS ${teamNameMappings[gameData?.home] || gameData?.home}`;
+              return `${gameData.visitor} VS ${gameData.home}`;
             }
             return null;
           })
