@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
 import { getGamePlayedByUserId } from "../../Apis/predictions";
-import { headerOptions } from "./data";
+import { headerOptions, teamNameMappings } from "./data";
 import "./NightResult.css";
 
 const NightResult = () => {
@@ -11,6 +11,7 @@ const NightResult = () => {
   const [gamesPlayed, setGamesPlayed] = useState([]);
   const [gameDataMap, setGameDataMap] = useState({});
   const [userStatsMap, setUserStatsMap] = useState({});
+  const [tpValuesMap, setTpValuesMap] = useState({}); // Map to store TP values for each header
 
   const id = localStorage.getItem("_id");
 
@@ -20,7 +21,7 @@ const NightResult = () => {
       return res.data;
     } catch (error) {
       console.error(`Error fetching user ${userId}:`, error);
-      return null; // Return null if there's an error
+      return null;
     }
   };
 
@@ -33,68 +34,73 @@ const NightResult = () => {
         res.data.data &&
         Array.isArray(res.data.data.gamesPlayed)
       ) {
-        const filteredData = res.data.data.gamesPlayed.filter(
-          (game) => game.league === selectedLeague
-        );
-
-        const enhancedData = filteredData.map((game) => ({
-          ...game,
-          userData, // Store userData directly in the game object
-          BR:
-            game.result?.perfectScore != null
-              ? parseFloat(game.result?.perfectScore).toFixed(2)
-              : "-",
-          vegasOdds: game.result?.vegasOdds || {},
-        }));
-
-        setGamesPlayed(enhancedData);
-
         const gameDataArray = res.data.data.gameData || [];
         const gameDataLookup = {};
         gameDataArray.forEach((game) => {
           gameDataLookup[game._id] = game;
         });
         setGameDataMap(gameDataLookup);
+        const filteredData = res.data.data.gamesPlayed.filter(
+          (game) => game.league === selectedLeague
+        );
 
+        const enhancedData = filteredData.map((game) => ({
+          ...game,
+          userData,
+          BR:
+            game.result?.perfectScore != null
+              ? parseFloat(game.result?.perfectScore).toFixed(2)
+              : "-",
+          vegasOdds: game.result?.vegasOdds || {},
+          tp: calculateTp(game), // Calculate TP for each game
+        }));
+
+        setGamesPlayed(enhancedData);
         const userStats = calculateUserStats(enhancedData);
         setUserStatsMap(userStats);
+
+        // Prepare TP values map for each home vs. visitor matchup
+        const newTpValuesMap = {};
+        enhancedData.forEach((game) => {
+          const gameData = gameDataMap[game.gameData] || {};
+          if (gameData.visitor && gameData.home) {
+            const header = `${
+              teamNameMappings[gameData?.visitor] || gameData?.visitor
+            } VS ${teamNameMappings[gameData?.home] || gameData?.home}`;
+            if (!newTpValuesMap[header]) {
+              newTpValuesMap[header] = {};
+            }
+            newTpValuesMap[header][game.userId] = game.tp;
+          }
+        });
+        setTpValuesMap(newTpValuesMap);
       }
     } catch (error) {
       console.error("Error fetching game data:", error);
     }
   };
 
-  useEffect(() => {
-    if (selectedLeague && headerOptions[selectedLeague]) {
-      setFilteredHeaderOptions(headerOptions[selectedLeague]);
-    } else {
-      setFilteredHeaderOptions([]);
-    }
-
-    getUser(id).then((userData) => {
-      getResult(userData);
-    });
-  }, [selectedLeague]);
-
-  useEffect(() => {
-    if (selectedLeague === "MLB" && gamesPlayed.length > 0) {
-      const gameHeaders = new Set(
-        gamesPlayed
-          .map((game) => {
-            const gameData = gameDataMap[game.gameData] || {};
-            if (gameData.visitor && gameData.home) {
-              return `${gameData.visitor} VS ${gameData.home}`;
-            }
-            return null;
-          })
-          .filter(Boolean)
-      );
-
-      setFilteredHeaderOptions((prevHeaders) => [
-        ...new Set([...prevHeaders, ...gameHeaders]),
-      ]);
-    }
-  }, [gamesPlayed, gameDataMap, selectedLeague]);
+  const calculateTp = (game) => {
+    // Adjust this calculation based on your actual data structure
+    return parseFloat(
+      (game.result?.accuracyPoints?.home?.p1s || 0) +
+        (game.result?.accuracyPoints?.visitor?.p1s || 0) +
+        (game.result?.accuracyPoints?.home?.p1s2p || 0) +
+        (game.result?.accuracyPoints?.visitor?.p1s2p || 0) +
+        (game.result?.accuracyPoints?.home?.p2s2p || 0) +
+        (game.result?.accuracyPoints?.visitor?.p2s2p || 0) +
+        (game.result?.vegasOdds?.pickingFavorite ||
+          game.result?.vegasOdds?.pickingUnderdog ||
+          0) +
+        (game.result?.vegasOdds?.pickingOver ||
+          game.result?.vegasOdds?.pickingUnder ||
+          0) +
+        (game.result?.vegasOdds?.pickingSpread?.vSpreadPoints ||
+          game.result?.vegasOdds?.pickingSpread?.hSpreadPoints ||
+          0) +
+        (game.BR || 0)
+    ).toFixed(2);
+  };
 
   const calculateUserStats = (games) => {
     const statsMap = {};
@@ -135,19 +141,51 @@ const NightResult = () => {
     return statsMap;
   };
 
+  useEffect(() => {
+    if (selectedLeague && headerOptions[selectedLeague]) {
+      const headers = [...headerOptions[selectedLeague]];
+
+      // Adding "Home vs. Visitor" matchups to headers
+      gamesPlayed.forEach((game) => {
+        const gameData = gameDataMap[game.gameData] || {};
+        if (gameData.visitor && gameData.home) {
+          const header = `${
+            teamNameMappings[gameData?.visitor] || gameData?.visitor
+          } VS ${teamNameMappings[gameData?.home] || gameData?.home}`;
+          if (!headers.includes(header)) {
+            headers.push(header);
+          }
+        }
+      });
+
+      setFilteredHeaderOptions(headers);
+    } else {
+      setFilteredHeaderOptions([]);
+    }
+
+    getUser(id).then((userData) => {
+      getResult(userData);
+    });
+  }, [selectedLeague, gamesPlayed, gameDataMap]);
+
   return (
     <div className="table-container">
       <div className="night-result-container">
-        <div className="animation-controls"></div>
-        {/* <br />
-        <br /> */}
-
         <table style={{ width: "100%" }}>
           <thead style={{ fontSize: "0.8rem" }}>
             <tr>
               {filteredHeaderOptions.map((item, ind) => (
                 <th key={ind} className="text-xs font-medium">
                   {item}
+                </th>
+              ))}
+            </tr>
+            {/* Add TP values header row */}
+            <tr>
+              {filteredHeaderOptions.map((item, ind) => (
+                <th key={ind} className="text-xs font-medium">
+                  {/* Only display TP values below the matchups */}
+                  {item.includes("VS")}
                 </th>
               ))}
             </tr>
@@ -190,6 +228,18 @@ const NightResult = () => {
                       {userStats.avgPointsPerGame}
                     </td>
                     <td className="text-xs font-medium text-center">{"-"}</td>
+                    {filteredHeaderOptions
+                      .filter((header) => header.includes("VS"))
+                      .map((header, headerIndex) => (
+                        <td
+                          key={headerIndex}
+                          className="text-xs font-medium text-center"
+                        >
+                          {tpValuesMap[header] && tpValuesMap[header][userId]
+                            ? tpValuesMap[header][userId]
+                            : "-"}
+                        </td>
+                      ))}
                   </tr>
                 );
               })
