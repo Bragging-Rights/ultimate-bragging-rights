@@ -5,20 +5,64 @@ import { getUserById } from "../../Apis/auth";
 import { getGamePlayedByUserId } from "../../Apis/predictions";
 import { headerOptions } from "./data"; // Import headerOptions
 
-const calculateReg = (row) => {
-  return row.result?.endingsPoints?.pickRegulation || 0;
-};
+const calculateReg = (row) => row.result?.endingsPoints?.pickRegulation || 0;
+const calculateOT = (row) => row.result?.endingsPoints?.pickOverTime || 0;
+const calculateSO = (row) => row.result?.endingsPoints?.pickShootout || 0;
+const calculateEI = (row) => row.result?.endingsPoints?.pickExtraInnings || 0;
 
-const calculateOT = (row) => {
-  return row.result?.endingsPoints?.pickOverTime || 0;
-};
+const calculateMetrics = (row, league) => {
+  const oneS = (
+    (row.result?.accuracyPoints?.home?.p1s || 0) +
+    (row.result?.accuracyPoints?.vistor?.p1s || 0)
+  ).toFixed(2);
 
-const calculateSO = (row) => {
-  return row.result?.endingsPoints?.pickShootout || 0;
-};
+  const oneSO = (
+    (row.result?.accuracyPoints?.home?.p1s0 || 0) +
+    (row.result?.accuracyPoints?.vistor?.p1s0 || 0)
+  ).toFixed(2);
 
-const calculateEI = (row) => {
-  return row.result?.endingsPoints?.pickExtraInnings || 0;
+  const oneSW2 = (
+    (row.result?.accuracyPoints?.home?.p1s2p || 0) +
+    (row.result?.accuracyPoints?.vistor?.p1s2p || 0)
+  ).toFixed(2);
+
+  const twoSW2 = (
+    (row.result?.accuracyPoints?.home?.p2s2p || 0) +
+    (row.result?.accuracyPoints?.vistor?.p2s2p || 0)
+  ).toFixed(2);
+
+  const oneSW3 = (
+    (row.result?.accuracyPoints?.home?.p1s3p || 0) +
+    (row.result?.accuracyPoints?.vistor?.p1s3p || 0)
+  ).toFixed(2);
+
+  const twoSW3 = (
+    (row.result?.accuracyPoints?.home?.p2s3p || 0) +
+    (row.result?.accuracyPoints?.vistor?.p2s3p || 0)
+  ).toFixed(2);
+
+  const oneSW7 = (
+    (row.result?.accuracyPoints?.home?.p1s7p || 0) +
+    (row.result?.accuracyPoints?.vistor?.p1s7p || 0)
+  ).toFixed(2);
+
+  const twoSW7 = (
+    (row.result?.accuracyPoints?.home?.p2s7p || 0) +
+    (row.result?.accuracyPoints?.vistor?.p2s7p || 0)
+  ).toFixed(2);
+
+  switch (league) {
+    case "NHL":
+      return { oneS, oneSO };
+    case "NBA":
+      return { oneS, oneSO, oneSW3, twoSW3, oneSW7, twoSW7 };
+    case "MLB":
+      return { oneS, oneSO, oneSW2, twoSW2 };
+    case "NFL":
+      return { oneS, oneSO, oneSW3, twoSW3, oneSW7, twoSW7 };
+    default:
+      return {};
+  }
 };
 
 const TableComponent = () => {
@@ -29,17 +73,12 @@ const TableComponent = () => {
   const id = localStorage.getItem("_id");
 
   const getUser = () => {
-    return getUserById(id).then((res) => {
-      // console.log("User data:", res);
-      return res.data; // Return the user data
-    });
+    return getUserById(id).then((res) => res.data);
   };
 
   const getResult = (userData) => {
     getGamePlayedByUserId(id)
       .then((res) => {
-        console.log("Game data response:", res);
-
         if (
           res.data &&
           res.data.data &&
@@ -53,9 +92,36 @@ const TableComponent = () => {
           setGameDataMap(gameDataLookup);
 
           const gamesPlayed = res.data.data.gamesPlayed;
-          const enhancedData = gamesPlayed.map((playedGame) => {
-            const correspondingGame = gameDataLookup[playedGame._id] || {};
 
+          const startOfDay = new Date();
+          startOfDay.setHours(0, 0, 0, 0); // 12:00 AM
+
+          const endOfDay = new Date();
+          endOfDay.setHours(23, 59, 59, 999); // 11:59 PM
+
+          // Calculate remaining time for the day
+          const now = new Date();
+          const timeRemaining = endOfDay - now;
+
+          const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+          const minutes = Math.floor(
+            (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+          console.log(
+            `Time remaining for today: ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+          );
+
+          const filteredGamesPlayed = gamesPlayed.filter(
+            (game) =>
+              game.league === selectedLeague &&
+              new Date(game.createdAt) >= startOfDay &&
+              new Date(game.createdAt) <= endOfDay
+          );
+
+          const enhancedData = filteredGamesPlayed.map((playedGame) => {
+            const correspondingGame = gameDataLookup[playedGame._id] || {};
             return {
               ...playedGame,
               ...correspondingGame,
@@ -72,7 +138,6 @@ const TableComponent = () => {
           });
 
           setGamesPlayed(enhancedData);
-          console.log("Enhanced data:", enhancedData);
         } else {
           console.error("Expected array but got:", res);
         }
@@ -86,7 +151,7 @@ const TableComponent = () => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       setFilteredHeaderOptions(headerOptions[selectedLeague]);
     } else {
-      setFilteredHeaderOptions([]); // Set empty array for consistency
+      setFilteredHeaderOptions([]);
     }
 
     getUser().then((userData) => {
@@ -94,10 +159,9 @@ const TableComponent = () => {
     });
   }, [selectedLeague]);
 
-  // Function to calculate TP points and rank them
   const calculateTPandRank = (games) => {
-    const tpValues = games.map((row) => {
-      return parseFloat(
+    const gamesWithTP = games.map((row) => {
+      const tp = parseFloat(
         (row.result?.accuracyPoints?.home?.p1s || 0) +
           (row.result?.accuracyPoints?.vistor?.p1s || 0) +
           (row.result?.accuracyPoints?.home?.p1s2p || 0) +
@@ -115,20 +179,18 @@ const TableComponent = () => {
             0) +
           (row.BR || 0)
       ).toFixed(2);
+      return { ...row, tp };
     });
 
-    // Rank the TP values
-    const sortedTPValues = [...tpValues].sort((a, b) => b - a);
-    const ranks = tpValues.map((tp) => sortedTPValues.indexOf(tp) + 1);
+    const sortedGames = gamesWithTP.sort((a, b) => b.tp - a.tp);
+    const ranks = sortedGames.map((game, index) => index + 1);
 
-    return { tpValues, ranks };
+    return { sortedGames, ranks };
   };
 
-  // Calculate TP points and ranks
-  const { tpValues, ranks } = calculateTPandRank(gamesPlayed);
+  const { sortedGames, ranks } = calculateTPandRank(gamesPlayed);
 
-  // Define a function to render the appropriate columns based on the selected league
-  const renderColumns = (row, index, ranks, tpValues, gameData) => {
+  const renderColumns = (row) => {
     const Reg = calculateReg(row);
     const OT = calculateOT(row);
     const SO = calculateSO(row);
@@ -176,47 +238,26 @@ const TableComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(gamesPlayed) && gamesPlayed.length > 0 ? (
-            gamesPlayed.map((row, index) => {
+          {sortedGames.length > 0 ? (
+            sortedGames.map((row, index) => {
               const gameData = gameDataMap[row.gameData] || {};
+              const tp = row.tp;
 
-              const tp = tpValues[index];
+              const metrics = calculateMetrics(row, selectedLeague);
 
-              // Calculate 1SW2 and 2SW2
-              const oneS = (
-                (row.result?.accuracyPoints?.home?.p1s || 0) +
-                (row.result?.accuracyPoints?.vistor?.p1s || 0)
-              ).toFixed(2);
-
-              const oneSW2 = (
-                (row.result?.accuracyPoints?.home?.p1s2p || 0) +
-                (row.result?.accuracyPoints?.vistor?.p1s2p || 0)
-              ).toFixed(2);
-
-              const oneS0 = (
-                (row.result?.accuracyPoints?.home?.p1s0 || 0) +
-                (row.result?.accuracyPoints?.vistor?.p1s0 || 0)
-              ).toFixed(2);
-
-              const twoSW2 = (
-                (row.result?.accuracyPoints?.home?.p2s2p || 0) +
-                (row.result?.accuracyPoints?.vistor?.p2s2p || 0)
-              ).toFixed(2);
-
-              // Extract one of the values from vegasOdds
               const vegasOddsValue = row.vegasOdds?.pickExtraInnings || "0";
-
-              // Compute ml, ou, spread values based on the specified properties
               const ml = parseFloat(
                 row.result?.vegasOdds?.pickingFavorite ||
                   row.result?.vegasOdds?.pickingUnderdog ||
                   0
               ).toFixed(2);
+
               const ou = parseFloat(
                 row.result?.vegasOdds?.pickingOver ||
                   row.result?.vegasOdds?.pickingUnder ||
                   0
               ).toFixed(2);
+
               const spread = parseFloat(
                 row.result?.vegasOdds?.pickingSpread?.vSpreadPoints ||
                   row.result?.vegasOdds?.pickingSpread?.hSpreadPoints ||
@@ -229,10 +270,10 @@ const TableComponent = () => {
                   className="h-14 bg-[#181818] text-white separator"
                 >
                   <td className="text-xs font-medium text-center">
-                    {headerOptions[gameData?.visitor] || gameData?.visitor}
+                    {gameData.visitor || "-"}
                   </td>
                   <td className="text-xs font-medium text-center">
-                    {headerOptions[gameData?.home] || gameData?.home}
+                    {gameData.home || "-"}
                   </td>
                   <td
                     className="text-xs font-medium text-center"
@@ -272,16 +313,19 @@ const TableComponent = () => {
                   <td className="text-xs font-medium text-center">{ml}</td>
                   <td className="text-xs font-medium text-center">{ou}</td>
                   <td className="text-xs font-medium text-center">{spread}</td>
-                  <td className="text-xs font-medium text-center">{oneS}</td>
-                  <td className="text-xs font-medium text-center">{oneS0}</td>
-
-                  <td className="text-xs font-medium text-center">{oneSW2}</td>
-                  <td className="text-xs font-medium text-center">{twoSW2}</td>
-                  {renderColumns(row, index, ranks, tpValues, gameData)}
-                  {/* Add a new column for the extracted vegasOdds value */}
-                  {/* <td className="text-xs font-medium text-center">
-                    {vegasOddsValue}
-                  </td> */}
+                  <td className="text-xs font-medium text-center">
+                    {metrics.oneS}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {metrics.oneSO}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {metrics.oneSW2}
+                  </td>
+                  <td className="text-xs font-medium text-center">
+                    {metrics.twoSW2}
+                  </td>
+                  {renderColumns(row)}
                 </tr>
               );
             })
