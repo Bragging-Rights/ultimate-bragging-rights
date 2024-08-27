@@ -141,7 +141,7 @@ const NightResult = () => {
     return statsMap;
   };
 
-  useEffect(() => {
+  const gameHeaders = () => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       const headers = [...headerOptions[selectedLeague]];
 
@@ -162,11 +162,14 @@ const NightResult = () => {
     } else {
       setFilteredHeaderOptions([]);
     }
+  };
 
+  useEffect(() => {
+    gameHeaders();
     getUser(id).then((userData) => {
       getResult(userData);
     });
-  }, [selectedLeague, gamesPlayed, gameDataMap]);
+  }, [selectedLeague]);
 
   return (
     <div className="table-container">
