@@ -3,7 +3,11 @@ import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
 import { getGamesPlayedByDate } from "../../Apis/predictions";
 import { headerOptions, teamNameMappings } from "./data";
+import { getGameById } from "../../Apis/games";
 import "./NightResult.css";
+
+//to get user use userId
+//to get game data e.g team names etc use gameData
 
 const NightResult = () => {
   const { selectedLeague } = useLeagueContext();
