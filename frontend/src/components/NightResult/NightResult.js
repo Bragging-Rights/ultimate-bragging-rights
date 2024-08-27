@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLeagueContext } from "../LeagueContext";
 import { getUserById } from "../../Apis/auth";
-import { getGamePlayedByUserId } from "../../Apis/predictions";
+import { getGamesPlayedByDate } from "../../Apis/predictions";
 import { headerOptions, teamNameMappings } from "./data";
 import "./NightResult.css";
 
@@ -27,7 +27,12 @@ const NightResult = () => {
 
   const getResult = async (userData) => {
     try {
-      const res = await getGamePlayedByUserId(id);
+      // Calculate yesterday's date
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const formattedDate = yesterday.toISOString().split("T")[0]; // Format date as YYYY-MM-DD
+      console.log(formattedDate);
+      const res = await getGamesPlayedByDate(formattedDate); // Pass the formatted date
       console.log("Game data:", res);
       if (
         res.data &&
@@ -141,7 +146,7 @@ const NightResult = () => {
     return statsMap;
   };
 
-  const gameHeaders = () => {
+  useEffect(() => {
     if (selectedLeague && headerOptions[selectedLeague]) {
       const headers = [...headerOptions[selectedLeague]];
 
@@ -162,13 +167,8 @@ const NightResult = () => {
     } else {
       setFilteredHeaderOptions([]);
     }
-  };
 
-  useEffect(() => {
-    gameHeaders();
-    getUser(id).then((userData) => {
-      getResult(userData);
-    });
+    getResult();
   }, [selectedLeague]);
 
   return (

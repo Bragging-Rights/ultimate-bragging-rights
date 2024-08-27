@@ -189,12 +189,12 @@ const Registration = (props) => {
 
   const handleVerifyClick = async () => {
     try {
-      const email = document.getElementById("email-input").value;
-      const otp = document.getElementById("otp-input").value;
+      const email = formData.email;
+      const otp = formData.otpCode;
       console.log("email", email);
       console.log("otp", otp);
       const response = await verifyOTP({ email, otp });
-
+      console.log(response);
       if (response?.status === 200) {
         if (response.data.error === false) {
           setShowOtpInput(true);
