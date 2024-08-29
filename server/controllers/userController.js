@@ -306,9 +306,19 @@ exports.verifyResetPasswordOTP = async (req, res) => {
 };
 
 exports.claimOffer = async (req, res) => {
-  const { email } = req.body;
-  const otp = generateOTP();
-  sendOTPEmail(email, otp);
-  console.log("OTP sent to:", email);
-  res.status(200).json({ otp: otp });
+  try {
+    const { email } = req.body;
+    const otp = generateOTP();
+    const response = await sendOTPEmail(email, otp);
+
+    if (response) {
+      console.log("OTP sent to:", email);
+      res.status(200).json({ message: "OTP sent successfully" });
+    } else {
+      res.status(400).json({ message: "Failed to send OTP" });
+    }
+  } catch (error) {
+    console.error("Error in claimOffer:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
