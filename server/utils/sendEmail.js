@@ -6,10 +6,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    // user: process.env.SMTP_USER,
-    // pass: process.env.SMTP_PASS,
-    user: "verify@ultimatebraggingrights.com",
-    pass: "5vY_=vKVW@^8f-9736j;",
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
@@ -18,7 +16,7 @@ exports.sendOTPEmail = async (recipientEmail, otp) => {
   try {
     const mailOptions = {
       //   from: '"Your Company Name" <noreply@yourdomain.com>', // Sender address
-      from: '"Ultimate Bragging Rights" <verify@ultimatebraggingrights.com>', // Sender address
+      from: `"Ultimate Bragging Rights" <${process.env.SMTP_USER}>`, // Sender address
       to: recipientEmail, // Recipient address
       subject: "Your OTP Code", // Subject line
       text: `Your OTP code is ${otp}`, // Plain text body
