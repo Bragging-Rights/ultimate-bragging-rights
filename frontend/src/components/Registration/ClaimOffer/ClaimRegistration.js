@@ -310,7 +310,21 @@ const ClaimRegistration = (props) => {
     mutate(data);
   };
 
+  const isLeagueDataValid = () => {
+    return userLeagues.every(
+      (league) => league.league && league.team && league.username
+    );
+  };
+
   const handleNextClick = () => {
+    if (currentStep === 3 && !isLeagueDataValid()) {
+      displayToast(
+        "Please fill in all required fields for the league.",
+        "error"
+      );
+      return;
+    }
+
     if (currentStep === 3 && userLeagues.length === 1) {
       Swal.fire({
         title: "You have only selected one league. Do you want to continue?",
@@ -319,14 +333,13 @@ const ClaimRegistration = (props) => {
         denyButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
-          nextStep(); // Proceed to the next step
+          nextStep();
         } else if (result.isDenied) {
           Swal.fire("You can add more leagues before proceeding", "", "info");
-          // Stay on the current page
         }
       });
     } else {
-      nextStep(); // Proceed to the next step if more than one league is selected or not on the "Choose League" step
+      nextStep();
     }
   };
 
@@ -409,7 +422,6 @@ const ClaimRegistration = (props) => {
   return (
     <Modal
       isOpen={modalIsOpen}
-      // className="custom-modal"
       style={isMobile ? mobileStyles : customStyles}
       onRequestClose={closeModal}
     >
@@ -565,35 +577,6 @@ const ClaimRegistration = (props) => {
                           { value: "female", label: "Female" },
                         ]}
                         name="gender"
-                        onChange={inputChangeHandler}
-                      />
-                      <ModalInput
-                        label={
-                          <h2
-                            id="heading"
-                            className="signup-heading"
-                            style={{ fontSize: "14px", color: "#FFAE00" }}
-                          >
-                            REFER BY
-                          </h2>
-                        }
-                        placeholder={"Refer by"}
-                        name="referralName"
-                        value={formData?.refer_by}
-                        onChange={inputChangeHandler}
-                      />
-                      <ModalInput
-                        label={
-                          <h2
-                            id="heading"
-                            className="signup-heading"
-                            style={{ fontSize: "14px", color: "#FFAE00" }}
-                          >
-                            COUPON CODE
-                          </h2>
-                        }
-                        placeholder={"Coupon Code"}
-                        name="couponCode"
                         onChange={inputChangeHandler}
                       />
                     </div>
@@ -851,61 +834,46 @@ const ClaimRegistration = (props) => {
                 </>
               )}
             </div>
-            <div className="button-layout">
-              {index + 1 < 4 && (
-                <div className="button-container">
-                  <div className="button-next-prev">
-                    {index > 0 && (
-                      <input
-                        type="button"
-                        onClick={prevStep}
-                        className="previous action-button-previous"
-                        value="Previous"
-                        style={{
-                          position: "relative",
-                          zIndex: 0,
-                        }}
-                      />
-                    )}
-                    <input
-                      type="button"
-                      onClick={handleNextClick}
-                      className="next action-button"
-                      value="Next"
-                      style={{
-                        position: "relative",
-                        zIndex: 0,
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-              {index + 1 === 4 && (
-                <div className="button-container">
-                  <div className="button-next-prev">
-                    {" "}
-                    <input
-                      type="button"
-                      onClick={prevStep}
-                      className="previous action-button-previous"
-                      value="Previous"
-                    />
-                    <button
-                      className={`submit action-button ${
-                        !captchaState && "cursor-not-allowed"
-                      }`}
-                      onClick={handleRegistration}
-                      type="button"
-                    >
-                      Create Account
-                      {isLoading && <Loader />}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
           </fieldset>
         ))}
+
+        <div className="button-layout">
+          <div className="button-container">
+            <div className="button-next-prev">
+              {currentStep > 1 && (
+                <input
+                  type="button"
+                  onClick={prevStep}
+                  className="previous action-button-previous"
+                  value="Previous"
+                />
+              )}
+              {currentStep < 4 ? (
+                <input
+                  type="button"
+                  onClick={handleNextClick}
+                  className={`next action-button ${
+                    currentStep === 3 && !isLeagueDataValid() ? "disabled" : ""
+                  }`}
+                  value="Next"
+                  disabled={currentStep === 3 && !isLeagueDataValid()}
+                />
+              ) : (
+                <button
+                  className={`submit action-button ${
+                    !captchaState && "cursor-not-allowed"
+                  }`}
+                  onClick={handleRegistration}
+                  type="button"
+                  disabled={!captchaState}
+                >
+                  Create Account
+                  {isLoading && <Loader />}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
       </form>
     </Modal>
   );

@@ -2,8 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 95vh;
-  margin-top: -10%;
+  min-height: 100vh;
+  padding: 2rem 0;
+  box-sizing: border-box;
 }
 
 .claim {
@@ -21,6 +22,7 @@
   border: 2px solid var(--clr);
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
+  margin: auto;
 }
 
 .claim .input-span-claim {

@@ -1,41 +1,39 @@
+#progressbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
 
-  #progressbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-  }
+#progressbar li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1;
+  flex: 1;
+}
 
-  #progressbar li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    line-height: 1;
-    flex: 1;
-  }
+#progressbar li:before,
+#progressbar li:after {
+  background: #ffae00;
+  background-image: url("../../assets/RedCircle-BR-Logo-modified.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: gray;
+  background-position: center;
+}
 
-  #progressbar li:before,
-  #progressbar li:after {
-    background: #ffae00;
-    background-image: url("../../assets/RedCircle-BR-Logo-modified.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: gray; 
-    background-position: center;
-
-  }
-
-  #progressbar li.active:before,
-  #progressbar li.active:after {
-    background: #ffae00;
-    background-image: url("../../assets/RedCircle-BR-Logo.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #ffae00;
+  background-image: url("../../assets/RedCircle-BR-Logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 .Captcha {
   font-family: sans-serif;
@@ -51,48 +49,38 @@
   overflow: auto;
 }
 
-
-
-
-
-
-
-
-
 /* mjr working */
 
 .button-layout {
   position: relative; /* Set this on the parent container to use absolute positioning inside it */
-  margin-top: 80px; /* Remove any margin if not needed */
+  margin-top: 90px; /* Reduced from 80px to give more space for dropdowns */
+  z-index: 1;
 }
 
 .button-container {
-  position: absolute;
-  bottom: 0; /* Align at the bottom */
-  right: 0;  /* Align at the right */
+  position: relative; /* Changed from absolute to relative */
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
   width: 100%; /* Optional: Adjust width if needed */
 }
 
 .button-next-prev {
   display: flex;
   width: 100%;
-  justify-content: right;
+  justify-content: flex-end;
+  gap: 10px; /* Add some space between buttons */
 }
 
-
-
-#msform{
+#msform {
   margin: 0%;
   /* background-color: #ffae00; */
 }
 
-.signup-heading{
+.signup-heading {
   margin-top: 20px;
   font-size: medium;
 }
-.signup-subtitle{
+.signup-subtitle {
   font-size: smaller;
 }
 .form-container {
@@ -111,26 +99,94 @@
   min-width: 150px; /* Adjust the minimum width as needed */
 }
 
-
-
 /* Media Queries */
 @media (min-width: 768px) {
   .modal-form-container {
-      flex-direction: row;
-      flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .modal-bottom {
-      flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 
   .password-section .password-inputs {
-      flex-direction: row;
+    flex-direction: row;
   }
 
   .privacy-policy {
-      flex-direction: row;
-      align-items: center;
+    flex-direction: row;
+    align-items: center;
   }
 }
 
+/* Ensure dropdowns appear above buttons */
+.react-select__menu,
+.react-select__menu-list,
+.react-select__option {
+  z-index: 9999 !important;
+}
+
+/* Adjust z-index for specific components if needed */
+.country-select__menu,
+.state-select__menu,
+.city-select__menu {
+  z-index: 1000 !important;
+}
+
+/* Ensure the form content is above the buttons */
+.form-card {
+  position: relative;
+  z-index: 2;
+}
+
+/* Adjust the button layout */
+.button-layout {
+  position: relative;
+  margin-top: 90px; /* Reduced from 80px to give more space for dropdowns */
+  z-index: 1;
+}
+
+.button-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.button-next-prev {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Ensure the modal content is above other elements */
+.ReactModal__Content {
+  z-index: 1000;
+}
+
+/* Adjust the overlay z-index if needed */
+.ReactModal__Overlay {
+  z-index: 999;
+}
+
+/* Ensure form elements are above the buttons */
+.form-card {
+  position: relative;
+  z-index: 2;
+}
+
+.action-button {
+  background-color: #ffae00; /* Default yellow color */
+  color: #000000;
+  cursor: pointer;
+  /* Add other styles as needed */
+}
+
+.action-button:disabled,
+.action-button.disabled {
+  background-color: #cccccc !important; /* Gray color */
+  color: #666666 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

@@ -1,169 +1,167 @@
-
 .title {
-    font-family: Inter, sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    text-transform: uppercase;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .r-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
 .r-modal-header .cross-btn {
-    position: absolute;
-    cursor: pointer;
-    border: #ff0000 solid 2px;
-    border-radius: 100px;
+  position: absolute;
+  cursor: pointer;
+  border: #ff0000 solid 2px;
+  border-radius: 100px;
 }
 
 .info-require {
-    color: #FFF;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: capitalize;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 .label-container {
-    position: relative;
+  position: relative;
 }
 
 .label-container .star {
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: capitalize;
-    position: absolute;
-    left: -10px;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: capitalize;
+  position: absolute;
+  left: -10px;
 }
 
 .label-container .line {
-    width: 100%;
-    height: 1px;
-    background: #5C626E;
-    margin-top: 15px;
-    margin-left: -3px;
+  width: 100%;
+  height: 1px;
+  background: #5c626e;
+  margin-top: 15px;
+  margin-left: -3px;
 }
 
 .modal-form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 27px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 27px;
 }
 
 .line {
-    border-radius: 4px;
-    opacity: 0.5;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    height: 2px;
-    width: 100%;
-    margin: 40px 0px;
+  border-radius: 4px;
+  opacity: 0.5;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  height: 2px;
+  width: 100%;
+  margin: 40px 0px;
 }
 
 .leage-option {
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    background-clip: text;
-    border-bottom: 1px solid #5C626E;
-    display: inline-block;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  border-bottom: 1px solid #5c626e;
+  display: inline-block;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .modal-bottom {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .add-another-league {
-    font-size: 14px;
-    font-weight: 600;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-top: 20px;
-    cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 20px;
+  cursor: pointer;
+  float: right;
 }
 
 .password-section h2 {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 2.56px;
-    text-transform: uppercase;
-    /* background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%); */
-    background: "#FFAE00" ;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2.56px;
+  text-transform: uppercase;
+  /* background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%); */
+  background: "#FFAE00";
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .password-section .warn {
-    display: inline-flex;
-    margin-top: 12px;
-    align-items: center;
-    gap: 5px;
-    border-bottom: 1px solid #5C626E;
-    padding-bottom: 10px;
+  display: inline-flex;
+  margin-top: 12px;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 1px solid #5c626e;
+  padding-bottom: 10px;
 }
 
 .password-section div {
-    color: #FFF;
-    font-size: 10px;
-    font-weight: 600;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .password-section .password-inputs {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .privacy-policy {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: auto;
 }
 
 .privacy-policy input {
-    border-radius: 4px;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    color: black;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  color: black;
 }
 
 .privacy-policy div {
-    color: #737373;
-    font-size: 14px;
-    font-weight: 600;
+  color: #737373;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .submit-btn {
-    color: #000;
-    font-size: 14px;
-    font-weight: 700;
-    border-radius: 4px;
-    background: linear-gradient(180deg, #BE8200 0%, #FEF098 47.4%, #EFD261 100%);
-    padding: 14px 20px;
-    margin-top: 20px;
-    width: 100%;
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #be8200 0%, #fef098 47.4%, #efd261 100%);
+  padding: 14px 20px;
+  margin-top: 20px;
+  width: 100%;
 }
-
-

@@ -51,9 +51,12 @@ const Routes = () => {
       <ToastContainer />
       <QueryClientProvider client={queryClient}>
         <Router>
+
           <LeagueProvider>
             <RoutesContainer>
               <Route index element={<HomePage />} />
+              <Route path="/claim-offer" element={<ClaimOffer />} />
+
               <Route element={<MainLayout />}>
                 <Route path="/games" element={<Games />} />
                 <Route path="/results" element={<Results />} />
@@ -63,7 +66,6 @@ const Routes = () => {
                 <Route path="/testleader" element={<Fullleaderboard />} />
                 <Route path="/standings" element={<Standing />} />
                 <Route path="/teams" element={<Teams />} />
-                <Route path="/claim" element={<ClaimOffer />} />
 
                 {/* <Route path="/season" element={<Season />} /> */}
                 <Route path="/fb-challanges" element={<FbChallanges />} />
@@ -85,6 +87,7 @@ const Routes = () => {
             </RoutesContainer>
           </LeagueProvider>
         </Router>
+        
       </QueryClientProvider>
     </Provider>
   );

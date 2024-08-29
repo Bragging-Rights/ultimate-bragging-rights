@@ -196,16 +196,17 @@ export const SignInModal = (props) => {
             padding: "1%",
             cursor: "pointer",
           }}
-          onClick={() => setRegistrationModalOpen(true)}
+          href="/claim-offer"
+          // onClick={() => setRegistrationModalOpen(true)}
         >
           Sign Up
         </a>
       </p>
 
-      <Registration
+      {/* <Registration
         modalIsOpen={isRegistrationModalOpen}
         closeModal={() => setRegistrationModalOpen(false)}
-      />
+      /> */}
 
       <ForgotPasswordModal
         modalIsOpen={isForgotPasswordModalOpen}
