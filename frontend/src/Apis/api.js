@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 // process.env.MODE === "production"
 //   ? process.env.REACT_APP_BACKEND_URL // For production
 //   : process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/"; // For development fallback
