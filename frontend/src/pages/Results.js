@@ -20,9 +20,9 @@ const Results = () => {
           <Line />
         </Grid>
 
-        <Grid item xs={12} display="flex" justifyContent="center">
+        {/* <Grid item xs={12} display="flex" justifyContent="center">
           <ResultTabs changeTab={changeTab} CurrentTab={CurrentTab} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           {CurrentTab === 0 ? (
             <TableComponent />
